@@ -1,0 +1,52 @@
+name: Veeam API Rate Limits
+description: Veeam REST API rate limiting varies by product. The Service Provider Console REST API uses a configurable throttling mechanism to prevent excessive server load. Veeam Backup for Microsoft 365 applies request throttling per endpoint. Most Veeam on-premises APIs (VBR, Enterprise Manager) do not publish fixed global rate limits as practical throughput is bounded by the local server resources.
+version: '0.1'
+rateLimits:
+  - name: Veeam Service Provider Console API Throttling
+    description: VSPC REST API controls request rate through a configurable throttling mechanism. Default limits can be adjusted via appsettings.json on the server. Throttling is enabled by default and protects against excessive parallel requests.
+    url: https://helpcenter.veeam.com/docs/vac/rest/throttling.html
+    unit: requests
+    window: concurrent
+    limit: configurable
+    defaultEnabled: true
+    configurable: true
+    configParameters:
+      - name: IsDisabled
+        default: 'false'
+        description: Set to true to disable throttling entirely
+      - name: MaxParallelRequestsMultiplier
+        default: '1'
+        description: Multiplier for maximum parallel requests allowed
+      - name: MaxRequestPerTimeUnitMultiplier
+        default: '1'
+        description: Multiplier for maximum requests processed per time unit
+    errorCode: 429
+    notes: Modification of throttling parameters should be made with guidance from Veeam customer support team.
+  - name: Veeam Backup for Microsoft 365 API Throttling
+    description: Veeam Backup for Microsoft 365 REST API applies per-endpoint throttling limits. These limits control token endpoint and resource endpoint request rates separately.
+    url: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
+    unit: requests
+    limits:
+      - window: second
+        limit: 1000
+      - window: minute
+        limit: 6000
+      - window: hour
+        limit: 150000
+    notes: Throttling limits for VBO365 are not publicly documented by default and are typically disclosed in support cases. Values shown are from community-reported observations for v8 and may vary by version and configuration.
+  - name: Veeam Backup & Replication REST API
+    description: No fixed global rate limits are published for the VBR REST API. Practical throughput is bounded by the resources of the Veeam Backup & Replication server hosting the API. Bulk operations may be unpredictable without empirical testing.
+    url: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+    limit: null
+    notes: Server resource constraints act as de facto rate limits. Plan bulk API usage with appropriate retry logic and back-off strategies.
+  - name: Veeam Backup Enterprise Manager REST API
+    description: No fixed global rate limits are published for the Enterprise Manager REST API. Performance is governed by server resources and concurrent connection limits.
+    url: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
+    limit: null
+    notes: Use connection pooling and implement exponential back-off for large-scale integrations.
+bestPractices:
+  - Implement exponential back-off and retry logic for all Veeam API integrations
+  - For VSPC API, work with Veeam support before adjusting throttling multipliers in production
+  - Avoid bulk parallel requests against on-premises APIs; queue and serialize where possible
+  - Monitor server resource utilization when running API-intensive automation workflows
+  - Use pagination controls (limit/offset) to avoid large single-response payloads

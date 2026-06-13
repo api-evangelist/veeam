@@ -1,0 +1,69 @@
+name: Veeam Plans and Pricing
+description: Veeam Data Platform licensing uses a Universal License (VUL) per-workload subscription model covering VMs, physical servers, cloud instances, and NAS shares. Licenses are sold in packs of 5 or 10 workloads. Pricing increased approximately 4-8% effective January 2026.
+url: https://www.veeam.com/store/
+version: '0.1'
+plans:
+  - name: Community Edition
+    description: Free tier providing full backup and replication functionality for up to 10 workloads with no time limit. Includes the same core backup capabilities as the paid Standard tier for VMware, Hyper-V, and physical server environments.
+    url: https://www.veeam.com/virtual-machine-backup-solution-free.html
+    price: 0
+    pricingModel: free
+    unit: workloads
+    limit: 10
+    features:
+      - VM backup and replication for VMware and Hyper-V (up to 10 workloads)
+      - Agent-based backup for Windows and Linux physical servers
+      - VM replication
+      - Recovery verification
+      - No time limit
+  - name: Standard (VUL)
+    description: Entry-level paid tier using Veeam Universal License (VUL) for unlimited workload protection. Sold in packs of 5 or 10 licenses with 24/7 production support included.
+    url: https://www.veeam.com/store/
+    price: 250
+    pricingModel: per-workload-per-year
+    unit: workload/year
+    features:
+      - Unlimited workload protection (VMs, physical, cloud)
+      - Backup to disk, tape, object storage, and cloud
+      - Instant VM recovery
+      - Application-aware processing
+      - Deduplication and compression
+      - 24/7 production support
+      - Portable license across environments
+  - name: Advanced (VUL)
+    description: Mid-tier using VUL including all Standard capabilities plus Veeam ONE for advanced monitoring, reporting, and intelligent diagnostics with automated remediation.
+    url: https://www.veeam.com/store/
+    price: 350
+    pricingModel: per-workload-per-year
+    unit: workload/year
+    features:
+      - All Standard tier capabilities
+      - Veeam ONE monitoring and reporting
+      - Capacity planning and analytics
+      - Intelligent diagnostics
+      - Automated remediation
+      - Enhanced support tier
+  - name: Premium (VUL)
+    description: Top-tier using VUL including all Advanced capabilities plus Veeam Recovery Orchestrator for automated disaster recovery testing, compliance documentation, and one-click failover orchestration.
+    url: https://www.veeam.com/store/
+    price: 450
+    pricingModel: per-workload-per-year
+    unit: workload/year
+    features:
+      - All Advanced tier capabilities
+      - Veeam Recovery Orchestrator
+      - Automated DR testing and compliance documentation
+      - One-click failover orchestration
+      - Priority premium support
+      - Recovery plan management
+  - name: Backup Essentials (SMB)
+    description: Enterprise-grade backup solution designed for small and medium businesses with 5-50 workloads. Sold in 5-instance packs with production support.
+    url: https://www.veeam.com/store/
+    price: null
+    pricingModel: custom
+    unit: 5-instance packs
+    features:
+      - Full VM and physical server backup
+      - Cloud tier support
+      - Production support included
+      - Designed for 5-50 workload environments

@@ -1,0 +1,84 @@
+name: Veeam FinOps Framework
+description: FinOps considerations for Veeam Data Platform deployments. Veeam uses a Universal License (VUL) per-workload subscription model. Cost optimization focuses on right-sizing workload counts, leveraging the free Community Edition, choosing the appropriate tier, and managing cloud storage costs separately from licensing.
+version: '1.0'
+framework: FinOps Framework 1.0 FOCUS-aligned
+url: https://www.veeam.com/store/
+domains:
+  - name: Understand
+    description: Gain visibility into Veeam licensing costs, workload counts, and cloud storage consumption to establish baselines for optimization.
+    capabilities:
+      - name: Workload Inventory
+        description: Audit all protected workloads (VMs, physical servers, cloud instances, NAS shares) to understand actual VUL consumption versus licensed count.
+        actions:
+          - Use Veeam ONE (Advanced/Premium tiers) to generate workload protection reports
+          - Query VBR REST API /api/v1/inventory endpoints for protected workload counts
+          - Identify unprotected workloads that may not require licensing
+      - name: License Utilization Tracking
+        description: Monitor VUL consumption to identify over-provisioned or under-utilized licenses.
+        actions:
+          - Review license usage dashboards in Veeam Backup & Replication console
+          - Use Service Provider Console REST API to pull tenant license utilization for MSP scenarios
+          - Identify workloads that qualify for Community Edition (under 10 workloads)
+      - name: Cloud Storage Cost Visibility
+        description: Cloud object storage costs are NOT included in VUL licensing and are billed separately through cloud providers.
+        actions:
+          - Tag Veeam backup buckets in AWS/Azure/GCP for cost allocation
+          - Monitor backup repository storage growth via VBR REST API
+          - Enable cloud provider cost anomaly alerts on backup storage buckets
+  - name: Optimize
+    description: Right-size Veeam licensing, storage tiers, and deployment configurations to minimize cost while maintaining protection SLAs.
+    capabilities:
+      - name: Tier Right-Sizing
+        description: Match workloads to the appropriate Veeam Data Platform tier to avoid paying for unused Advanced/Premium features.
+        actions:
+          - Evaluate whether Veeam ONE features (Advanced tier) are actively used before renewal
+          - Reserve Recovery Orchestrator (Premium tier) for workloads with formal DR SLAs
+          - Use Standard tier for bulk workloads without monitoring or DR orchestration needs
+        tierPricing:
+          Standard: ~$250/workload/year
+          Advanced: ~$350/workload/year
+          Premium: ~$450/workload/year
+      - name: Workload Consolidation
+        description: Reduce VUL count through workload consolidation, decommissioning, and use of the free Community Edition tier.
+        actions:
+          - Decommission backups of retired workloads to free VUL slots
+          - Consolidate dev/test environments to remain within the 10-workload free tier
+          - Review license pack sizing (5-pack vs 10-pack) relative to actual usage
+      - name: Cloud Storage Optimization
+        description: Optimize cloud backup repository costs using object lifecycle policies and capacity tier features.
+        actions:
+          - Enable Veeam Capacity Tier to automatically move aging backups to cheaper cloud storage classes
+          - Configure object lock (immutability) only on compliance-required backup sets to avoid premium storage costs
+          - Use per-region storage pricing to select lowest-cost backup target regions
+          - Set backup retention policies to avoid accumulating excess restore points
+      - name: License Pack Optimization
+        description: Purchase VUL in correctly-sized packs to minimize overage.
+        actions:
+          - Buy 10-packs when workload count is within 10% of a pack boundary
+          - Align renewal timing across workload groups to consolidate contract dates
+          - Evaluate annual vs multi-year licensing for price lock-in given ~4-8% annual price increases
+  - name: Operate
+    description: Establish ongoing governance and automation to maintain Veeam cost efficiency over time.
+    capabilities:
+      - name: Automated Cost Reporting
+        description: Use Veeam APIs and cloud provider cost tools to generate regular cost reports.
+        actions:
+          - Schedule weekly license utilization reports via Veeam ONE REST API
+          - Integrate cloud backup storage spend into FinOps platform (e.g., CloudHealth, Apptio) using cloud provider billing APIs
+          - Alert on VUL utilization approaching licensed pack limits
+      - name: Chargeback and Showback
+        description: Allocate Veeam licensing and storage costs to consuming business units using workload tags and tenant structures.
+        actions:
+          - Use VSPC tenant isolation for MSP chargeback models
+          - Tag VMs and backup jobs by cost center in Veeam console for allocation reporting
+          - Map cloud storage bucket costs to business units using cloud provider tagging
+      - name: Renewal Planning
+        description: Plan for annual VUL renewal with awareness of pricing trajectory and workload growth.
+        actions:
+          - Budget for 4-8% annual VUL price increases at renewal
+          - Review workload growth trends 90 days before renewal to right-size next-term pack count
+          - Evaluate Veeam partner/reseller pricing versus direct purchase for volume discounts
+notes:
+  - Veeam does not include cloud object storage in VUL pricing; always budget separately for backup repository storage costs in AWS S3, Azure Blob, or Google Cloud Storage
+  - Community Edition (free, up to 10 workloads) is production-capable and recommended for small environments or isolated dev/test workloads
+  - VUL is portable across VM, physical, and cloud workloads — consolidate legacy per-socket and per-VM licenses onto VUL at renewal to simplify cost management
