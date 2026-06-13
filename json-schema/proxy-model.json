@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/veeam/main/json-schema/ProxyModel.json",
+  "title": "ProxyModel",
+  "allOf": [
+    {
+      "discriminator": {
+        "mapping": {
+          "ViProxy": "#/components/schemas/ViProxyModel"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/ViProxyModel"
+        }
+      ]
+    },
+    {
+      "$ref": "#/components/schemas/BaseProxyModel"
+    }
+  ]
+}

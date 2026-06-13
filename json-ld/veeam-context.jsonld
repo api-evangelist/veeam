@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "veeam": "https://www.veeam.com/vocabulary#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "BackupJob": "veeam:BackupJob",
+    "ReplicationJob": "veeam:ReplicationJob",
+    "BackupCopyJob": "veeam:BackupCopyJob",
+    "RestorePoint": "veeam:RestorePoint",
+    "Repository": "veeam:Repository",
+    "Proxy": "veeam:Proxy",
+    "Session": "veeam:Session",
+    "Agent": "veeam:Agent",
+    "ManagedServer": "veeam:ManagedServer",
+    "ProtectedWorkload": "veeam:ProtectedWorkload",
+    "Credentials": "veeam:Credentials",
+    "Encryption": "veeam:Encryption",
+    "ConfigurationBackup": "veeam:ConfigurationBackup",
+    "WANAccelerator": "veeam:WANAccelerator",
+    "ScaleOutRepository": "veeam:ScaleOutRepository",
+    "ObjectStorage": "veeam:ObjectStorage",
+
+    "jobId": { "@id": "veeam:jobId", "@type": "xsd:string" },
+    "jobName": { "@id": "schema:name", "@type": "xsd:string" },
+    "description": { "@id": "schema:description", "@type": "xsd:string" },
+    "isEnabled": { "@id": "veeam:isEnabled", "@type": "xsd:boolean" },
+    "scheduleEnabled": { "@id": "veeam:scheduleEnabled", "@type": "xsd:boolean" },
+    "nextRun": { "@id": "veeam:nextRun", "@type": "xsd:dateTime" },
+    "lastRun": { "@id": "veeam:lastRun", "@type": "xsd:dateTime" },
+    "lastResult": { "@id": "veeam:lastResult", "@type": "xsd:string" },
+    "status": { "@id": "veeam:status", "@type": "xsd:string" },
+    "creationTime": { "@id": "schema:dateCreated", "@type": "xsd:dateTime" },
+    "modificationTime": { "@id": "schema:dateModified", "@type": "xsd:dateTime" },
+
+    "repositoryId": { "@id": "veeam:repositoryId", "@type": "xsd:string" },
+    "repositoryName": { "@id": "schema:name", "@type": "xsd:string" },
+    "hostId": { "@id": "veeam:hostId", "@type": "xsd:string" },
+    "capacityGB": { "@id": "veeam:capacityGB", "@type": "xsd:decimal" },
+    "freeSpaceGB": { "@id": "veeam:freeSpaceGB", "@type": "xsd:decimal" },
+    "usedSpaceGB": { "@id": "veeam:usedSpaceGB", "@type": "xsd:decimal" },
+
+    "sessionId": { "@id": "veeam:sessionId", "@type": "xsd:string" },
+    "startTime": { "@id": "schema:startDate", "@type": "xsd:dateTime" },
+    "endTime": { "@id": "schema:endDate", "@type": "xsd:dateTime" },
+    "progress": { "@id": "veeam:progress", "@type": "xsd:integer" },
+    "result": { "@id": "veeam:result", "@type": "xsd:string" },
+
+    "proxyId": { "@id": "veeam:proxyId", "@type": "xsd:string" },
+    "maxTaskCount": { "@id": "veeam:maxTaskCount", "@type": "xsd:integer" },
+    "transportMode": { "@id": "veeam:transportMode", "@type": "xsd:string" },
+
+    "agentId": { "@id": "veeam:agentId", "@type": "xsd:string" },
+    "osType": { "@id": "veeam:osType", "@type": "xsd:string" },
+    "platform": { "@id": "veeam:platform", "@type": "xsd:string" },
+    "version": { "@id": "schema:version", "@type": "xsd:string" },
+
+    "credentialsId": { "@id": "veeam:credentialsId", "@type": "xsd:string" },
+    "credentialsType": { "@id": "veeam:credentialsType", "@type": "xsd:string" },
+    "username": { "@id": "schema:accountId", "@type": "xsd:string" },
+
+    "encryptionEnabled": { "@id": "veeam:encryptionEnabled", "@type": "xsd:boolean" },
+    "encryptionAlgorithm": { "@id": "veeam:encryptionAlgorithm", "@type": "xsd:string" },
+    "keyHint": { "@id": "veeam:keyHint", "@type": "xsd:string" },
+
+    "restorePointId": { "@id": "veeam:restorePointId", "@type": "xsd:string" },
+    "creationTimeUtc": { "@id": "schema:dateCreated", "@type": "xsd:dateTime" },
+    "backupId": { "@id": "veeam:backupId", "@type": "xsd:string" },
+    "backupSize": { "@id": "veeam:backupSize", "@type": "xsd:integer" },
+    "dataSize": { "@id": "veeam:dataSize", "@type": "xsd:integer" },
+    "deduplicationRatio": { "@id": "veeam:deduplicationRatio", "@type": "xsd:decimal" },
+    "compressionRatio": { "@id": "veeam:compressionRatio", "@type": "xsd:decimal" }
+  }
+}

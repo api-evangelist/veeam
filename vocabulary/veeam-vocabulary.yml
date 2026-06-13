@@ -1,0 +1,85 @@
+vocabulary:
+  name: Veeam API Vocabulary
+  description: Key terms and concepts used across Veeam REST APIs for backup, replication, and data protection.
+  url: https://raw.githubusercontent.com/api-evangelist/veeam/main/vocabulary/veeam-vocabulary.yml
+
+terms:
+  - term: Backup Job
+    definition: A configured task that protects one or more workloads by copying data to a backup repository on a defined schedule.
+    tags: [Jobs, Backups]
+
+  - term: Replication Job
+    definition: A task that creates and maintains a copy of a VM or workload at a secondary site for failover purposes.
+    tags: [Jobs, Replication]
+
+  - term: Restore Point
+    definition: A point-in-time snapshot of a protected workload stored in a backup repository that can be used for restore operations.
+    tags: [Backups, Restore]
+
+  - term: Repository
+    definition: A storage location where Veeam keeps backup files, VM copies, and metadata. Can be local disk, SAN, NAS, object storage, or cloud.
+    tags: [Repositories]
+
+  - term: Proxy
+    definition: A Veeam component that acts as a data mover, processing backup and replication traffic between source workloads and target repositories.
+    tags: [Proxies]
+
+  - term: Session
+    definition: A runtime instance of a job execution, capturing status, logs, start/end times, and result codes.
+    tags: [Sessions]
+
+  - term: Agent
+    definition: A Veeam software component installed on a physical or cloud machine to enable agentful backup and restore operations.
+    tags: [Agents]
+
+  - term: Credentials
+    definition: Authentication information (username/password, access keys, certificates) stored in Veeam and used to connect to protected infrastructure.
+    tags: [Credentials]
+
+  - term: Protected Workload
+    definition: Any VM, physical server, cloud instance, or SaaS resource that is covered by at least one active Veeam backup job.
+    tags: [Backup Objects]
+
+  - term: Instant Recovery
+    definition: A Veeam restore operation that starts a VM or workload directly from a compressed and deduplicated backup file without waiting for full restoration.
+    tags: [Restore]
+
+  - term: Scale-out Backup Repository
+    definition: A logical backup repository that aggregates multiple storage extents for capacity and performance, with policy-based data placement.
+    tags: [Repositories]
+
+  - term: Backup Copy Job
+    definition: A job that copies existing backup files to a secondary repository, enabling the 3-2-1 backup rule.
+    tags: [Jobs, Backups]
+
+  - term: WAN Accelerator
+    definition: A Veeam component that deduplicates and compresses backup traffic sent over wide-area network links to reduce bandwidth consumption.
+    tags: [Traffic Rules]
+
+  - term: Configuration Backup
+    definition: A backup of the Veeam Backup & Replication configuration database, enabling recovery of the backup server itself.
+    tags: [Configuration Backup]
+
+  - term: Managed Server
+    definition: An infrastructure host (ESXi, Hyper-V, Windows, Linux) added to Veeam inventory and managed for backup or proxy functions.
+    tags: [Managed Servers]
+
+  - term: Inventory Browser
+    definition: An API resource for browsing protected infrastructure objects such as VMs, hosts, clusters, and datastores.
+    tags: [Inventory Browser]
+
+  - term: Object Storage
+    definition: Cloud or on-premises S3-compatible storage used as a backup repository or archive tier in Veeam scale-out repositories.
+    tags: [Repositories]
+
+  - term: Encryption
+    definition: Data-at-rest or in-flight protection applied to backup files or network traffic using AES-256 or other algorithms.
+    tags: [Encryption]
+
+  - term: Cloud Browser
+    definition: An API resource for browsing cloud provider resources such as EC2 instances, S3 buckets, and Azure VMs from within Veeam.
+    tags: [Cloud Browser]
+
+  - term: Automation
+    definition: Scripted or API-driven orchestration of Veeam operations, including job scheduling, configuration, and reporting.
+    tags: [Automation]

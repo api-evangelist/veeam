@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/veeam/main/json-schema/RepositoryModel.json",
+  "title": "RepositoryModel",
+  "allOf": [
+    {
+      "discriminator": {
+        "mapping": {
+          "AmazonS3": "#/components/schemas/AmazonS3StorageModel",
+          "AmazonS3Glacier": "#/components/schemas/AmazonS3GlacierStorageModel",
+          "AmazonSnowballEdge": "#/components/schemas/AmazonSnowballEdgeStorageModel",
+          "AzureArchive": "#/components/schemas/AzureArchiveStorageModel",
+          "AzureBlob": "#/components/schemas/AzureBlobStorageModel",
+          "AzureDataBox": "#/components/schemas/AzureDataBoxStorageModel",
+          "GoogleCloud": "#/components/schemas/GoogleCloudStorageModel",
+          "IBMCloud": "#/components/schemas/IBMCloudStorageModel",
+          "LinuxHardened": "#/components/schemas/LinuxHardenedStorageModel",
+          "LinuxLocal": "#/components/schemas/LinuxLocalStorageModel",
+          "Nfs": "#/components/schemas/NfsStorageModel",
+          "S3Compatible": "#/components/schemas/S3CompatibleStorageModel",
+          "Smb": "#/components/schemas/SmbStorageModel",
+          "WasabiCloud": "#/components/schemas/WasabiCloudStorageModel",
+          "WinLocal": "#/components/schemas/WindowsLocalStorageModel"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/WindowsLocalStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/LinuxLocalStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/NfsStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/SmbStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AzureBlobStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AzureDataBoxStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AmazonS3StorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AmazonSnowballEdgeStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/S3CompatibleStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/GoogleCloudStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/IBMCloudStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AmazonS3GlacierStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/AzureArchiveStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/WasabiCloudStorageModel"
+        },
+        {
+          "$ref": "#/components/schemas/LinuxHardenedStorageModel"
+        }
+      ]
+    },
+    {
+      "$ref": "#/components/schemas/BaseRepositoryModel"
+    }
+  ]
+}

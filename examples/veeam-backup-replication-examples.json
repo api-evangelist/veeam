@@ -1,0 +1,109 @@
+{
+  "examples": [
+    {
+      "operationId": "CreateAuthorizationCode",
+      "path": "/api/oauth2/authorization_code",
+      "method": "POST",
+      "summary": "Get Authorization Code",
+      "tags": [
+        "Login"
+      ]
+    },
+    {
+      "operationId": "Logout",
+      "path": "/api/oauth2/logout",
+      "method": "POST",
+      "summary": "Log Out",
+      "tags": [
+        "Login"
+      ]
+    },
+    {
+      "operationId": "CreateToken",
+      "path": "/api/oauth2/token",
+      "method": "POST",
+      "summary": "Get Access Token",
+      "tags": [
+        "Login"
+      ],
+      "requestSchema": {
+        "$ref": "#/components/schemas/TokenLoginSpec"
+      }
+    },
+    {
+      "operationId": "GetAllComputerRecoveryTokens",
+      "path": "/api/v1/agents/recoveryTokens",
+      "method": "GET",
+      "summary": "Get All Recovery Tokens",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "operationId": "CreateComputerRecoveryToken",
+      "path": "/api/v1/agents/recoveryTokens",
+      "method": "POST",
+      "summary": "Create Recovery Token",
+      "tags": [
+        "Agents"
+      ],
+      "requestSchema": {
+        "$ref": "#/components/schemas/ComputerRecoveryTokenSpec"
+      }
+    },
+    {
+      "operationId": "DeleteComputerRecoveryToken",
+      "path": "/api/v1/agents/recoveryTokens/{id}",
+      "method": "DELETE",
+      "summary": "Delete Recovery Token",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "operationId": "GetComputerRecoveryToken",
+      "path": "/api/v1/agents/recoveryTokens/{id}",
+      "method": "GET",
+      "summary": "Get Recovery Token",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "operationId": "UpdateComputerRecoveryToken",
+      "path": "/api/v1/agents/recoveryTokens/{id}",
+      "method": "PUT",
+      "summary": "Edit Recovery Token",
+      "tags": [
+        "Agents"
+      ],
+      "requestSchema": {
+        "$ref": "#/components/schemas/ComputerRecoveryTokenModel"
+      }
+    },
+    {
+      "operationId": "ExportCloudCredentials",
+      "path": "/api/v1/automation/cloudcredentials/export",
+      "method": "POST",
+      "summary": "Export Cloud Credentials",
+      "tags": [
+        "Automation"
+      ],
+      "requestSchema": {
+        "$ref": "#/components/schemas/CloudCredentialsExportSpec"
+      }
+    },
+    {
+      "operationId": "ImportCloudCredentials",
+      "path": "/api/v1/automation/cloudcredentials/import",
+      "method": "POST",
+      "summary": "Import Cloud Credentials",
+      "tags": [
+        "Automation"
+      ],
+      "requestSchema": {
+        "$ref": "#/components/schemas/CloudCredentialsImportSpecCollection"
+      }
+    }
+  ]
+}

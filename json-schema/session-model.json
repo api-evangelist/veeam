@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/veeam/main/json-schema/SessionModel.json",
+  "title": "SessionModel",
+  "properties": {
+    "activityId": {
+      "description": "ID of the activity.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "creationTime": {
+      "description": "Date and time when the session was created.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "endTime": {
+      "description": "Date and time when the session was ended.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "description": "ID of the session.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the session.",
+      "type": "string"
+    },
+    "parentSessionId": {
+      "description": "ID of the parent session.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "progressPercent": {
+      "description": "Progress percentage of the session.",
+      "type": "integer"
+    },
+    "resourceId": {
+      "description": "ID of the resource.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "resourceReference": {
+      "description": "URI of the resource.",
+      "type": "string"
+    },
+    "result": {
+      "$ref": "#/components/schemas/SessionResultModel"
+    },
+    "sessionType": {
+      "$ref": "#/components/schemas/ESessionType"
+    },
+    "state": {
+      "$ref": "#/components/schemas/ESessionState"
+    },
+    "usn": {
+      "description": "Update sequence number.",
+      "format": "int64",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "activityId",
+    "creationTime",
+    "id",
+    "name",
+    "sessionType",
+    "state",
+    "usn"
+  ],
+  "type": "object"
+}

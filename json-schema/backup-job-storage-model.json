@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/veeam/main/json-schema/BackupJobStorageModel.json",
+  "title": "BackupJobStorageModel",
+  "description": "Backup storage settings.",
+  "properties": {
+    "advancedSettings": {
+      "$ref": "#/components/schemas/BackupJobAdvancedSettingsModel"
+    },
+    "backupProxies": {
+      "$ref": "#/components/schemas/BackupProxiesSettingsModel"
+    },
+    "backupRepositoryId": {
+      "description": "ID of the backup repository.",
+      "format": "uuid",
+      "type": "string"
+    },
+    "gfsPolicy": {
+      "$ref": "#/components/schemas/GFSPolicySettingsModel"
+    },
+    "retentionPolicy": {
+      "$ref": "#/components/schemas/BackupJobRetentionPolicySettingsModel"
+    }
+  },
+  "required": [
+    "backupProxies",
+    "backupRepositoryId",
+    "retentionPolicy"
+  ],
+  "type": "object"
+}

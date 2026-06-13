@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/veeam/main/json-schema/BackupJobSpec.json",
+  "title": "BackupJobSpec",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/BaseJobSpec"
+    },
+    {
+      "properties": {
+        "guestProcessing": {
+          "$ref": "#/components/schemas/BackupJobGuestProcessingModel"
+        },
+        "isHighPriority": {
+          "default": false,
+          "description": "If *true*, the job has a high priority in getting backup infrastructure resources.",
+          "type": "boolean"
+        },
+        "schedule": {
+          "$ref": "#/components/schemas/BackupScheduleModel"
+        },
+        "storage": {
+          "$ref": "#/components/schemas/BackupJobStorageModel"
+        },
+        "virtualMachines": {
+          "$ref": "#/components/schemas/BackupJobVirtualMachinesSpec"
+        }
+      },
+      "required": [
+        "guestProcessing",
+        "isHighPriority",
+        "schedule",
+        "storage",
+        "virtualMachines"
+      ],
+      "type": "object"
+    }
+  ]
+}
