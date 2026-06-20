@@ -1,7 +1,7 @@
 aid: veeam
 name: Veeam
 description: Veeam is a backup and data management platform providing REST APIs for managing backup jobs, restore operations, protected workloads, and cloud backup policies across on-premises, virtual, and cloud environments. The Veeam platform covers Backup & Replication, Backup for Microsoft 365, Backup for AWS, Azure, and Google Cloud, Veeam ONE monitoring, Recovery Orchestrator, and Service Provider Console.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/veeam/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -22,7 +22,7 @@ tags:
 apis:
   - name: Veeam Backup & Replication REST API
     description: The primary REST API for Veeam Backup & Replication, enabling programmatic management of backup jobs, restore operations, protected workloads, infrastructure components, and replication policies across VMware, Hyper-V, and physical environments.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
     baseURL: https://localhost:9419
     tags:
@@ -36,7 +36,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   - name: Veeam Backup Enterprise Manager REST API
     description: REST API for Veeam Backup Enterprise Manager, providing centralized management of Veeam Backup & Replication servers, reporting, and enterprise-level operations exposed through a RESTful framework over HTTPS.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
     baseURL: https://localhost:9398
     tags:
@@ -49,7 +49,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
   - name: Veeam Backup for Microsoft 365 REST API
     description: REST API for Veeam Backup for Microsoft 365, enabling management of backup jobs and restore operations for Exchange Online, SharePoint Online, OneDrive for Business, and Microsoft Teams. Uses HAL hypermedia to express resources and relationships.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
     baseURL: https://localhost:4443
     tags:
@@ -64,7 +64,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
   - name: Veeam ONE REST API
     description: REST API for Veeam ONE, enabling monitoring, reporting, capacity planning, and intelligent diagnostics for Veeam-protected environments including VMware, Hyper-V, and Veeam Backup & Replication infrastructure.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/one/rest/
     baseURL: https://localhost:1239
     tags:
@@ -77,7 +77,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/one/rest/
   - name: Veeam Backup for AWS REST API
     description: REST API for Veeam Backup for AWS, enabling management of backup and recovery operations for AWS EC2 instances, RDS databases, EFS, and VPC configurations. Covers backup policies, restore points, and protected instance management.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vbaws/rest/
     baseURL: https://localhost
     tags:
@@ -90,7 +90,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vbaws/rest/
   - name: Veeam Backup for Microsoft Azure REST API
     description: REST API for Veeam Backup for Microsoft Azure, providing programmatic access to backup and restore operations for Azure VMs, Azure SQL databases, and Azure File Shares. Supports management of backup policies and recovery points.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vbazure/rest/
     baseURL: https://localhost
     tags:
@@ -102,7 +102,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vbazure/rest/
   - name: Veeam Backup for Google Cloud REST API
     description: REST API for Veeam Backup for Google Cloud, enabling management of backup and restore operations for Google Compute Engine VMs and Google Cloud SQL instances. Provides access to backup policies, restore points, and protected resource management.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vbgc/rest/
     baseURL: https://localhost
     tags:
@@ -115,7 +115,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vbgc/rest/
   - name: Veeam Service Provider Console REST API
     description: REST API for Veeam Service Provider Console (VSPC), enabling managed service providers to programmatically manage tenant environments, backup resources, billing, and licensing. Includes throttling controls to manage server load. Conforms to OpenAPI Specification 3.0.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
     baseURL: https://localhost:1280
     tags:
@@ -131,7 +131,7 @@ apis:
         url: https://helpcenter.veeam.com/docs/vac/rest/reference/vspc-rest.html
   - name: Veeam Recovery Orchestrator REST API
     description: REST API for Veeam Recovery Orchestrator, enabling automated disaster recovery planning, orchestration testing, and failover execution. Supports management of recovery plans, compliance reports, and automated DR verification workflows.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://helpcenter.veeam.com/docs/vro/rest/
     baseURL: https://localhost
     tags:
