@@ -143,6 +143,12 @@ apis:
       - type: Documentation
         url: https://helpcenter.veeam.com/docs/vro/rest/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/veeam-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/veeam-domain-security.yml
+  - type: Authentication
+    url: authentication/veeam-authentication.yml
   - type: Website
     url: https://www.veeam.com/
   - type: Documentation

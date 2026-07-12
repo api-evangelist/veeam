@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/veeam-backup-aws-openapi.yml, openapi/veeam-backup-replication-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: Bearer
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Bearer \<JWT\>
+  sources:
+  - openapi/veeam-backup-aws-openapi.yml
+  - openapi/veeam-backup-replication-openapi.yml
