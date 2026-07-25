@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Services API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Services section defines a path and operation for retrieving information about associated backend services. You may need to connect to these services for integration with Veeam Backup & Replication.
+  name: Services
+paths:
+  /api/v1/services:
+    get:
+      description: The HTTP GET request to the `/api/v1/services` path allows you to get associated services for integration with Veeam Backup & Replication.
+      operationId: GetAllServices
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of services to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ServicesFilters'
+      - description: Maximum number of services to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ServicesFilters'
+      - description: Sorts services by one of the service parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EServicesFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ServicesFilters'
+      - description: Sorts services in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ServicesFilters'
+      - description: Filters services by the `nameFilter` pattern. The pattern can match any service parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ServicesFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - name: External Infrastructure DB Provider
+                  port: 6172
+                - name: VM Backup API
+                  port: 10006
+                pagination:
+                  count: 2
+                  limit: 200
+                  skip: 0
+                  total: 2
+              schema:
+                $ref: '#/components/schemas/ServicesResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Associated Services
+      tags:
+      - Services
+      x-veeam-authorize:
+        claims:
+        - ViewServices
+components:
+  schemas:
+    ServicesResult:
+      properties:
+        data:
+          description: Array of services.
+          items:
+            $ref: '#/components/schemas/ServicesModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ServicesFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EServicesFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
+    ServicesModel:
+      properties:
+        name:
+          description: Name of the service.
+          type: string
+        port:
+          description: Port used to communicate with the service.
+          type: integer
+      required:
+      - name
+      - port
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    EServicesFiltersOrderColumn:
+      enum:
+      - Name
+      - Port
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

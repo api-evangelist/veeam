@@ -1,0 +1,501 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Backups API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Backups section defines paths and operations for managing backups that are created on or imported to the backup server.
+  name: Backups
+paths:
+  /api/v1/backups:
+    get:
+      description: The HTTP GET request to the `/api/v1/backups` path allows you to get an array of all backups that are created on or imported to the backup server.
+      operationId: GetAllBackups
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of backups to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Maximum number of backups to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Sorts backups by one of the backup parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Sorts backups in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Filters backups by the `nameFilter` pattern. The pattern can match any backup parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Returns backups that are created after the specified date and time.
+        in: query
+        name: createdAfterFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Returns backups that are created before the specified date and time.
+        in: query
+        name: createdBeforeFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Filters backups by ID of the backup object platform.
+        in: query
+        name: platformIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Filters backups by ID of the parent job.
+        in: query
+        name: jobIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      - description: Filters backups by retention policy tag.
+        in: query
+        name: policyTagFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupsFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - creationTime: '2022-02-12T04:24:16.2+03:00'
+                  id: f3b0fbc5-01cf-4464-976a-4881e6eda067
+                  jobId: 53b87378-7958-477d-8def-fbe6740d4b6f
+                  name: Oracle Backup
+                  platformId: 00000000-0000-0000-0000-000000000000
+                  platformName: VMware
+                  policyTag: ''
+                  repositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+                - creationTime: '2019-11-13T16:34:21+03:00'
+                  id: b2f9f40f-7944-498f-baff-175e18558829
+                  jobId: 00000000-0000-0000-0000-000000000000
+                  name: Oracle Backup
+                  platformId: c8098b32-9700-459b-b27c-4dceaf4ea932
+                  platformName: CustomPlatform
+                  policyTag: ''
+                  repositoryId: 49607f55-4cc4-4ea5-a2c9-e750318d0f34
+                pagination:
+                  count: 2
+                  limit: 200
+                  skip: 0
+                  total: 2
+              schema:
+                $ref: '#/components/schemas/BackupsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Backups
+      tags:
+      - Backups
+      x-veeam-authorize:
+        claims:
+        - ViewBackups
+  /api/v1/backups/{id}:
+    get:
+      description: The HTTP GET request to the `/api/v1/backups/{id}` path allows you to get a backup that has the specified `id`.
+      operationId: GetBackup
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                platformName: VMware
+                repositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+                platformId: 00000000-0000-0000-0000-000000000000
+                id: 9d4c348d-284a-480d-9340-6454998fa227
+                name: AD Backup
+                creationTime: '2021-02-12T04:24:32.087+03:00'
+                policyTag: ''
+                jobId: 301450bc-34cd-4d2c-bfc3-8d269bb471be
+              schema:
+                $ref: '#/components/schemas/BackupModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Backup
+      tags:
+      - Backups
+      x-veeam-authorize:
+        claims:
+        - ViewBackups
+  /api/v1/backups/{id}/objects:
+    get:
+      description: The HTTP GET request to the `/api/v1/backups/{id}/objects` path allows you to get an array of virtual infrastructure objects (VMs and VM containers) that are included in a backup that has the specified ID.
+      operationId: GetBackupObjects
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - id: 2a192b21-4d32-4b94-829e-231e8f0c0355
+                  name: DLDC
+                  objectId: '503'
+                  path: 172.17.42.92\DLDC
+                  platformId: 00000000-0000-0000-0000-000000000000
+                  platformName: VMware
+                  restorePointsCount: 3
+                  type: VM
+                  viType: VirtualMachine
+                pagination:
+                  count: 1
+                  limit: 1
+                  skip: 0
+                  total: 1
+              schema:
+                $ref: '#/components/schemas/BackupObjectsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Backup Objects
+      tags:
+      - Backups
+      x-veeam-authorize:
+        claims:
+        - ViewBackupObjects
+components:
+  schemas:
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    BaseBackupObjectModel:
+      properties:
+        id:
+          description: ID of the object.
+          format: uuid
+          type: string
+        name:
+          description: Name of the object.
+          type: string
+        platformId:
+          description: Id of the platform where the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        restorePointsCount:
+          description: Number of restore points.
+          type: integer
+        type:
+          description: Type of the object.
+          type: string
+      type: object
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
+    BackupObjectsResult:
+      properties:
+        data:
+          description: Array of backup objects.
+          items:
+            $ref: '#/components/schemas/BackupObjectModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupsResult:
+      properties:
+        data:
+          description: Array of backups.
+          items:
+            $ref: '#/components/schemas/BackupModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupsFilters:
+      properties:
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        jobIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
+        platformIdFilter:
+          format: uuid
+          type: string
+        policyTagFilter:
+          type: string
+        skip:
+          format: int32
+          type: integer
+      type: object
+    BackupModel:
+      properties:
+        creationTime:
+          description: Date and time when the backup was created.
+          format: date-time
+          type: string
+        id:
+          description: ID of the backup.
+          format: uuid
+          type: string
+        jobId:
+          description: ID of the job that created the backup.
+          format: uuid
+          type: string
+        name:
+          description: Name of the job that created the backup.
+          type: string
+        platformId:
+          description: ID of the platform of the backup resource.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        policyTag:
+          description: Tag that identifies retention policy.
+          type: string
+        repositoryId:
+          description: ID of the backup repository where the backup is stored.
+          format: uuid
+          type: string
+      required:
+      - id
+      - name
+      - type
+      - platformName
+      - platformId
+      - creationTime
+      - repositoryId
+      type: object
+    EBackupsFiltersOrderColumn:
+      enum:
+      - Name
+      - CreationTime
+      - PlatformId
+      - JobId
+      - PolicyTag
+      type: string
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EPlatformType:
+      description: Platform name.
+      enum:
+      - VMware
+      - HyperV
+      - Vcd
+      - WindowsPhysical
+      - LinuxPhysical
+      - Tape
+      - NasBackup
+      - CustomPlatform
+      type: string
+    BackupObjectModel:
+      allOf:
+      - discriminator:
+          mapping:
+            VMware: '#/components/schemas/ViBackupObjectModel'
+          propertyName: platformName
+        oneOf:
+        - $ref: '#/components/schemas/ViBackupObjectModel'
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

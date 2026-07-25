@@ -1,0 +1,494 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Backup Objects API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Backup Objects section defines paths and operations for managing backup objects — virtual infrastructure objects (VMs and VM containers) that are included in backups created by the backup server.
+  name: Backup Objects
+paths:
+  /api/v1/backupObjects:
+    get:
+      description: The HTTP GET request to the `/api/v1/backupObjects` path allows you to get an array of virtual infrastructure objects (VMs and VM containers) that are included in backups created by the backup server.
+      operationId: GetAllBackupObjects
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of backup objects to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Maximum number of backup objects to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Sorts backup objects by one of the backup object parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EBackupObjectsFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Sorts backup objects in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Filters backup objects by the `nameFilter` pattern. The pattern can match any backup object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Filters backup objects by platform ID.
+        in: query
+        name: platformNameFilter
+        schema:
+          $ref: '#/components/schemas/EPlatformType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Filters backup objects by platform ID.
+        in: query
+        name: platformIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Filters backup objects by object type.
+        in: query
+        name: typeFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      - description: Filters backup objects by the type of VMware vSphere server.
+        in: query
+        name: viTypeFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/BackupObjectsFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - id: 47335ff1-a4f0-41ae-91f6-21a129fe4500
+                  name: null
+                  platformId: c8098b32-9700-459b-b27c-4dceaf4ea932
+                  platformName: CustomPlatform
+                  restorePointsCount: 11
+                  type: Directory
+                - id: 2a192b21-4d32-4b94-829e-231e8f0c0355
+                  name: DLDC
+                  objectId: '503'
+                  path: 172.17.42.92\DLDC
+                  platformId: 00000000-0000-0000-0000-000000000000
+                  platformName: VMware
+                  restorePointsCount: 3
+                  type: VM
+                  viType: VirtualMachine
+                pagination:
+                  limit: 200
+                  skip: 0
+                  total: 2
+                  count: 2
+              schema:
+                $ref: '#/components/schemas/BackupObjectsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Backup Objects
+      tags:
+      - Backup Objects
+      x-veeam-authorize:
+        claims:
+        - ViewBackupObjects
+  /api/v1/backupObjects/{id}:
+    get:
+      description: The HTTP GET request to the `/api/v1/backupObjects/{id}` path allows you to get a backup object that has the specified `id`.
+      operationId: GetBackupObject
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup object.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                objectId: vm-69191
+                name: winsrv88
+                type: VM
+                id: fcea73fa-aa48-45e1-89e4-6e33411e8de2
+                platformName: VmWare
+                platformId: 00000000-0000-0000-0000-000000000000
+                restorePointsCount: 13
+                path: vcenter01.tech.local\Atlanta\esx04.tech.local\Enterprise\winsrv88
+                viType: VirtualMachine
+              schema:
+                $ref: '#/components/schemas/BackupObjectModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Backup Object
+      tags:
+      - Backup Objects
+      x-veeam-authorize:
+        claims:
+        - ViewBackupObjects
+  /api/v1/backupObjects/{id}/restorePoints:
+    get:
+      description: The HTTP GET request to the `/api/v1/backupObjects/{id}/restorePoints` path allows you to get an array of restore points of a backup object that has the specified `id`.
+      operationId: GetBackupObjectRestorePoints
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup object.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - allowedOperations: []
+                  backupId: 3c3d7ebd-3b06-4a99-899c-fa7d5320582a
+                  creationTime: '2022-02-02T22:01:18.163+01:00'
+                  id: cb9b2475-46d9-40ae-8d27-0f2f1dfa97cd
+                  name: winsrv88
+                  platformId: 00000000-0000-0000-0000-000000000000
+                  platformName: VmWare
+                - allowedOperations: []
+                  backupId: 3c3d7ebd-3b06-4a99-899c-fa7d5320582a
+                  creationTime: '2022-02-01T22:00:39.997+01:00'
+                  id: a97c72ed-adaf-4b27-a31e-c1ff5af9ba8f
+                  name: winsrv88
+                  platformId: 00000000-0000-0000-0000-000000000000
+                  platformName: VmWare
+                pagination:
+                  total: 2
+                  count: 2
+                  limit: 2
+                  skip: 0
+              schema:
+                $ref: '#/components/schemas/ObjectRestorePointsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Restore Points
+      tags:
+      - Backup Objects
+      x-veeam-authorize:
+        claims:
+        - ViewRestorePoints
+components:
+  schemas:
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    BaseBackupObjectModel:
+      properties:
+        id:
+          description: ID of the object.
+          format: uuid
+          type: string
+        name:
+          description: Name of the object.
+          type: string
+        platformId:
+          description: Id of the platform where the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        restorePointsCount:
+          description: Number of restore points.
+          type: integer
+        type:
+          description: Type of the object.
+          type: string
+      type: object
+    EBackupObjectsFiltersOrderColumn:
+      enum:
+      - Name
+      - ObjectId
+      - PlatformId
+      - Type
+      type: string
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
+    EObjectRestorePointOperation:
+      enum:
+      - VmwareInstantRecoveryFcd
+      type: string
+    ObjectRestorePointsResult:
+      properties:
+        data:
+          description: Array of restore points.
+          items:
+            $ref: '#/components/schemas/ObjectRestorePointModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupObjectsResult:
+      properties:
+        data:
+          description: Array of backup objects.
+          items:
+            $ref: '#/components/schemas/BackupObjectModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupObjectsFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EBackupObjectsFiltersOrderColumn'
+        platformIdFilter:
+          format: uuid
+          type: string
+        platformNameFilter:
+          $ref: '#/components/schemas/EPlatformType'
+        skip:
+          format: int32
+          type: integer
+        typeFilter:
+          type: string
+        viTypeFilter:
+          type: string
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ObjectRestorePointModel:
+      properties:
+        allowedOperations:
+          description: Array of operations allowed for the restore point.
+          items:
+            $ref: '#/components/schemas/EObjectRestorePointOperation'
+          type: array
+        backupId:
+          description: ID of a backup that contains the restore point.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the restore point was created.
+          format: date-time
+          type: string
+        id:
+          description: ID of the restore point.
+          format: uuid
+          type: string
+        name:
+          description: Object name.
+          type: string
+        platformId:
+          description: ID of a platform on which the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+      required:
+      - id
+      - name
+      - paltformName
+      - platformId
+      - creationTime
+      - backupId
+      - allowedOperations
+      type: object
+    EPlatformType:
+      description: Platform name.
+      enum:
+      - VMware
+      - HyperV
+      - Vcd
+      - WindowsPhysical
+      - LinuxPhysical
+      - Tape
+      - NasBackup
+      - CustomPlatform
+      type: string
+    BackupObjectModel:
+      allOf:
+      - discriminator:
+          mapping:
+            VMware: '#/components/schemas/ViBackupObjectModel'
+          propertyName: platformName
+        oneOf:
+        - $ref: '#/components/schemas/ViBackupObjectModel'
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

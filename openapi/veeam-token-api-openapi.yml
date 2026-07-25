@@ -1,0 +1,319 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Token API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Token
+paths:
+  /api/v1/token:
+    post:
+      tags:
+      - Token
+      operationId: Authenticate
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  description: Authentication grant type
+                  type: string
+                  enum:
+                  - password
+                  - refresh_token
+                  - authorization_code
+                  - mfa
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                username:
+                  description: User name (required for the 'password' grant type)
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                password:
+                  description: Password (required for the 'password' grant type)
+                  type: string
+                  format: password
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                refresh_token:
+                  description: Refresh token (required for the 'refresh_token' grant type)
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                code:
+                  description: Authorization code (required for the 'authorization_code' grant type)
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                mfa_token:
+                  description: MFA token (required for the 'mfa' grant type)
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+                mfa_code:
+                  description: Verification code (required for the 'mfa' grant type)
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/LoginSpec'
+              required:
+              - grant_type
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RESTLogin'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RESTLogin'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+    delete:
+      tags:
+      - Token
+      operationId: SignOut
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/token/authorizationCode:
+    post:
+      tags:
+      - Token
+      operationId: CreateAuthorizationCode
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationCode'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationCode'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    LoginSpec:
+      required:
+      - grant_type
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+        refresh_token:
+          type: string
+        code:
+          type: string
+          description: required if grant_type = authorization_code
+        grant_type:
+          $ref: '#/components/schemas/LoginGrantTypes'
+        mfa_token:
+          type: string
+        mfa_code:
+          type: string
+    RESTLogin:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        refresh_token:
+          type: string
+        expires_in:
+          format: int32
+          type: integer
+        .issued:
+          format: date-time
+          type: string
+        .expires:
+          format: date-time
+          type: string
+        username:
+          type: string
+        roleName:
+          type: string
+        mfa_enabled:
+          type: boolean
+        mfa_token:
+          type: string
+    LoginGrantTypes:
+      enum:
+      - password
+      - refresh_token
+      - authorization_code
+      - mfa
+      type: string
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    AuthorizationCode:
+      required:
+      - code
+      properties:
+        code:
+          type: string
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

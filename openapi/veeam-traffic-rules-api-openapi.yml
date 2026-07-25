@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Traffic Rules API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Traffic Rules section defines paths and operations for retrieving and editing information about network traffic rules that are configured on the backup server.
+  name: Traffic Rules
+paths:
+  /api/v1/trafficRules:
+    get:
+      description: The HTTP GET request to the `/api/v1/trafficRules` path allows you to get network traffic rules that control traffic transferred between backup infrastructure components.
+      operationId: GetAllTrafficRules
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                trafficRules:
+                - encryptionEnabled: true
+                  id: 622b0112-a972-49c2-9987-24a57ddc930a
+                  name: Internet
+                  sourceIPEnd: ''
+                  sourceIPStart: Any
+                  targetIPEnd: ''
+                  targetIPStart: Internet
+                  throttlingEnabled: false
+                  throttlingUnit: MbitPerSpec
+                  throttlingValue: 1
+                  throttlingWindowEnabled: false
+                  throttlingWindowOptions:
+                    days:
+                    - day: sunday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: monday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: tuesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: wednesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: thursday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: friday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: saturday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                uploadStreamsCount: 5
+                preferredNetworks:
+                  isEnabled: false
+                  networks: []
+                useMultipleStreamsPerJob: true
+              schema:
+                $ref: '#/components/schemas/GlobalNetworkTrafficRulesModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Traffic Rules
+      tags:
+      - Traffic Rules
+      x-veeam-authorize:
+        claims:
+        - ViewTrafficRules
+    put:
+      description: The HTTP PUT request to the `/api/v1/trafficRules` path allows you to edit network traffic rules that are configured on the backup server.
+      operationId: UpdateTrafficRules
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              preferredNetworks:
+                isEnabled: true
+                networks:
+                - cidrNotation: '8'
+                  ipAddress: 124.0.0.0
+                  subnetMask: 255.0.0.0
+                - cidrNotation: '8'
+                  ipAddress: 123.0.0.0
+                  subnetMask: 255.0.0.0
+              trafficRules:
+              - encryptionEnabled: true
+                id: 622b0112-a972-49c2-9987-24a57ddc930a
+                name: Internet
+                sourceIPEnd: ''
+                sourceIPStart: Any
+                targetIPEnd: ''
+                targetIPStart: Internet
+                throttlingEnabled: false
+                throttlingUnit: MbitPerSpec
+                throttlingValue: 2
+                throttlingWindowEnabled: true
+                throttlingWindowOptions:
+                  days:
+                  - day: sunday
+                    hours: 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: monday
+                    hours: 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: tuesday
+                    hours: 1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: wednesday
+                    hours: 1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: thursday
+                    hours: 1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: friday
+                    hours: 1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  - day: saturday
+                    hours: 1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+              useMultipleStreamsPerJob: true
+              uploadStreamsCount: 5
+            schema:
+              $ref: '#/components/schemas/GlobalNetworkTrafficRulesModel'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                uploadStreamsCount: 5
+                trafficRules:
+                - encryptionEnabled: true
+                  id: 622b0112-a972-49c2-9987-24a57ddc930a
+                  name: Internet
+                  sourceIPEnd: ''
+                  sourceIPStart: Any
+                  targetIPEnd: ''
+                  targetIPStart: Internet
+                  throttlingEnabled: false
+                  throttlingUnit: MbitPerSpec
+                  throttlingValue: 2
+                  throttlingWindowEnabled: true
+                  throttlingWindowOptions:
+                    days:
+                    - day: sunday
+                      hours: 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: monday
+                      hours: 0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: tuesday
+                      hours: 1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: wednesday
+                      hours: 1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: thursday
+                      hours: 1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: friday
+                      hours: 1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: saturday
+                      hours: 1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                useMultipleStreamsPerJob: true
+                preferredNetworks:
+                  isEnabled: true
+                  networks:
+                  - cidrNotation: '8'
+                    ipAddress: 124.0.0.0
+                    subnetMask: 255.0.0.0
+                  - cidrNotation: '8'
+                    ipAddress: 123.0.0.0
+                    subnetMask: 255.0.0.0
+              schema:
+                $ref: '#/components/schemas/GlobalNetworkTrafficRulesModel'
+          description: Infrastructure session has been created to edit the traffic rules. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Traffic Rules
+      tags:
+      - Traffic Rules
+      x-veeam-authorize:
+        claims:
+        - UpdateTrafficRules
+components:
+  schemas:
+    TrafficRuleModel:
+      properties:
+        encryptionEnabled:
+          description: If *true*, traffic encryption is enabled.
+          type: boolean
+        id:
+          description: ID of the rule.
+          format: uuid
+          type: string
+        name:
+          description: Name of the rule.
+          type: string
+        sourceIPEnd:
+          description: End IP address of the range for the backup infrastructure components on the source side.
+          type: string
+        sourceIPStart:
+          description: Start IP address of the range for the backup infrastructure components on the source side.
+          type: string
+        targetIPEnd:
+          description: End IP address of the range for the backup infrastructure components on the target side.
+          type: string
+        targetIPStart:
+          description: Start IP address of the range for the backup infrastructure components on the target side.
+          type: string
+        throttlingEnabled:
+          description: If *true*, traffic throttling is enabled.
+          type: boolean
+        throttlingUnit:
+          $ref: '#/components/schemas/ESpeedUnit'
+        throttlingValue:
+          description: Maximum speed that must be used to transfer data from source to target.
+          format: int32
+          type: integer
+        throttlingWindowEnabled:
+          description: If *true*, throttling window during which the speed must be limited is enabled.
+          type: boolean
+        throttlingWindowOptions:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+      required:
+      - name
+      - sourceIPStart
+      - sourceIPEnd
+      - targetIPStart
+      - targetIPEnd
+      type: object
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
+    GlobalNetworkTrafficRulesModel:
+      properties:
+        preferredNetworks:
+          $ref: '#/components/schemas/PreferredNetworksModel'
+        trafficRules:
+          description: Array of traffic rules.
+          items:
+            $ref: '#/components/schemas/TrafficRuleModel'
+          type: array
+        uploadStreamsCount:
+          description: Number of TCP/IP connections per job.
+          format: integer
+          type: integer
+        useMultipleStreamsPerJob:
+          description: If *true*, Veeam Backup & Replication uses multiple TCP/IP transfer connection for every job session.
+          type: boolean
+      required:
+      - useMultipleStreamsPerJob
+      type: object
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
+      properties:
+        days:
+          description: Array of per-day schemes.
+          items:
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
+          type: array
+      required:
+      - days
+      type: object
+    PreferredNetworkModel:
+      properties:
+        cidrNotation:
+          description: CIDR notation.
+          type: string
+        ipAddress:
+          description: IP address.
+          type: string
+        subnetMask:
+          description: Subnet mask.
+          type: string
+      type: object
+    ESpeedUnit:
+      description: Traffic speed unit.
+      enum:
+      - KbytePerSec
+      - MbitPerSpec
+      - MbytePerSec
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    PreferredNetworksModel:
+      description: Preferred networks used for backup and replication traffic.
+      properties:
+        isEnabled:
+          description: If *true*, prefered networks are enabled.
+          type: boolean
+        networks:
+          description: Array of networks.
+          items:
+            $ref: '#/components/schemas/PreferredNetworkModel'
+          type: array
+      required:
+      - isEnabled
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

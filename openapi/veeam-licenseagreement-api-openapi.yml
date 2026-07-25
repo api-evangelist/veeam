@@ -1,0 +1,284 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents LicenseAgreement API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: LicenseAgreement
+paths:
+  /api/v1/licenseAgreement:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - LicenseAgreement
+      operationId: GetLicenseAgreement
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAgreements'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/LicenseAgreements'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+  /api/v1/licenseAgreement/accepted:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - LicenseAgreement
+      operationId: GetCurrentLicenseAgreementAccepted
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseAgreementAcceptResult'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/LicenseAgreementAcceptResult'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+  /api/v1/licenseAgreement/accept:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - LicenseAgreement
+      operationId: AcceptLicenseAgreement
+      parameters:
+      - name: eulaChecksum
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: thirdPartyLicenseAgreementChecksum
+        in: query
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+  /api/v1/licenseAgreement/download:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - LicenseAgreement
+      operationId: DownloadLicenseAgreementFile
+      parameters:
+      - name: licenseAgreementType
+        in: query
+        required: true
+        x-veeam-spec:
+          $ref: '#/components/schemas/LicenseAgreementDownloadSpec'
+        schema:
+          type: string
+          enum:
+          - Eula
+          - ThirdPartyAgreement
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+            application/problem+json:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  schemas:
+    LicenseAgreement:
+      required:
+      - type
+      type: object
+      properties:
+        checksum:
+          type: string
+        content:
+          type: string
+        type:
+          $ref: '#/components/schemas/LicenseAgreementTypes'
+    LicenseAgreementTypes:
+      type: string
+      enum:
+      - Eula
+      - ThirdPartyAgreement
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    LicenseAgreementDownloadSpec:
+      required:
+      - licenseAgreementType
+      type: object
+      properties:
+        licenseAgreementType:
+          $ref: '#/components/schemas/LicenseAgreementTypes'
+    LicenseAgreements:
+      type: object
+      properties:
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseAgreement'
+    LicenseAgreementAcceptResult:
+      required:
+      - accepted
+      type: object
+      properties:
+        accepted:
+          type: boolean
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

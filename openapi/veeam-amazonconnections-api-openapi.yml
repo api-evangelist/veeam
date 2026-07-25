@@ -1,0 +1,1140 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents AmazonConnections API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: AmazonConnections
+paths:
+  /api/v1/amazonConnections:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: GetAllAmazonConnections
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnectionsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnectionsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - AmazonConnections
+      operationId: CreateAmazonConnection
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmazonConnectionSpec'
+        required: true
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnection'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnection'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: GetAmazonConnectionById
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnection'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/AmazonConnection'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - AmazonConnections
+      operationId: DeleteAmazonConnection
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/cloudNetworks:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseCloudNetworks
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudNetworksFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudNetworksFilters'
+        schema:
+          type: integer
+          format: int32
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudNetworksPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CloudNetworksPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/cloudSubnetworks:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseCloudSubnetworks
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cloudNetworkId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSubnetworksFilters'
+        schema:
+          type: string
+      - name: availabilityZone
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSubnetworksFilters'
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSubnetworksFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSubnetworksFilters'
+        schema:
+          type: integer
+          format: int32
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudSubnetworksPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CloudSubnetworksPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/cloudSecurityGroups:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseCloudSecurityGroups
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: cloudNetworkId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSecurityGroupsFilters'
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSecurityGroupsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudSecurityGroupsFilters'
+        schema:
+          type: integer
+          format: int32
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudSecurityGroupsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CloudSecurityGroupsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/availabilityZones:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseAvailabilityZones
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/validateS3endpoint:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: ValidateS3Endpoint
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: subnetId
+        in: query
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudSubnetS3EndpointValidationResult'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CloudSubnetS3EndpointValidationResult'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/cloudEncryptionKeys:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseEncryptionKeys
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudEncryptionKeysFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CloudEncryptionKeysFilters'
+        schema:
+          type: integer
+          format: int32
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloudEncryptionKeysPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CloudEncryptionKeysPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/amazonConnections/{amazonConnectionId}/browseBucketFolders/{bucketId}:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - AmazonConnections
+      operationId: BrowseBucketFolders
+      parameters:
+      - name: amazonConnectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            enum:
+            - NameAsc
+            - NameDesc
+            type: string
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketFoldersPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/BucketFoldersPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    AmazonConnectionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonConnection'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudNetwork:
+      required:
+      - resourceId
+      - cidrBlock
+      - state
+      - isDefault
+      type: object
+      properties:
+        resourceId:
+          type: string
+        name:
+          type: string
+        cidrBlock:
+          type: string
+        state:
+          $ref: '#/components/schemas/CloudNetworkStates'
+        isDefault:
+          type: boolean
+    Region:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    CloudEncryptionKeysFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    CloudNetworkStates:
+      enum:
+      - Available
+      - Pending
+      type: string
+    AmazonConnection:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudSubnetwork:
+      required:
+      - resourceId
+      - name
+      - cloudNetworkResourceId
+      - cidrBlock
+      type: object
+      properties:
+        resourceId:
+          type: string
+        name:
+          type: string
+        cloudNetworkResourceId:
+          type: string
+        cidrBlock:
+          type: string
+        availabilityZone:
+          type: string
+    CloudNetworksFilters:
+      type: object
+      properties:
+        Offset:
+          type: integer
+          format: int32
+        Limit:
+          type: integer
+          format: int32
+    CloudSubnetworksFilters:
+      type: object
+      properties:
+        cloudNetworkId:
+          type: string
+        availabilityZone:
+          type: string
+          format: uuid
+        Offset:
+          type: integer
+          format: int32
+        Limit:
+          type: integer
+          format: int32
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudSubnetworksPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudSubnetwork'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudEncryptionKeysPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudEncryptionKey'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFolder:
+      required:
+      - name
+      - folderId
+      type: object
+      properties:
+        name:
+          type: string
+        folderId:
+          format: uuid
+          type: string
+    AmazonConnectionSpec:
+      required:
+      - RegionId
+      type: object
+      properties:
+        AmazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        RegionId:
+          type: string
+          format: uuid
+    RegionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudNetworksPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudNetwork'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    CloudSecurityGroupsFilters:
+      type: object
+      properties:
+        cloudNetworkId:
+          type: string
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    CloudSecurityGroupsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudSecurityGroup'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudSubnetS3EndpointValidationResult:
+      required:
+      - isValid
+      - details
+      type: object
+      properties:
+        isValid:
+          type: boolean
+        details:
+          type: string
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
+    CloudSecurityGroup:
+      required:
+      - resourceId
+      - cloudNetworkResourceId
+      - name
+      type: object
+      properties:
+        resourceId:
+          type: string
+        cloudNetworkResourceId:
+          type: string
+        name:
+          type: string
+    CloudEncryptionKey:
+      required:
+      - arn
+      - name
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

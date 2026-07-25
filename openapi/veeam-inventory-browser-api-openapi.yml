@@ -1,0 +1,466 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Inventory Browser API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Inventory Browser section defines paths and operations for retrieving VMware vSphere servers and their virtual infrastructure objects (data centers, clusters, hosts, resource pools, VMs).<br> <div class="note"><strong>NOTE</strong><br>In the current version, you can browse VMware vSphere objects only.</div>
+  name: Inventory Browser
+paths:
+  /api/v1/inventory/vmware/hosts:
+    get:
+      description: The HTTP GET request to the `/api/v1/inventory/vmware/hosts` path allows you to get an array of all VMware vSphere servers added to the backup infrastructure.
+      operationId: GetAllInventoryVmwareHosts
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of VMware vSphere servers to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ViRootFilters'
+      - description: Maximum number of VMware vSphere servers to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ViRootFilters'
+      - description: Sorts VMware vSphere servers by one of the VMware vSphere server parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EViRootFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ViRootFilters'
+      - description: Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ViRootFilters'
+      - description: Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ViRootFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - inventoryObject:
+                    hostName: vcenter01.tech01.local
+                    name: vcenter01.tech01.local
+                    objectId: d766a026-a7a7-4d6e-add0-9599a291394f
+                    type: vCenterServer
+                  size: N/A
+                - inventoryObject:
+                    hostName: vcenter02.tech02.local
+                    name: vcenter02.tech02.local
+                    objectId: bd49ae5e-d5ec-4013-8ffa-c91beadce052
+                    type: vCenterServer
+                  size: N/A
+                pagination:
+                  count: 2
+                  limit: 200
+                  skip: 0
+                  total: 2
+              schema:
+                $ref: '#/components/schemas/ViRootsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All VMware vSphere Servers
+      tags:
+      - Inventory Browser
+      x-veeam-authorize:
+        claims:
+        - ViewViHierarchy
+  /api/v1/inventory/vmware/hosts/{name}:
+    get:
+      description: The HTTP GET request to the `/api/v1/inventory/vmware/hosts/{name}` path allows you to get an array of virtual infrastructure objects of the VMware vSphere server that has the specified `name`.
+      operationId: GetVmwareHostObject
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Name of the VMware vSphere server.
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Number of objects to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Maximum number of objects to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Sorts objects by one of the object parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EvCentersInventoryFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Sorts objects in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Filters objects by object ID.
+        in: query
+        name: objectIdFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Filters objects by hierarchy type.
+        in: query
+        name: hierarchyTypeFilter
+        schema:
+          $ref: '#/components/schemas/EHierarchyType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Filters objects by the `nameFilter` pattern. The pattern can match any object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Filters objects by virtual infrastructure type.
+        in: query
+        name: typeFilter
+        schema:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      - description: Filters objects by name of the parent container.
+        in: query
+        name: parentContainerNameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/VCenterInventoryFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - inventoryObject:
+                    hostName: vcenter01.tech.local
+                    name: Prague
+                    objectId: datacenter-42371
+                    type: Datacenter
+                  size: N/A
+                - inventoryObject:
+                    hostName: vcenter01.tech.local
+                    name: Templates
+                    objectId: group-h42373
+                    type: Folder
+                  size: N/A
+                - inventoryObject:
+                    hostName: vcenter01.tech.local
+                    name: esx03.tech.local
+                    objectId: host-42428
+                    type: Host
+                  size: N/A
+                - inventoryObject:
+                    hostName: vcenter01.tech.local
+                    name: Services
+                    objectId: resgroup-65867
+                    type: ResourcePool
+                  size: N/A
+                - inventoryObject:
+                    hostName: vcenter01.tech.local
+                    name: winsrv01
+                    objectId: vm-62230
+                    type: VirtualMachine
+                  size: 220 GB
+                pagination:
+                  limit: 200
+                  skip: 0
+                  total: 5
+                  count: 5
+              schema:
+                $ref: '#/components/schemas/VCenterInventoryResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get VMware vSphere Server Objects
+      tags:
+      - Inventory Browser
+      x-veeam-authorize:
+        claims:
+        - ViewViHierarchy
+components:
+  schemas:
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    VCenterInventoryFilters:
+      properties:
+        hierarchyTypeFilter:
+          $ref: '#/components/schemas/EHierarchyType'
+        limit:
+          description: Maximum number of objects to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters objects by the `nameFilter` pattern. The pattern can match any object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        objectIdFilter:
+          description: Filters objects by object ID.
+          type: string
+        orderAsc:
+          description: Sorts objects in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EvCentersInventoryFiltersOrderColumn'
+        parentContainerNameFilter:
+          description: Filters objects by name of the parent container.
+          type: string
+        skip:
+          description: Number of objects to skip.
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      type: object
+    EViRootFiltersOrderColumn:
+      description: Sorts VMware vSphere servers by one of the VMware vSphere server parameters.
+      enum:
+      - Name
+      - Type
+      type: string
+    EvCentersInventoryFiltersOrderColumn:
+      description: Sorts vCenter Servers by one of the job parameters.
+      enum:
+      - Name
+      - ObjectId
+      - Type
+      type: string
+    EHierarchyType:
+      description: Hierarchy type.
+      enum:
+      - HostsAndClusters
+      - DatastoresAndVms
+      - HostsAndDatastores
+      - VmsAndTemplates
+      - VmsAndTags
+      - Network
+      type: string
+    ViRootFilters:
+      properties:
+        limit:
+          description: Maximum number of VMware vSphere servers to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+          type: string
+        orderAsc:
+          description: Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EViRootFiltersOrderColumn'
+        skip:
+          description: Number of VMware vSphere servers to skip.
+          format: int32
+          type: integer
+      type: object
+    ViRootsResult:
+      properties:
+        data:
+          description: Array of VMware vSphere servers.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    VCenterInventoryResult:
+      properties:
+        data:
+          description: Array of vCenter Servers.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    VmwareObjectSizeModel:
+      properties:
+        inventoryObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        size:
+          description: Size used by the VMware vSphere object.
+          type: string
+      required:
+      - inventoryObject
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

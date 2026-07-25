@@ -1,0 +1,323 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Certificates API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Certificates
+paths:
+  /api/v1/settings/certificates:
+    get:
+      tags:
+      - Certificates
+      operationId: GetCertificates
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Certificates'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Certificates'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/settings/certificates/regenerate:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Certificates
+      operationId: RecreateCertificate
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CertificateRegenerateSpec'
+        required: true
+      responses:
+        '202':
+          description: Success
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/settings/certificates/upload:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Certificates
+      operationId: UploadCertificate
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                certificateFile:
+                  description: The .PFX certificate to upload.
+                  type: string
+                  format: binary
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/UploadCertificateSpec'
+                certificatePassword:
+                  description: .PFX certificate password
+                  type: string
+                  x-veeam-spec:
+                    $ref: '#/components/schemas/UploadCertificateSpec'
+              required:
+              - certificateFile
+              - certificatePassword
+        required: true
+      responses:
+        '202':
+          description: Success
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Certificates:
+      type: object
+      properties:
+        data:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Certificate'
+    CertificateRegenerateSpec:
+      properties:
+        validBy:
+          format: date-time
+          type: string
+    Certificate:
+      required:
+      - thumbprint
+      - serialNumber
+      - issuedTo
+      - issuedBy
+      - validFrom
+      - validBy
+      - subject
+      - keyAlgorithm
+      - keySize
+      - automaticallyGenerated
+      type: object
+      properties:
+        thumbprint:
+          description: certificate thumpbprint
+          type: string
+        serialNumber:
+          type: string
+        keyAlgorithm:
+          description: certificate key algorithm
+          type: string
+        keySize:
+          description: certificate key size
+          type: string
+        subject:
+          description: certificate subject
+          type: string
+        issuedTo:
+          description: certificate acquirer
+          type: string
+        issuedBy:
+          description: certificate issuer
+          type: string
+        validFrom:
+          format: date-time
+          type: string
+        validBy:
+          format: date-time
+          type: string
+        automaticallyGenerated:
+          type: boolean
+    UploadCertificateSpec:
+      type: object
+      required:
+      - certificateFile
+      - certificatePassword
+      properties:
+        certificateFile:
+          type: string
+          format: binary
+          x-veeam-type:
+            type: formfile
+          description: The .PFX certificate to upload.
+        certificatePassword:
+          type: string
+          description: .PFX certificate password
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

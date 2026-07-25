@@ -1,0 +1,569 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Buckets API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Buckets
+paths:
+  /api/v1/cloudInfrastructure/buckets:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Buckets
+      operationId: Buckets
+      parameters:
+      - name: AmazonAccountId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketsFilters'
+        schema:
+          type: string
+          format: uuid
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketsFilters'
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketsFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - nameAsc
+            - nameDesc
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/BucketsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/buckets/{bucketId}:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Buckets
+      operationId: BucketById
+      parameters:
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/buckets/rescan/{amazonAccountId}:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Buckets
+      operationId: RescanBucket
+      parameters:
+      - name: amazonAccountId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/buckets/{bucketId}/folders:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Buckets
+      operationId: GetBucketFolders
+      parameters:
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/BucketFoldersFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            enum:
+            - NameAsc
+            - NameDesc
+            type: string
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketFoldersPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/BucketFoldersPage'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/buckets/{bucketId}/folders/{folderName}:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - Buckets
+      operationId: GetBucketFolder
+      parameters:
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: folderName
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketFolder'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/BucketFolder'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketsFilters:
+      type: object
+      properties:
+        AmazonAccountId:
+          type: string
+          format: uuid
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketsSortColumns'
+    BucketFolder:
+      required:
+      - name
+      - folderId
+      type: object
+      properties:
+        name:
+          type: string
+        folderId:
+          format: uuid
+          type: string
+    Bucket:
+      required:
+      - id
+      - name
+      - location
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        location:
+          type: object
+          required:
+          - id
+          - name
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

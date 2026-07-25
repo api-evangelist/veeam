@@ -1,0 +1,389 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  name: Agents
+paths:
+  /api/v1/agents/recoveryTokens:
+    get:
+      description: The HTTP GET request to the `/api/v1/agents/recoveryTokens` path allows you to get an array of all recovery tokens.
+      operationId: GetAllComputerRecoveryTokens
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of recovery tokens to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ComputerRecoveryTokenFilters'
+      - description: Maximum number of recovery tokens to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ComputerRecoveryTokenFilters'
+      - description: Sorts recovery tokens by one of the parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ComputerRecoveryTokenFilters'
+      - description: Sorts recovery tokens in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ComputerRecoveryTokenFilters'
+      - description: Filters recovery tokens by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ComputerRecoveryTokenFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputerRecoveryTokenResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Recovery Tokens
+      tags:
+      - Agents
+      x-veeam-authorize:
+        claims:
+        - ViewComputerRecoveryTokens
+    post:
+      description: The HTTP POST request to the `/api/v1/agents/recoveryTokens` path allows you to create a new recovery token.
+      operationId: CreateComputerRecoveryToken
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComputerRecoveryTokenSpec'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputerRecoveryTokenModel'
+          description: Recovery token has been created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create Recovery Token
+      tags:
+      - Agents
+      x-veeam-authorize:
+        claims:
+        - CreateComputerRecoveryToken
+  /api/v1/agents/recoveryTokens/{id}:
+    delete:
+      description: The HTTP DELETE request to the `/api/v1/agents/recoveryTokens/{id}` path allows you to delete a recovery token that has the specified `id`.
+      operationId: DeleteComputerRecoveryToken
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the recovery token.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: Token has been deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete Recovery Token
+      tags:
+      - Agents
+      x-veeam-authorize:
+        claims:
+        - DeleteComputerRecoveryToken
+    get:
+      description: The HTTP GET request to the `/api/v1/agents/recoveryTokens/{id}` path allows you to get a recovery token that has the specified `id`.
+      operationId: GetComputerRecoveryToken
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the recovery token.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputerRecoveryTokenModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Recovery Token
+      tags:
+      - Agents
+      x-veeam-authorize:
+        claims:
+        - ViewComputerRecoveryTokens
+    put:
+      description: The HTTP PUT request to the `/api/v1/agents/recoveryTokens/{id}` path allows you to edit settings of a recovery token that has the specified `id`.
+      operationId: UpdateComputerRecoveryToken
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the recovery token.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComputerRecoveryTokenModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComputerRecoveryTokenModel'
+          description: Recovery token has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Recovery Token
+      tags:
+      - Agents
+      x-veeam-authorize:
+        claims:
+        - UpdateComputerRecoveryToken
+components:
+  schemas:
+    EComputerRecoveryTokenFiltersOrderColumn:
+      enum:
+      - Name
+      - ExpirationDate
+      type: string
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    ComputerRecoveryTokenSpec:
+      properties:
+        backupIds:
+          description: Array of backup IDs whose data you want to restore with the recovery token.
+          items:
+            format: uuid
+            type: string
+          type: array
+        expirationDate:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+      required:
+      - backupIds
+      - expirationDate
+      type: object
+    ComputerRecoveryTokenModel:
+      properties:
+        expirationDate:
+          description: Date and time when the recovery token expires.
+          format: date-time
+          type: string
+        id:
+          description: ID of the recovery token.
+          format: uuid
+          type: string
+        name:
+          description: Friendly name of the recovery token.
+          type: string
+        recoveryToken:
+          description: Recovery token.
+          type: string
+      required:
+      - id
+      - name
+      - expirationDate
+      type: object
+    ComputerRecoveryTokenFilters:
+      properties:
+        expirationDateAfter:
+          format: date-time
+          type: string
+        expirationDateBefore:
+          format: date-time
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
+    ComputerRecoveryTokenResult:
+      properties:
+        data:
+          description: Array of recovery tokens.
+          items:
+            $ref: '#/components/schemas/ComputerRecoveryTokenModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Service API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Service section defines paths and operations for retrieving information about the backup server where the REST API service is running.
+  name: Service
+paths:
+  /api/v1/serverCertificate:
+    get:
+      description: The HTTP GET request to the `/api/v1/serverCertificate` path allows you to get a certificate of the backup server.
+      operationId: GetServerCertificate
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                issuedBy: Veeam Backup Server Certificate
+                issuedTo: Veeam Backup Server Certificate
+                thumbprint: 4E916B201930CD9AE44C20019F87F2A4EF227303
+                serialNumber: 65FFC0E36A66B2BA40EF93AF47C2EF7D
+                subject: CN=Veeam Backup Server Certificate
+                validBy: '2031-03-17T19:53:54+01:00'
+                keySize: '2048'
+                keyAlgorithm: RSA-PKCS1-KeyEx
+                validFrom: '2021-03-17T19:53:54+01:00'
+              schema:
+                $ref: '#/components/schemas/CertificateModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security: []
+      summary: Get Backup Server Certificate
+      tags:
+      - Service
+  /api/v1/serverInfo:
+    get:
+      description: The HTTP GET request to the `/api/v1/serverInfo` path allows you to get Veeam Backup & Replication installation ID, backup server name (or IP address), build number and cumulative patches installed on the backup server.
+      operationId: GetServerInfo
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerInfoModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Backup Server Information
+      tags:
+      - Service
+  /api/v1/serverTime:
+    get:
+      description: The HTTP GET request to the `/api/v1/serverTime` path allows you to get current date and time on the backup server.
+      operationId: GetServerTime
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                serverTime: '2022-01-25T18:31:50.7300443+01:00'
+                timeZone: (UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague
+              schema:
+                $ref: '#/components/schemas/ServerTimeModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security: []
+      summary: Get Backup Server Time
+      tags:
+      - Service
+components:
+  schemas:
+    CertificateModel:
+      description: Certificate settings.
+      properties:
+        issuedBy:
+          description: Issuer of the certificate.
+          type: string
+        issuedTo:
+          description: Acquirer of the certificate.
+          type: string
+        keyAlgorithm:
+          description: Key algorithm of the certificate.
+          type: string
+        keySize:
+          description: Key size of the certificate.
+          type: string
+        serialNumber:
+          description: Serial number of the certificate.
+          type: string
+        subject:
+          description: Subject of the certificate.
+          type: string
+        thumbprint:
+          description: Thumbprint of the certificate.
+          type: string
+        validBy:
+          description: Expiration date and time of the certificate.
+          format: date-time
+          type: string
+        validFrom:
+          description: Date and time the certificate is valid from.
+          format: date-time
+          type: string
+      required:
+      - issuedBy
+      - issuedTo
+      - keyAlgorithm
+      - keySize
+      - serialNumber
+      - subject
+      - thumbprint
+      - validBy
+      - validFrom
+      type: object
+    ServerInfoModel:
+      properties:
+        buildVersion:
+          description: Veeam Backup & Replication build number.
+          type: string
+        name:
+          description: Full DNS name or IP address of the backup server.
+          type: string
+        patches:
+          description: Array of Veeam Backup & Replication cumulative patches installed on the backup server.
+          items:
+            type: string
+          type: array
+        vbrId:
+          description: Veeam Backup & Replication installation ID.
+          type: string
+      required:
+      - vbrInstallationId
+      - name
+      - buildVersion
+      - patches
+      type: object
+    ServerTimeModel:
+      properties:
+        serverTime:
+          description: Current date and time on the backup server.
+          format: date-time
+          type: string
+        timeZone:
+          description: Time zone where the backup server is located.
+          type: string
+      required:
+      - serverTime
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

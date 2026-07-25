@@ -1,0 +1,661 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Configuration Backup API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Configuration Backup section defines paths and operations for managing backup of the configuration database that Veeam Backup & Replication uses.
+  name: Configuration Backup
+paths:
+  /api/v1/configBackup:
+    get:
+      description: The HTTP GET request to the `/api/v1/configBackup` path allows you to get configuration backup of the backup server.
+      operationId: GetConfigBackupOptions
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                encryption:
+                  isEnabled: true
+                  passwordId: ebf6c20f-7126-4186-a1b8-24e6c541161c
+                schedule:
+                  daily:
+                    isEnabled: true
+                    localTime: 10:00 AM
+                    dailyKind: Everyday
+                    days:
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    - sunday
+                  isEnabled: true
+                  monthly:
+                    dayOfWeek: saturday
+                    isEnabled: false
+                    localTime: 10:00 PM
+                    months:
+                    - January
+                    - February
+                    - March
+                    - April
+                    - May
+                    - June
+                    - July
+                    - August
+                    - September
+                    - October
+                    - November
+                    - December
+                    dayNumberInMonth: Fourth
+                    dayOfMonth: 1
+                isEnabled: true
+                lastSuccessfulBackup:
+                  lastSuccessfulTime: '2022-01-21T10:00:35.033+01:00'
+                  sessionId: a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76
+                backupRepositoryId: d4b5e196-f3ad-474c-99bc-dfef051dae07
+                notifications:
+                  SMTPSettings:
+                    subject: '[%JobResult%] %JobName% (%Time%)'
+                    isEnabled: false
+                    notifyOnError: true
+                    notifyOnSuccess: true
+                    notifyOnWarning: true
+                    recipients: []
+                    settingsType: Custom
+                  SNMPEnabled: true
+                restorePointsToKeep: 10
+              schema:
+                $ref: '#/components/schemas/ConfigBackupModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Configuration Backup
+      tags:
+      - Configuration Backup
+      x-veeam-authorize:
+        claims:
+        - ViewConfigBackupOptions
+    put:
+      description: The HTTP PUT request to the `/api/v1/configBackup` path allows you to edit configuration backup of the backup server.
+      operationId: UpdateConfigBackupOptions
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              notifications:
+                SMTPSettings:
+                  isEnabled: false
+                  notifyOnError: true
+                  notifyOnSuccess: true
+                  notifyOnWarning: true
+                  recipients: []
+                  settingsType: Custom
+                  subject: '[%JobResult%] %JobName% (%Time%)'
+                SNMPEnabled: true
+              schedule:
+                monthly:
+                  dayOfWeek: saturday
+                  isEnabled: false
+                  localTime: 10:00 PM
+                  months:
+                  - January
+                  - February
+                  - March
+                  - April
+                  - May
+                  - June
+                  - July
+                  - August
+                  - September
+                  - October
+                  - November
+                  - December
+                  dayNumberInMonth: Fourth
+                  dayOfMonth: 1
+                daily:
+                  dailyKind: Everyday
+                  days:
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  - sunday
+                  isEnabled: true
+                  localTime: 10:00 AM
+                isEnabled: true
+              backupRepositoryId: d4b5e196-f3ad-474c-99bc-dfef051dae07
+              restorePointsToKeep: 10
+              encryption:
+                isEnabled: false
+                passwordId: ebf6c20f-7126-4186-a1b8-24e6c541161c
+              isEnabled: true
+              lastSuccessfulBackup:
+                sessionId: a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76
+                lastSuccessfulTime: '2022-01-21T10:00:35.033+01:00'
+            schema:
+              $ref: '#/components/schemas/ConfigBackupModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                lastSuccessfulBackup:
+                  lastSuccessfulTime: '2022-01-21T10:00:35.033+01:00'
+                  sessionId: a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76
+                notifications:
+                  SMTPSettings:
+                    notifyOnError: true
+                    notifyOnSuccess: true
+                    notifyOnWarning: true
+                    recipients: []
+                    settingsType: Custom
+                    subject: '[%JobResult%] %JobName% (%Time%)'
+                    isEnabled: false
+                  SNMPEnabled: true
+                schedule:
+                  daily:
+                    dailyKind: Everyday
+                    days:
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    - sunday
+                    isEnabled: true
+                    localTime: 10:00 AM
+                  isEnabled: true
+                  monthly:
+                    isEnabled: false
+                    localTime: 10:00 PM
+                    months:
+                    - January
+                    - February
+                    - March
+                    - April
+                    - May
+                    - June
+                    - July
+                    - August
+                    - September
+                    - October
+                    - November
+                    - December
+                    dayNumberInMonth: Fourth
+                    dayOfMonth: 1
+                    dayOfWeek: saturday
+                isEnabled: true
+                backupRepositoryId: d4b5e196-f3ad-474c-99bc-dfef051dae07
+                encryption:
+                  isEnabled: false
+                  passwordId: ebf6c20f-7126-4186-a1b8-24e6c541161c
+                restorePointsToKeep: 10
+              schema:
+                $ref: '#/components/schemas/ConfigBackupModel'
+          description: Configuration backup settings have been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Configuration Backup
+      tags:
+      - Configuration Backup
+      x-veeam-authorize:
+        claims:
+        - UpdateConfigBackupOptions
+  /api/v1/configBackup/backup:
+    post:
+      description: The HTTP POST request to the `/api/v1/configBackup` path allows you to start configuration backup.
+      operationId: StartConfigBackup
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                activityId: 99d1bf3d-e2e0-4bec-b2b3-820c0b87d212
+                sessionType: ConfigurationBackup
+                id: d20f79d1-962d-4cb1-809b-0364c5b90696
+                name: Backup Configuration Job
+                usn: 0
+                progressPercent: 0
+                state: Starting
+                creationTime: '2022-01-26T17:13:29.097+01:00'
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Configuration backup has been started.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Start Configuration Backup
+      tags:
+      - Configuration Backup
+      x-veeam-authorize:
+        claims:
+        - StartConfigBackup
+components:
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+  schemas:
+    ScheduleDailyModel:
+      description: Daily scheduling options.
+      properties:
+        dailyKind:
+          $ref: '#/components/schemas/EDailyKinds'
+        days:
+          description: Days of the week when the job must start.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: true
+          description: If *true*, daily schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+      required:
+      - isEnabled
+      type: object
+    ConfigBackupScheduleModel:
+      description: Scheduling settings.
+      properties:
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        isEnabled:
+          description: If *true*, backup scheduling is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+      required:
+      - isEnabled
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EDayNumberInMonth:
+      description: Week day number in the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    EConfigBackupSMTPSettingsType:
+      description: Type of notification settings.
+      enum:
+      - Global
+      - Custom
+      type: string
+    SessionModel:
+      properties:
+        activityId:
+          description: ID of the activity.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the session was created.
+          format: date-time
+          type: string
+        endTime:
+          description: Date and time when the session was ended.
+          format: date-time
+          type: string
+        id:
+          description: ID of the session.
+          format: uuid
+          type: string
+        name:
+          description: Name of the session.
+          type: string
+        parentSessionId:
+          description: ID of the parent session.
+          format: uuid
+          type: string
+        progressPercent:
+          description: Progress percentage of the session.
+          type: integer
+        resourceId:
+          description: ID of the resource.
+          format: uuid
+          type: string
+        resourceReference:
+          description: URI of the resource.
+          type: string
+        result:
+          $ref: '#/components/schemas/SessionResultModel'
+        sessionType:
+          $ref: '#/components/schemas/ESessionType'
+        state:
+          $ref: '#/components/schemas/ESessionState'
+        usn:
+          description: Update sequence number.
+          format: int64
+          type: integer
+      required:
+      - activityId
+      - creationTime
+      - id
+      - name
+      - sessionType
+      - state
+      - usn
+      type: object
+    ConfigBackupEncryptionModel:
+      description: Encryption settings.
+      properties:
+        isEnabled:
+          description: If *true*, backup encryption is enabled.
+          type: boolean
+        passwordId:
+          description: ID of the password used for encryption.
+          format: uuid
+          type: string
+      required:
+      - isEnabled
+      - passwordId
+      type: object
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    ConfigBackupLastSuccessfulModel:
+      description: Last successful backup.
+      properties:
+        lastSuccessfulTime:
+          description: Date and time when the last successful backup was created.
+          format: date-time
+          type: string
+        sessionId:
+          description: ID of the job session.
+          format: uuid
+          type: string
+      type: object
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    ConfigBackupSMTPSettigsModel:
+      description: Email notification settings.
+      properties:
+        isEnabled:
+          description: If *true*, email notifications are enabled for this job.
+          type: boolean
+        notifyOnError:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        recipients:
+          description: Array of recipients' email addresses.
+          items:
+            type: string
+          type: array
+        settingsType:
+          $ref: '#/components/schemas/EConfigBackupSMTPSettingsType'
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li></ul>
+          type: string
+      required:
+      - isEnabled
+      - recipients
+      - settingsType
+      - subject
+      - notifyOnSuccess
+      - notifyOnWarning
+      - notifyOnError
+      type: object
+    ConfigBackupModel:
+      properties:
+        backupRepositoryId:
+          description: ID of the backup repository on which the configuration backup is stored.
+          format: uuid
+          type: string
+        encryption:
+          $ref: '#/components/schemas/ConfigBackupEncryptionModel'
+        isEnabled:
+          description: If *true*, configuration backup is enabled.
+          type: boolean
+        lastSuccessfulBackup:
+          $ref: '#/components/schemas/ConfigBackupLastSuccessfulModel'
+        notifications:
+          $ref: '#/components/schemas/ConfigBackupNotificationsModel'
+        restorePointsToKeep:
+          description: Number of restore points to keep in the backup repository.
+          format: int32
+          type: integer
+        schedule:
+          $ref: '#/components/schemas/ConfigBackupScheduleModel'
+      required:
+      - isEnabled
+      - backupRepositoryId
+      - restorePointsToKeep
+      - notifications
+      - schedule
+      - lastSuccessfulBackup
+      - encryption
+      type: object
+    ConfigBackupNotificationsModel:
+      description: Notification settings.
+      properties:
+        SMTPSettings:
+          $ref: '#/components/schemas/ConfigBackupSMTPSettigsModel'
+        SNMPEnabled:
+          description: If *true*, SNMP traps are enabled for this job.
+          type: boolean
+      required:
+      - SNMPEnabled
+      type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

@@ -1,0 +1,401 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Encryption API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Encryption section defines paths and operations for managing passwords that are used for data encryption.
+  name: Encryption
+paths:
+  /api/v1/encryptionPasswords:
+    get:
+      description: The HTTP GET request to the `/api/v1/encryptionPasswords` path allows you to get an array of all passwords that are used for data encryption.
+      operationId: GetAllEncryptionPasswords
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of passwords to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/EncryptionPasswordsFilters'
+      - description: Maximum number of passwords to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/EncryptionPasswordsFilters'
+      - description: Sorts passwords by one of the password parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/EncryptionPasswordsFilters'
+      - description: Sorts passwords in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/EncryptionPasswordsFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                pagination:
+                  count: 2
+                  limit: 200
+                  skip: 0
+                  total: 2
+                data:
+                - hint: Standard Password
+                  id: 6ebbe3cc-8147-47b6-b77a-01eeb7965522
+                  modificationTime: '2021-10-19T12:37:58.27+03:00'
+                  tag: internal
+                - hint: Created by TECH\Administrator
+                  id: 3261d360-1db7-4291-b1ed-360ef5b77175
+                  modificationTime: '2022-02-11T11:34:28.677+03:00'
+                  tag: external
+              schema:
+                $ref: '#/components/schemas/EncryptionPasswordsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Encryption Passwords
+      tags:
+      - Encryption
+      x-veeam-authorize:
+        claims:
+        - ViewEncryptionPasswords
+    post:
+      description: The HTTP POST request to the `/api/v1/encryptionPasswords` path allows you to add an encryption password.
+      operationId: CreateEncryptionPassword
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EncryptionPasswordSpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                hint: Pet name
+                password: passsw3wrsdf2d44
+                tag: vcenter01
+              schema:
+                $ref: '#/components/schemas/EncryptionPasswordModel'
+          description: Password has been added.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Add Encryption Password
+      tags:
+      - Encryption
+      x-veeam-authorize:
+        claims:
+        - CreateEncryptionPasswords
+  /api/v1/encryptionPasswords/{id}:
+    delete:
+      description: The HTTP DELETE request to the `/api/v1/encryptionPasswords/{id}` path allows you to remove an encryption password that has the specified `id`.
+      operationId: DeleteEncryptionPassword
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the encryption password.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: Password has been removed.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Remove Encryption Password
+      tags:
+      - Encryption
+      x-veeam-authorize:
+        claims:
+        - DeleteEncryptionPasswords
+    get:
+      description: The HTTP GET request to the `/api/v1/encryptionPasswords/{id}` path allows you to get an encryption password that has the specified `id`.
+      operationId: GetEncryptionPassword
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the encryption password.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                hint: Standard Password
+                id: 6ebbe3cc-8147-47b6-b77a-01eeb7965522
+                tag: internal
+                modificationTime: '2022-10-19T12:37:58.27+03:00'
+              schema:
+                $ref: '#/components/schemas/EncryptionPasswordModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Encryption Password
+      tags:
+      - Encryption
+      x-veeam-authorize:
+        claims:
+        - ViewEncryptionPasswords
+    put:
+      description: The HTTP PUT request to the `/api/v1/encryptionPasswords/{id}` path allows you to edit an encryption password that has the specified `id`.
+      operationId: UpdateEncryptionPassword
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the encryption password.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: 6ebbe3cc-8147-47b6-b77a-01eeb7965522
+              modificationTime: '2022-10-19T12:37:58.27+03:00'
+              tag: internal
+              hint: Poem
+            schema:
+              $ref: '#/components/schemas/EncryptionPasswordModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EncryptionPasswordModel'
+          description: Password has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Encryption Password
+      tags:
+      - Encryption
+      x-veeam-authorize:
+        claims:
+        - UpdateEncryptionPasswords
+components:
+  schemas:
+    EEncryptionPasswordsFiltersOrderColumn:
+      enum:
+      - Hint
+      - ModificationTime
+      type: string
+    EncryptionPasswordSpec:
+      properties:
+        hint:
+          description: Hint for the encryption password. Provide a meaningful hint that will help you recall the password.
+          type: string
+        password:
+          description: Password for data encryption. If you lose the password, you will not be able to restore it.
+          type: string
+        tag:
+          description: Tag for the encryption password.
+          type: string
+      required:
+      - hint
+      - password
+      type: object
+    EncryptionPasswordModel:
+      properties:
+        hint:
+          description: Hint for the encryption password.
+          type: string
+        id:
+          description: ID of the encryption password.
+          format: uuid
+          type: string
+        modificationTime:
+          description: Date and time when the password was last modified.
+          format: date-time
+          type: string
+        tag:
+          description: Tag for the encryption password.
+          type: string
+      required:
+      - hint
+      - id
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    EncryptionPasswordsFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EncryptionPasswordsResult:
+      properties:
+        data:
+          description: Array of encryption passwords.
+          items:
+            $ref: '#/components/schemas/EncryptionPasswordModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

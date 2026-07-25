@@ -1,0 +1,437 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Object Restore Points API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Object Restore Points section defines paths and operations for retrieving restore points created on the backup server and backed up disks from the restore points.
+  name: Object Restore Points
+paths:
+  /api/v1/objectRestorePoints:
+    get:
+      description: The HTTP GET request to the `/api/v1/objectRestorePoints` path allows you to get an array of all restore points created on the backup server.
+      operationId: GetAllObjectRestorePoints
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of restore points to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Maximum number of restore points to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Sorts restore points by one of the restore point parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EObjectRestorePointsFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Sorts restore points in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Returns restore points that are created after the specified date and time.
+        in: query
+        name: createdAfterFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Returns restore points that are created before the specified date and time.
+        in: query
+        name: createdBeforeFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Filters restore points by the `nameFilter` pattern. The pattern can match any restore point parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Filters restore points by name of the backup object platform.
+        in: query
+        name: platformNameFilter
+        schema:
+          $ref: '#/components/schemas/EPlatformType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Filters restore points by ID of the backup object platform.
+        in: query
+        name: platformIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Filters restore points by backup ID.
+        in: query
+        name: backupIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      - description: Filters restore points by backup object ID.
+        in: query
+        name: backupObjectIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ObjectRestorePointsFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectRestorePointsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Restore Points
+      tags:
+      - Object Restore Points
+      x-veeam-authorize:
+        claims:
+        - ViewRestorePoints
+  /api/v1/objectRestorePoints/{id}:
+    get:
+      description: The HTTP GET request to the `/api/v1/objectRestorePoints/{id}` path allows you to get a restore point that has the specified `id`.
+      operationId: GetObjectRestorePoint
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the restore point.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectRestorePointModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Restore Point
+      tags:
+      - Object Restore Points
+      x-veeam-authorize:
+        claims:
+        - ViewRestorePoints
+  /api/v1/objectRestorePoints/{id}/disks:
+    get:
+      description: The HTTP GET request to the `/api/v1/objectRestorePoints/{id}/disks` path allows you to get an array of disks from a restore point that has the specified `id`.
+      operationId: GetObjectRestorePointDisks
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the restore point.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectRestorePointDisksResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Restore Point Disks
+      tags:
+      - Object Restore Points
+      x-veeam-authorize:
+        claims:
+        - ViewRestorePointDisks
+components:
+  schemas:
+    ObjectRestorePointsFilters:
+      properties:
+        backupIdFilter:
+          format: uuid
+          type: string
+        backupObjectIdFilter:
+          format: uuid
+          type: string
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EObjectRestorePointsFiltersOrderColumn'
+        platformIdFilter:
+          format: uuid
+          type: string
+        platformNameFilter:
+          $ref: '#/components/schemas/EPlatformType'
+        skip:
+          format: int32
+          type: integer
+      type: object
+    EObjectRestorePointOperation:
+      enum:
+      - VmwareInstantRecoveryFcd
+      type: string
+    EDiskInfoProcessState:
+      description: Process state of the disk.
+      enum:
+      - NotProcessed
+      - InProcessing
+      - PartiallyProcessed
+      - Processed
+      type: string
+    ObjectRestorePointsResult:
+      properties:
+        data:
+          description: Array of restore points.
+          items:
+            $ref: '#/components/schemas/ObjectRestorePointModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ObjectRestorePointDisksResult:
+      properties:
+        data:
+          description: Array of disks.
+          items:
+            $ref: '#/components/schemas/ObjectRestorePointDiskModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ObjectRestorePointDiskModel:
+      properties:
+        capacity:
+          description: Capacity of the disk.
+          format: int64
+          type: integer
+        name:
+          description: Name of the disk.
+          type: string
+        state:
+          $ref: '#/components/schemas/EDiskInfoProcessState'
+        type:
+          $ref: '#/components/schemas/EDiskInfoType'
+        uid:
+          description: ID of the disk.
+          type: string
+      required:
+      - uid
+      - type
+      - name
+      - capacity
+      - state
+      type: object
+    ObjectRestorePointModel:
+      properties:
+        allowedOperations:
+          description: Array of operations allowed for the restore point.
+          items:
+            $ref: '#/components/schemas/EObjectRestorePointOperation'
+          type: array
+        backupId:
+          description: ID of a backup that contains the restore point.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the restore point was created.
+          format: date-time
+          type: string
+        id:
+          description: ID of the restore point.
+          format: uuid
+          type: string
+        name:
+          description: Object name.
+          type: string
+        platformId:
+          description: ID of a platform on which the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+      required:
+      - id
+      - name
+      - paltformName
+      - platformId
+      - creationTime
+      - backupId
+      - allowedOperations
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EPlatformType:
+      description: Platform name.
+      enum:
+      - VMware
+      - HyperV
+      - Vcd
+      - WindowsPhysical
+      - LinuxPhysical
+      - Tape
+      - NasBackup
+      - CustomPlatform
+      type: string
+    EDiskInfoType:
+      description: Type of the disk.
+      enum:
+      - Unknown
+      - Simple
+      - Vi
+      - Hv
+      - HvRawDiskFile
+      - EndPoint
+      type: string
+    EObjectRestorePointsFiltersOrderColumn:
+      enum:
+      - CreationTime
+      - PlatformId
+      - BackupId
+      type: string
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

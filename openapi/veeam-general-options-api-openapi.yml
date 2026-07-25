@@ -1,0 +1,322 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents General Options API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The General Options section defines paths and operations for retrieving and editing general settings of Veeam Backup & Replication.<br> <div class="note"><strong>NOTE</strong><br>In the current version of the REST API, you can configure notification settings only.</div>
+  name: General Options
+paths:
+  /api/v1/generalOptions:
+    get:
+      description: The HTTP GET request to the `/api/v1/generalOptions` path allows you to get notification settings of Veeam Backup & Replication.
+      operationId: GetGeneralOptions
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                emailSettings:
+                  sendDailyReportsAt: '2019-01-01T22:00:00+01:00'
+                  smtpServerName: ''
+                  subject: '[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%'
+                  advancedSmtpOptions:
+                    SSLEnabled: false
+                    authRequred: false
+                    port: 25
+                    timeoutMs: 100000
+                  from: ''
+                  isEnabled: false
+                  notifyOnFailure: true
+                  notifyOnLastRetry: true
+                  to: ''
+                  notifyOnSuccess: true
+                  notifyOnWarning: true
+                notifications:
+                  notifyOnUpdates: true
+                  skipVMSpaceThreshold: 5
+                  skipVMSpaceThresholdEnabled: true
+                  storageSpaceThreshold: 10
+                  storageSpaceThresholdEnabled: true
+                  datastoreSpaceThreshold: 10
+                  datastoreSpaceThresholdEnabled: true
+                  notifyOnSupportExpiration: true
+              schema:
+                $ref: '#/components/schemas/GeneralOptionsModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Notification Settings
+      tags:
+      - General Options
+      x-veeam-authorize:
+        claims:
+        - ViewGeneralOptions
+    put:
+      description: The HTTP PUT request to the `/api/v1/generalOptions` path allows you to edit notification settings of Veeam Backup & Replication.
+      operationId: UpdateGeneralOptions
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              emailSettings:
+                smtpServerName: ''
+                advancedSmtpOptions:
+                  SSLEnabled: true
+                  authRequred: true
+                  credentialsId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  port: 2425
+                  timeoutMs: 100000
+                from: ''
+                notifyOnFailure: true
+                notifyOnWarning: true
+                sendDailyReportsAt: 2022-01-01 22:00:00
+                isEnabled: true
+                notifyOnLastRetry: true
+                notifyOnSuccess: true
+                subject: '[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%'
+                to: ''
+              notifications:
+                datastoreSpaceThresholdEnabled: true
+                notifyOnSupportExpiration: true
+                notifyOnUpdates: true
+                skipVMSpaceTreshold: 5
+                skipVMSpaceTresholdEnabled: true
+                storageSpaceThreshold: 15
+                storageSpaceThresholdEnabled: true
+                datastoreSpaceThreshold: 13
+            schema:
+              $ref: '#/components/schemas/GeneralOptionsModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GeneralOptionsModel'
+          description: Notification settings have been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Notification Settings
+      tags:
+      - General Options
+      x-veeam-authorize:
+        claims:
+        - UpdateGeneralOptions
+components:
+  schemas:
+    AdvancedSmtpOptionsModel:
+      description: Advanced global email notification settings.
+      properties:
+        SSLEnabled:
+          description: If *true*, secure connection for email operations is used.
+          type: boolean
+        authRequired:
+          description: If *true*, the `credentialsId` credentials are used to connect to the SMTP server.
+          type: boolean
+        credentialsId:
+          description: ID of the credentials used to connect to the server.
+          format: uuid
+          type: string
+        port:
+          description: Port number for the SMTP server.
+          format: int32
+          type: integer
+        timeoutMs:
+          description: Connection timeout for the SMTP server.
+          format: int32
+          type: integer
+      required:
+      - port
+      - timeoutMs
+      - SSLEnabled
+      - authRequired
+      type: object
+    GeneralOptionsModel:
+      properties:
+        emailSettings:
+          $ref: '#/components/schemas/GeneralOptionsEmailNotificationsModel'
+        notifications:
+          $ref: '#/components/schemas/GeneralOptionsNotificationsModel'
+      type: object
+    GeneralOptionsNotificationsModel:
+      description: Other notifications such as notifications on low disk space, support contract expiration, and available updates.
+      properties:
+        datastoreSpaceThreshold:
+          description: Space threshold of production datastore, in percent.
+          format: int32
+          type: integer
+        datastoreSpaceThresholdEnabled:
+          description: If *true*, notifications about critical amount of free space in production datastore are enabled.
+          type: boolean
+        notifyOnSupportExpiration:
+          description: If *true*, notifications about support contract expiration are enabled.
+          type: boolean
+        notifyOnUpdates:
+          description: If *true*, notifications about updates are enabled.
+          type: boolean
+        skipVMSpaceThreshold:
+          description: Space threshold of production datastore, in percent.
+          format: int32
+          type: integer
+        skipVMSpaceThresholdEnabled:
+          description: If *true* and the `skipVMSpaceThreshold` threshold is reached, Veeam Backup & Replication terminates backup and replication jobs working with production datastores before VM snapshots are taken.
+          type: boolean
+        storageSpaceThreshold:
+          description: Space threshold of backup storage, in percent.
+          format: int32
+          type: integer
+        storageSpaceThresholdEnabled:
+          description: If *true*, notifications about critical amount of free space in backup storage are enabled.
+          type: boolean
+      required:
+      - storageSpaceThresholdEnabled
+      - storageSpaceThreshold
+      - datastoreSpaceThresholdEnabled
+      - datastoreSpaceThreshold
+      - skipVMSpaceThresholdEnabled
+      - skipVMSpaceThreshold
+      - notifyOnSupportExpiration
+      - notifyOnUpdates
+      type: object
+    GeneralOptionsEmailNotificationsModel:
+      description: Global email notification settings and job notifications.
+      properties:
+        advancedSmtpOptions:
+          $ref: '#/components/schemas/AdvancedSmtpOptionsModel'
+        from:
+          description: Email address from which email notifications must be sent.
+          type: string
+        isEnabled:
+          description: If *true*, global email notification settings are enabled.
+          type: boolean
+        notifyOnFailure:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnLastRetry:
+          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        sendDailyReportsAt:
+          description: Time when Veeam Backup & Replication sends daily email reports.
+          format: date-time
+          type: string
+        smtpServerName:
+          description: Full DNS name or IP address of the SMTP server.
+          type: string
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>%Time% — completion time</li> <li>%JobName% — job name</li> <li>%JobResult% — job result</li> <li>%ObjectCount% — number of VMs in the job</li> <li>%Issues% — number of VMs in the job that have been processed with the Warning or Failed status</li></ul>
+          type: string
+        to:
+          description: Recipient email addresses. Use a semicolon to separate multiple addresses.
+          type: string
+      required:
+      - isEnabled
+      - smtpServerName
+      - advancedSmtpOptions
+      - from
+      - to
+      - subject
+      - sendDailyReportsAt
+      - notifyOnSuccess
+      - notifyOnWarning
+      - notifyOnFailure
+      - notifyOnLastRetry
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

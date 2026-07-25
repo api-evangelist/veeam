@@ -1,0 +1,937 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Managed Servers API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Managed Servers section defines paths and operations for managing servers.<br> <div class="note"><strong>NOTE</strong><br>In the current version, the REST API supports the following server types&#58; *VMware vSphere*, *Linux* and *Windows*.</div>
+  name: Managed Servers
+paths:
+  /api/v1/backupInfrastructure/managedServers:
+    get:
+      description: The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers` path allows you to get an array of all servers that are added to the backup infrastructure.
+      operationId: GetAllManagedServers
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of servers to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Maximum number of servers to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Sorts servers by one of the server parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EManagedServersFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Sorts servers in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Filters servers by the `nameFilter` pattern. The pattern can match any server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Filters servers by server type.
+        in: query
+        name: typeFilter
+        schema:
+          $ref: '#/components/schemas/EManagedServerType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      - description: Filters servers by the type of VMware vSphere server.
+        in: query
+        name: viTypeFilter
+        schema:
+          $ref: '#/components/schemas/EViHostType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ManagedServersFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - credentialsId: b860489e-490d-4e43-b20a-a91c4e7d2e76
+                  description: Created by TECH\sheila.d.cory
+                  id: 535b5414-788d-4720-a53a-ecc830d2589b
+                  name: 172.17.53.67
+                  sshSettings:
+                    managementPort: 6162
+                    portRangeEnd: 3300
+                    portRangeStart: 2500
+                    serverThisSide: false
+                    sshTimeOutMs: 20000
+                  type: LinuxHost
+                - credentialsId: fa4769b5-6722-4968-838b-866c29bd14d4
+                  description: Created by TECH\sheila.d.cory
+                  id: ee50f2fb-034f-41cd-8dc8-904aeae2d0d8
+                  name: enterprise04.tech.local
+                  networkSettings:
+                    components:
+                    - componentName: DeployerSvc
+                      port: 6160
+                    - componentName: Transport
+                      port: 6162
+                    - componentName: Nfs
+                      port: 6161
+                    - componentName: RestoreProxy
+                      port: 6170
+                    - componentName: WanAccelerator
+                      port: 6164
+                    - componentName: Tape
+                      port: 6166
+                    - componentName: CloudGate
+                      port: 6168
+                    - componentName: AgentConfigureService
+                      port: 9380
+                    - componentName: FileSystemVssIntegration
+                      port: 6210
+                    - componentName: VssHwSnapshotProvider
+                      port: 6211
+                    portRangeEnd: 3300
+                    portRangeStart: 2500
+                    serverThisSide: false
+                  type: WindowsHost
+                - credentialsId: fa4769b5-6722-4968-838b-866c29bd14d4
+                  description: Created by TECH\administrator
+                  id: de28dc43-b8ee-4e17-8e63-3d38b6604033
+                  name: vcenter01.tech.local
+                  port: 443
+                  type: ViHost
+                  viHostType: VC
+                pagination:
+                  total: 3
+                  count: 3
+                  limit: 200
+                  skip: 0
+              schema:
+                $ref: '#/components/schemas/ManagedServersResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Servers
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - ViewManagedServers
+    post:
+      description: The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers` path allows you to add a server to the backup infrastructure.
+      operationId: CreateManagedServer
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              credentialsId: d7af15f3-8808-454e-ba79-2c2267acb05d
+              description: Backup Repository
+              name: enterprise01.tech.local
+              networkSettings:
+                components:
+                - componentName: DeployerSvc
+                  port: 6160
+                - componentName: Transport
+                  port: 6162
+                - componentName: Nfs
+                  port: 6161
+                - componentName: RestoreProxy
+                  port: 6170
+                - componentName: WanAccelerator
+                  port: 6164
+                - componentName: Tape
+                  port: 6166
+                - componentName: CloudGate
+                  port: 6168
+                - componentName: AgentConfigureService
+                  port: 9380
+                - componentName: FileSystemVssIntegration
+                  port: 6210
+                - componentName: VssHwSnapshotProvider
+                  port: 6211
+                portRangeEnd: 3313
+                portRangeStart: 2517
+                serverThisSide: true
+              type: WindowsHost
+            schema:
+              $ref: '#/components/schemas/ManagedServerSpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                sessionType: Infrastructure
+                id: 59f85a1e-2016-4d08-aea5-2676a03d548c
+                name: Infrastructure Item Saving
+                state: Working
+                usn: 0
+                activityId: 59f85a1e-2016-4d08-aea5-2676a03d548c
+                creationTime: '2022-01-28T19:48:43.117+01:00'
+                progressPercent: 0
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Infrastructure session has been created to add the server. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Add Server
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - CreateManagedServers
+  /api/v1/backupInfrastructure/managedServers/{id}:
+    delete:
+      description: The HTTP DELETE request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to remove a managed server that has the specified `id` from the backup infrastructure.
+      operationId: DeleteManagedServer
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the managed server.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                state: Working
+                sessionType: InfrastructureItemDeletion
+                id: af1a6027-3845-487e-9a16-6849f4775a1e
+                progressPercent: 0
+                creationTime: '2022-01-28T20:21:08.81+01:00'
+                usn: 0
+                activityId: fc5683a4-8c25-4f8e-97cc-0a40745a5729
+                name: Infrastructure Item Deletion
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: InfrastructureItemDeletion session has been created to remove the server. To check the progress, track the session `state`.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Remove Server
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - DeleteManagedServers
+    get:
+      description: The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to get a managed server that has the specified `id`.
+      operationId: GetManagedServer
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the managed server.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                description: Backup repository
+                networkSettings:
+                  components:
+                  - componentName: DeployerSvc
+                    port: 6160
+                  - componentName: Transport
+                    port: 6162
+                  - componentName: Nfs
+                    port: 6161
+                  - componentName: RestoreProxy
+                    port: 6170
+                  - componentName: WanAccelerator
+                    port: 6164
+                  - componentName: Tape
+                    port: 6166
+                  - componentName: CloudGate
+                    port: 6168
+                  - componentName: AgentConfigureService
+                    port: 9380
+                  - componentName: FileSystemVssIntegration
+                    port: 6210
+                  - componentName: VssHwSnapshotProvider
+                    port: 6211
+                  portRangeEnd: 3300
+                  portRangeStart: 2500
+                  serverThisSide: false
+                id: fc5683a4-8c25-4f8e-97cc-0a40745a5729
+                credentialsId: 97d00492-92b7-4929-9e11-68eaa63b88e3
+                name: enterprise05.tech.local
+                type: WindowsHost
+              schema:
+                $ref: '#/components/schemas/ManagedServerModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Server
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - ViewManagedServers
+    put:
+      description: The HTTP PUT request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to edit a managed server that has the specified `id`.
+      operationId: UpdateManagedServer
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the managed server.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: 71988b5d-e338-4c62-81e5-05ea944d233e
+              description: Backup repository
+              name: linuxsrv01.tech.local
+              type: LinuxHost
+              credentialsId: 76571109-fe6e-4638-ad37-2f1f30e3e9f1
+              sshSettings:
+                managementPort: 6162
+                portRangeEnd: 3300
+                portRangeStart: 2500
+                serverThisSide: false
+                sshTimeOutMs: 20000
+            schema:
+              $ref: '#/components/schemas/ManagedServerModel'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                name: Infrastructure Item Saving
+                usn: 0
+                activityId: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+                progressPercent: 0
+                sessionType: Infrastructure
+                creationTime: '2022-01-28T20:18:47.563+01:00'
+                id: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+                state: Working
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Infrastructure session has been created to edit the server. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Server
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - UpdateManagedServers
+  /api/v1/backupInfrastructure/managedServers/{id}/updateSingleUseCredentials:
+    post:
+      description: The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers/{id}/updateSingleUseCredentials` path allows you to change from persistent to single-use credentials used to access a Linux server that has the specified `id`. Single-use type of credentials is required if you want to use the Linux server as a hardened repository.
+      operationId: UpdateSingleUseCredentials
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the managed server.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LinuxCredentialsSpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                creationTime: '2022-01-28T20:18:47.563+01:00'
+                name: Infrastructure Item Saving
+                sessionType: Infrastructure
+                state: Working
+                usn: 0
+                id: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+                progressPercent: 0
+                activityId: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Infrastructure session has been created to edit the server. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Change to Single-Use Credentials
+      tags:
+      - Managed Servers
+      x-veeam-authorize:
+        claims:
+        - UpdateManagedServers
+components:
+  schemas:
+    BaseManagedServerSpec:
+      properties:
+        credentialsId:
+          description: ID of the credentials used to connect to the server.
+          format: uuid
+          type: string
+        description:
+          description: Description of the server.
+          type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      type: object
+    ECredentialsStorageType:
+      description: Credentials type used to connect to the Linux server.
+      enum:
+      - Permanent
+      - SingleUse
+      type: string
+    WindowsHostSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
+      - properties:
+          networkSettings:
+            $ref: '#/components/schemas/WindowsHostPortsModel'
+        type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ViHostSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
+      - properties:
+          certificateThumbprint:
+            description: Certificate thumbprint used to verify the server identity. For details on how to get the thumbprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
+            type: string
+          port:
+            description: Port used to communicate with the server.
+            type: integer
+        type: object
+    WindowsHostComponentPortModel:
+      description: Ports used by Veeam Backup & Replication components.
+      properties:
+        componentName:
+          $ref: '#/components/schemas/EWindowsHostComponentType'
+        port:
+          description: Port used by the component.
+          type: integer
+      required:
+      - componentName
+      - port
+      type: object
+    BaseManagedServerModel:
+      properties:
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
+          type: string
+        description:
+          description: Description of the server.
+          type: string
+        id:
+          description: ID of the server.
+          format: uuid
+          type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      type: object
+    SessionModel:
+      properties:
+        activityId:
+          description: ID of the activity.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the session was created.
+          format: date-time
+          type: string
+        endTime:
+          description: Date and time when the session was ended.
+          format: date-time
+          type: string
+        id:
+          description: ID of the session.
+          format: uuid
+          type: string
+        name:
+          description: Name of the session.
+          type: string
+        parentSessionId:
+          description: ID of the parent session.
+          format: uuid
+          type: string
+        progressPercent:
+          description: Progress percentage of the session.
+          type: integer
+        resourceId:
+          description: ID of the resource.
+          format: uuid
+          type: string
+        resourceReference:
+          description: URI of the resource.
+          type: string
+        result:
+          $ref: '#/components/schemas/SessionResultModel'
+        sessionType:
+          $ref: '#/components/schemas/ESessionType'
+        state:
+          $ref: '#/components/schemas/ESessionState'
+        usn:
+          description: Update sequence number.
+          format: int64
+          type: integer
+      required:
+      - activityId
+      - creationTime
+      - id
+      - name
+      - sessionType
+      - state
+      - usn
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    LinuxHostSSHSettingsModel:
+      description: SSH settings.
+      properties:
+        managementPort:
+          description: Port used as a control channel from the Veeam Backup & Replication console to the Linux server.
+          type: integer
+        portRangeEnd:
+          description: End port used for data transfer.
+          type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+        sshTimeOutMs:
+          description: SSH timeout, in ms. If a task targeted at the server is inactive after the timeout, the task is terminated.
+          type: integer
+      type: object
+    ManagedServersResult:
+      properties:
+        data:
+          description: Array of managed servers.
+          items:
+            $ref: '#/components/schemas/ManagedServerModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    WindowsHostModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerModel'
+      - properties:
+          networkSettings:
+            $ref: '#/components/schemas/WindowsHostPortsModel'
+        type: object
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    BaseCredentialsSpec:
+      properties:
+        description:
+          description: Description of the credentials record.
+          type: string
+        password:
+          description: Password.
+          type: string
+        type:
+          $ref: '#/components/schemas/ECredentialsType'
+        username:
+          description: User name.
+          type: string
+      type: object
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    WindowsHostPortsModel:
+      description: Veeam Backup & Replication components installed on the server and ports used by the components.
+      properties:
+        components:
+          description: Array of Veeam Backup & Replication components.
+          items:
+            $ref: '#/components/schemas/WindowsHostComponentPortModel'
+          type: array
+        portRangeEnd:
+          description: End port used for data transfer.
+          type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+      type: object
+    EWindowsHostComponentType:
+      description: Veeam Backup & Replication component.
+      enum:
+      - Transport
+      - Nfs
+      - HvIntegration
+      - DeployerSvc
+      - WanAccelerator
+      - Tape
+      - CloudGate
+      - CloudServiceInvoker
+      - CloudServiceRemoting
+      - RestoreProxy
+      - EpAgent
+      - EpAgentSqlLocalDB
+      - EpAgentSharedManagementObjects
+      - EpAgentSqlSysClrTypes
+      - AgentConfigureService
+      - VawRedist
+      - ValRedist
+      - GuestControl
+      - FileSystemVssIntegration
+      - VssHwSnapshotProvider
+      - Cdp
+      - VamRedist
+      type: string
+    LinuxHostSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
+      properties:
+        sshFingerprint:
+          description: SSH key fingerprint used to verify the server identity. For details on how to get the fingerprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
+          type: string
+        sshSettings:
+          $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
+      required:
+      - sshFingerprint
+      type: object
+    ViHostModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerModel'
+      - properties:
+          port:
+            description: Port used to communicate with the server.
+            type: integer
+          viHostType:
+            $ref: '#/components/schemas/EViHostType'
+        required:
+        - port
+        type: object
+    ManagedServersFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EManagedServersFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EManagedServerType'
+        viTypeFilter:
+          $ref: '#/components/schemas/EViHostType'
+      type: object
+    LinuxCredentialsSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCredentialsSpec'
+      - properties:
+          SSHPort:
+            description: SSH port used to connect to a Linux server.
+            type: integer
+          addToSudoers:
+            description: If *true*, the account is automatically added to the sudoers file.
+            type: boolean
+          autoElevated:
+            description: If *true*, the permissions of the account are automatically elevated to the root user.
+            type: boolean
+          passphrase:
+            description: Passphrase that protects the private key.
+            type: string
+          privateKey:
+            description: Private key.
+            type: string
+          rootPassword:
+            description: Password for the root account.
+            type: string
+          tag:
+            description: Tag used to identify the credentials record.
+            type: string
+          useSu:
+            description: If *true*, the `su` command is used for Linux distributions where the `sudo` command is not available.
+            type: boolean
+        type: object
+    EViHostType:
+      description: Type of the VMware vSphere server.
+      enum:
+      - ESX
+      - ESXi
+      - VC
+      type: string
+    ManagedServerSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            LinuxHost: '#/components/schemas/LinuxHostSpec'
+            ViHost: '#/components/schemas/ViHostSpec'
+            WindowsHost: '#/components/schemas/WindowsHostSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsHostSpec'
+        - $ref: '#/components/schemas/LinuxHostSpec'
+        - $ref: '#/components/schemas/ViHostSpec'
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    LinuxHostModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerModel'
+      - properties:
+          credentialsStorageType:
+            $ref: '#/components/schemas/ECredentialsStorageType'
+          sshSettings:
+            $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
+        type: object
+    EManagedServersFiltersOrderColumn:
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ECredentialsType:
+      description: Credentials type.
+      enum:
+      - Standard
+      - Linux
+      type: string
+    ManagedServerModel:
+      allOf:
+      - discriminator:
+          mapping:
+            LinuxHost: '#/components/schemas/LinuxHostModel'
+            ViHost: '#/components/schemas/ViHostModel'
+            WindowsHost: '#/components/schemas/WindowsHostModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsHostModel'
+        - $ref: '#/components/schemas/LinuxHostModel'
+        - $ref: '#/components/schemas/ViHostModel'
+      - $ref: '#/components/schemas/BaseManagedServerModel'
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

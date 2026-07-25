@@ -1,0 +1,1525 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Sessions API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Sessions
+paths:
+  /api/v1/sessions:
+    get:
+      tags:
+      - Sessions
+      operationId: GetSessions
+      parameters:
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - name: PolicyId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: string
+          format: uuid
+      - name: Status
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - Running
+            - NeverExecuted
+            - Succeeded
+            - Warning
+            - Failed
+            - Canceled
+          uniqueItems: false
+      - name: Types
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            enum:
+            - Policy
+            - Job
+            - Task
+            - UserPolicy
+            - RetentionActivity
+            - RestoreTask
+            - FLRTask
+            - SelfBackupActivity
+            type: string
+          uniqueItems: false
+      - name: FromUtc
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: string
+          format: date-time
+      - name: ToUtc
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: string
+          format: date-time
+      - name: Usn
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: integer
+          format: int64
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - startTimeAsc
+            - startTimeDesc
+            - stopTimeAsc
+            - stopTimeDesc
+            - durationAsc
+            - durationDesc
+            - typeAsc
+            - typeDesc
+            - reasonAsc
+            - reasonDesc
+            - usnAsc
+            - usnDesc
+          uniqueItems: false
+      - name: VmId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/SessionsFilters'
+        schema:
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SessionsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{retentionSessionId}/deletedItems:
+    get:
+      tags:
+      - Sessions
+      operationId: GetRetentionSessionDeletedRestorePoints
+      parameters:
+      - name: retentionSessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointsFilters'
+        schema:
+          type: string
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - nameAsc
+            - nameDesc
+            - statusAsc
+            - statusDesc
+            - regionAsc
+            - regionDesc
+          uniqueItems: false
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetentionJobDeletedRestorePointsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RetentionJobDeletedRestorePointsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{backupSessionId}/protectedItems:
+    get:
+      tags:
+      - Sessions
+      operationId: GetBackupSessionProtectedItems
+      parameters:
+      - name: backupSessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProtectedItemsFilters'
+        schema:
+          type: string
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProtectedItemsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - virtualMachineNameAsc
+            - virtualMachineNameDesc
+            - regionAsc
+            - regionDesc
+            - succeededAsc
+            - succeededDesc
+            - failedAsc
+            - failedDesc
+          uniqueItems: false
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProtectedItemsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProtectedItemsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProtectedItemsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProtectedItemsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{restoreSessionId}/restoredItems:
+    get:
+      tags:
+      - Sessions
+      operationId: GetRestoreSessionRestoredItems
+      parameters:
+      - name: restoreSessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RestoredItemsFilters'
+        schema:
+          type: string
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RestoredItemsFilters'
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - nameAsc
+            - nameDesc
+            - regionAsc
+            - regionDesc
+          uniqueItems: false
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RestoredItemsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RestoredItemsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestoredItemsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RestoredItemsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{sessionId}:
+    get:
+      tags:
+      - Sessions
+      operationId: GetSessionById
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{sessionId}/log:
+    get:
+      tags:
+      - Sessions
+      operationId: GetSessionLog
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionLog'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SessionLog'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{sessionId}/stop:
+    post:
+      tags:
+      - Sessions
+      operationId: StopJob
+      parameters:
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '202':
+          description: Success
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/export:
+    post:
+      tags:
+      - Sessions
+      operationId: ExportSessions
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+            application/xml:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/sessions/{id}:
+    get:
+      description: The HTTP GET request to the `/api/v1/sessions/{id}` path allows you to get a session that has the specified `id`.
+      operationId: GetSession
+      parameters:
+      - description: ID of the session.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam_2'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                usn: 0
+                id: f848e90c-7f37-4ff5-9d55-04e33f8a4de3
+                state: Stopped
+                result:
+                  isCanceled: false
+                  message: Success
+                  result: Success
+                sessionType: ConfigurationBackup
+                endTime: '2021-11-08T10:00:34.017+01:00'
+                name: Backup Configuration Job
+                activityId: 99d1bf3d-e2e0-4bec-b2b3-820c0b87d212
+                progressPercent: 100
+                creationTime: '2021-11-08T10:00:12.56+01:00'
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Session
+      tags:
+      - Sessions
+      x-veeam-authorize:
+        claims:
+        - ViewSessions
+  /api/v1/sessions/{id}/logs:
+    get:
+      description: The HTTP GET request to the `/api/v1/sessions/{id}/logs` path allows you to get an array of log records of a session that has the specified `id`.
+      operationId: GetSessionLogs
+      parameters:
+      - description: ID of the session.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam_2'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                records:
+                - description: ''
+                  id: 11
+                  startTime: '2021-11-05T06:03:15.866256+01:00'
+                  status: Warning
+                  title: 'Job finished with warning at 11/5/2021 6:03:15 AM '
+                  updateTime: '2021-11-05T06:03:15.866256+01:00'
+                - description: ''
+                  id: 10
+                  startTime: '2021-11-05T06:03:15.756877+01:00'
+                  status: Succeeded
+                  title: 'Primary bottleneck: Source'
+                  updateTime: '2021-11-05T06:03:15.756877+01:00'
+                - description: ''
+                  id: 9
+                  startTime: '2021-11-05T06:03:15.647498+01:00'
+                  status: Succeeded
+                  title: 'Load: Source 86% > Proxy 54% > Network 56% > Target 42%'
+                  updateTime: '2021-11-05T06:03:15.647498+01:00'
+                - description: ''
+                  id: 7
+                  startTime: '2021-11-05T06:00:24.096249+01:00'
+                  status: Succeeded
+                  title: Processing ubuntu88
+                  updateTime: '2021-11-05T06:03:08.2098022+01:00'
+                - description: ''
+                  id: 5
+                  startTime: '2021-11-05T06:00:18.9711163+01:00'
+                  status: Succeeded
+                  title: Processing winsrv100
+                  updateTime: '2021-11-05T06:02:18.5413692+01:00'
+                - description: ''
+                  id: 6
+                  startTime: '2021-11-05T06:00:24.0650043+01:00'
+                  status: Succeeded
+                  title: Processing dbserver01
+                  updateTime: '2021-11-05T06:01:02.6441456+01:00'
+                - description: ''
+                  id: 8
+                  startTime: '2021-11-05T06:00:59.2378014+01:00'
+                  status: Succeeded
+                  title: All VMs have been queued for processing
+                  updateTime: '2021-11-05T06:00:59.2378014+01:00'
+                - description: ''
+                  id: 4
+                  startTime: '2021-11-05T06:00:12.0178073+01:00'
+                  status: Succeeded
+                  title: Changed block tracking is enabled
+                  updateTime: '2021-11-05T06:00:12.0178073+01:00'
+                - description: ''
+                  id: 3
+                  startTime: '2021-11-05T06:00:12.0021761+01:00'
+                  status: Succeeded
+                  title: 'VM size: 86 GB (48 GB used)'
+                  updateTime: '2021-11-05T06:00:12.0021761+01:00'
+                - description: ''
+                  id: 2
+                  startTime: '2021-11-05T06:00:07.9864525+01:00'
+                  status: Succeeded
+                  title: Building list of machines to process
+                  updateTime: '2021-11-05T06:00:10.377142+01:00'
+                - description: ''
+                  id: 1
+                  startTime: '2021-11-05T06:00:07.7051998+01:00'
+                  status: Succeeded
+                  title: Job started at 11/5/2021 6:00:02 AM
+                  updateTime: '2021-11-05T06:00:07.7051998+01:00'
+                totalRecords: 11
+              schema:
+                $ref: '#/components/schemas/SessionLogResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Session Logs
+      tags:
+      - Sessions
+      x-veeam-authorize:
+        claims:
+        - ViewSessions
+  /api/v1/sessions/{id}/stop:
+    post:
+      description: The HTTP POST request to the `/api/v1/sessions/{id}/stop` path allows you to stop a session that has the specified `id`.
+      operationId: StopSession
+      parameters:
+      - description: ID of the session.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      - $ref: '#/components/parameters/apiVersionParam_2'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Stop Session
+      tags:
+      - Sessions
+      x-veeam-authorize:
+        claims:
+        - StopSessions
+components:
+  schemas:
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    RetentionJobDeletedRestorePointsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/RetentionJobDeletedRestorePoint'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    SessionLog:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        log:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LogItem'
+    RestoredItemsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/RestoredItemsSortColumns'
+          uniqueItems: false
+    SessionStatuses:
+      type: string
+      enum:
+      - Running
+      - NeverExecuted
+      - Succeeded
+      - Warning
+      - Failed
+      - Canceled
+    ETaskLogRecordStatus:
+      enum:
+      - None
+      - Succeeded
+      - Warning
+      - Failed
+      type: string
+    SessionEmbeddedResources:
+      type: object
+      properties:
+        backupJobInfo:
+          $ref: '#/components/schemas/Link'
+        restoreJobInfo:
+          $ref: '#/components/schemas/Link'
+        retentionJobDeletedRestorePoints:
+          $ref: '#/components/schemas/Link'
+    RetentionJobDeletedRestorePointSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - statusAsc
+      - statusDesc
+      - regionAsc
+      - regionDesc
+    SessionLogResult:
+      description: Log of the session.
+      properties:
+        records:
+          description: Array of log records.
+          items:
+            $ref: '#/components/schemas/SessionLogRecordModel'
+          type: array
+        totalRecords:
+          description: Total number of records.
+          type: integer
+      type: object
+    RestoreItemEmbedded:
+      type: object
+      properties:
+        virtualMachine:
+          $ref: '#/components/schemas/Link'
+        region:
+          $ref: '#/components/schemas/Link'
+    ProtectedItem:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SessionItemsStatuses'
+        region:
+          type: string
+        _embedded:
+          $ref: '#/components/schemas/ProtectedItemEmbedded'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    RetentionJobDeletedRestorePoint:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SessionItemsStatuses'
+        region:
+          type: string
+        _embedded:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointEmbedded'
+    RetentionJobDeletedRestorePointsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetentionJobDeletedRestorePointSortColumns'
+          uniqueItems: false
+    ProtectedItemEmbedded:
+      type: object
+      properties:
+        virtualMachine:
+          $ref: '#/components/schemas/Link'
+        region:
+          $ref: '#/components/schemas/Link'
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    SessionModel:
+      properties:
+        activityId:
+          description: ID of the activity.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the session was created.
+          format: date-time
+          type: string
+        endTime:
+          description: Date and time when the session was ended.
+          format: date-time
+          type: string
+        id:
+          description: ID of the session.
+          format: uuid
+          type: string
+        name:
+          description: Name of the session.
+          type: string
+        parentSessionId:
+          description: ID of the parent session.
+          format: uuid
+          type: string
+        progressPercent:
+          description: Progress percentage of the session.
+          type: integer
+        resourceId:
+          description: ID of the resource.
+          format: uuid
+          type: string
+        resourceReference:
+          description: URI of the resource.
+          type: string
+        result:
+          $ref: '#/components/schemas/SessionResultModel'
+        sessionType:
+          $ref: '#/components/schemas/ESessionType'
+        state:
+          $ref: '#/components/schemas/ESessionState'
+        usn:
+          description: Update sequence number.
+          format: int64
+          type: integer
+      required:
+      - activityId
+      - creationTime
+      - id
+      - name
+      - sessionType
+      - state
+      - usn
+      type: object
+    SessionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RestoredItemsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/RestoredItem'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    LogItem:
+      required:
+      - logTime
+      - status
+      type: object
+      properties:
+        logTime:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - NeverExecuted
+          - Success
+          - Warning
+          - Error
+          - Pending
+          - Canceling
+          - Canceled
+          - Running
+          - RunningWithWarning
+          - RunningWithError
+          type: string
+        message:
+          type: string
+        executionStartTime:
+          format: date-time
+          type: string
+        executionDuration:
+          type: integer
+          format: int64
+    SessionsFilters:
+      type: object
+      properties:
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        PolicyId:
+          type: string
+          format: uuid
+        Status:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionStatuses'
+          uniqueItems: false
+        Types:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionTypes'
+          uniqueItems: false
+        FromUtc:
+          type: string
+          format: date-time
+        Usn:
+          type: integer
+          format: int64
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/SessionsSortColumns'
+          uniqueItems: false
+    Session:
+      required:
+      - id
+      - type
+      - status
+      - usn
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/SessionTypes'
+        executionStartTime:
+          format: date-time
+          type: string
+        executionStopTime:
+          format: date-time
+          type: string
+        executionDuration:
+          type: integer
+          format: int64
+        status:
+          $ref: '#/components/schemas/SessionStatuses'
+        result:
+          $ref: '#/components/schemas/SessionResults'
+        reason:
+          type: string
+        usn:
+          format: int64
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+        _embedded:
+          $ref: '#/components/schemas/SessionEmbeddedResources'
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    SessionResults:
+      enum:
+      - Running
+      - Success
+      - Warning
+      - Failed
+      - Cancelled
+      type: string
+    RetentionJobDeletedRestorePointEmbedded:
+      type: object
+      properties:
+        region:
+          $ref: '#/components/schemas/Link'
+    ProtectedItemsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ProtectedItem'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    SessionLogRecordModel:
+      description: Record of the session log.
+      properties:
+        description:
+          description: Description of the log record.
+          type: string
+        id:
+          description: ID of the log record.
+          type: integer
+        startTime:
+          description: Date and time when the operation was started.
+          format: date-time
+          type: string
+        status:
+          $ref: '#/components/schemas/ETaskLogRecordStatus'
+        title:
+          description: Title of the log record.
+          type: string
+        updateTime:
+          description: Date and time when the log record was updated.
+          format: date-time
+          type: string
+      type: object
+    SessionsSortColumns:
+      type: string
+      enum:
+      - startTimeAsc
+      - startTimeDesc
+      - stopTimeAsc
+      - stopTimeDesc
+      - durationAsc
+      - durationDesc
+      - typeAsc
+      - typeDesc
+      - reasonAsc
+      - reasonDesc
+      - usnAsc
+      - usnDesc
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ProtectedItemsSortColumns:
+      type: string
+      enum:
+      - virtualMachineNameAsc
+      - virtualMachineNameDesc
+      - regionAsc
+      - regionDesc
+    RestoredItem:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SessionItemsStatuses'
+        regionName:
+          type: string
+        _embedded:
+          $ref: '#/components/schemas/RestoreItemEmbedded'
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    SessionTypes:
+      enum:
+      - Policy
+      - Job
+      - Task
+      - UserPolicy
+      - RetentionActivity
+      - RestoreTask
+      - FLRTask
+      - SelfBackupActivity
+      - ImportPolicy
+      - TombstoneRetention
+      type: string
+    RestoredItemsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - regionAsc
+      - regionDesc
+    Error_2:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ProtectedItemsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProtectedItemsSortColumns'
+          uniqueItems: false
+    SessionItemsStatuses:
+      enum:
+      - Succeeded
+      - Warning
+      - Failed
+      type: string
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+  parameters:
+    apiVersionParam_2:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

@@ -1,0 +1,255 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Problems API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Problems
+paths:
+  /api/v1/problems/accessDenied:
+    get:
+      tags:
+      - Problems
+      operationId: AccessDenied
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/noAccessToken:
+    get:
+      tags:
+      - Problems
+      operationId: NoAccessToken
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/invalidAccessToken:
+    get:
+      tags:
+      - Problems
+      operationId: InvalidAccessToken
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/expiredAccessToken:
+    get:
+      tags:
+      - Problems
+      operationId: ExpiredAccessToken
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/resourceNotFound:
+    get:
+      tags:
+      - Problems
+      operationId: ResourceNotFound
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/validationError:
+    get:
+      tags:
+      - Problems
+      operationId: ValidationError
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/serviceUnavailable:
+    get:
+      tags:
+      - Problems
+      operationId: ServiceUnavailable
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/notImplemented:
+    get:
+      tags:
+      - Problems
+      operationId: ActionNotImplemented
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/unknownError:
+    get:
+      tags:
+      - Problems
+      operationId: UnknownError
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/repositoryUsedByPolicy:
+    get:
+      tags:
+      - Problems
+      operationId: RepositoryUsedByPolicy
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/unsupportedApiVersion:
+    get:
+      tags:
+      - Problems
+      operationId: UnsupportedApiVersion
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/apiVersionUnspecified:
+    get:
+      tags:
+      - Problems
+      operationId: ApiVersionUnspecified
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/invalidApiVersion:
+    get:
+      tags:
+      - Problems
+      operationId: InvalidApiVersion
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/ambiguousApiVersion:
+    get:
+      tags:
+      - Problems
+      operationId: AmbiguousApiVersion
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/failedToRemoveUserPolicy:
+    get:
+      tags:
+      - Problems
+      operationId: FailedToRemoveUserPolicy
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/policyAlreadyStarted:
+    get:
+      tags:
+      - Problems
+      operationId: PolicyAlreadyStarted
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+  /api/v1/problems/licenseAgreementsIsNotAccepted:
+    get:
+      tags:
+      - Problems
+      operationId: LicenseAgreementsIsNotAccepted
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+      security: []
+components:
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

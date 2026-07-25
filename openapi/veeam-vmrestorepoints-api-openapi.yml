@@ -1,0 +1,960 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents VmRestorePoints API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: VmRestorePoints
+paths:
+  /api/v1/vmRestorePoints:
+    get:
+      tags:
+      - VmRestorePoints
+      operationId: RestorePointsGetAll
+      parameters:
+      - name: VirtualMachineId
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/VmRestorePointsFilters'
+        schema:
+          type: string
+          format: uuid
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/VmRestorePointsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/VmRestorePointsFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/VmRestorePointsFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - pointInTimeAsc
+            - pointInTimeDesc
+            - backupSizeBytesAsc
+            - backupSizeBytesDesc
+            - jobTypeAsc
+            - jobTypeDesc
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePointsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePointsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}:
+    get:
+      tags:
+      - VmRestorePoints
+      operationId: RestorePointsGetOneById
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePoint'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePoint'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/restoreDisk:
+    post:
+      tags:
+      - VmRestorePoints
+      operationId: RestoreDisk
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/DiskBulkRestoreOptions'
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/validateRestoreDisk:
+    post:
+      tags:
+      - VmRestorePoints
+      operationId: ValidateRestoreDisk
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/DiskBulkRestoreOptions'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                uniqueItems: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationMessage'
+            application/problem+json:
+              schema:
+                uniqueItems: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationMessage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/restoreVm:
+    post:
+      tags:
+      - VmRestorePoints
+      operationId: RestoreVm
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/VirtualMachineRestoreOptions'
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/SessionLink'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/validateRestoreVm:
+    post:
+      tags:
+      - VmRestorePoints
+      operationId: ValidateRestoreVm
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/VirtualMachineRestoreOptions'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                uniqueItems: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationMessage'
+            application/problem+json:
+              schema:
+                uniqueItems: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationMessage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/restoreFile:
+    post:
+      tags:
+      - VmRestorePoints
+      operationId: startFlr
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlrOptions'
+      responses:
+        '202':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StartFlrResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartFlrResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StartFlrResponse'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/StartFlrResponse'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/vmRestorePoints/{vmRestorePointId}/defaultNetworkSettings:
+    get:
+      tags:
+      - VmRestorePoints
+      operationId: VmRestorePointsGetDefaultNetworkSettings
+      parameters:
+      - name: vmRestorePointId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePointDefaultNetworkSettings'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/VmRestorePointDefaultNetworkSettings'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    ValidationMessage:
+      type: object
+      properties:
+        severity:
+          enum:
+          - Warning
+          - Error
+          type: string
+        message:
+          type: string
+        contextId:
+          type: string
+          format: uuid
+    JobTypes:
+      enum:
+      - Backup
+      - Snapshot
+      - ManualSnapshot
+      - Replica
+      type: string
+    VmRestorePointsSortColumns:
+      type: string
+      enum:
+      - pointInTimeAsc
+      - pointInTimeDesc
+      - backupSizeBytesAsc
+      - backupSizeBytesDesc
+      - jobTypeAsc
+      - jobTypeDesc
+    VmRestorePointsFilters:
+      type: object
+      properties:
+        VirtualMachineId:
+          type: string
+          format: uuid
+        OnlyLatest:
+          type: boolean
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/VmRestorePointsSortColumns'
+          uniqueItems: false
+    VirtualMachineRestoreOptions:
+      type: object
+      properties:
+        reason:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        startInstance:
+          type: boolean
+        toAlternative:
+          $ref: '#/components/schemas/VirtualMachineToAlternativeRestoreOptions'
+    StartFlrResponse:
+      required:
+      - sessionId
+      - url
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        url:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    FlrOptions:
+      type: object
+      properties:
+        reason:
+          type: string
+    Ec2DiskTypes:
+      type: string
+      enum:
+      - Standart
+      - St1
+      - Sc1
+      - Io1
+      - Gp2
+    VirtualMachineToAlternativeRestoreOptions:
+      required:
+      - regionId
+      - name
+      - vmType
+      - subnetId
+      - networkSecurityGroupId
+      - preserveEncryptionForVolumes
+      type: object
+      properties:
+        name:
+          type: string
+        regionId:
+          type: string
+          format: uuid
+        vmType:
+          type: string
+        subnetId:
+          type: string
+        networkSecurityGroupId:
+          type: string
+        preserveEncryptionForVolumes:
+          type: boolean
+        encryptionKeyId:
+          type: string
+    VmRestorePoint:
+      required:
+      - id
+      - backupId
+      - backupSizeBytes
+      - jobType
+      - pointInTime
+      - volumes
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        backupId:
+          format: uuid
+          type: string
+        jobType:
+          $ref: '#/components/schemas/JobTypes'
+        pointInTime:
+          format: date-time
+          type: string
+        backupSizeBytes:
+          format: int64
+          type: integer
+        volumes:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/VmBackupVolume'
+        regionId:
+          format: uuid
+          type: string
+        availabilityZoneId:
+          format: uuid
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    VmBackupVolume:
+      required:
+      - diskId
+      - backupSizeBytes
+      - type
+      type: object
+      properties:
+        diskId:
+          type: string
+        type:
+          $ref: '#/components/schemas/Ec2DiskTypes'
+        backupSizeBytes:
+          format: int64
+          type: integer
+        iops:
+          format: int32
+          type: integer
+        name:
+          type: string
+        device:
+          type: string
+        encryptionKey:
+          type: string
+        encryptionKeyName:
+          type: string
+    DiskBulkRestoreOptions:
+      required:
+      - volumes
+      type: object
+      properties:
+        reason:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        volumes:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/DiskRestoreOptions'
+        toAlternative:
+          $ref: '#/components/schemas/DiskBulkRestoreToAlternativeOptions'
+    DiskBulkRestoreToAlternativeOptions:
+      required:
+      - availabilityZoneId
+      - preserveEncryptionForVolumes
+      type: object
+      properties:
+        availabilityZoneId:
+          type: string
+          format: uuid
+        preserveEncryptionForVolumes:
+          type: boolean
+        encryptionKeyId:
+          type: string
+    VmRestorePointsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/VmRestorePoint'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    DiskRestoreOptions:
+      required:
+      - diskId
+      type: object
+      properties:
+        diskId:
+          type: string
+        name:
+          type: string
+    VmRestorePointDefaultNetworkSettings:
+      required:
+      - restorePointId
+      type: object
+      properties:
+        restorePointId:
+          type: string
+          format: uuid
+        networkName:
+          type: string
+        networkId:
+          type: string
+        subNetworkName:
+          type: string
+        subNetworkId:
+          type: string
+        securityGroupName:
+          type: string
+        securityGroupId:
+          type: string
+  requestBodies:
+    VirtualMachineRestoreOptions:
+      content:
+        application/json-patch+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        text/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/*+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/csp-report:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+    DiskBulkRestoreOptions:
+      content:
+        application/json-patch+json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        text/json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/*+json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/csp-report:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

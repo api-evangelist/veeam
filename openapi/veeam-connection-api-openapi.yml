@@ -1,0 +1,205 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Connection API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Connection section defines a path and operation for retrieving a TLS certificate or SSH fingerprint used to establish a secure connection between the backup server and the specified server.
+  name: Connection
+paths:
+  /api/v1/connectionCertificate:
+    post:
+      description: The HTTP POST request to the `/api/v1/connectionCertificate` path allows you to get a TLS certificate or SSH fingerprint of the specified host.
+      operationId: GetConnectionCertificate
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              credentialsId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              port: 443
+              serverName: vcenter01.tech.local
+              type: ViHost
+            schema:
+              $ref: '#/components/schemas/HostConnectionSpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                certificate:
+                  keyAlgorithm: RSA-PKCS1-KeyEx
+                  thumbprint: 1FFB549DC6C6CFF4DA8923F3E640F88925D11704
+                  validBy: '2025-08-15T18:27:45+02:00'
+                  issuedBy: CA
+                  issuedTo: vcenter01.tech.local
+                  keySize: '2048'
+                  serialNumber: 00CE2401CE350B143C
+                  subject: C=US, CN=vcenter01.tech.local
+                  validFrom: '2015-08-21T18:28:05+02:00'
+              schema:
+                $ref: '#/components/schemas/ConnectionCertificateModel'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Request TLS Certificate or SSH Fingerprint
+      tags:
+      - Connection
+      x-veeam-authorize:
+        claims:
+        - CheckCertificate
+components:
+  schemas:
+    ConnectionCertificateModel:
+      properties:
+        certificate:
+          $ref: '#/components/schemas/CertificateModel'
+        fingerprint:
+          description: SSH key fingerprint used to verify the server identity.
+          type: string
+      type: object
+    CertificateModel:
+      description: Certificate settings.
+      properties:
+        issuedBy:
+          description: Issuer of the certificate.
+          type: string
+        issuedTo:
+          description: Acquirer of the certificate.
+          type: string
+        keyAlgorithm:
+          description: Key algorithm of the certificate.
+          type: string
+        keySize:
+          description: Key size of the certificate.
+          type: string
+        serialNumber:
+          description: Serial number of the certificate.
+          type: string
+        subject:
+          description: Subject of the certificate.
+          type: string
+        thumbprint:
+          description: Thumbprint of the certificate.
+          type: string
+        validBy:
+          description: Expiration date and time of the certificate.
+          format: date-time
+          type: string
+        validFrom:
+          description: Date and time the certificate is valid from.
+          format: date-time
+          type: string
+      required:
+      - issuedBy
+      - issuedTo
+      - keyAlgorithm
+      - keySize
+      - serialNumber
+      - subject
+      - thumbprint
+      - validBy
+      - validFrom
+      type: object
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    HostConnectionSpec:
+      properties:
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
+          type: string
+        port:
+          description: Port used to communicate with the server.
+          type: integer
+        serverName:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - serverName
+      - credentialsId
+      - type
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

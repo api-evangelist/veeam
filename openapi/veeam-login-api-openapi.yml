@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Login API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The authorization process involves obtaining an access token and a refresh token.<br>For details on the authorization process and security settings, see [Authorization and Security](https://helpcenter.veeam.com/docs/backup/vbr_rest/authorization_security.html?ver=120).<SecurityDefinitions />
+  name: Login
+paths:
+  /api/oauth2/authorization_code:
+    post:
+      description: The HTTP POST request to the `/api/oauth2/authorization_code` path allows you to get an authorization code that is used to obtain an access token. For more information on authorization process, see [Requesting Authorization](https://helpcenter.veeam.com/docs/backup/vbr_rest/requesting_authorization.html?ver=120).
+      operationId: CreateAuthorizationCode
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                code: AAEAAPcbxUSe0PNKAN+ilV5d4M5Fkv9ONjwRa4hfZYoemxIDA/IHbrjldYbfu1MemydXxGR4KYe5woGq09k+URepuiwUVsg3WbXC179ECOARXmfMH9dFI5H4aiXTotwPvuXLAC2AU4nFSUI2Kr2jlg4Vm8hTEPisaEiOolaVPA5CTzSEribGVaPYwvzyEIn7qy+lLnvGN2dm46W6Q0QJ2dpw1SCI2DZRCRIz+L8Nq804hNwDQJk9TCPJ61ztwF4FM+wO2ToNvMkL6aVay7STpeTRlkFf5i5dAm2qC0a1fcDdkkxt2lwv47t52I2tyZafpdLXs1eb+y7ZnuYQGbDI3epq5GAIAAAAK1kt2wvg2Qg=
+              schema:
+                $ref: '#/components/schemas/AuthorizationCodeModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Authorization Code
+      tags:
+      - Login
+  /api/oauth2/logout:
+    post:
+      description: The HTTP POST request to the `/api/oauth2/logout` path allows you to perform the logout operation. After you log out, your access and refresh tokens are expired.
+      operationId: Logout
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Log Out
+      tags:
+      - Login
+  /api/oauth2/token:
+    post:
+      description: The HTTP POST request to the `/api/oauth2/token` path allows you to get an access token and a refresh token.
+      operationId: CreateToken
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenLoginSpec'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                expires_in: 900
+                .expires: '2022-04-24T14:39:18+01:00'
+                refresh_token: eyJhbGciOiJSUzUxMiIsImtpZCI6IjRFOTE2QjIwMTkzMENEOUFFNDRDMjAwMTlGODdGMkE0RUYyMjczMDMiLCJ0eXAiOiJKV1QifQ.eyJ1bmlxdWVfbmFtZSI6InNoZWlsYS5kLmNvcnkiLCJ0b2tlbl9pZCI6IjEwNTA4YWUyLTk0YzctNGRkNi04YzEyLWZjNGY1NDQ1MzM0YSIsInNob3J0X3Rlcm1fZXhwaXJhdGlvbiI6IkZhbHNlIiwibmJmIjoxNjQzMDMwNjU5LCJleHAiOjE2NDQyNDAyNTksImlhdCI6MTY0MzAzMDY1OSwiYXVkIjoicmVmcmVzaCJ9.RXx9xPlpoUuRwO7sTkBTXntpc3vixXc2kgfCPfRcpePdzOGbLqn64c1hCHTGgXPKgZ4ogEY58N2D3xUPd6spAdfbOkF_XwjEEDpxf03rl7LYMo-OXQ0PxVtUCJK3_o6Dfah0YV6IYu5yctvd-_1MKaac7vV5Zl87qhlF8w4e7LT0QPD_Vhp2JUoD3dSTvYw9WvNDqaRotYfaWj05yTB3PArVwSiPDg1oZXSLxROmDDtKf5FFqSgOdp4LxJmD6sYlv_2FQqG-tNwPqRyzKIaqiDDQXBR9MVmFHBl9iUcYOqvX9ZlCa7oPP_txjopks-NcpdyPkSH74hvoeOs3hujW8w
+                .issued: '2022-04-24T14:24:18+01:00'
+                token_type: bearer
+                access_token: eyJhbGciOiJSUzUxMiIsImtpZCI6IjRFOTE2QjIwMTkzMENEOUFFNDRDMjAwMTlGODdGMkE0RUYyMjczMDMiLCJ0eXAiOiJKV1QifQ.eyJ1bmlxdWVfbmFtZSI6InNoZWlsYS5kLmNvcnkiLCJuYmYiOjE2NDMwMzA2NTgsImV4cCI6MTY0MzAzMTU1OCwiaWF0IjoxNjQzMDMwNjU4LCJhdWQiOiJhY2Nlc3MifQ.PYyLnd-AGcQDiMN6RibL_3D-IzngzGqM0Du0huiEbswyqB9JATF3PJvPPKQn1H27xYEiznDyhAnbs9qZNNXlK0E7yRZbifUat16C1XDCvKFXAkije_44xakcUf5aUeU5YVRyjHa-hTRTkwISj9lBCNf_WdpttkK2stgyRCafrj057ATgUyru6o5gZhTYIS4cioAXmhvLvB7Qrn4X080DHH0-KqYeSQwnQASi1HDuogfkEmxyu8380fbGJiyK4eKGLJ2hmq5DsMmL0BSSzIvUiifLPS5_Ei4-9EOFOv3RlLmk6eQNefaLrkRSsV7QSgGZDLc98zIBlD2yrUccx2cj9A
+              schema:
+                $ref: '#/components/schemas/TokenModel'
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security: []
+      summary: Get Access Token
+      tags:
+      - Login
+components:
+  schemas:
+    TokenModel:
+      properties:
+        .expires:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+        .issued:
+          description: Date and time when the access token is issued.
+          format: date-time
+          type: string
+        access_token:
+          description: String that represents authorization issued to the client. It must be specified in all requests. An access token can be used multiple times, but its lifetime is 15 minutes.
+          type: string
+        expires_in:
+          description: Lifetime of the access token, in seconds.
+          format: int32
+          type: integer
+        refresh_token:
+          description: String that is used to obtain a new access token if the current access token expires or becomes lost. A refresh token can be used only once, and its default lifetime is 14 days.
+          type: string
+        token_type:
+          description: Type of the access token.
+          type: string
+      required:
+      - .expires
+      - .issued
+      - access_token
+      - expires_in
+      - refresh_token
+      - token_type
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    TokenLoginSpec:
+      properties:
+        code:
+          description: Authorization code. Required if the `grant_type` value is `authorization_code`.
+          type: string
+        grant_type:
+          $ref: '#/components/schemas/ELoginGrantType'
+        password:
+          description: Password. Required if the `grant_type` value is `password`.
+          format: password
+          type: string
+        refresh_token:
+          description: Refresh token. Required if the `grant_type` value is `refresh_token`.
+          type: string
+        use_short_term_refresh:
+          description: If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.
+          type: boolean
+        username:
+          description: User name. Required if the `grant_type` value is `password`.
+          type: string
+        vbr_token:
+          description: Veeam Backup & Replication platform service token.
+          type: string
+      required:
+      - grant_type
+      type: object
+    ELoginGrantType:
+      default: password
+      description: Authorization grant type.<br>Available values:<ul> <li>`password` — used to obtain an access token by providing a user name and password.</li> <li>`refresh_token` — used to refresh an expired or lost access token by providing a refresh token.</li> <li>`authorization_code` — used to obtain an access token by providing an authorization code.</li> <li>`vbr_token` — used to obtain an access token by providing a Veeam Backup & Replication token. This grant type is only used in a restricted mode for integration with Veeam Backup & Replication.</li></ul>
+      enum:
+      - password
+      - refresh_token
+      - authorization_code
+      - vbr_token
+      type: string
+    AuthorizationCodeModel:
+      properties:
+        code:
+          description: String that is used to obtain an access token. Lifetime of the authorization code is 60 seconds.
+          type: string
+      required:
+      - code
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

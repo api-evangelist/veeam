@@ -1,0 +1,744 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Proxies API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Proxies section defines paths and operations for managing backup proxies.<br><div class="note"><strong>NOTE</strong><br>In the current version, the REST API supports VMware backup proxies only.</div>
+  name: Proxies
+paths:
+  /api/v1/backupInfrastructure/proxies:
+    get:
+      description: The HTTP GET request to the `/api/v1/backupInfrastructure/proxies` path allows you to get an array of all backup proxies that are added to the backup infrastructure.
+      operationId: GetAllProxies
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of proxies to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Maximum number of proxies to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Sorts proxies by one of the proxy parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EProxiesFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Sorts proxies in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Filters proxies by the `nameFilter` pattern. The pattern can match any proxy parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Filters proxies by proxy type.
+        in: query
+        name: typeFilter
+        schema:
+          $ref: '#/components/schemas/EProxyType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      - description: Filters proxies by ID of the backup server.
+        in: query
+        name: hostIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/ProxiesFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - description: Created by TECH\sheila.d.cory
+                  id: 0be53088-d516-4734-a956-a8093a568876
+                  name: 172.17.53.67
+                  server:
+                    connectedDatastores:
+                      autoSelect: true
+                      datastores: []
+                    failoverToNetwork: true
+                    hostId: 535b5414-788d-4720-a53a-ecc830d2589b
+                    hostToProxyEncryption: false
+                    maxTaskCount: 2
+                    transportMode: virtualAppliance
+                  type: ViProxy
+                - description: Created by Veeam Backup & Replication
+                  id: 18b661c1-d9dc-4233-90a0-7e7b10dc2d09
+                  name: VMware Backup Proxy
+                  server:
+                    connectedDatastores:
+                      autoSelect: true
+                      datastores: []
+                    failoverToNetwork: true
+                    hostId: 6745a759-2205-4cd2-b172-8ec8f7e60ef8
+                    hostToProxyEncryption: false
+                    maxTaskCount: 2
+                    transportMode: auto
+                  type: ViProxy
+                pagination:
+                  skip: 0
+                  total: 2
+                  count: 2
+                  limit: 200
+              schema:
+                $ref: '#/components/schemas/ProxiesResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Proxies
+      tags:
+      - Proxies
+      x-veeam-authorize:
+        claims:
+        - ViewProxies
+    post:
+      description: The HTTP POST request to the `/api/v1/backupInfrastructure/proxies` path allows you to add a proxy to the backup infrastructure.
+      operationId: CreateProxy
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              description: Created by TECH\sheila.d.cory
+              name: proxy01.tech.local
+              server:
+                maxTaskCount: 2
+                transportMode: auto
+                connectedDatastores:
+                  datastores:
+                  - datastore:
+                      hostName: vcenter01.tech.local
+                      name: esx04-ds1
+                      objectId: datastore-78098
+                      type: Datastore
+                    vmCount: 98
+                  - datastore:
+                      hostName: vcenter01.tech.local
+                      name: esx04-ds2
+                      objectId: datastore-94394
+                      type: Datastore
+                    vmCount: 93
+                  autoSelect: false
+                failoverToNetwork: true
+                hostId: 080b9a63-56f3-49e2-9b06-56fc252de34c
+                hostToProxyEncryption: false
+              type: ViProxy
+            schema:
+              $ref: '#/components/schemas/ProxySpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                activityId: 59f85a1e-2016-4d08-aea5-2676a03d548c
+                state: Working
+                sessionType: Infrastructure
+                creationTime: '2022-01-28T19:48:43.117+01:00'
+                usn: 0
+                name: Infrastructure Item Saving
+                progressPercent: 0
+                id: 59f85a1e-2016-4d08-aea5-2676a03d548c
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Infrastructure session has been created to add the proxy. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Add Proxy
+      tags:
+      - Proxies
+      x-veeam-authorize:
+        claims:
+        - CreateProxies
+  /api/v1/backupInfrastructure/proxies/{id}:
+    delete:
+      description: The HTTP DELETE request to the `/api/v1/backupInfrastructure/proxies/{id}` path allows you to remove a backup proxy that has the specified `id` from the backup infrastructure.
+      operationId: DeleteProxy
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup proxy.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/Deleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Remove Proxy
+      tags:
+      - Proxies
+      x-veeam-authorize:
+        claims:
+        - DeleteProxies
+    get:
+      description: The HTTP GET request to the `/api/v1/backupInfrastructure/proxies/{id}` path allows you to get a backup proxy that has the specified `id`.
+      operationId: GetProxy
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup proxy.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                id: 18b661c1-d9dc-4233-90a0-7e7b10dc2d09
+                server:
+                  maxTaskCount: 2
+                  transportMode: auto
+                  connectedDatastores:
+                    autoSelect: true
+                    datastores: []
+                  failoverToNetwork: true
+                  hostId: 6745a759-2205-4cd2-b172-8ec8f7e60ef8
+                  hostToProxyEncryption: false
+                type: ViProxy
+                name: VMware Backup Proxy
+                description: Created by Veeam Backup & Replication
+              schema:
+                $ref: '#/components/schemas/ProxyModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Proxy
+      tags:
+      - Proxies
+      x-veeam-authorize:
+        claims:
+        - ViewProxies
+    put:
+      description: The HTTP PUT request to the `/api/v1/backupInfrastructure/proxies/{id}` path allows you to edit a backup proxy that has the specified `id`.
+      operationId: UpdateProxy
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the backup proxy.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              description: Created by Veeam Backup & Replication
+              server:
+                transportMode: network
+                connectedDatastores:
+                  autoSelect: true
+                  datastores: []
+                failoverToNetwork: false
+                hostId: 6745a759-2205-4cd2-b172-8ec8f7e60ef8
+                hostToProxyEncryption: false
+                maxTaskCount: 2
+              name: VMware Backup Proxy
+              id: 18b661c1-d9dc-4233-90a0-7e7b10dc2d09
+              trafficRules:
+                rules:
+                - encryption: true
+                  name: Internet
+                  throttling: false
+                  timePeriod: Anytime
+              type: ViProxy
+            schema:
+              $ref: '#/components/schemas/ProxyModel'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                progressPercent: 0
+                state: Working
+                creationTime: '2022-01-28T20:18:47.563+01:00'
+                activityId: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+                sessionType: Infrastructure
+                usn: 0
+                id: e81a72de-9b0a-4f4a-a451-0d0ece4c54b2
+                name: Infrastructure Item Saving
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Infrastructure session has been created to edit the proxy. To check the progress, track the session `state`.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Proxy
+      tags:
+      - Proxies
+      x-veeam-authorize:
+        claims:
+        - UpdateProxies
+components:
+  schemas:
+    EProxiesFiltersOrderColumn:
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    ProxySpec:
+      allOf:
+      - discriminator:
+          mapping:
+            ViProxy: '#/components/schemas/ViProxySpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/ViProxySpec'
+      - $ref: '#/components/schemas/BaseProxySpec'
+    EBackupProxyTransportMode:
+      description: Transport mode of the backup proxy.
+      enum:
+      - auto
+      - directAccess
+      - virtualAppliance
+      - network
+      type: string
+    ProxiesResult:
+      properties:
+        data:
+          description: Array of backup proxies.
+          items:
+            $ref: '#/components/schemas/ProxyModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ProxiesFilters:
+      properties:
+        hostIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EProxiesFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EProxyType'
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    SessionModel:
+      properties:
+        activityId:
+          description: ID of the activity.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the session was created.
+          format: date-time
+          type: string
+        endTime:
+          description: Date and time when the session was ended.
+          format: date-time
+          type: string
+        id:
+          description: ID of the session.
+          format: uuid
+          type: string
+        name:
+          description: Name of the session.
+          type: string
+        parentSessionId:
+          description: ID of the parent session.
+          format: uuid
+          type: string
+        progressPercent:
+          description: Progress percentage of the session.
+          type: integer
+        resourceId:
+          description: ID of the resource.
+          format: uuid
+          type: string
+        resourceReference:
+          description: URI of the resource.
+          type: string
+        result:
+          $ref: '#/components/schemas/SessionResultModel'
+        sessionType:
+          $ref: '#/components/schemas/ESessionType'
+        state:
+          $ref: '#/components/schemas/ESessionState'
+        usn:
+          description: Update sequence number.
+          format: int64
+          type: integer
+      required:
+      - activityId
+      - creationTime
+      - id
+      - name
+      - sessionType
+      - state
+      - usn
+      type: object
+    ProxyServerSettingsModel:
+      description: Server settings for the backup proxy.
+      properties:
+        connectedDatastores:
+          $ref: '#/components/schemas/ProxyDatastoreSettingsModel'
+        failoverToNetwork:
+          description: (For the Direct storage access and Virtual appliance transport modes) If *true*, Veeam Backup & Replication failovers to the network transport mode in case the primary mode fails or is unavailable.
+          type: boolean
+        hostId:
+          description: ID of the server.
+          format: uuid
+          type: string
+        hostToProxyEncryption:
+          description: (For the Network mode) If *true*, VM data is transferred over an encrypted TLS connection.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        transportMode:
+          $ref: '#/components/schemas/EBackupProxyTransportMode'
+      required:
+      - hostId
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    ViProxyModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseProxyModel'
+      - properties:
+          server:
+            $ref: '#/components/schemas/ProxyServerSettingsModel'
+        required:
+        - server
+        type: object
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    ProxyModel:
+      allOf:
+      - discriminator:
+          mapping:
+            ViProxy: '#/components/schemas/ViProxyModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/ViProxyModel'
+      - $ref: '#/components/schemas/BaseProxyModel'
+    ViProxySpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseProxySpec'
+      - properties:
+          server:
+            $ref: '#/components/schemas/ProxyServerSettingsModel'
+        required:
+        - server
+        type: object
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    ProxyDatastoreModel:
+      properties:
+        datastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        vmCount:
+          description: Number of VMs.
+          type: integer
+      type: object
+    BaseProxySpec:
+      properties:
+        description:
+          description: Description of the backup proxy.
+          type: string
+        type:
+          $ref: '#/components/schemas/EProxyType'
+      type: object
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    EProxyType:
+      description: Type of the backup proxy.
+      enum:
+      - ViProxy
+      type: string
+    ProxyDatastoreSettingsModel:
+      description: Datastores to which the backup proxy has a direct SAN or NFS connection.
+      properties:
+        autoSelect:
+          description: If *true*, all datastores that the backup proxy can access are detected automatically.
+          type: boolean
+        datastores:
+          description: Array of datastores to which the backup proxy has a direct SAN or NFS connection.
+          items:
+            $ref: '#/components/schemas/ProxyDatastoreModel'
+          type: array
+      required:
+      - autoSelect
+      type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    BaseProxyModel:
+      properties:
+        description:
+          description: Description of the backup proxy.
+          type: string
+        id:
+          description: ID of the backup proxy.
+          format: uuid
+          type: string
+        name:
+          description: Name of the backup proxy.
+          type: string
+        type:
+          $ref: '#/components/schemas/EProxyType'
+      type: object
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Deleted:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptySuccessResponse'
+      description: Removed.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

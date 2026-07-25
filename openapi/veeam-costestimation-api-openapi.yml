@@ -1,0 +1,804 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents CostEstimation API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: CostEstimation
+paths:
+  /api/v1/costEstimation:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - CostEstimation
+      operationId: GetCostEstimation
+      parameters:
+      - name: VirtualMachineNameFilter
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CostEstimationFilters'
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CostEstimationFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CostEstimationFilters'
+        schema:
+          type: integer
+          format: int32
+          minimum: -1
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/CostEstimationFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - virtualMachineNameAsc
+            - virtualMachineNameDesc
+            - snapshotCostAsc
+            - snapshotCostDesc
+            - replicaCostAsc
+            - replicaCostDesc
+            - backupCostAsc
+            - backupCostDesc
+            - trafficAsc
+            - trafficDesc
+            - transactionAsc
+            - transactionDesc
+            - totalAsc
+            - totalDesc
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/PolicySpec'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostEstimationsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/CostEstimationsPage'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/costEstimation/export:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - CostEstimation
+      operationId: ExportCostEstimation
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/PolicySpec'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+            application/xml:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    PolicyNotificationSettings:
+      type: object
+      properties:
+        recipient:
+          type: string
+        notifyOnSuccess:
+          type: boolean
+        notifyOnWarning:
+          type: boolean
+        notifyOnFailure:
+          type: boolean
+    CostEstimationsPage:
+      required:
+      - totalCount
+      - items
+      - isEmpty
+      - instancesCosts
+      - totalTrafficCost
+      - totalTransactionCost
+      - totalCost
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CostEstimationItem'
+        isEmpty:
+          type: boolean
+        totalSnapshotCost:
+          type: number
+          format: double
+        totalReplicaCost:
+          type: number
+          format: double
+        totalBackupCost:
+          type: number
+          format: double
+        totalTrafficCost:
+          type: number
+          format: double
+        totalTransactionCost:
+          type: number
+          format: double
+        totalCost:
+          type: number
+          format: double
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    WeeklyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/WeeklySchedule'
+    PolicySnapshotSettings:
+      type: object
+      properties:
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
+        tryCreateVSSSnapshot:
+          type: boolean
+    MonthlyScheduleSettings:
+      required:
+      - timeLocal
+      - dayNumberInMonth
+      - snapshotOptions
+      type: object
+      properties:
+        timeLocal:
+          format: date-time
+          type: string
+        dayNumberInMonth:
+          $ref: '#/components/schemas/DayNumbersInMonth'
+        dayOfWeek:
+          $ref: '#/components/schemas/DaysOfWeek'
+        dayOfMonth:
+          format: int32
+          type: integer
+        snapshotOptions:
+          $ref: '#/components/schemas/MonthlySnapshotScheduleSettings'
+        backupOptions:
+          $ref: '#/components/schemas/MonthlyBackupScheduleSettings'
+        replicaOptions:
+          $ref: '#/components/schemas/MonthlyReplicaScheduleSettings'
+    MonthlyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
+    MonthlySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
+    CostEstimationSortColumns:
+      type: string
+      enum:
+      - virtualMachineNameAsc
+      - virtualMachineNameDesc
+      - snapshotCostAsc
+      - snapshotCostDesc
+      - replicaCostAsc
+      - replicaCostDesc
+      - backupCostAsc
+      - backupCostDesc
+      - trafficAsc
+      - trafficDesc
+      - transactionAsc
+      - transactionDesc
+      - totalAsc
+      - totalDesc
+    MonthlySchedule:
+      type: object
+      required:
+      - months
+      properties:
+        months:
+          type: array
+          uniqueItems: true
+          minLength: 0
+          maxLength: 12
+          items:
+            $ref: '#/components/schemas/Months'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    YearlyScheduleSettings:
+      required:
+      - timeLocal
+      - dayNumberInMonth
+      - month
+      - retention
+      type: object
+      properties:
+        timeLocal:
+          type: string
+          format: date-time
+        dayNumberInMonth:
+          $ref: '#/components/schemas/DayNumbersInMonth'
+        dayOfWeek:
+          $ref: '#/components/schemas/DaysOfWeek'
+        dayOfMonth:
+          format: int32
+          type: integer
+        month:
+          $ref: '#/components/schemas/Months'
+        retention:
+          $ref: '#/components/schemas/YearlyRetentionOptions'
+    RetentionTypes:
+      type: string
+      enum:
+      - Days
+      - Months
+    DailyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    PointsRetentionOptions:
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+    Months:
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    WeeklyScheduleSettings:
+      required:
+      - timeLocal
+      - snapshotOptions
+      type: object
+      properties:
+        timeLocal:
+          format: date-time
+          type: string
+        snapshotOptions:
+          $ref: '#/components/schemas/WeeklySnapshotScheduleSettings'
+        backupOptions:
+          $ref: '#/components/schemas/WeeklyBackupScheduleSettings'
+        replicaOptions:
+          $ref: '#/components/schemas/WeeklyReplicaScheduleSettings'
+    CostEstimationFilters:
+      type: object
+      properties:
+        VirtualMachineNameFilter:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/CostEstimationSortColumns'
+    PolicyBackupSettings:
+      type: object
+      properties:
+        targetRepositoryId:
+          format: uuid
+          type: string
+    YearlyRetentionOptions:
+      required:
+      - count
+      - type
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+        type:
+          type: string
+          enum:
+          - Years
+    DaysOfWeek:
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      type: string
+    PolicySelectionTypes:
+      enum:
+      - AllItems
+      - SelectedItems
+      type: string
+    DailySchedule:
+      type: object
+      required:
+      - hours
+      properties:
+        hours:
+          type: array
+          uniqueItems: false
+          minLength: 24
+          maxLength: 24
+          items:
+            type: boolean
+    RetrySettings:
+      required:
+      - retryTimes
+      type: object
+      properties:
+        retryTimes:
+          format: int32
+          type: integer
+    PolicyBackupItems:
+      type: object
+      properties:
+        virtualMachineIds:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+        tagIds:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+    WeeklySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/WeeklySchedule'
+    WeeklySchedule:
+      type: object
+      required:
+      - days
+      properties:
+        days:
+          type: array
+          uniqueItems: true
+          minLength: 0
+          maxLength: 7
+          items:
+            $ref: '#/components/schemas/DaysOfWeek'
+    DailyScheduleSettings:
+      required:
+      - kind
+      - runsPerHour
+      - snapshotOptions
+      type: object
+      properties:
+        kind:
+          $ref: '#/components/schemas/DailyScheduleKinds'
+        runsPerHour:
+          type: integer
+          format: int32
+          minimum: 1
+        days:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/DaysOfWeek'
+        snapshotOptions:
+          $ref: '#/components/schemas/DailySnapshotScheduleSettings'
+        backupOptions:
+          $ref: '#/components/schemas/DailyBackupScheduleSettings'
+        replicaOptions:
+          $ref: '#/components/schemas/DailyReplicaScheduleSettings'
+    DayNumbersInMonth:
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    ReplicaMapping:
+      required:
+      - sourceRegionId
+      - targetRegionId
+      - targetAmazonAccountId
+      type: object
+      properties:
+        sourceRegionId:
+          format: uuid
+          type: string
+        targetRegionId:
+          format: uuid
+          type: string
+        targetAmazonAccountId:
+          type: string
+          format: uuid
+        encryptionKey:
+          type: string
+    ScheduleSettings:
+      required:
+      - dailyScheduleEnabled
+      - weeklyScheduleEnabled
+      - monthlyScheduleEnabled
+      - yearlyScheduleEnabled
+      type: object
+      properties:
+        dailyScheduleEnabled:
+          type: boolean
+        dailySchedule:
+          $ref: '#/components/schemas/DailyScheduleSettings'
+        weeklyScheduleEnabled:
+          type: boolean
+        weeklySchedule:
+          $ref: '#/components/schemas/WeeklyScheduleSettings'
+        monthlyScheduleEnabled:
+          type: boolean
+        monthlySchedule:
+          $ref: '#/components/schemas/MonthlyScheduleSettings'
+        yearlyScheduleEnabled:
+          type: boolean
+        yearlySchedule:
+          $ref: '#/components/schemas/YearlyScheduleSettings'
+    DailyScheduleKinds:
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    MonthlyReplicaScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
+    DailyReplicaScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    PeriodRetentionOptions:
+      required:
+      - type
+      - count
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/RetentionTypes'
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+    PolicyReplicaSettings:
+      required:
+      - mapping
+      type: object
+      properties:
+        mapping:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ReplicaMapping'
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
+    DailySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    CostEstimationItem:
+      required:
+      - virtualMachineId
+      - virtualMachineName
+      - trafficCost
+      - transactionCost
+      - totalCost
+      type: object
+      properties:
+        virtualMachineId:
+          type: string
+          format: uuid
+        virtualMachineName:
+          type: string
+        snapshotCost:
+          type: number
+          format: double
+        replicaCost:
+          type: number
+          format: double
+        backupCost:
+          type: number
+          format: double
+        trafficCost:
+          type: number
+          format: double
+        transactionCost:
+          type: number
+          format: double
+        totalCost:
+          type: number
+          format: double
+    PolicySpec:
+      required:
+      - regions
+      - name
+      - amazonAccountId
+      - backupType
+      type: object
+      properties:
+        snapshotSettings:
+          $ref: '#/components/schemas/PolicySnapshotSettings'
+        replicaSettings:
+          $ref: '#/components/schemas/PolicyReplicaSettings'
+        backupSettings:
+          $ref: '#/components/schemas/PolicyBackupSettings'
+        regionIds:
+          minLength: 1
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+        selectedItems:
+          $ref: '#/components/schemas/PolicyBackupItems'
+        excludedItems:
+          $ref: '#/components/schemas/PolicyBackupItems'
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        retrySettings:
+          $ref: '#/components/schemas/RetrySettings'
+        policyNotificationSettings:
+          $ref: '#/components/schemas/PolicyNotificationSettings'
+        backupType:
+          $ref: '#/components/schemas/PolicySelectionTypes'
+    TagSpec:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    WeeklyReplicaScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/WeeklySchedule'
+  requestBodies:
+    PolicySpec:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PolicySpec'
+      required: true
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

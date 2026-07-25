@@ -1,0 +1,577 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Regions API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: Regions
+paths:
+  /api/v1/cloudInfrastructure/regions:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - Regions
+      operationId: GetAllRegions
+      parameters:
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - nameAsc
+            - nameDesk
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/regions/{regionId}:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - Regions
+      operationId: GetRegionById
+      parameters:
+      - name: regionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Region'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/regions/{regionId}/zones:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - Regions
+      operationId: GetInnerRegions
+      parameters:
+      - name: regionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: SearchPattern
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: string
+      - name: Offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: Sort
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/RegionsFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - nameAsc
+            - nameDesk
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/RegionsPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found. One or more resources specified in the request could not be found in the specified resource collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/cloudInfrastructure/regions/{regionId}/instancesTypes:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+        - Portal Operator
+      tags:
+      - Regions
+      operationId: GetInstancesTypesByRegion
+      parameters:
+      - name: regionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: offset
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/AmazonInstancesTypesByRegionFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: limit
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/AmazonInstancesTypesByRegionFilters'
+        schema:
+          type: integer
+          format: int32
+      - name: isArm64
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/AmazonInstancesTypesByRegionFilters'
+        schema:
+          type: boolean
+      - name: virtualizationTypes
+        in: query
+        required: false
+        x-veeam-spec:
+          $ref: '#/components/schemas/AmazonInstancesTypesByRegionFilters'
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+          uniqueItems: false
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AmazonInstanceTypesByRegionPage'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmazonInstanceTypesByRegionPage'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AmazonInstanceTypesByRegionPage'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/AmazonInstanceTypesByRegionPage'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    AmazonInstanceType:
+      required:
+      - name
+      - cpuCount
+      - ram
+      type: object
+      properties:
+        name:
+          type: string
+        cpuCount:
+          format: int32
+          type: integer
+        ram:
+          format: int32
+          type: integer
+        isArm64:
+          type: boolean
+        virtualizationType:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+    AmazonInstancesTypesByRegionFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        isArm64:
+          type: boolean
+        virtualizationTypes:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+    AmazonInstanceTypesByRegionPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonInstanceType'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RegionsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/RegionsSortColumns'
+    RegionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Region:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    RegionsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesk
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

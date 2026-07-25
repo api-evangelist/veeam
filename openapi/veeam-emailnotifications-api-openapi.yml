@@ -1,0 +1,304 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents EmailNotifications API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- name: EmailNotifications
+paths:
+  /api/v1/settings/emailNotifications:
+    get:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - EmailNotifications
+      operationId: GetEmailNotifications
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailNotifications'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/EmailNotifications'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - EmailNotifications
+      operationId: SaveEmailNotifications
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/EmailNotifications'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailNotifications'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/EmailNotifications'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/settings/emailNotifications/sendTestMessage:
+    post:
+      x-veeam-authorize:
+        roles:
+        - Portal Administrator
+      tags:
+      - EmailNotifications
+      operationId: SendTestMessage
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        $ref: '#/components/requestBodies/EmailNotifications'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailNotificationsTestResult'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/EmailNotificationsTestResult'
+        '400':
+          description: Bad Request. The request body is malformed, incomplete or otherwise invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    EmailNotificationsTestResult:
+      required:
+      - success
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    EmailNotifications:
+      required:
+      - enabled
+      - server
+      - port
+      - from
+      - to
+      - subject
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        server:
+          type: string
+        port:
+          type: integer
+        useSsl:
+          type: boolean
+        timeout:
+          type: integer
+        useCredentials:
+          type: boolean
+        credentialsId:
+          format: uuid
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        subject:
+          type: string
+        onSuccess:
+          type: boolean
+        onWarning:
+          type: boolean
+        onFailure:
+          type: boolean
+        enableScheduledNotification:
+          type: boolean
+        notifyTime:
+          format: date-time
+          type: string
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          maximum: 600
+          exclusiveMaximum: true
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+  requestBodies:
+    EmailNotifications:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmailNotifications'
+      required: true
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>

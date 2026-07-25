@@ -1,0 +1,3830 @@
+openapi: 3.0.0
+info:
+  version: 1.0-rev0
+  title: Veeam Backup for AWS public API 1.0 Agents Jobs API
+  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+security:
+- Bearer: []
+tags:
+- description: The Jobs section defines paths and operations for managing jobs that are coordinated by the backup server.<br> <div class="note"><strong>NOTE</strong><br>In the current version, the REST API supports only jobs of the *Backup* type that include only VMware vSphere objects of the following types&#58; *VirtualMachine*, *vCenterServer*, *Datacenter*, *Cluster*, *Host*, *ResourcePool*, *Folder*, *Template*, *Tag*, *Datastore* and *DatastoreCluster*. Objects with tags combination (or *Multitag*) are not supported.</div>
+  name: Jobs
+paths:
+  /api/v1/jobs:
+    get:
+      description: The HTTP GET request to the `/api/v1/jobs` path allows you to get an array of all jobs coordinated by the backup server.
+      operationId: GetAllJobs
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of jobs to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      - description: Maximum number of jobs to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      - description: Sorts jobs by one of the job parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EJobFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      - description: Sorts jobs in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      - description: Filters jobs by the `nameFilter` pattern. The pattern can match any job parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      - description: Filters jobs by job type.
+        in: query
+        name: typeFilter
+        schema:
+          $ref: '#/components/schemas/EJobType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobsFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - description: Created by ENTERPRISE01\Administrator
+                  guestProcessing:
+                    appAwareProcessing:
+                      appSettings: []
+                      isEnabled: false
+                    guestCredentials:
+                      credentialsPerMachine: []
+                      credsId: 4fbeb05c-c158-4510-84f3-6744554fb350
+                      credsType: Standard
+                    guestFSIndexing:
+                      indexingSettings:
+                      - LinuxIndexing:
+                          guestFSIndexingMode: indexAllExcept
+                          indexingList:
+                          - /cdrom
+                          - /dev
+                          - /media
+                          - /mnt
+                          - /proc
+                          - /tmp
+                          - /lost+found
+                        WindowsIndexing:
+                          guestFSIndexingMode: indexAllExcept
+                          indexingList:
+                          - '%windir%'
+                          - '%ProgramFiles%'
+                          - '%ProgramFiles(x86)%'
+                          - '%ProgramW6432%'
+                          - '%TEMP%'
+                        vmObject:
+                          hostName: vcenter01.tech.local
+                          name: filesrv02
+                          objectId: vm-45006
+                          type: VirtualMachine
+                      isEnabled: true
+                    guestInteractionProxies:
+                      autoSelection: true
+                      proxyIds: []
+                  id: ef1f0227-80e1-40f8-b2a2-5119172d2c36
+                  isDisabled: false
+                  isHighPriority: false
+                  name: Backup Job 2
+                  schedule:
+                    afterThisJob:
+                      isEnabled: false
+                      jobName: null
+                    backupWindow:
+                      backupWindow:
+                        days:
+                        - day: sunday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: monday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: tuesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: wednesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: thursday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: friday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: saturday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      isEnabled: false
+                    continuously:
+                      backupWindow:
+                        days:
+                        - day: sunday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: monday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: tuesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: wednesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: thursday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: friday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: saturday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      isEnabled: false
+                    daily:
+                      dailyKind: Everyday
+                      days:
+                      - sunday
+                      - monday
+                      - tuesday
+                      - wednesday
+                      - thursday
+                      - friday
+                      - saturday
+                      isEnabled: true
+                      localTime: 10:00 PM
+                    monthly:
+                      dayNumberInMonth: Fourth
+                      dayOfMonth: 1
+                      dayOfWeek: saturday
+                      isEnabled: false
+                      localTime: 10:00 PM
+                      months:
+                      - January
+                      - February
+                      - March
+                      - April
+                      - May
+                      - June
+                      - July
+                      - August
+                      - September
+                      - October
+                      - November
+                      - December
+                    periodically:
+                      backupWindow:
+                        days:
+                        - day: sunday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: monday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: tuesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: wednesday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: thursday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: friday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                        - day: saturday
+                          hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      frequency: 1
+                      isEnabled: false
+                      periodicallyKind: Hours
+                      startTimeWithinAnHour: 0
+                    retry:
+                      awaitMinutes: 10
+                      isEnabled: true
+                      retryCount: 3
+                    runAutomatically: true
+                  storage:
+                    advancedSettings:
+                      activeFulls:
+                        isEnabled: false
+                        monthly:
+                          dayNumberInMonth: First
+                          dayOfMonths: 1
+                          dayOfWeek: monday
+                          isEnabled: false
+                          months:
+                          - January
+                          - February
+                          - March
+                          - April
+                          - May
+                          - June
+                          - July
+                          - August
+                          - September
+                          - October
+                          - November
+                          - December
+                        weekly:
+                          days:
+                          - saturday
+                          isEnabled: true
+                      backupHealth:
+                        isEnabled: false
+                        monthly:
+                          dayNumberInMonth: Last
+                          dayOfMonths: 1
+                          dayOfWeek: friday
+                          isEnabled: true
+                          months:
+                          - January
+                          - February
+                          - March
+                          - April
+                          - May
+                          - June
+                          - July
+                          - August
+                          - September
+                          - October
+                          - November
+                          - December
+                        weekly:
+                          days:
+                          - friday
+                          isEnabled: false
+                      backupModeType: Incremental
+                      fullBackupMaintenance:
+                        RemoveData:
+                          afterDays: 14
+                          isEnabled: false
+                        defragmentAndCompact:
+                          isEnabled: false
+                          monthly:
+                            dayNumberInMonth: Last
+                            dayOfMonths: 1
+                            dayOfWeek: saturday
+                            isEnabled: true
+                            months:
+                            - January
+                            - February
+                            - March
+                            - April
+                            - May
+                            - June
+                            - July
+                            - August
+                            - September
+                            - October
+                            - November
+                            - December
+                          weekly:
+                            days:
+                            - saturday
+                            isEnabled: false
+                      notifications:
+                        emailNotifications:
+                          customNotificationSettings: null
+                          isEnabled: false
+                          notificationType: null
+                          recipients: []
+                        sendSNMPNotifications: false
+                        vmAttribute:
+                          appendToExisitingValue: true
+                          isEnabled: false
+                          notes: Notes
+                      scripts:
+                        dayOfWeek:
+                        - saturday
+                        periodicityType: BackupSessions
+                        postCommand:
+                          command: ''
+                          isEnabled: false
+                        preCommand:
+                          command: ''
+                          isEnabled: false
+                        runScriptEvery: 1
+                      storageData:
+                        compressionLevel: Optimal
+                        enableInlineDataDedup: true
+                        encryption:
+                          encryptionPasswordIdOrNull: 00000000-0000-0000-0000-000000000000
+                          encryptionPasswordTag: null
+                          isEnabled: false
+                        excludeDeletedFileBlocks: true
+                        excludeSwapFileBlocks: true
+                        storageOptimization: LocalTarget
+                      storageIntegration:
+                        failoverToStandardBackup: false
+                        isEnabled: true
+                        limitProcessedVm: false
+                        limitProcessedVmCount: 10
+                      synthenticFulls:
+                        days:
+                        - saturday
+                        isEnabled: true
+                      vSphere:
+                        changedBlockTracking:
+                          enableCBTautomatically: true
+                          isEnabled: true
+                          resetCBTonActiveFull: true
+                        enableVMWareToolsQuiescence: false
+                    backupProxies:
+                      autoSelection: true
+                      proxyIds: []
+                    backupRepositoryId: 88101045-8755-4117-9221-bca81fbfabc4
+                    gfsPolicy:
+                      isEnabled: false
+                      monthly:
+                        desiredTime: First
+                        isEnabled: false
+                        keepForNumberOfMonths: 1
+                      weekly:
+                        desiredTime: sunday
+                        isEnabled: false
+                        keepForNumberOfWeeks: 1
+                      yearly:
+                        desiredTime: January
+                        isEnabled: false
+                        keepForNumberOfYears: 1
+                    retentionPolicy:
+                      quantity: 7
+                      type: Days
+                  type: Backup
+                  virtualMachines:
+                    excludes:
+                      disks:
+                      - disks: []
+                        disksToProcess: AllDisks
+                        removeFromVMConfiguration: true
+                        vmObject:
+                          hostName: vcenter01.tech.local
+                          name: filesrv02
+                          objectId: vm-45006
+                          type: VirtualMachine
+                      templates:
+                        excludeFromIncremental: true
+                        isEnabled: true
+                      vms: []
+                    includes:
+                    - inventoryObject:
+                        hostName: vcenter01.tech.local
+                        name: filesrv02
+                        objectId: vm-45006
+                        type: VirtualMachine
+                      size: 43.5 GB
+                pagination:
+                  count: 1
+                  limit: 1
+                  skip: 0
+                  total: 3
+              schema:
+                $ref: '#/components/schemas/JobsResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Jobs
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - ViewJobs
+    post:
+      description: The HTTP POST request to the `/api/v1/jobs` path allows you to create a new job that has the specified parameters.
+      operationId: CreateJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      requestBody:
+        content:
+          application/json:
+            example:
+              type: Backup
+              storage:
+                gfsPolicy:
+                  isEnabled: false
+                  monthly:
+                    desiredTime: First
+                    isEnabled: false
+                    keepForNumberOfMonths: 1
+                  weekly:
+                    desiredTime: sunday
+                    isEnabled: false
+                    keepForNumberOfWeeks: 1
+                  yearly:
+                    keepForNumberOfYears: 1
+                    desiredTime: January
+                    isEnabled: false
+                retentionPolicy:
+                  quantity: 7
+                  type: RestorePoints
+                advancedSettings:
+                  backupHealth:
+                    isEnabled: true
+                    monthly:
+                      dayNumberInMonth: First
+                      dayOfMonths: 1
+                      dayOfWeek: monday
+                      isEnabled: true
+                      months:
+                      - January
+                      - February
+                      - March
+                      - April
+                      - May
+                      - June
+                      - July
+                      - August
+                      - September
+                      - October
+                      - November
+                      - December
+                    weekly:
+                      days:
+                      - friday
+                      isEnabled: false
+                  backupModeType: Incremental
+                  scripts:
+                    postCommand:
+                      command: ''
+                      dayOfWeek:
+                      - saturday
+                      isEnabled: false
+                      periodicityType: BackupSessions
+                      runScriptEvery: 1
+                    preCommand:
+                      dayOfWeek:
+                      - saturday
+                      isEnabled: false
+                      periodicityType: BackupSessions
+                      runScriptEvery: 1
+                      command: ''
+                  storageData:
+                    excludeDeletedFileBlocks: true
+                    excludeSwapFileBlocks: true
+                    storageOptimization: LocalTarget
+                    compressionLevel: Optimal
+                    enableInlineDataDedup: true
+                    encryption:
+                      isEnabled: false
+                      passwordId: 00000000-0000-0000-0000-000000000000
+                  storageIntegration:
+                    limitProcessedVmCount: 13
+                    failoverToStandardBackup: true
+                    isEnabled: true
+                    limitProcessedVm: true
+                  synthenticFulls:
+                    days:
+                    - saturday
+                    isEnabled: true
+                  activeFulls:
+                    isEnabled: true
+                    monthly:
+                      dayNumberInMonth: First
+                      dayOfMonths: 1
+                      dayOfWeek: monday
+                      isEnabled: false
+                      months:
+                      - January
+                      - February
+                      - March
+                      - April
+                      - May
+                      - June
+                      - July
+                      - August
+                      - September
+                      - October
+                      - November
+                      - December
+                    weekly:
+                      days:
+                      - saturday
+                      isEnabled: true
+                  fullBackupMaintenance:
+                    RemoveData:
+                      afterDays: 14
+                      isEnabled: false
+                    defragmentAndCompact:
+                      isEnabled: false
+                      monthly:
+                        dayNumberInMonth: Last
+                        dayOfMonths: 1
+                        dayOfWeek: saturday
+                        isEnabled: true
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                      weekly:
+                        isEnabled: false
+                        days:
+                        - saturday
+                  notifications:
+                    emailNotifications:
+                      isEnabled: false
+                      recipients: []
+                    sendSNMPNotifications: true
+                    vmAttribute:
+                      appendToExisitingValue: true
+                      isEnabled: false
+                      notes: Notes
+                  vSphere:
+                    changedBlockTracking:
+                      enableCBTautomatically: true
+                      isEnabled: true
+                      resetCBTonActiveFull: true
+                    enableVMWareToolsQuiescence: false
+                backupProxies:
+                  proxyIds: []
+                  autoSelection: true
+                backupRepositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+              name: Backup Job 3
+              virtualMachines:
+                excludes:
+                  disks:
+                  - disks:
+                    - SCSI 0:0 (2000)
+                    - IDE 0:0 (3000)
+                    disksToProcess: SelectedDisks
+                    vmObject:
+                      name: ResourcePool01
+                      objectId: resgroup-32774
+                      type: ResourcePool
+                      vcName: vcenter01.tech.local
+                  templates:
+                    excludeFromIncremental: false
+                    isEnabled: true
+                  vms:
+                  - name: srv01
+                    objectId: vm-34739
+                    type: VirtualMachine
+                    vcName: vcenter01.tech.local
+                  - name: srv02
+                    objectId: vm-32843
+                    type: VirtualMachine
+                    vcName: vcenter01.tech.local
+                includes:
+                - name: ResourcePool01
+                  objectId: resgroup-32774
+                  type: ResourcePool
+                  vcName: vcenter01.tech.local
+              guestProcessing:
+                guestInteractionProxies:
+                  autoSelection: true
+                  proxyIds: []
+                appAwareProcessing:
+                  appSettings:
+                  - exclusions:
+                      exclusionPolicy: disabled
+                      itemsList: []
+                    oracle:
+                      archiveLogs: deleteExpiredGBs
+                      backupLogs: true
+                      backupMinsCount: 23
+                      credentialsId: a1b84070-9767-4f47-99cd-e25f57cd65dc
+                      deleteGBsCount: 10240
+                      deleteHoursCount: null
+                      keepDaysCount: 15
+                      logShippingServers:
+                        autoSelection: true
+                        shippingServerIds: []
+                      retainLogBackups: untilBackupDeleted
+                      useGuestCredentials: false
+                    scripts:
+                      linuxScripts: null
+                      scriptProcessingMode: disableExec
+                      windowsScripts: null
+                    sql:
+                      backupMinsCount: 15
+                      keepDaysCount: null
+                      logShippingServers:
+                        autoSelection: true
+                        shippingServerIds: []
+                      logsProcessing: backup
+                      retainLogBackups: untilBackupDeleted
+                    transactionLogs: process
+                    vmObject:
+                      name: ResourcePool01
+                      objectId: resgroup-32774
+                      type: ResourcePool
+                      vcName: vcenter01.tech.local
+                    vss: requireSuccess
+                  isEnabled: true
+                guestCredentials:
+                  credentialsPerMachine:
+                  - linuxCredsId: 00000000-0000-0000-0000-000000000000
+                    vmObject:
+                      name: ResourcePool01
+                      objectId: resgroup-32774
+                      type: ResourcePool
+                      vcName: vcenter01.tech.local
+                    windowsCredsId: a1b84070-9767-4f47-99cd-e25f57cd65dc
+                  linuxCredsId: 00000000-0000-0000-0000-000000000000
+                  windowsCredsId: a1b84070-9767-4f47-99cd-e25f57cd65dc
+                guestFSIndexing:
+                  indexingSettings:
+                  - LinuxIndexing:
+                      guestFSIndexingMode: indexAllExcept
+                      indexingList:
+                      - /cdrom
+                      - /dev
+                      - /media
+                      - /mnt
+                      - /proc
+                      - /tmp
+                      - /lost+found
+                    WindowsIndexing:
+                      guestFSIndexingMode: indexAllExcept
+                      indexingList:
+                      - '%windir%'
+                      - '%ProgramFiles%'
+                      - '%ProgramFiles(x86)%'
+                      - '%ProgramW6432%'
+                      - '%TEMP%'
+                    vmObject:
+                      name: ResourcePool01
+                      objectId: resgroup-32774
+                      type: ResourcePool
+                      vcName: vcenter01.tech.local
+                  isEnabled: true
+              schedule:
+                monthly:
+                  dayOfMonth: 1
+                  dayOfWeek: saturday
+                  isEnabled: false
+                  localTime: 10:00 PM
+                  months:
+                  - January
+                  - February
+                  - March
+                  - April
+                  - May
+                  - June
+                  - July
+                  - August
+                  - September
+                  - October
+                  - November
+                  - December
+                  dayNumberInMonth: Fourth
+                periodically:
+                  isEnabled: false
+                  periodicallyKind: Hours
+                  continuously:
+                    BackupWindow:
+                      days:
+                      - day: monday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: tuesday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: wednesday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: thursday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: friday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: saturday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                      - day: sunday
+                        hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                  frequency: 0
+                retry:
+                  awaitMinutes: 10
+                  isEnabled: true
+                  retryCount: 3
+                backupWindow:
+                  WindowSetting:
+                    days:
+                    - day: monday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: tuesday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: wednesday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: thursday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: friday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: saturday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    - day: sunday
+                      hours: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                  isEnabled: false
+                daily:
+                  dailyKind: Everyday
+                  days:
+                  - sunday
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  isEnabled: true
+                  localTime: 10:00 PM
+                isEnabled: true
+              description: Created by ENTERPRISE01\Administrator
+              isHighPriority: false
+            schema:
+              $ref: '#/components/schemas/JobSpec'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobModel'
+          description: Job has been created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Create Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - CreateJobs
+  /api/v1/jobs/states:
+    get:
+      description: The HTTP GET request to the `/api/v1/jobs/states` path allows you to get an array of all job states. The states include brief job information that you can also find under the **Jobs** node in the Veeam Backup & Replication console.
+      operationId: GetAllJobsStates
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: Number of job states to skip.
+        in: query
+        name: skip
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Maximum number of job states to return.
+        in: query
+        name: limit
+        schema:
+          format: int32
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Sorts job states by one of the state parameters.
+        in: query
+        name: orderColumn
+        schema:
+          $ref: '#/components/schemas/EJobStatesFiltersOrderColumn'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Sorts job states in the ascending order by the `orderColumn` parameter.
+        in: query
+        name: orderAsc
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by job ID.
+        in: query
+        name: idFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by the `nameFilter` pattern. The pattern can match any state parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+        in: query
+        name: nameFilter
+        schema:
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by job type.
+        in: query
+        name: typeFilter
+        schema:
+          $ref: '#/components/schemas/EJobType'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by status with which jobs must finish.
+        in: query
+        name: lastResultFilter
+        schema:
+          $ref: '#/components/schemas/ESessionResult'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by current status of the job.
+        in: query
+        name: statusFilter
+        schema:
+          $ref: '#/components/schemas/EJobStatus'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by workloads that jobs must process.
+        in: query
+        name: workloadFilter
+        schema:
+          $ref: '#/components/schemas/EJobWorkload'
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Returns job states for jobs that have run after the specified date and time.
+        in: query
+        name: lastRunAfterFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Returns job states for jobs that have not run after the specified date and time.
+        in: query
+        name: lastRunBeforeFilter
+        schema:
+          format: date-time
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: If *true*, Returns job states for jobs with high priority.
+        in: query
+        name: isHighPriorityJobFilter
+        schema:
+          type: boolean
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by repository ID.
+        in: query
+        name: repositoryIdFilter
+        schema:
+          format: uuid
+          type: string
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      - description: Filters job states by number of objects processed by the job.
+        in: query
+        name: objectsCountFilter
+        schema:
+          type: integer
+        x-veeam-spec:
+          $ref: '#/components/schemas/JobStatesFilters'
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                data:
+                - description: Created by GAMMA\Administrator
+                  id: 301450bc-34cd-4d2c-bfc3-8d269bb471be
+                  lastResult: None
+                  lastRun: '2022-02-04T21:40:34.473+03:00'
+                  name: AD Backup
+                  nextRun: null
+                  objectsCount: 1
+                  repositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+                  repositoryName: Default Backup Repository
+                  sessionId: dc98d2df-e845-46c4-bba1-57c3d020bf36
+                  status: running
+                  type: Backup
+                  workload: vm
+                - description: Created by GAMMA\Administrator
+                  id: 53b87378-7958-477d-8def-fbe6740d4b6f
+                  lastResult: Warning
+                  lastRun: '2021-02-20T06:53:17.747+03:00'
+                  name: Exchange Backup
+                  nextRun: null
+                  objectsCount: 1
+                  repositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+                  repositoryName: Default Backup Repository
+                  sessionId: 4c5f14a6-b883-4b83-891a-d520809e4284
+                  status: inactive
+                  type: Backup
+                  workload: vm
+                - description: Created by GAMMA\Administrator
+                  id: 75fc491a-d158-4380-a433-ebc42a28e4df
+                  lastResult: None
+                  lastRun: '2022-02-04T21:40:24.96+03:00'
+                  name: Oracle Backup
+                  nextRun: '2022-02-05T16:00:00+03:00'
+                  objectsCount: 1
+                  repositoryId: 49607f55-4cc4-4ea5-a2c9-e750318d0f34
+                  repositoryName: Storage 3
+                  sessionId: 433d8b8b-bcb7-4ce3-986e-7bf2a3731d01
+                  status: running
+                  type: Backup
+                  workload: application
+                pagination:
+                  limit: 200
+                  skip: 0
+                  total: 3
+                  count: 3
+              schema:
+                $ref: '#/components/schemas/JobStatesResult'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get All Job States
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - ViewJobs
+  /api/v1/jobs/{id}:
+    delete:
+      description: The HTTP DELETE request to the `/api/v1/jobs/{id}` path allows you to delete a job that has the specified `id`.
+      operationId: DeleteJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/Deleted'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Delete Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - DeleteJobs
+    get:
+      description: The HTTP GET request to the `/api/v1/jobs/{id}` path allows you to get a job that has the specified `id`.
+      operationId: GetJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                description: Created by GAMMA\Administrator
+                schedule:
+                  daily:
+                    dailyKind: Everyday
+                    days:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    isEnabled: true
+                    localTime: 4:00 PM
+                  monthly:
+                    dayOfMonth: 1
+                    dayOfWeek: saturday
+                    isEnabled: false
+                    localTime: 9:00 AM
+                    months:
+                    - January
+                    - February
+                    - March
+                    - April
+                    - May
+                    - June
+                    - July
+                    - August
+                    - September
+                    - October
+                    - November
+                    - December
+                    dayNumberInMonth: Fourth
+                  periodically:
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    frequency: 1
+                    isEnabled: false
+                    periodicallyKind: Hours
+                    startTimeWithinAnHour: 0
+                  retry:
+                    retryCount: 3
+                    awaitMinutes: 10
+                    isEnabled: true
+                  runAutomatically: true
+                  afterThisJob:
+                    isEnabled: false
+                  backupWindow:
+                    isEnabled: false
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  continuously:
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    isEnabled: false
+                virtualMachines:
+                  excludes:
+                    vms: []
+                    disks:
+                    - disks: []
+                      disksToProcess: AllDisks
+                      removeFromVMConfiguration: true
+                      vmObject:
+                        hostName: 172.17.52.34
+                        name: srv45
+                        objectId: vm-61281
+                        type: VirtualMachine
+                    templates:
+                      isEnabled: true
+                      excludeFromIncremental: true
+                  includes:
+                  - inventoryObject:
+                      hostName: 172.17.52.34
+                      name: srv45
+                      objectId: vm-61281
+                      type: VirtualMachine
+                    size: 152.5 GB
+                isHighPriority: false
+                guestProcessing:
+                  appAwareProcessing:
+                    appSettings:
+                    - exclusions:
+                        exclusionPolicy: disabled
+                        itemsList: []
+                      oracle:
+                        archiveLogs: preserve
+                        backupLogs: true
+                        backupMinsCount: 15
+                        credentialsId: null
+                        deleteGBsCount: null
+                        deleteHoursCount: null
+                        keepDaysCount: 15
+                        logShippingServers:
+                          autoSelection: true
+                          shippingServerIds: []
+                        retainLogBackups: untilBackupDeleted
+                        useGuestCredentials: true
+                      scripts:
+                        linuxScripts: null
+                        scriptProcessingMode: disableExec
+                        windowsScripts: null
+                      sql:
+                        backupMinsCount: null
+                        keepDaysCount: null
+                        logShippingServers: null
+                        logsProcessing: truncate
+                        retainLogBackups: null
+                      transactionLogs: process
+                      usePersistentGuestAgent: false
+                      vmObject:
+                        hostName: 172.17.52.34
+                        name: srv45
+                        objectId: vm-61281
+                        type: VirtualMachine
+                      vss: requireSuccess
+                    isEnabled: true
+                  guestCredentials:
+                    credsId: 6454c893-d5c6-4de8-be38-d984ea30dae4
+                    credsType: Standard
+                    credentialsPerMachine: []
+                  guestFSIndexing:
+                    indexingSettings: []
+                    isEnabled: false
+                  guestInteractionProxies:
+                    autoSelection: true
+                    proxyIds: []
+                storage:
+                  advancedSettings:
+                    scripts:
+                      dayOfWeek:
+                      - saturday
+                      periodicityType: BackupSessions
+                      postCommand:
+                        command: ''
+                        isEnabled: false
+                      preCommand:
+                        command: ''
+                        isEnabled: false
+                      runScriptEvery: 1
+                    storageIntegration:
+                      failoverToStandardBackup: false
+                      isEnabled: true
+                      limitProcessedVm: false
+                      limitProcessedVmCount: 10
+                    vSphere:
+                      changedBlockTracking:
+                        enableCBTautomatically: true
+                        isEnabled: true
+                        resetCBTonActiveFull: true
+                      enableVMWareToolsQuiescence: false
+                    activeFulls:
+                      isEnabled: false
+                      monthly:
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                        dayNumberInMonth: First
+                        dayOfMonths: 1
+                        dayOfWeek: monday
+                        isEnabled: false
+                      weekly:
+                        days:
+                        - saturday
+                        isEnabled: true
+                    backupModeType: Incremental
+                    fullBackupMaintenance:
+                      defragmentAndCompact:
+                        monthly:
+                          months:
+                          - January
+                          - February
+                          - March
+                          - April
+                          - May
+                          - June
+                          - July
+                          - August
+                          - September
+                          - October
+                          - November
+                          - December
+                          dayNumberInMonth: Last
+                          dayOfMonths: 1
+                          dayOfWeek: saturday
+                          isEnabled: true
+                        weekly:
+                          days:
+                          - saturday
+                          isEnabled: false
+                        isEnabled: false
+                      RemoveData:
+                        afterDays: 14
+                        isEnabled: false
+                    notifications:
+                      sendSNMPNotifications: false
+                      vmAttribute:
+                        notes: Notes
+                        appendToExisitingValue: true
+                        isEnabled: false
+                      emailNotifications:
+                        isEnabled: false
+                        recipients: []
+                    storageData:
+                      encryption:
+                        encryptionPasswordIdOrNull: 00000000-0000-0000-0000-000000000000
+                        isEnabled: false
+                      excludeDeletedFileBlocks: true
+                      excludeSwapFileBlocks: true
+                      storageOptimization: LocalTarget
+                      compressionLevel: Optimal
+                      enableInlineDataDedup: true
+                    synthenticFulls:
+                      isEnabled: false
+                      days:
+                      - saturday
+                    backupHealth:
+                      isEnabled: false
+                      monthly:
+                        dayNumberInMonth: Last
+                        dayOfMonths: 1
+                        dayOfWeek: friday
+                        isEnabled: true
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                      weekly:
+                        days:
+                        - friday
+                        isEnabled: false
+                  backupProxies:
+                    autoSelection: true
+                    proxyIds: []
+                  backupRepositoryId: 49607f55-4cc4-4ea5-a2c9-e750318d0f34
+                  gfsPolicy:
+                    weekly:
+                      desiredTime: sunday
+                      isEnabled: false
+                      keepForNumberOfWeeks: 1
+                    yearly:
+                      desiredTime: January
+                      isEnabled: false
+                      keepForNumberOfYears: 1
+                    isEnabled: false
+                    monthly:
+                      desiredTime: First
+                      isEnabled: false
+                      keepForNumberOfMonths: 1
+                  retentionPolicy:
+                    quantity: 7
+                    type: RestorePoints
+                isDisabled: false
+                id: 75fc491a-d158-4380-a433-ebc42a28e4df
+                name: Oracle Backup
+                type: Backup
+              schema:
+                $ref: '#/components/schemas/JobModel'
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Get Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - ViewJobs
+    put:
+      description: The HTTP PUT request to the `/api/v1/jobs/{id}` path allows you to edit a job that has the specified `id`.
+      operationId: UpdateJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              id: 53b87378-7958-477d-8def-fbe6740d4b6f
+              isDisabled: false
+              isHighPriority: true
+              schedule:
+                continuously:
+                  backupWindow:
+                    days:
+                    - day: sunday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: monday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: tuesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: wednesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: thursday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: friday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: saturday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  isEnabled: false
+                daily:
+                  days:
+                  - sunday
+                  - monday
+                  - tuesday
+                  - wednesday
+                  - thursday
+                  - friday
+                  - saturday
+                  isEnabled: true
+                  localTime: 10:00 PM
+                  dailyKind: Everyday
+                monthly:
+                  months:
+                  - January
+                  - February
+                  - March
+                  - April
+                  - May
+                  - June
+                  - July
+                  - August
+                  - September
+                  - October
+                  - November
+                  - December
+                  dayNumberInMonth: Fourth
+                  dayOfMonth: 1
+                  dayOfWeek: saturday
+                  isEnabled: false
+                  localTime: 10:00 PM
+                periodically:
+                  startTimeWithinAnHour: 0
+                  backupWindow:
+                    days:
+                    - day: sunday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: monday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: tuesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: wednesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: thursday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: friday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: saturday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  frequency: 1
+                  isEnabled: false
+                  periodicallyKind: Hours
+                retry:
+                  awaitMinutes: 10
+                  isEnabled: true
+                  retryCount: 3
+                runAutomatically: false
+                afterThisJob:
+                  isEnabled: false
+                backupWindow:
+                  backupWindow:
+                    days:
+                    - day: sunday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: monday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: tuesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: wednesday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: thursday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: friday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    - day: saturday
+                      hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                  isEnabled: false
+              name: Exchange Backup
+              storage:
+                gfsPolicy:
+                  isEnabled: false
+                  monthly:
+                    desiredTime: First
+                    isEnabled: false
+                    keepForNumberOfMonths: 1
+                  weekly:
+                    desiredTime: sunday
+                    isEnabled: false
+                    keepForNumberOfWeeks: 1
+                  yearly:
+                    keepForNumberOfYears: 1
+                    desiredTime: January
+                    isEnabled: false
+                retentionPolicy:
+                  quantity: 3
+                  type: RestorePoints
+                advancedSettings:
+                  backupModeType: Incremental
+                  fullBackupMaintenance:
+                    RemoveData:
+                      afterDays: 14
+                      isEnabled: false
+                    defragmentAndCompact:
+                      weekly:
+                        days:
+                        - saturday
+                        isEnabled: false
+                      isEnabled: false
+                      monthly:
+                        dayOfMonths: 1
+                        dayOfWeek: saturday
+                        isEnabled: true
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                        dayNumberInMonth: Last
+                  notifications:
+                    sendSNMPNotifications: false
+                    vmAttribute:
+                      appendToExisitingValue: true
+                      isEnabled: false
+                      notes: Notes
+                    emailNotifications:
+                      isEnabled: false
+                      recipients: []
+                  vSphere:
+                    changedBlockTracking:
+                      enableCBTautomatically: true
+                      isEnabled: true
+                      resetCBTonActiveFull: true
+                    enableVMWareToolsQuiescence: false
+                  activeFulls:
+                    isEnabled: false
+                    monthly:
+                      dayOfWeek: monday
+                      isEnabled: false
+                      months:
+                      - January
+                      - February
+                      - March
+                      - April
+                      - May
+                      - June
+                      - July
+                      - August
+                      - September
+                      - October
+                      - November
+                      - December
+                      dayNumberInMonth: First
+                      dayOfMonths: 1
+                    weekly:
+                      days:
+                      - saturday
+                      isEnabled: true
+                  backupHealth:
+                    isEnabled: false
+                    monthly:
+                      dayNumberInMonth: Last
+                      dayOfMonths: 1
+                      dayOfWeek: friday
+                      isEnabled: true
+                      months:
+                      - January
+                      - February
+                      - March
+                      - April
+                      - May
+                      - June
+                      - July
+                      - August
+                      - September
+                      - October
+                      - November
+                      - December
+                    weekly:
+                      isEnabled: false
+                      days:
+                      - friday
+                  storageIntegration:
+                    failoverToStandardBackup: false
+                    isEnabled: true
+                    limitProcessedVm: false
+                    limitProcessedVmCount: 10
+                  synthenticFulls:
+                    days:
+                    - saturday
+                    isEnabled: false
+                  scripts:
+                    dayOfWeek:
+                    - saturday
+                    periodicityType: BackupSessions
+                    postCommand:
+                      command: ''
+                      isEnabled: false
+                    preCommand:
+                      command: ''
+                      isEnabled: false
+                    runScriptEvery: 1
+                  storageData:
+                    compressionLevel: Optimal
+                    enableInlineDataDedup: true
+                    encryption:
+                      encryptionPasswordIdOrNull: 00000000-0000-0000-0000-000000000000
+                      isEnabled: false
+                    excludeDeletedFileBlocks: true
+                    excludeSwapFileBlocks: true
+                    storageOptimization: LocalTarget
+                backupProxies:
+                  autoSelection: true
+                  proxyIds: []
+                backupRepositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+              guestProcessing:
+                appAwareProcessing:
+                  appSettings:
+                  - exclusions:
+                      exclusionPolicy: disabled
+                      itemsList: []
+                    oracle:
+                      archiveLogs: preserve
+                      backupLogs: false
+                      backupMinsCount: null
+                      credentialsId: null
+                      deleteGBsCount: null
+                      deleteHoursCount: null
+                      keepDaysCount: null
+                      logShippingServers: null
+                      retainLogBackups: null
+                      useGuestCredentials: true
+                    scripts:
+                      linuxScripts: null
+                      scriptProcessingMode: disableExec
+                      windowsScripts: null
+                    sql:
+                      backupMinsCount: null
+                      keepDaysCount: null
+                      logShippingServers: null
+                      logsProcessing: truncate
+                      retainLogBackups: null
+                    transactionLogs: process
+                    usePersistentGuestAgent: false
+                    vmObject:
+                      hostName: 172.17.42.92
+                      name: DLExch
+                      objectId: '516'
+                      type: VirtualMachine
+                    vss: requireSuccess
+                  isEnabled: true
+                guestCredentials:
+                  credentialsPerMachine: []
+                  credsId: d38995da-75ec-4ada-ac31-2138d7a0351f
+                  credsType: Standard
+                guestFSIndexing:
+                  indexingSettings: []
+                  isEnabled: false
+                guestInteractionProxies:
+                  autoSelection: true
+                  proxyIds: []
+              type: Backup
+              description: Created by GAMMA\Administrator
+              virtualMachines:
+                excludes:
+                  disks:
+                  - disks: []
+                    disksToProcess: AllDisks
+                    removeFromVMConfiguration: true
+                    vmObject:
+                      hostName: 172.17.42.92
+                      name: DLExch
+                      objectId: '516'
+                      type: VirtualMachine
+                  templates:
+                    excludeFromIncremental: true
+                    isEnabled: true
+                  vms: []
+                includes:
+                - inventoryObject:
+                    hostName: 172.17.42.92
+                    name: DLExch
+                    objectId: '516'
+                    type: VirtualMachine
+                  size: 170 GB
+            schema:
+              $ref: '#/components/schemas/JobModel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                description: Created by GAMMA\Administrator
+                virtualMachines:
+                  includes:
+                  - inventoryObject:
+                      hostName: 172.17.42.92
+                      name: DLExch
+                      objectId: '516'
+                      type: VirtualMachine
+                    size: 178.1 GB
+                  excludes:
+                    disks:
+                    - disks: []
+                      disksToProcess: AllDisks
+                      removeFromVMConfiguration: true
+                      vmObject:
+                        hostName: 172.17.42.92
+                        name: DLExch
+                        objectId: '516'
+                        type: VirtualMachine
+                    templates:
+                      excludeFromIncremental: true
+                      isEnabled: true
+                    vms: []
+                guestProcessing:
+                  appAwareProcessing:
+                    appSettings:
+                    - exclusions:
+                        exclusionPolicy: disabled
+                        itemsList: []
+                      oracle:
+                        archiveLogs: preserve
+                        backupLogs: false
+                        backupMinsCount: null
+                        credentialsId: null
+                        deleteGBsCount: null
+                        deleteHoursCount: null
+                        keepDaysCount: null
+                        logShippingServers: null
+                        retainLogBackups: null
+                        useGuestCredentials: true
+                      scripts:
+                        linuxScripts: null
+                        scriptProcessingMode: disableExec
+                        windowsScripts: null
+                      sql:
+                        backupMinsCount: null
+                        keepDaysCount: null
+                        logShippingServers: null
+                        logsProcessing: truncate
+                        retainLogBackups: null
+                      transactionLogs: process
+                      usePersistentGuestAgent: false
+                      vmObject:
+                        hostName: 172.17.42.92
+                        name: DLExch
+                        objectId: '516'
+                        type: VirtualMachine
+                      vss: requireSuccess
+                    isEnabled: true
+                  guestCredentials:
+                    credentialsPerMachine: []
+                    credsId: d38995da-75ec-4ada-ac31-2138d7a0351f
+                    credsType: Standard
+                  guestFSIndexing:
+                    indexingSettings: []
+                    isEnabled: false
+                  guestInteractionProxies:
+                    autoSelection: true
+                    proxyIds: []
+                name: Exchange Backup
+                storage:
+                  advancedSettings:
+                    vSphere:
+                      enableVMWareToolsQuiescence: false
+                      changedBlockTracking:
+                        enableCBTautomatically: true
+                        isEnabled: true
+                        resetCBTonActiveFull: true
+                    activeFulls:
+                      isEnabled: false
+                      monthly:
+                        dayNumberInMonth: First
+                        dayOfMonths: 1
+                        dayOfWeek: monday
+                        isEnabled: false
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                      weekly:
+                        days:
+                        - saturday
+                        isEnabled: true
+                    backupHealth:
+                      isEnabled: false
+                      monthly:
+                        isEnabled: true
+                        months:
+                        - January
+                        - February
+                        - March
+                        - April
+                        - May
+                        - June
+                        - July
+                        - August
+                        - September
+                        - October
+                        - November
+                        - December
+                        dayNumberInMonth: Last
+                        dayOfMonths: 1
+                        dayOfWeek: friday
+                      weekly:
+                        days:
+                        - friday
+                        isEnabled: false
+                    backupModeType: Incremental
+                    notifications:
+                      vmAttribute:
+                        isEnabled: false
+                        notes: Notes
+                        appendToExisitingValue: true
+                      emailNotifications:
+                        isEnabled: false
+                        recipients: []
+                      sendSNMPNotifications: false
+                    storageData:
+                      excludeDeletedFileBlocks: true
+                      excludeSwapFileBlocks: true
+                      storageOptimization: LocalTarget
+                      compressionLevel: Optimal
+                      enableInlineDataDedup: true
+                      encryption:
+                        encryptionPasswordIdOrNull: 00000000-0000-0000-0000-000000000000
+                        isEnabled: false
+                    storageIntegration:
+                      failoverToStandardBackup: false
+                      isEnabled: true
+                      limitProcessedVm: false
+                      limitProcessedVmCount: 10
+                    fullBackupMaintenance:
+                      RemoveData:
+                        afterDays: 14
+                        isEnabled: false
+                      defragmentAndCompact:
+                        isEnabled: false
+                        monthly:
+                          dayOfMonths: 1
+                          dayOfWeek: saturday
+                          isEnabled: true
+                          months:
+                          - January
+                          - February
+                          - March
+                          - April
+                          - May
+                          - June
+                          - July
+                          - August
+                          - September
+                          - October
+                          - November
+                          - December
+                          dayNumberInMonth: Last
+                        weekly:
+                          days:
+                          - saturday
+                          isEnabled: false
+                    scripts:
+                      runScriptEvery: 1
+                      dayOfWeek:
+                      - saturday
+                      periodicityType: BackupSessions
+                      postCommand:
+                        command: ''
+                        isEnabled: false
+                      preCommand:
+                        command: ''
+                        isEnabled: false
+                    synthenticFulls:
+                      days:
+                      - saturday
+                      isEnabled: false
+                  backupProxies:
+                    autoSelection: true
+                    proxyIds: []
+                  backupRepositoryId: 88788f9e-d8f5-4eb4-bc4f-9b3f5403bcec
+                  gfsPolicy:
+                    isEnabled: false
+                    monthly:
+                      desiredTime: First
+                      isEnabled: false
+                      keepForNumberOfMonths: 1
+                    weekly:
+                      desiredTime: sunday
+                      isEnabled: false
+                      keepForNumberOfWeeks: 1
+                    yearly:
+                      desiredTime: January
+                      isEnabled: false
+                      keepForNumberOfYears: 1
+                  retentionPolicy:
+                    quantity: 3
+                    type: RestorePoints
+                type: Backup
+                isDisabled: false
+                isHighPriority: true
+                id: 53b87378-7958-477d-8def-fbe6740d4b6f
+                schedule:
+                  runAutomatically: false
+                  afterThisJob:
+                    isEnabled: false
+                  backupWindow:
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    isEnabled: false
+                  continuously:
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    isEnabled: false
+                  daily:
+                    dailyKind: Everyday
+                    days:
+                    - sunday
+                    - monday
+                    - tuesday
+                    - wednesday
+                    - thursday
+                    - friday
+                    - saturday
+                    isEnabled: true
+                    localTime: 10:00 PM
+                  monthly:
+                    dayOfMonth: 1
+                    dayOfWeek: saturday
+                    isEnabled: false
+                    localTime: 10:00 PM
+                    months:
+                    - January
+                    - February
+                    - March
+                    - April
+                    - May
+                    - June
+                    - July
+                    - August
+                    - September
+                    - October
+                    - November
+                    - December
+                    dayNumberInMonth: Fourth
+                  periodically:
+                    backupWindow:
+                      days:
+                      - day: sunday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: monday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: tuesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: wednesday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: thursday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: friday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                      - day: saturday
+                        hours: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+                    frequency: 1
+                    isEnabled: false
+                    periodicallyKind: Hours
+                    startTimeWithinAnHour: 0
+                  retry:
+                    awaitMinutes: 10
+                    isEnabled: true
+                    retryCount: 3
+              schema:
+                $ref: '#/components/schemas/JobModel'
+          description: Job has been updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Edit Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - UpdateJobs
+  /api/v1/jobs/{id}/disable:
+    post:
+      description: The HTTP POST request to the `/api/v1/jobs/{id}/disable` path allows you to disable a job that has the specified `id`.
+      operationId: DisableJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: Job has been disabled.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Disable Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - DisableJobs
+  /api/v1/jobs/{id}/enable:
+    post:
+      description: The HTTP POST request to the `/api/v1/jobs/{id}/enable` path allows you to enable a job that has the specified `id`.
+      operationId: EnableJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmptySuccessResponse'
+          description: Job has been enabled.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Enable Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - EnableJobs
+  /api/v1/jobs/{id}/start:
+    post:
+      description: The HTTP POST request to the `/api/v1/jobs/{id}/start` path allows you to start a job that has the specified `id`.
+      operationId: StartJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              performActiveFull: false
+              startChainedJobs: false
+            schema:
+              $ref: '#/components/schemas/JobStartSpec'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                name: Oracle Backup
+                id: b1380736-18a9-4fac-adfe-20abc570e8de
+                progressPercent: 0
+                usn: 0
+                state: Starting
+                activityId: 75fc491a-d158-4380-a433-ebc42a28e4df
+                creationTime: '2022-02-04T20:46:49.067+03:00'
+                sessionType: Job
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Job session has been started.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Start Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - StartJobs
+  /api/v1/jobs/{id}/stop:
+    post:
+      description: The HTTP POST request to the `/api/v1/jobs/{id}/stop` path allows you to stop a job that has the specified `id`.
+      operationId: StopJob
+      parameters:
+      - $ref: '#/components/parameters/apiVersionParam'
+      - description: ID of the job.
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              gracefullStop: true
+            schema:
+              $ref: '#/components/schemas/JobStopSpec'
+        required: false
+      responses:
+        '201':
+          content:
+            application/json:
+              example:
+                creationTime: '2022-02-04T20:52:06.387+03:00'
+                state: Working
+                id: 3b5a044b-f38d-4ae8-85d1-38872095a537
+                name: Oracle Backup
+                usn: 0
+                activityId: 75fc491a-d158-4380-a433-ebc42a28e4df
+                progressPercent: 0
+                sessionType: Job
+              schema:
+                $ref: '#/components/schemas/SessionModel'
+          description: Job session has been stopped.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      summary: Stop Job
+      tags:
+      - Jobs
+      x-veeam-authorize:
+        claims:
+        - StopJobs
+components:
+  schemas:
+    VmwareObjectDiskModel:
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            description: ID of the disk.
+            type: string
+          type: array
+        disksToProcess:
+          $ref: '#/components/schemas/EVmwareDisksTypeToProcess'
+        removeFromVMConfiguration:
+          description: If *true*, the disk is removed from VM configuration.
+          type: boolean
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - disks
+      - disksToProcess
+      - vmObject
+      type: object
+    BackupLinuxScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Linux VMs.
+      properties:
+        postThawScript:
+          description: Path to a post-thaw script.
+          type: string
+        preFreezeScript:
+          description: Path to a pre-freeze script.
+          type: string
+      type: object
+    GFSPolicySettingsWeeklyModel:
+      description: Weekly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          description: If *true*, the weekly GFS retention policy is enabled.
+          type: boolean
+        keepForNumberOfWeeks:
+          description: Number of weeks to keep full backups for archival purposes. Possible values are from 1 through 9999.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    JobStartSpec:
+      properties:
+        performActiveFull:
+          default: false
+          description: If *true*, Veeam Backup & Replication will perform an active full backup.
+          type: boolean
+        startChainedJobs:
+          default: false
+          description: If *true*, Veeam Backup & Replication will start chained jobs as well.
+          type: boolean
+      required:
+      - performActiveFull
+      type: object
+    JobScriptsSettingsModel:
+      description: Script settings.
+      properties:
+        dayOfWeek:
+          description: Days of the week when the scripts must be executed.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        periodicityType:
+          $ref: '#/components/schemas/EScriptPeriodicityType'
+        postCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        preCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        runScriptEvery:
+          description: Number of the backup job session after which the scripts must be executed.
+          type: integer
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EVmwareDisksTypeToProcess:
+      description: Type of disk selection.
+      enum:
+      - AllDisks
+      - SystemOnly
+      - SelectedDisks
+      type: string
+    EDayNumberInMonth:
+      description: Week day number in the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    EJobWorkload:
+      description: Workload which the job must process.
+      enum:
+      - application
+      - cloudVm
+      - file
+      - server
+      - workstation
+      - vm
+      type: string
+    EJobFiltersOrderColumn:
+      description: Orders jobs by the specified column.
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    GFSPolicySettingsYearlyModel:
+      description: Yearly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/EMonth'
+        isEnabled:
+          description: If *true*, the yearly GFS retention policy is enabled.
+          type: boolean
+        keepForNumberOfYears:
+          description: Number of years to keep full backups for archival purposes. Possible values are from 1 through 999.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    BackupJobExclusions:
+      description: Objects excluded from the backup.
+      properties:
+        disks:
+          description: Array of VM disks excluded from the backup.
+          items:
+            $ref: '#/components/schemas/VmwareObjectDiskModel'
+          type: array
+        templates:
+          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
+        vms:
+          description: Array of VMs excluded from the backup.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+      type: object
+    BackupFSExclusionsModel:
+      description: VM guest OS file exclusion.
+      properties:
+        exclusionPolicy:
+          $ref: '#/components/schemas/EBackupExclusionPolicy'
+        itemsList:
+          description: Array of files and folders. Full paths to files and folders, environmental variables and file masks with the asterisk (*) and question mark (?) characters can be used.
+          items:
+            type: string
+          type: array
+      required:
+      - exclusionPolicy
+      type: object
+    BackupScheduleModel:
+      description: Job scheduling options.
+      properties:
+        afterThisJob:
+          $ref: '#/components/schemas/ScheduleAfterThisJobModel'
+        backupWindow:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        continuously:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+        periodically:
+          $ref: '#/components/schemas/SchedulePeriodicallyModel'
+        retry:
+          $ref: '#/components/schemas/ScheduleRetryModel'
+        runAutomatically:
+          default: false
+          description: If *true*, job scheduling is enabled.
+          type: boolean
+      required:
+      - runAutomatically
+      type: object
+    AdvancedStorageScheduleWeeklyModel:
+      description: Weekly schedule settings.
+      properties:
+        days:
+          description: Days of the week when the operation is performed.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: false
+          description: If *true*, the weekly schedule is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    BackupStorageSettingModel:
+      description: Storage settings.
+      properties:
+        compressionLevel:
+          $ref: '#/components/schemas/ECompressionLevel'
+        enableInlineDataDedup:
+          description: If *true*, Veeam Backup & Replication deduplicates VM data before storing it in the backup repository.
+          type: boolean
+        encryption:
+          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
+        excludeDeletedFileBlocks:
+          description: If *true*, Veeam Backup & Replication does not copy deleted file blocks.
+          type: boolean
+        excludeSwapFileBlocks:
+          description: If *true*, Veeam Backup & Replication excludes swap file blocks from processing.
+          type: boolean
+        storageOptimization:
+          $ref: '#/components/schemas/EStorageOptimization'
+      type: object
+    EBackupOracleLogsSettings:
+      description: Type of archived logs processing.
+      enum:
+      - preserve
+      - deleteExpiredHours
+      - deleteExpiredGBs
+      type: string
+    EPeriodicallyKinds:
+      description: Time unit for periodic job scheduling.
+      enum:
+      - Hours
+      - Minutes
+      - Seconds
+      - Days
+      type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    BackupJobModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseJobModel'
+      - properties:
+          guestProcessing:
+            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
+          isHighPriority:
+            description: If *true*, the job has a high priority in getting backup infrastructure resources.
+            type: boolean
+          schedule:
+            $ref: '#/components/schemas/BackupScheduleModel'
+          storage:
+            $ref: '#/components/schemas/BackupJobStorageModel'
+          virtualMachines:
+            $ref: '#/components/schemas/BackupJobVirtualMachinesModel'
+        required:
+        - guestProcessing
+        - isHighPriority
+        - schedule
+        - storage
+        - virtualMachines
+        type: object
+    ESennightOfMonth:
+      description: Sennight of the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Fifth
+      - Last
+      type: string
+    BackupJobSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseJobSpec'
+      - properties:
+          guestProcessing:
+            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
+          isHighPriority:
+            default: false
+            description: If *true*, the job has a high priority in getting backup infrastructure resources.
+            type: boolean
+          schedule:
+            $ref: '#/components/schemas/BackupScheduleModel'
+          storage:
+            $ref: '#/components/schemas/BackupJobStorageModel'
+          virtualMachines:
+            $ref: '#/components/schemas/BackupJobVirtualMachinesSpec'
+        required:
+        - guestProcessing
+        - isHighPriority
+        - schedule
+        - storage
+        - virtualMachines
+        type: object
+    BackupJobStorageModel:
+      description: Backup storage settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/BackupJobAdvancedSettingsModel'
+        backupProxies:
+          $ref: '#/components/schemas/BackupProxiesSettingsModel'
+        backupRepositoryId:
+          description: ID of the backup repository.
+          format: uuid
+          type: string
+        gfsPolicy:
+          $ref: '#/components/schemas/GFSPolicySettingsModel'
+        retentionPolicy:
+          $ref: '#/components/schemas/BackupJobRetentionPolicySettingsModel'
+      required:
+      - backupProxies
+      - backupRepositoryId
+      - retentionPolicy
+      type: object
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ECredentialsType:
+      description: Credentials type.
+      enum:
+      - Standard
+      - Linux
+      type: string
+    EGuestFSIndexingMode:
+      description: Indexing mode.
+      enum:
+      - disable
+      - indexAll
+      - indexAllExcept
+      - indexOnly
+      type: string
+    BackupJobGuestProcessingModel:
+      description: Guest processing settings.
+      properties:
+        appAwareProcessing:
+          $ref: '#/components/schemas/BackupApplicationAwareProcessingModel'
+        guestCredentials:
+          $ref: '#/components/schemas/GuestOsCredentialsModel'
+        guestFSIndexing:
+          $ref: '#/components/schemas/GuestFileSystemIndexingModel'
+        guestInteractionProxies:
+          $ref: '#/components/schemas/GuestInteractionProxiesSettingsModel'
+      required:
+      - appAwareProcessing
+      - guestFSIndexing
+      type: object
+    JobStatesResult:
+      properties:
+        data:
+          description: Array of job states.
+          items:
+            $ref: '#/components/schemas/JobStateModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupSQLSettingsModel:
+      description: Microsoft SQL Server transaction log settings.
+      properties:
+        backupMinsCount:
+          description: Frequency of transaction log backup, in minutes.
+          type: integer
+        keepDaysCount:
+          description: Number of days to keep transaction logs in the backup repository.
+          type: integer
+        logShippingServers:
+          $ref: '#/components/schemas/BackupLogShippingServersModel'
+        logsProcessing:
+          $ref: '#/components/schemas/ESQLLogsProcessing'
+        retainLogBackups:
+          $ref: '#/components/schemas/ERetainLogBackupsType'
+      required:
+      - logsProcessing
+      type: object
+    NotificationVmAttributeSettingsModel:
+      description: VM attribute settings.
+      properties:
+        appendToExisitingValue:
+          description: If *true*, information about successfully performed backup is appended to the existing value of the attribute added by the user.
+          type: boolean
+        isEnabled:
+          description: If *true*, information about successfully performed backup is written to a VM attribute.
+          type: boolean
+        notes:
+          description: Name of the VM attribute.
+          type: string
+      required:
+      - isEnabled
+      type: object
+    ERetentionPolicyType:
+      description: Type of the retention policy.
+      enum:
+      - RestorePoints
+      - Days
+      type: string
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    SchedulePeriodicallyModel:
+      description: Periodic scheduling options.
+      properties:
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        frequency:
+          description: Number of time units that defines the time interval.
+          type: integer
+        isEnabled:
+          default: false
+          description: If *true*, periodic schedule is enabled.
+          type: boolean
+        periodicallyKind:
+          $ref: '#/components/schemas/EPeriodicallyKinds'
+        startTimeWithinAnHour:
+          description: Start time within an hour, in minutes.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    BaseJobModel:
+      properties:
+        description:
+          description: Description of the job.
+          type: string
+        id:
+          description: ID of the job.
+          format: uuid
+          type: string
+        isDisabled:
+          description: If *true*, the job is disabled.
+          type: boolean
+        name:
+          description: Name of the job.
+          type: string
+        type:
+          $ref: '#/components/schemas/EJobType'
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    EBackupModeType:
+      description: Type of the backup method used to create a restore point.
+      enum:
+      - Full
+      - Incremental
+      - ReverseIncremental
+      - Transofrm
+      - TransformForeverIncremental
+      type: string
+    BackupJobVirtualMachinesSpec:
+      description: Arrays of objects that you want to back up or exclude from the backup.
+      properties:
+        excludes:
+          $ref: '#/components/schemas/BackupJobExclusionsSpec'
+        includes:
+          description: Array of objects that you want to back up.
+          items:
+            $ref: '#/components/schemas/VmwareObjectModel'
+          type: array
+      required:
+      - includes
+      type: object
+    BackupApplicationSettingsModel:
+      properties:
+        exclusions:
+          $ref: '#/components/schemas/BackupFSExclusionsModel'
+        oracle:
+          $ref: '#/components/schemas/BackupOracleSettingsModel'
+        scripts:
+          $ref: '#/components/schemas/BackupScriptSettingsModel'
+        sql:
+          $ref: '#/components/schemas/BackupSQLSettingsModel'
+        transactionLogs:
+          $ref: '#/components/schemas/ETransactionLogsSettings'
+        usePersistentGuestAgent:
+          description: If *true*, persistent guest agent is used.
+          type: boolean
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        vss:
+          $ref: '#/components/schemas/EApplicationSettingsVSS'
+      required:
+      - vmObject
+      - vss
+      type: object
+    FullBackupMaintenanceRemoveDataModel:
+      description: Backup data setting for deleted VMs.
+      properties:
+        afterDays:
+          description: Number of days.
+          type: integer
+        isEnabled:
+          description: If *true*, Veeam Backup & Replication keeps the backup data of deleted VMs for the `afterDays` number of days.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    BackupProxiesSettingsModel:
+      description: Backup proxy settings.
+      properties:
+        autoSelection:
+          default: true
+          description: If *true*, backup proxies are detected and assigned automatically.
+          type: boolean
+        proxyIds:
+          description: Array of proxy IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+      required:
+      - autoSelection
+      type: object
+    GuestFileSystemIndexingModel:
+      description: VM guest OS file indexing.
+      properties:
+        indexingSettings:
+          description: Array of VMs with guest OS file indexing options.
+          items:
+            $ref: '#/components/schemas/BackupIndexingSettingsModel'
+          type: array
+        isEnabled:
+          description: If *true*, file indexing is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    GuestOsCredentialsModel:
+      description: VM custom credentials.
+      properties:
+        credentialsPerMachine:
+          description: Individual credentials for VMs.
+          items:
+            $ref: '#/components/schemas/GuestOsCredentialsPerMachineModel'
+          type: array
+          uniqueItems: true
+        credsId:
+          description: Credentials ID for Microsoft Windows VMs.
+          format: uuid
+          type: string
+        credsType:
+          $ref: '#/components/schemas/ECredentialsType'
+      required:
+      - credsId
+      - credsType
+      type: object
+    JobStatesFilters:
+      description: Filters jobs by the specified parameters.
+      properties:
+        idFilter:
+          format: uuid
+          type: string
+        isHighPriorityJobFilter:
+          type: boolean
+        lastResultFilter:
+          $ref: '#/components/schemas/ESessionResult'
+        lastRunAfterFilter:
+          format: date-time
+          type: string
+        lastRunBeforeFilter:
+          format: date-time
+          type: string
+        limit:
+          description: Returns the specified number of jobs.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters jobs by the `nameFilter` pattern. The pattern can match any job state parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        objectsCountFilter:
+          type: integer
+        orderAsc:
+          description: Sorts jobs in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EJobStatesFiltersOrderColumn'
+        repositoryIdFilter:
+          format: uuid
+          type: string
+        skip:
+          description: Skips the specified number of jobs.
+          format: int32
+          type: integer
+        statusFilter:
+          $ref: '#/components/schemas/EJobStatus'
+        typeFilter:
+          $ref: '#/components/schemas/EJobType'
+        workloadFilter:
+          $ref: '#/components/schemas/EJobWorkload'
+      type: object
+    ERetainLogBackupsType:
+      description: Retention policy for the logs stored in the backup repository.
+      enum:
+      - untilBackupDeleted
+      - KeepOnlyDays
+      type: string
+    ActiveFullSettingsModel:
+      description: Active full backup settings.
+      properties:
+        isEnabled:
+          description: If *true*, active full backups are enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    EApplicationSettingsVSS:
+      description: Behavior scenario for application-aware processing.
+      enum:
+      - requireSuccess
+      - ignoreFailures
+      - disabled
+      type: string
+    AdvancedStorageScheduleMonthlyModel:
+      description: Monthly schedule settings.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonths:
+          description: Day of the month when the operation is performed.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          description: If *true*, the monthly schedule is enabled.
+          type: boolean
+        months:
+          description: Months when the operation is performed.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    BackupIndexingSettingsModel:
+      properties:
+        LinuxIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        WindowsIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - vmObject
+      type: object
+    GFSPolicySettingsModel:
+      description: GFS retention policy settings.
+      properties:
+        isEnabled:
+          description: If *true*, the long-term (GFS) retention policy is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/GFSPolicySettingsMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/GFSPolicySettingsWeeklyModel'
+        yearly:
+          $ref: '#/components/schemas/GFSPolicySettingsYearlyModel'
+      required:
+      - isEnabled
+      type: object
+    BackupStorageSettingsEncryptionModel:
+      description: Encryption of backup files.
+      properties:
+        encryptionPasswordIdOrNull:
+          description: ID of the password used for encryption. The value is *null* for exported objects.
+          format: uuid
+          type: string
+        encryptionPasswordTag:
+          description: Tag used to identify the password.
+          type: string
+        isEnabled:
+          description: If *true*, the content of backup files is encrypted.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    FullBackupMaintenanceModel:
+      description: Maintenance settings for full backup files.
+      properties:
+        RemoveData:
+          $ref: '#/components/schemas/FullBackupMaintenanceRemoveDataModel'
+        defragmentAndCompact:
+          $ref: '#/components/schemas/FullBackupMaintenanceDefragmentAndCompactModel'
+      type: object
+    JobsFilters:
+      description: Filters jobs by the specified parameters.
+      properties:
+        limit:
+          description: Returns the specified number of jobs.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters jobs by the `nameFilter` pattern. The pattern can match any job parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        orderAsc:
+          description: Sorts jobs in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EJobFiltersOrderColumn'
+        skip:
+          description: Skips the specified number of jobs.
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EJobType'
+      type: object
+    FullBackupMaintenanceDefragmentAndCompactModel:
+      description: Compact operation settings.
+      properties:
+        isEnabled:
+          description: If *true*, Veeam Backup & Replication compacts full backup files.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    ETransactionLogsSettings:
+      description: Transaction logs settings that define whether copy-only backups must be created, or transaction logs for Microsoft Exchange, Microsoft SQL and Oracle VMs must be processed.<br> If transaction log processing is selected, specify the following parameters:<ul> <li>[For Microsoft SQL Server VMs] Microsoft SQL Server transaction log settings</li> <li>[For Oracle VMs] Oracle archived log settings</li></ul>
+      enum:
+      - process
+      - copyOnly
+      type: string
+    EJobStatesFiltersOrderColumn:
+      description: Orders job states by the specified column.
+      enum:
+      - Name
+      - Type
+      - Status
+      - LastRun
+      - LastResult
+      - NextRun
+      - Description
+      - RepositoryId
+      - ObjectsCount
+      type: string
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    BackupOracleSettingsModel:
+      description: Oracle archived log settings.
+      properties:
+        archiveLogs:
+          $ref: '#/components/schemas/EBackupOracleLogsSettings'
+        backupLogs:
+          description: If *true*, archived logs are backed up.
+          type: boolean
+        backupMinsCount:
+          description: Frequency of archived log backup, in minutes.
+          type: integer
+        credentialsId:
+          description: ID of the credentials record that is used if `useGuestCredentials` is *false*.
+          format: uuid
+          type: string
+        deleteGBsCount:
+          description: Maximum size for archived logs in GB. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredGBs*.
+          type: integer
+        deleteHoursCount:
+          description: Time period in hours to keep archived logs. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredHours*.
+          type: integer
+        keepDaysCount:
+          description: Number of days to keep archived logs.
+          type: integer
+        logShippingServers:
+          $ref: '#/components/schemas/BackupLogShippingServersModel'
+        retainLogBackups:
+          $ref: '#/components/schemas/ERetainLogBackupsType'
+        useGuestCredentials:
+          description: If *true*, Veeam Backup & Replication uses credentials specified in the guest processing settings.
+          type: boolean
+      required:
+      - archiveLogs
+      - useGuestCredentials
+      type: object
+    JobsResult:
+      properties:
+        data:
+          description: Array of jobs.
+          items:
+            $ref: '#/components/schemas/JobModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    PrimaryStorageIntegrationSettingsModel:
+      description: Primary storage integration settings for the backup job.
+      properties:
+        failoverToStandardBackup:
+          description: If *true*, failover to the regular VM processing mode is enabled. In this case, if backup from storage snapshot fails, VM snapshots are used.
+          type: boolean
+        isEnabled:
+          description: If *true*, the primary storage integration is enabled. In this case, storage snapshots (instead of VM snapshots) are used for VM data processing.
+          type: boolean
+        limitProcessedVm:
+          description: If *true*, the number of processed VMs per storage snapshot is limited.
+          type: boolean
+        limitProcessedVmCount:
+          description: Number of processed VMs per storage snapshot.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    EStorageOptimization:
+      description: Storage optimization that depends on the target type.
+      enum:
+      - LocalTargetLarge
+      - LocalTarget
+      - LANTarget
+      - WANTarget
+      - LocalTargetLarge8192
+      - LocalTargetLarge4096
+      type: string
+    ScheduleRetryModel:
+      description: Retry options.
+      properties:
+        awaitMinutes:
+          default: 10
+          description: Time interval between job retries in minutes. Must be greater than zero.
+          type: integer
+        isEnabled:
+          default: false
+          description: If *true*, retry options are enabled.
+          type: boolean
+        retryCount:
+          default: 3
+          description: Number of retries set for the job. Must be greater than zero.
+          type: integer
+      type: object
+    JobStopSpec:
+      properties:
+        gracefullStop:
+          default: true
+          description: If *true*, Veeam Backup & Replication will produce a new restore point for those VMs that have already been processed and for VMs that are being processed at the moment.
+          type: boolean
+      required:
+      - gracefullStop
+      type: object
+    JobStateModel:
+      properties:
+        description:
+          description: Description of the job.
+          type: string
+        id:
+          description: ID of the job.
+          format: uuid
+          type: string
+        lastResult:
+          $ref: '#/components/schemas/ESessionResult'
+        lastRun:
+          description: Last run of the job.
+          format: date-time
+          type: string
+        name:
+          description: Name of the job.
+          type: string
+        nextRun:
+          description: Next run of the job.
+          format: date-time
+          type: string
+        objectsCount:
+          description: Number of objects processed by the job.
+          type: integer
+        repositoryId:
+          description: ID of the backup repository.
+          format: uuid
+          type: string
+        repositoryName:
+          description: Name of the backup repository.
+          type: string
+        sessionId:
+          description: ID of the last job session.
+          format: uuid
+          type: string
+        status:
+          $ref: '#/components/schemas/EJobStatus'
+        type:
+          $ref: '#/components/schemas/EJobType'
+        workload:
+          $ref: '#/components/schemas/EJobWorkload'
+      required:
+      - id
+      - name
+      - type
+      - description
+      - status
+      - lastResult
+      - workload
+      - objectsCount
+      type: object
+    EBackupExclusionPolicy:
+      description: Exclusion policy.
+      enum:
+      - disabled
+      - excludeOnly
+      - includeOnly
+      type: string
+    EBackupScriptProcessingMode:
+      description: Scenario for scripts execution.
+      enum:
+      - disableExec
+      - ignoreExecFailures
+      - requireSuccess
+      type: string
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    EEmailNotificationType:
+      description: Type of email notification settings (global notification settings specified for the backup server, or custom notification settings specified for this job).
+      enum:
+      - UseGlobalNotificationSettings
+      - UseCustomNotificationSettings
+      type: string
+    BackupLogShippingServersModel:
+      description: Log shipping server used to transport logs.
+      properties:
+        autoSelection:
+          description: If *true*, Veeam Backup & Replication chooses an optimal log shipping server automatically.
+          type: boolean
+        shippingServerIds:
+          description: Array of servers that are explicitly selected for log shipping.
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - autoSelection
+      type: object
+    ESQLLogsProcessing:
+      description: Type of transaction logs processing.
+      enum:
+      - truncate
+      - preserve
+      - backup
+      - neverTruncate
+      type: string
+    EScriptPeriodicityType:
+      description: Type of script periodicity.
+      enum:
+      - Days
+      - BackupSessions
+      type: string
+    SyntheticFullSettingsModel:
+      description: Synthetic full backup settings.
+      properties:
+        isEnabled:
+          description: If *true*, active full backups are enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    EmailNotificationSettingsModel:
+      description: Email notification settings for the backup job.
+      properties:
+        customNotificationSettings:
+          $ref: '#/components/schemas/EmailCustomNotificationType'
+        isEnabled:
+          description: If *true*, email notifications are enabled for this job.
+          type: boolean
+        notificationType:
+          $ref: '#/components/schemas/EEmailNotificationType'
+        recipients:
+          description: Array of recipient’s email addresses.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    ScheduleAfterThisJobModel:
+      description: Job chaining options.
+      properties:
+        isEnabled:
+          description: If *true*, job chaining is enabled.
+          type: boolean
+        jobName:
+          description: Name of the preceding job.
+          type: string
+      required:
+      - isEnabled
+      type: object
+    GuestOsCredentialsPerMachineModel:
+      properties:
+        linuxCredsId:
+          description: Credentials ID for a Linux VM.
+          format: uuid
+          type: string
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        windowsCredsId:
+          description: Credentials ID for a Microsoft Windows VM.
+          format: uuid
+          type: string
+      required:
+      - vmObject
+      type: object
+    BackupJobExclusionsTemplates:
+      description: VM templates exclusion.
+      properties:
+        excludeFromIncremental:
+          description: If *true*, VM templates are excluded from the incremental backup.
+          type: boolean
+        isEnabled:
+          description: If *true*, VM templates are excluded from the backup.
+          type: boolean
+      type: object
+    BackupJobAdvancedSettingsVSphereModel:
+      description: VMware vSphere settings for the backup job.
+      properties:
+        changedBlockTracking:
+          $ref: '#/components/schemas/VSphereChangedBlockTrackingSettingsModel'
+        enableVMWareToolsQuiescence:
+          description: If *true*, VMware Tools quiescence is enabled for freezing the VM file system and application data.
+          type: boolean
+      type: object
+    BackupJobAdvancedSettingsModel:
+      description: Advanced settings of the backup job.
+      properties:
+        activeFulls:
+          $ref: '#/components/schemas/ActiveFullSettingsModel'
+        backupHealth:
+          $ref: '#/components/schemas/BackupHealthCheckSettingsModels'
+        backupModeType:
+          $ref: '#/components/schemas/EBackupModeType'
+        fullBackupMaintenance:
+          $ref: '#/components/schemas/FullBackupMaintenanceModel'
+        notifications:
+          $ref: '#/components/schemas/NotificationSettingsModel'
+        scripts:
+          $ref: '#/components/schemas/JobScriptsSettingsModel'
+        storageData:
+          $ref: '#/components/schemas/BackupStorageSettingModel'
+        storageIntegration:
+          $ref: '#/components/schemas/PrimaryStorageIntegrationSettingsModel'
+        synthenticFulls:
+          $ref: '#/components/schemas/SyntheticFullSettingsModel'
+        vSphere:
+          $ref: '#/components/schemas/BackupJobAdvancedSettingsVSphereModel'
+      required:
+      - backupModeType
+      type: object
+    EJobType:
+      description: Type of the job.
+      enum:
+      - Backup
+      type: string
+    JobModel:
+      allOf:
+      - discriminator:
+          mapping:
+            Backup: '#/components/schemas/BackupJobModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/BackupJobModel'
+      - $ref: '#/components/schemas/BaseJobModel'
+    BackupApplicationAwareProcessingModel:
+      description: Application-aware processing settings.
+      properties:
+        appSettings:
+          description: Array of VMware vSphere objects and their application settings.
+          items:
+            $ref: '#/components/schemas/BackupApplicationSettingsModel'
+          type: array
+        isEnabled:
+          description: If *true*, application-aware processing is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    ScheduleDailyModel:
+      description: Daily scheduling options.
+      properties:
+        dailyKind:
+          $ref: '#/components/schemas/EDailyKinds'
+        days:
+          description: Days of the week when the job must start.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: true
+          description: If *true*, daily schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+      required:
+      - isEnabled
+      type: object
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
+      properties:
+        days:
+          description: Array of per-day schemes.
+          items:
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
+          type: array
+      required:
+      - days
+      type: object
+    EmailCustomNotificationType:
+      description: Custom notification settings.
+      properties:
+        SuppressNotificationUntilLastRetry:
+          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
+          type: boolean
+        notifyOnError:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li> <li>*%ObjectCount%* — number of VMs in the job</li> <li>*%Issues%* — number of VMs in the job that have finished with the Warning or Failed status</li></ul>
+          type: string
+      type: object
+    EJobStatus:
+      description: Current status of the job.
+      enum:
+      - running
+      - inactive
+      - disabled
+      type: string
+    BackupJobExclusionsSpec:
+      description: Objects that you want to exclude from the backup.
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            $ref: '#/components/schemas/VmwareObjectDiskModel'
+          type: array
+        templates:
+          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
+        vms:
+          description: Array of VMs.
+          items:
+            $ref: '#/components/schemas/VmwareObjectModel'
+          type: array
+      type: object
+    BackupJobVirtualMachinesModel:
+      description: Included and excluded objects.
+      properties:
+        excludes:
+          $ref: '#/components/schemas/BackupJobExclusions'
+        includes:
+          description: Array of VMs and VM containers processed by the job.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+      required:
+      - includes
+      type: object
+    BackupHealthCheckSettingsModels:
+      description: Health check settings for the for the latest restore point in the backup chain.
+      properties:
+        isEnabled:
+          description: If *true*, the health check is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    ScriptCommand:
+      description: Script settings.
+      properties:
+        command:
+          description: Path to the script.
+          type: string
+        isEnabled:
+          description: If *true*, script execution is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    SessionModel:
+      properties:
+        activityId:
+          description: ID of the activity.
+          format: uuid
+          type: string
+        creationTime:
+          description: Date and time when the session was created.
+          format: date-time
+          type: string
+        endTime:
+          description: Date and time when the session was ended.
+          format: date-time
+          type: string
+        id:
+          description: ID of the session.
+          format: uuid
+          type: string
+        name:
+          description: Name of the session.
+          type: string
+        parentSessionId:
+          description: ID of the parent session.
+          format: uuid
+          type: string
+        progressPercent:
+          description: Progress percentage of the session.
+          type: integer
+        resourceId:
+          description: ID of the resource.
+          format: uuid
+          type: string
+        resourceReference:
+          description: URI of the resource.
+          type: string
+        result:
+          $ref: '#/components/schemas/SessionResultModel'
+        sessionType:
+          $ref: '#/components/schemas/ESessionType'
+        state:
+          $ref: '#/components/schemas/ESessionState'
+        usn:
+          description: Update sequence number.
+          format: int64
+          type: integer
+      required:
+      - activityId
+      - creationTime
+      - id
+      - name
+      - sessionType
+      - state
+      - usn
+      type: object
+    BackupJobRetentionPolicySettingsModel:
+      description: Retention policy settings.
+      properties:
+        quantity:
+          description: Number of restore points or days to keep.
+          type: integer
+        type:
+          $ref: '#/components/schemas/ERetentionPolicyType'
+      required:
+      - quantity
+      - type
+      type: object
+    BackupScriptSettingsModel:
+      description: Pre-freeze and post-thaw scripts.
+      properties:
+        linuxScripts:
+          $ref: '#/components/schemas/BackupLinuxScriptModel'
+        scriptProcessingMode:
+          $ref: '#/components/schemas/EBackupScriptProcessingMode'
+        windowsScripts:
+          $ref: '#/components/schemas/BackupWindowsScriptModel'
+      required:
+      - scriptProcessingMode
+      type: object
+    NotificationSettingsModel:
+      description: Notification settings for the backup job.
+      properties:
+        emailNotifications:
+          $ref: '#/components/schemas/EmailNotificationSettingsModel'
+        sendSNMPNotifications:
+          description: If *true*, SNMP notifications are enabled for this job.
+          type: boolean
+        vmAttribute:
+          $ref: '#/components/schemas/NotificationVmAttributeSettingsModel'
+      type: object
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    GuestInteractionProxiesSettingsModel:
+      description: Guest interaction proxy used to deploy the runtime process on the VM guest OS.
+      properties:
+        autoSelection:
+          default: true
+          description: If *true*, Veeam Backup & Replication automatically selects the guest interaction proxy.
+          type: boolean
+        proxyIds:
+          description: Array of proxies specified explicitly. The array must contain Microsoft Windows servers added to the backup infrastructure only.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+      required:
+      - autoSelection
+      type: object
+    BackupWindowsScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Microsoft Windows VMs.
+      properties:
+        postThawScript:
+          description: Path to a post-thaw script.
+          type: string
+        preFreezeScript:
+          description: Path to a pre-freeze script.
+          type: string
+      type: object
+    GFSPolicySettingsMonthlyModel:
+      description: Monthly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/ESennightOfMonth'
+        isEnabled:
+          description: If *true*, the monthly GFS retention policy is enabled.
+          type: boolean
+        keepForNumberOfMonths:
+          description: Number of months to keep full backups for archival purposes. Possible values are from 1 through 999.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    ECompressionLevel:
+      description: Compression level.
+      enum:
+      - None
+      - DedupFriendly
+      - Optimal
+      - High
+      - Extreme
+      type: string
+    ScheduleBackupWindowModel:
+      description: Backup window settings.
+      properties:
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        isEnabled:
+          default: false
+          description: If *true*, backup window is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    BackupObjectIndexingModel:
+      description: Guest OS indexing options for the VM.
+      properties:
+        guestFSIndexingMode:
+          $ref: '#/components/schemas/EGuestFSIndexingMode'
+        indexingList:
+          description: Array of folders. Environmental variables and full paths to folders can be used.
+          items:
+            type: string
+          type: array
+      required:
+      - guestFSIndexingMode
+      type: object
+    VmwareObjectSizeModel:
+      properties:
+        inventoryObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        size:
+          description: Size used by the VMware vSphere object.
+          type: string
+      required:
+      - inventoryObject
+      type: object
+    JobSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            Backup: '#/components/schemas/BackupJobSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/BackupJobSpec'
+      - $ref: '#/components/schemas/BaseJobSpec'
+    VSphereChangedBlockTrackingSettingsModel:
+      description: CBT settings for the backup job.
+      properties:
+        enableCBTautomatically:
+          description: If *true*, CBT is enabled for all processed VMs even if CBT is disabled in VM configuration. CBT is used for VMs with virtual hardware version 7 or later. These VMs must not have existing snapshots.
+          type: boolean
+        isEnabled:
+          description: If *true*, CBT data is used.
+          type: boolean
+        resetCBTonActiveFull:
+          description: If *true*, CBT is reset before creating active full backups.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    BaseJobSpec:
+      properties:
+        description:
+          description: Job description specified at the time of the job creation.
+          type: string
+        name:
+          description: Name of the job.
+          type: string
+        type:
+          $ref: '#/components/schemas/EJobType'
+      type: object
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Deleted:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptySuccessResponse'
+      description: Removed.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
+  securitySchemes:
+    Bearer:
+      name: Authorization
+      in: header
+      type: apiKey
+      description: Bearer \<JWT\>
