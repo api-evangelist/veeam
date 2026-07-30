@@ -1,7 +1,20 @@
 aid: veeam
 name: Veeam
 description: Veeam is a backup and data management platform providing REST APIs for managing backup jobs, restore operations, protected workloads, and cloud backup policies across on-premises, virtual, and cloud environments. The Veeam platform covers Backup & Replication, Backup for Microsoft 365, Backup for AWS, Azure, and Google Cloud, Veeam ONE monitoring, Recovery Orchestrator, and Service Provider Console.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/veeam.png
 url: https://raw.githubusercontent.com/api-evangelist/veeam/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -20,128 +33,750 @@ tags:
   - Google Cloud
   - Ransomware Recovery
 apis:
-  - name: Veeam Backup & Replication REST API
-    description: The primary REST API for Veeam Backup & Replication, enabling programmatic management of backup jobs, restore operations, protected workloads, infrastructure components, and replication policies across VMware, Hyper-V, and physical environments.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
-    baseURL: https://localhost:9419
-    tags:
-      - Backup
-      - Replication
-      - Restore
-      - VMware
-      - Hyper-V
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
-  - name: Veeam Backup Enterprise Manager REST API
-    description: REST API for Veeam Backup Enterprise Manager, providing centralized management of Veeam Backup & Replication servers, reporting, and enterprise-level operations exposed through a RESTful framework over HTTPS.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
-    baseURL: https://localhost:9398
-    tags:
-      - Backup
-      - Enterprise
-      - Management
-      - Reporting
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
-  - name: Veeam Backup for Microsoft 365 REST API
-    description: REST API for Veeam Backup for Microsoft 365, enabling management of backup jobs and restore operations for Exchange Online, SharePoint Online, OneDrive for Business, and Microsoft Teams. Uses HAL hypermedia to express resources and relationships.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
-    baseURL: https://localhost:4443
-    tags:
-      - Microsoft 365
-      - Exchange Online
-      - SharePoint
-      - OneDrive
-      - Teams
-      - SaaS Backup
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
-  - name: Veeam ONE REST API
-    description: REST API for Veeam ONE, enabling monitoring, reporting, capacity planning, and intelligent diagnostics for Veeam-protected environments including VMware, Hyper-V, and Veeam Backup & Replication infrastructure.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/one/rest/
-    baseURL: https://localhost:1239
-    tags:
-      - Monitoring
-      - Reporting
-      - Analytics
-      - Capacity Planning
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/one/rest/
-  - name: Veeam Backup for AWS REST API
-    description: REST API for Veeam Backup for AWS, enabling management of backup and recovery operations for AWS EC2 instances, RDS databases, EFS, and VPC configurations. Covers backup policies, restore points, and protected instance management.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vbaws/rest/
-    baseURL: https://localhost
-    tags:
-      - AWS
-      - EC2
-      - RDS
-      - Cloud Backup
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vbaws/rest/
-  - name: Veeam Backup for Microsoft Azure REST API
-    description: REST API for Veeam Backup for Microsoft Azure, providing programmatic access to backup and restore operations for Azure VMs, Azure SQL databases, and Azure File Shares. Supports management of backup policies and recovery points.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vbazure/rest/
-    baseURL: https://localhost
-    tags:
-      - Azure
-      - Cloud Backup
-      - Virtual Machines
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vbazure/rest/
-  - name: Veeam Backup for Google Cloud REST API
-    description: REST API for Veeam Backup for Google Cloud, enabling management of backup and restore operations for Google Compute Engine VMs and Google Cloud SQL instances. Provides access to backup policies, restore points, and protected resource management.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vbgc/rest/
-    baseURL: https://localhost
-    tags:
-      - Google Cloud
-      - GCP
-      - Cloud Backup
-      - Compute Engine
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vbgc/rest/
-  - name: Veeam Service Provider Console REST API
-    description: REST API for Veeam Service Provider Console (VSPC), enabling managed service providers to programmatically manage tenant environments, backup resources, billing, and licensing. Includes throttling controls to manage server load. Conforms to OpenAPI Specification 3.0.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
-    baseURL: https://localhost:1280
-    tags:
-      - Service Provider
-      - MSP
-      - Tenant Management
-      - Licensing
-      - Billing
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
-      - type: OpenAPI
-        url: https://helpcenter.veeam.com/docs/vac/rest/reference/vspc-rest.html
-  - name: Veeam Recovery Orchestrator REST API
-    description: REST API for Veeam Recovery Orchestrator, enabling automated disaster recovery planning, orchestration testing, and failover execution. Supports management of recovery plans, compliance reports, and automated DR verification workflows.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://helpcenter.veeam.com/docs/vro/rest/
-    baseURL: https://localhost
-    tags:
-      - Disaster Recovery
-      - Orchestration
-      - Failover
-      - Recovery Plans
-    properties:
-      - type: Documentation
-        url: https://helpcenter.veeam.com/docs/vro/rest/
+- name: Veeam Backup & Replication REST API
+  description: >-
+    The primary REST API for Veeam Backup & Replication, enabling programmatic management of backup jobs,
+    restore operations, protected workloads, infrastructure components, and replication policies across
+    VMware, Hyper-V, and physical environments.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Backup
+  - Replication
+  - Restore
+  - VMware
+  - Hyper-V
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+- name: Veeam Backup Enterprise Manager REST API
+  description: >-
+    REST API for Veeam Backup Enterprise Manager, providing centralized management of Veeam Backup & Replication
+    servers, reporting, and enterprise-level operations exposed through a RESTful framework over HTTPS.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
+  baseURL: https://localhost:9398
+  tags:
+  - Backup
+  - Enterprise
+  - Management
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vbr/em_rest/overview.html
+- name: Veeam Backup for Microsoft 365 REST API
+  description: >-
+    REST API for Veeam Backup for Microsoft 365, enabling management of backup jobs and restore operations
+    for Exchange Online, SharePoint Online, OneDrive for Business, and Microsoft Teams. Uses HAL hypermedia
+    to express resources and relationships.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
+  baseURL: https://localhost:4443
+  tags:
+  - Microsoft 365
+  - Exchange Online
+  - SharePoint
+  - OneDrive
+  - Teams
+  - SaaS Backup
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
+- name: Veeam ONE REST API
+  description: >-
+    REST API for Veeam ONE, enabling monitoring, reporting, capacity planning, and intelligent diagnostics
+    for Veeam-protected environments including VMware, Hyper-V, and Veeam Backup & Replication infrastructure.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/one/rest/
+  baseURL: https://localhost:1239
+  tags:
+  - Monitoring
+  - Reporting
+  - Analytics
+  - Capacity Planning
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/one/rest/
+- name: Veeam Backup for AWS REST API
+  description: >-
+    REST API for Veeam Backup for AWS, enabling management of backup and recovery operations for AWS EC2
+    instances, RDS databases, EFS, and VPC configurations. Covers backup policies, restore points, and
+    protected instance management.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vbaws/rest/
+  baseURL: https://localhost
+  tags:
+  - AWS
+  - EC2
+  - RDS
+  - Cloud Backup
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vbaws/rest/
+- name: Veeam Backup for Microsoft Azure REST API
+  description: >-
+    REST API for Veeam Backup for Microsoft Azure, providing programmatic access to backup and restore
+    operations for Azure VMs, Azure SQL databases, and Azure File Shares. Supports management of backup
+    policies and recovery points.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vbazure/rest/
+  baseURL: https://localhost
+  tags:
+  - Azure
+  - Cloud Backup
+  - Virtual Machines
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vbazure/rest/
+- name: Veeam Backup for Google Cloud REST API
+  description: >-
+    REST API for Veeam Backup for Google Cloud, enabling management of backup and restore operations for
+    Google Compute Engine VMs and Google Cloud SQL instances. Provides access to backup policies, restore
+    points, and protected resource management.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vbgc/rest/
+  baseURL: https://localhost
+  tags:
+  - Google Cloud
+  - GCP
+  - Cloud Backup
+  - Compute Engine
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vbgc/rest/
+- name: Veeam Recovery Orchestrator REST API
+  description: >-
+    REST API for Veeam Recovery Orchestrator, enabling automated disaster recovery planning, orchestration
+    testing, and failover execution. Supports management of recovery plans, compliance reports, and automated
+    DR verification workflows.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://helpcenter.veeam.com/docs/vro/rest/
+  baseURL: https://localhost
+  tags:
+  - Disaster Recovery
+  - Orchestration
+  - Failover
+  - Recovery Plans
+  properties:
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vro/rest/
+- aid: veeam:veeam-agents-api
+  name: Veeam Agents API
+  description: >-
+    The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-agents-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-amazonconnections-api
+  name: Veeam AmazonConnections API
+  description: The AmazonConnections API from Veeam — 9 operation(s) for amazonconnections.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - AmazonConnections
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-amazonconnections-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-automation-api
+  name: Veeam Automation API
+  description: >-
+    The Automation section defines paths and operations for granular import and export of objects available
+    in the REST API. It can be useful, for example, if you set up the backup infrastructure using JSON
+    specification or migrate the infrastructure to another backup server. For details, see [Mass Deployment](https://helpcenter.veeam.com/docs/backup/vbr_rest/automation.html?ver=120).
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Automation
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-automation-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-backup-objects-api
+  name: Veeam Backup Objects API
+  description: >-
+    The Backup Objects section defines paths and operations for managing backup objects — virtual infrastructure
+    objects (VMs and VM containers) that are included in backups created by the backup server.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Backup Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-backup-objects-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-backups-api
+  name: Veeam Backups API
+  description: >-
+    The Backups section defines paths and operations for managing backups that are created on or imported
+    to the backup server.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Backups
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-backups-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-buckets-api
+  name: Veeam Buckets API
+  description: The Buckets API from Veeam — 5 operation(s) for buckets.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-certificates-api
+  name: Veeam Certificates API
+  description: The Certificates API from Veeam — 3 operation(s) for certificates.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Certificates
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-certificates-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-cloud-browser-api
+  name: Veeam Cloud Browser API
+  description: >-
+    The Cloud Browser section defines paths and operations for retrieving information about cloud resources
+    (compute or storage). Cloud browser helps you map a cloud folder with an object storage repository.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Cloud Browser
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-cloud-browser-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-configuration-backup-api
+  name: Veeam Configuration Backup API
+  description: >-
+    The Configuration Backup section defines paths and operations for managing backup of the configuration
+    database that Veeam Backup & Replication uses.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Configuration Backup
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-configuration-backup-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-connection-api
+  name: Veeam Connection API
+  description: >-
+    The Connection section defines a path and operation for retrieving a TLS certificate or SSH fingerprint
+    used to establish a secure connection between the backup server and the specified server.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Connection
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-connection-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-costestimation-api
+  name: Veeam CostEstimation API
+  description: The CostEstimation API from Veeam — 2 operation(s) for costestimation.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - CostEstimation
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-costestimation-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-credentials-api
+  name: Veeam Credentials API
+  description: >-
+    The Credentials section defines paths and operations for managing credentials records that are added
+    to the backup server.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-emailnotifications-api
+  name: Veeam EmailNotifications API
+  description: The EmailNotifications API from Veeam — 2 operation(s) for emailnotifications.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - EmailNotifications
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-emailnotifications-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-encryption-api
+  name: Veeam Encryption API
+  description: >-
+    The Encryption section defines paths and operations for managing passwords that are used for data
+    encryption.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Encryption
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-encryption-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-general-options-api
+  name: Veeam General Options API
+  description: >-
+    The General Options section defines paths and operations for retrieving and editing general settings
+    of Veeam Backup & Replication.<br> <div class="note"><strong>NOTE</strong><br>In the current version
+    of the REST API, you can configure notification settings only.</div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - General Options
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-general-options-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-iamroles-api
+  name: Veeam IAMRoles API
+  description: The IAMRoles API from Veeam — 6 operation(s) for iamroles.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - IAMRoles
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-iamroles-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-instances-api
+  name: Veeam Instances API
+  description: The Instances API from Veeam — 6 operation(s) for instances.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-instances-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-inventory-browser-api
+  name: Veeam Inventory Browser API
+  description: >-
+    The Inventory Browser section defines paths and operations for retrieving VMware vSphere servers and
+    their virtual infrastructure objects (data centers, clusters, hosts, resource pools, VMs).<br> <div
+    class="note"><strong>NOTE</strong><br>In the current version, you can browse VMware vSphere objects
+    only.</div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Inventory Browser
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-inventory-browser-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-jobs-api
+  name: Veeam Jobs API
+  description: >-
+    The Jobs section defines paths and operations for managing jobs that are coordinated by the backup
+    server.<br> <div class="note"><strong>NOTE</strong><br>In the current version, the REST API supports
+    only jobs of the *Backup* type that include only VMware vSphere objects of the following types&#58;
+    *VirtualMachine*, *vCenterServer*, *Datacenter*, *Cluster*, *Host*, *ResourcePool*, *Folder*, *Template*,
+    *Tag*, *Datastore* and *DatastoreCluster*. Objects with tags combination (or *Multitag*) are not supported.</div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-licenseagreement-api
+  name: Veeam LicenseAgreement API
+  description: The LicenseAgreement API from Veeam — 4 operation(s) for licenseagreement.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - LicenseAgreement
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-licenseagreement-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-licensing-api
+  name: Veeam Licensing API
+  description: The Licensing API from Veeam — 5 operation(s) for licensing.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Licensing
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-licensing-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-login-api
+  name: Veeam Login API
+  description: >-
+    The authorization process involves obtaining an access token and a refresh token.<br>For details on
+    the authorization process and security settings, see [Authorization and Security](https://helpcenter.veeam.com/docs/backup/vbr_rest/authorization_security.html?ver=120).<SecurityDefinitions
+    />
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Login
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-login-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-managed-servers-api
+  name: Veeam Managed Servers API
+  description: >-
+    The Managed Servers section defines paths and operations for managing servers.<br> <div class="note"><strong>NOTE</strong><br>In
+    the current version, the REST API supports the following server types&#58; *VMware vSphere*, *Linux*
+    and *Windows*.</div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Managed Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-managed-servers-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-object-restore-points-api
+  name: Veeam Object Restore Points API
+  description: >-
+    The Object Restore Points section defines paths and operations for retrieving restore points created
+    on the backup server and backed up disks from the restore points.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Object Restore Points
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-object-restore-points-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-overview-api
+  name: Veeam Overview API
+  description: The Overview API from Veeam — 1 operation(s) for overview.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Overview
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-overview-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-policies-api
+  name: Veeam Policies API
+  description: The Policies API from Veeam — 15 operation(s) for policies.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-policies-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-problems-api
+  name: Veeam Problems API
+  description: The Problems API from Veeam — 17 operation(s) for problems.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Problems
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-problems-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-proxies-api
+  name: Veeam Proxies API
+  description: >-
+    The Proxies section defines paths and operations for managing backup proxies.<br><div class="note"><strong>NOTE</strong><br>In
+    the current version, the REST API supports VMware backup proxies only.</div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Proxies
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-proxies-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-regions-api
+  name: Veeam Regions API
+  description: The Regions API from Veeam — 4 operation(s) for regions.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Regions
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-regions-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-repositories-api
+  name: Veeam Repositories API
+  description: The Repositories API from Veeam — 18 operation(s) for repositories.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-repositories-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-restore-api
+  name: Veeam Restore API
+  description: >-
+    The Restore section defines paths and operations for performing restore.<br> <div class="note"><strong>NOTE</strong><br>In
+    the current version, the REST API supports the following recovery operations:<ul> <li>Instant Recovery
+    of a VMware vSphere VM to VMware vSphere</li> <li>Entire VM restore of a VMware vSphere VM to VMware
+    vSphere</li> <li>Restore of disks that will be registered as First Class Disks (FCD) — a type of virtual
+    disks that can be managed independent of any VM.</li></ul></div>
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Restore
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-restore-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-retentionsettings-api
+  name: Veeam RetentionSettings API
+  description: The RetentionSettings API from Veeam — 2 operation(s) for retentionsettings.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - RetentionSettings
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-retentionsettings-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-service-api
+  name: Veeam Service API
+  description: >-
+    The Service section defines paths and operations for retrieving information about the backup server
+    where the REST API service is running.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-service-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-services-api
+  name: Veeam Services API
+  description: >-
+    The Services section defines a path and operation for retrieving information about associated backend
+    services. You may need to connect to these services for integration with Veeam Backup & Replication.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-services-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-sessions-api
+  name: Veeam Sessions API
+  description: The Sessions API from Veeam — 11 operation(s) for sessions.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-smtpservercredentialsrecords-api
+  name: Veeam SMTPServerCredentialsRecords API
+  description: >-
+    The SMTPServerCredentialsRecords API from Veeam — 4 operation(s) for smtpservercredentialsrecords.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - SMTPServerCredentialsRecords
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-smtpservercredentialsrecords-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-statistics-api
+  name: Veeam Statistics API
+  description: The Statistics API from Veeam — 1 operation(s) for statistics.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Statistics
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-statistics-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-system-api
+  name: Veeam System API
+  description: The System API from Veeam — 2 operation(s) for system.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-system-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-tags-api
+  name: Veeam Tags API
+  description: The Tags API from Veeam — 2 operation(s) for tags.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-tags-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-test-api
+  name: Veeam Test API
+  description: The Test API from Veeam — 1 operation(s) for test.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Test
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-test-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-timezone-api
+  name: Veeam Timezone API
+  description: The Timezone API from Veeam — 4 operation(s) for timezone.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Timezone
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-timezone-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-token-api
+  name: Veeam Token API
+  description: The Token API from Veeam — 2 operation(s) for token.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-token-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-traffic-rules-api
+  name: Veeam Traffic Rules API
+  description: >-
+    The Traffic Rules section defines paths and operations for retrieving and editing information about
+    network traffic rules that are configured on the backup server.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Traffic Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-traffic-rules-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-users-api
+  name: Veeam Users API
+  description: The Users API from Veeam — 12 operation(s) for users.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-users-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-version-api
+  name: Veeam Version API
+  description: The Version API from Veeam — 2 operation(s) for version.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Version
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-version-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-vmrestorepoints-api
+  name: Veeam VmRestorePoints API
+  description: The VmRestorePoints API from Veeam — 8 operation(s) for vmrestorepoints.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - VmRestorePoints
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-vmrestorepoints-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-workers-api
+  name: Veeam Workers API
+  description: The Workers API from Veeam — 3 operation(s) for workers.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Workers
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-workers-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 common:
   - type: AgenticAccess
     url: agentic-access/veeam-agentic-access.yml
