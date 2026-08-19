@@ -1,0 +1,790 @@
+{
+  "item": [
+    {
+      "id": "06a80cb8-409c-412f-8e4d-6181cd2e4903",
+      "name": "Service",
+      "description": {
+        "content": "The Service section defines paths and operations for retrieving information about the backup server where the REST API service is running.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc13db25-5355-40da-b20c-9d40b5f7319a",
+          "name": "Get Backup Server Certificate",
+          "request": {
+            "name": "Get Backup Server Certificate",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/serverCertificate` path allows you to get a certificate of the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "serverCertificate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2989a91b-a616-4056-b5ef-0e4c8bb79cde",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverCertificate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"issuedBy\": \"Veeam Backup Server Certificate\",\n  \"issuedTo\": \"Veeam Backup Server Certificate\",\n  \"thumbprint\": \"4E916B201930CD9AE44C20019F87F2A4EF227303\",\n  \"serialNumber\": \"65FFC0E36A66B2BA40EF93AF47C2EF7D\",\n  \"subject\": \"CN=Veeam Backup Server Certificate\",\n  \"validBy\": \"2031-03-17T19:53:54+01:00\",\n  \"keySize\": \"2048\",\n  \"keyAlgorithm\": \"RSA-PKCS1-KeyEx\",\n  \"validFrom\": \"2021-03-17T19:53:54+01:00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7889de7c-0848-406d-aa69-1f10048204f4",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverCertificate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03376a8e-128e-44fa-82ad-5a3eec3aa7d0",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverCertificate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1301b46e-30bf-4d94-bbc6-b4e5fd287719",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverCertificate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95ffb8c8-bf03-49ed-82af-c99c114c3d7f",
+          "name": "Get Backup Server Information",
+          "request": {
+            "name": "Get Backup Server Information",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/serverInfo` path allows you to get Veeam Backup & Replication installation ID, backup server name (or IP address), build number and cumulative patches installed on the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "serverInfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d0a4653-27b6-4503-ad80-6a32181a6dd1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"buildVersion\": \"string\",\n  \"patches\": [\n    \"string\",\n    \"string\"\n  ],\n  \"vbrId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e42c0ef-80a4-49c5-a9d5-d87839fa0515",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dae70ccb-4988-4d56-b85f-5bfb7d05bd31",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "685259ea-9ab5-4f77-b3a5-38aea527fdd8",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "350f36d9-1d91-4476-b342-7757f9bb5ca1",
+          "name": "Get Backup Server Time",
+          "request": {
+            "name": "Get Backup Server Time",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/serverTime` path allows you to get current date and time on the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "serverTime"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "081962b2-5e98-4760-bda6-90fbc14218a0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverTime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serverTime\": \"2022-01-25T18:31:50.7300443+01:00\",\n  \"timeZone\": \"(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20d32dd4-bf62-4463-a88f-2e3f34778bfb",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverTime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d63f853e-dbfd-4334-b5bb-3985032fb46c",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverTime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de402c76-50bc-46ea-9513-34cad60f9b83",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "serverTime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"AccessDenied\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4275b82c-9989-43f1-abd1-cbe89e85aa6b",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Service API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

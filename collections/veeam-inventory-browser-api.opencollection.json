@@ -1,0 +1,154 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Inventory Browser API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory Browser",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All VMware vSphere Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/vmware/hosts",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of VMware vSphere servers to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of VMware vSphere servers to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts VMware vSphere servers by one of the VMware vSphere server parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/inventory/vmware/hosts` path allows you to get an array of all VMware vSphere servers added to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Get VMware vSphere Server Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/vmware/hosts/:name",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the VMware vSphere server."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of objects to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of objects to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts objects by one of the object parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts objects in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "objectIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters objects by object ID."
+              },
+              {
+                "name": "hierarchyTypeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters objects by hierarchy type."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters objects by the `nameFilter` pattern. The pattern can match any object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters objects by virtual infrastructure type."
+              },
+              {
+                "name": "parentContainerNameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters objects by name of the parent container."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/inventory/vmware/hosts/{name}` path allows you to get an array of virtual infrastructure objects of the VMware vSphere server that has the specified `name`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

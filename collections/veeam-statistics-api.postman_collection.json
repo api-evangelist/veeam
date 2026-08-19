@@ -1,0 +1,350 @@
+{
+  "item": [
+    {
+      "id": "061385fc-4137-4e35-9843-f603b984ef7c",
+      "name": "Statistics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c54f26d6-f891-470f-8fc6-937acffe0948",
+          "name": "Get Summary",
+          "request": {
+            "name": "Get Summary",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "statistics",
+                "summary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04ba992c-2f10-49c2-b16a-673322a50bb9",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "statistics",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alarmsCount\": 7064,\n  \"alarmsCountChangesTrend\": \"Increased\",\n  \"instancesCount\": 9278,\n  \"instancesCountChangesTrend\": \"NotChanged\",\n  \"protectedInstancesCount\": 4540,\n  \"protectedInstancesCountChangesTrend\": \"NotChanged\",\n  \"policiesCount\": 431,\n  \"policiesCountChangesTrend\": \"NotChanged\",\n  \"repositoriesCount\": 5343,\n  \"repositoriesCountChangesTrend\": \"Increased\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6743e0fc-5158-41c7-bca8-3ea49f688cb5",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "statistics",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://GoSeUxUxTLJqNiRPQUs.uxJSYG9cq,z-dbSEclzSzwwTOXCvw88aFjG4l17T\",\n  \"title\": \"string\",\n  \"status\": 409,\n  \"errorCode\": \"MethodNotAllowed\",\n  \"details\": \"string\",\n  \"instance\": \"https://PsjH.jfyofJ92YI2GyL22FXe.G3AEUOUhZQHK1LxW64CPKBZg5vxe9BKvGB\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04b0a3e9-e732-4aed-a9d8-e342fcaa7f72",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "statistics",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://GoSeUxUxTLJqNiRPQUs.uxJSYG9cq,z-dbSEclzSzwwTOXCvw88aFjG4l17T\",\n  \"title\": \"string\",\n  \"status\": 409,\n  \"errorCode\": \"MethodNotAllowed\",\n  \"details\": \"string\",\n  \"instance\": \"https://PsjH.jfyofJ92YI2GyL22FXe.G3AEUOUhZQHK1LxW64CPKBZg5vxe9BKvGB\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4614fc-ae3a-4129-b4da-f71a40c69e74",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "statistics",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://GoSeUxUxTLJqNiRPQUs.uxJSYG9cq,z-dbSEclzSzwwTOXCvw88aFjG4l17T\",\n  \"title\": \"string\",\n  \"status\": 409,\n  \"errorCode\": \"MethodNotAllowed\",\n  \"details\": \"string\",\n  \"instance\": \"https://PsjH.jfyofJ92YI2GyL22FXe.G3AEUOUhZQHK1LxW64CPKBZg5vxe9BKvGB\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25cfbf86-3771-42d2-ab1a-444b3f1888c5",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "statistics",
+                    "summary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://GoSeUxUxTLJqNiRPQUs.uxJSYG9cq,z-dbSEclzSzwwTOXCvw88aFjG4l17T\",\n  \"title\": \"string\",\n  \"status\": 409,\n  \"errorCode\": \"MethodNotAllowed\",\n  \"details\": \"string\",\n  \"instance\": \"https://PsjH.jfyofJ92YI2GyL22FXe.G3AEUOUhZQHK1LxW64CPKBZg5vxe9BKvGB\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ab1b19ae-77a5-4bb0-b011-1bca1430f35d",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

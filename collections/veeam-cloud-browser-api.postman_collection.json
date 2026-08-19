@@ -1,0 +1,757 @@
+{
+  "item": [
+    {
+      "id": "03e169da-1588-476c-94fc-cb877a004182",
+      "name": "Cloud Browser",
+      "description": {
+        "content": "The Cloud Browser section defines paths and operations for retrieving information about cloud resources (compute or storage). Cloud browser helps you map a cloud folder with an object storage repository.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ed768cb6-fafa-4f15-b056-6c03a0125091",
+          "name": "Get Cloud Hierarchy",
+          "request": {
+            "name": "Get Cloud Hierarchy",
+            "description": {
+              "content": "The HTTP POST request to the `/api/v1/cloudBrowser` path allows you to browse cloud resources (compute or storage) available for the specified storage account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cloudBrowser"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f735984-7529-4c98-ad8a-255e43389647",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"credentialsId\": \"c0377ba0-dd85-7182-1767-61a4d14f6ef4\",\n  \"serviceType\": \"<string>\",\n  \"containers\": [\n    {\n      \"folders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name\": \"string\"\n    },\n    {\n      \"folders\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name\": \"string\"\n    }\n  ],\n  \"hostId\": \"e1957b87-8fad-4bac-ba7e-c63b7019ba6d\",\n  \"regionType\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d235f10-fb14-4e52-adc6-0970380ea6d0",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "068ffe84-82b4-491b-b4db-733f47ec9e7c",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98f4de0c-ba18-4d75-a5c7-9b83b8590c86",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa3175e2-b5fb-4059-a715-03cff20a5738",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"gatewayServerId\": \"<uuid>\",\n  \"regionType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "082c4766-5bed-43a9-a3d3-6ec05b0c1878",
+          "name": "New Folder",
+          "request": {
+            "name": "New Folder",
+            "description": {
+              "content": "The HTTP POST request to the `/api/v1/cloudBrowser/newFolder` path allows you to create a new folder in the cloud infrastructure.<br><div class=\"note\"><strong>NOTE</strong><br>The REST API does not create new containers, you can create a folder in an existing container only.</div>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "cloudBrowser",
+                "newFolder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f44f3eb7-2fe2-4547-b7f0-06e74d093cb0",
+              "name": "Cloud folder has been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser",
+                    "newFolder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c3936fa-5d9c-462e-b906-b6015ebf001e",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser",
+                    "newFolder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce957f50-1cce-46b3-b041-9b741d58ef87",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser",
+                    "newFolder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa2c1163-92ce-4914-a3c5-55abb1105367",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser",
+                    "newFolder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ce8ee12-e9c2-4877-bd14-86ff92180bc2",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "cloudBrowser",
+                    "newFolder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionType\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"credentialsId\": \"<uuid>\",\n  \"newFolderName\": \"<string>\",\n  \"serviceType\": \"<string>\",\n  \"folderType\": \"<string>\",\n  \"hostId\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ServiceUnavailable\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "9612a134-a274-47b3-bf6c-95f56888473d",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Cloud Browser API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

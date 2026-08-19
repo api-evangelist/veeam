@@ -1,0 +1,3193 @@
+{
+  "item": [
+    {
+      "id": "556a6f5d-fb00-4b2b-8710-212fa549f20b",
+      "name": "IAMRoles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e420c9f3-414d-428b-ae21-5c9ae5ff5408",
+          "name": "Amazon Accounts Get All",
+          "request": {
+            "name": "Amazon Accounts Get All",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "SearchPattern",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Sort",
+                  "value": "<string>,<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cff7d70-d4ec-463d-abb8-dac9bd0820fd",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"3159a2a1-b869-54d5-7216-91abdc884072\",\n      \"name\": \"string\",\n      \"awsid\": \"string\",\n      \"description\": \"string\",\n      \"regionType\": \"Emulator\",\n      \"accessKeys\": {\n        \"accessKey\": \"string\",\n        \"defaultRegion\": \"Government\"\n      },\n      \"IAMRole\": {\n        \"roleName\": \"string\",\n        \"isDefault\": true,\n        \"parentAmazonAccountId\": \"42644e4d-2ba2-6ce6-ac1b-990b3ba54062\"\n      },\n      \"IAMRoleFromAnotherAccount\": {\n        \"parentAmazonAccountId\": \"2ed94d35-6bf3-5db0-ecb8-2e9ba03eb41a\",\n        \"accountId\": \"string\",\n        \"roleName\": \"string\"\n      },\n      \"_links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"DELETE\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"PUT\"\n        }\n      ]\n    },\n    {\n      \"id\": \"2e1eef03-c11a-655e-d751-16a421301d2c\",\n      \"name\": \"string\",\n      \"awsid\": \"string\",\n      \"description\": \"string\",\n      \"regionType\": \"Government\",\n      \"accessKeys\": {\n        \"accessKey\": \"string\",\n        \"defaultRegion\": \"Global\"\n      },\n      \"IAMRole\": {\n        \"roleName\": \"string\",\n        \"isDefault\": false,\n        \"parentAmazonAccountId\": \"8336ddec-171f-bd87-fcea-5064e9eaf424\"\n      },\n      \"IAMRoleFromAnotherAccount\": {\n        \"parentAmazonAccountId\": \"3a8b09f3-015e-bad0-7f35-7d3e24bc0c92\",\n        \"accountId\": \"string\",\n        \"roleName\": \"string\"\n      },\n      \"_links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"GET\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"POST\"\n        }\n      ]\n    }\n  ],\n  \"totalCount\": 8689,\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"PUT\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "222f31a9-b733-4f86-b525-9502fc3dcea4",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "323456ec-1ad5-423f-b418-bf5eb5ee3e87",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a48964d-0088-42ce-b09d-5e9806b1eb76",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e0ac00f-9fb9-4883-8754-267fde544707",
+          "name": "Add Amazon Account",
+          "request": {
+            "name": "Add Amazon Account",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a0eff18c-1c74-4b07-9914-2b1f12d92ba1",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"b9d73e46-b3e9-912b-9394-0fe94b971b62\",\n  \"name\": \"string\",\n  \"awsid\": \"string\",\n  \"description\": \"string\",\n  \"regionType\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"string\",\n    \"defaultRegion\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"string\",\n    \"isDefault\": false,\n    \"parentAmazonAccountId\": \"ac3e71a5-85d5-bd25-f9e4-1d7ec4ca4939\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"parentAmazonAccountId\": \"2efab7c2-db8d-c475-3994-766830b3c827\",\n    \"accountId\": \"string\",\n    \"roleName\": \"string\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b38e5c8-fca9-4dde-bf4e-0d87688623f2",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f25034e0-57e2-4945-994a-0e5384467977",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3348e5f-d494-440b-9229-1e2912959c14",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c8d91e8-39f0-4cdd-9204-850a9d3d1962",
+          "name": "Validate Amazon Account Name",
+          "request": {
+            "name": "Validate Amazon Account Name",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                "validateName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ee464a2a-7650-4cae-b459-7ce77baf7395",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "validateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"severity\": \"Warning\",\n    \"message\": \"string\",\n    \"contextId\": \"e1d3b8d2-da3f-b7bc-2a42-69bc6754c281\"\n  },\n  {\n    \"severity\": \"Warning\",\n    \"message\": \"string\",\n    \"contextId\": \"2680d7d6-7ecd-9268-c551-562f993b866c\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c32c838-f9b2-4abc-9cf0-e461c482a19a",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "validateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a11edf0-0b31-4d8e-bc85-3c582cc6e3d7",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "validateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d4a1c49-aa69-4108-a1ed-f9b5eae9c564",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "validateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3978baba-fdc3-4e60-bb21-63e7656cf0a0",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "validateName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27b1c918-7c5f-4362-9700-e0769debdee3",
+          "name": "Validate Delete Amazon Account",
+          "request": {
+            "name": "Validate Delete Amazon Account",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                ":amazonAccountId",
+                "validateDelete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "amazonAccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e71a7033-0d01-4d22-9f68-e81c6a892e8c",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"severity\": \"Warning\",\n    \"message\": \"string\",\n    \"contextId\": \"e1d3b8d2-da3f-b7bc-2a42-69bc6754c281\"\n  },\n  {\n    \"severity\": \"Warning\",\n    \"message\": \"string\",\n    \"contextId\": \"2680d7d6-7ecd-9268-c551-562f993b866c\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e278530b-e5ed-4f5c-adeb-3c37a4354400",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c0629b3-9678-412f-8955-afe65038896e",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccf1f4b0-508f-48cc-a004-d70fd6af85fa",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eed05f3d-2978-44c3-a7f3-d0b6e1b2f10b",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44f3d712-4f12-4cc1-b05a-20576a9fde0d",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "validateDelete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e0efdcf-4b6b-461f-b771-90352de8786f",
+          "name": "Amazon Accounts Get One By Id",
+          "request": {
+            "name": "Amazon Accounts Get One By Id",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                ":amazonAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "amazonAccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4221fe2d-bed0-47e8-b21a-b03e0ae02a2b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"b9d73e46-b3e9-912b-9394-0fe94b971b62\",\n  \"name\": \"string\",\n  \"awsid\": \"string\",\n  \"description\": \"string\",\n  \"regionType\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"string\",\n    \"defaultRegion\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"string\",\n    \"isDefault\": false,\n    \"parentAmazonAccountId\": \"ac3e71a5-85d5-bd25-f9e4-1d7ec4ca4939\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"parentAmazonAccountId\": \"2efab7c2-db8d-c475-3994-766830b3c827\",\n    \"accountId\": \"string\",\n    \"roleName\": \"string\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d4beb4e-7b27-44d8-85d3-338a743f5561",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c60516ca-ddce-40b6-a340-80f34162105e",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bed070e2-a44f-4e06-b48a-c30b9039444b",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf478064-87f8-4cac-9143-d06ab1fc1b80",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8474314-cef9-47ed-b1eb-b75e5342767d",
+          "name": "Update Amazon Account",
+          "request": {
+            "name": "Update Amazon Account",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                ":amazonAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "amazonAccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4844de21-320e-4b2d-9b70-89ce165c0d36",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"b9d73e46-b3e9-912b-9394-0fe94b971b62\",\n  \"name\": \"string\",\n  \"awsid\": \"string\",\n  \"description\": \"string\",\n  \"regionType\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"string\",\n    \"defaultRegion\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"string\",\n    \"isDefault\": false,\n    \"parentAmazonAccountId\": \"ac3e71a5-85d5-bd25-f9e4-1d7ec4ca4939\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"parentAmazonAccountId\": \"2efab7c2-db8d-c475-3994-766830b3c827\",\n    \"accountId\": \"string\",\n    \"roleName\": \"string\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f56d96-020e-4fd1-a9d3-947995d03899",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19aa689e-f5b1-4adc-8935-58d4436a49c1",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f04be79-aed6-4398-af7e-fdb03c826dcc",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f903211-6628-46d8-b9a9-2ce73644eacb",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"accessKeys\": {\n    \"accessKey\": \"<string>\",\n    \"secretKey\": \"<string>\",\n    \"defaultRegionType\": \"<string>\"\n  },\n  \"IAMRole\": {\n    \"roleName\": \"<string>\"\n  },\n  \"IAMRoleFromAnotherAccount\": {\n    \"accountId\": \"<string>\",\n    \"roleName\": \"<string>\",\n    \"externalId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f636d7d0-7c4b-4e03-b05d-72bd2bf32a7a",
+          "name": "Delete Amazon Account",
+          "request": {
+            "name": "Delete Amazon Account",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                ":amazonAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "amazonAccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19a4b68d-ce4e-451c-8d64-66b68b214035",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8fac6ba3-613f-4cb8-b82e-ee7a64c277bf",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2cad925-3fda-46d3-ad67-26ee0357b2a5",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13e71adc-724e-4eb0-9c2d-78a4573d575f",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d5eaaed-76a9-411c-8460-f991168d3cdb",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21219444-4aea-42d9-bdea-73643a437531",
+          "name": "Rescan Amazon Account",
+          "request": {
+            "name": "Rescan Amazon Account",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                ":amazonAccountId",
+                "rescan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "amazonAccountId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e96cf9b-1e48-4491-9676-ba6d66787ee6",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "rescan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionId\": \"68a49969-9a98-0aba-3b3d-f0126f485270\",\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"PUT\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2428a09d-adbb-426d-97a3-9786cf7548e5",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "rescan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "210ea098-1987-4c14-ac70-157b1a7e9527",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "rescan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b927957b-f67a-4d21-8dde-e70456f8929e",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "rescan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf2bd356-483c-4e74-bfd0-54a1a64305ca",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    ":amazonAccountId",
+                    "rescan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "amazonAccountId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"http://EDLMFpamIuCyKSLzkHWXyiAXyEMweTFV.uxToKR7-laAZmWv+7m3S-MG4FE4g2+l7eTRwg4WkQA-\",\n  \"title\": \"string\",\n  \"status\": 518,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://GpBbjP.stigDBlHHUOTLBiUDaSwLQZ05RJPLFavIYeGYdvtJA05Mx,AcFnEno\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2456ddcc-448b-4297-bae7-192b8d2822ba",
+          "name": "Export Amazon Accounts",
+          "request": {
+            "name": "Export Amazon Accounts",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "amazon",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da1dc311-e513-4b1f-a2be-2712d4433e66",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "fa9a2252-dd99-4e49-9b80-d07a7f799226",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "3874dde9-043b-46ce-b5aa-ec6e7ce52c18",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "accounts",
+                    "amazon",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e1a662e3-ea88-4236-b5fa-180461f3502d",
+    "name": "Veeam Backup for AWS public API 1.0 Agents IAMRoles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

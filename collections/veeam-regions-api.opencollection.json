@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Regions API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Regions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GetAllRegions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/cloudInfrastructure/regions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "SearchPattern",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GetRegionById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/cloudInfrastructure/regions/:regionId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GetInnerRegions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/cloudInfrastructure/regions/:regionId/zones",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "SearchPattern",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "GetInstancesTypesByRegion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/cloudInfrastructure/regions/:regionId/instancesTypes",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "regionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isArm64",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "virtualizationTypes",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

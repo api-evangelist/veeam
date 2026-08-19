@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Service API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Backup Server Certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/serverCertificate",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/serverCertificate` path allows you to get a certificate of the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Backup Server Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/serverInfo",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/serverInfo` path allows you to get Veeam Backup & Replication installation ID, backup server name (or IP address), build number and cumulative patches installed on the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Backup Server Time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/serverTime",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/serverTime` path allows you to get current date and time on the backup server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

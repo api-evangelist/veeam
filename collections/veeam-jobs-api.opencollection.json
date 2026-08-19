@@ -1,0 +1,398 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Jobs API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/jobs",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of jobs to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of jobs to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts jobs by one of the job parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts jobs in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters jobs by the `nameFilter` pattern. The pattern can match any job parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters jobs by job type."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/jobs` path allows you to get an array of all jobs coordinated by the backup server."
+        },
+        {
+          "info": {
+            "name": "Create Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/jobs",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/jobs` path allows you to create a new job that has the specified parameters."
+        },
+        {
+          "info": {
+            "name": "Get All Job States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/jobs/states",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of job states to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of job states to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts job states by one of the state parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts job states in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "idFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by job ID."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by the `nameFilter` pattern. The pattern can match any state parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by job type."
+              },
+              {
+                "name": "lastResultFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by status with which jobs must finish."
+              },
+              {
+                "name": "statusFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by current status of the job."
+              },
+              {
+                "name": "workloadFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by workloads that jobs must process."
+              },
+              {
+                "name": "lastRunAfterFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns job states for jobs that have run after the specified date and time."
+              },
+              {
+                "name": "lastRunBeforeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns job states for jobs that have not run after the specified date and time."
+              },
+              {
+                "name": "isHighPriorityJobFilter",
+                "value": "",
+                "type": "query",
+                "description": "If *true*, Returns job states for jobs with high priority."
+              },
+              {
+                "name": "repositoryIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by repository ID."
+              },
+              {
+                "name": "objectsCountFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters job states by number of objects processed by the job."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/jobs/states` path allows you to get an array of all job states. The states include brief job information that you can also find under the **Jobs** node in the Veeam Backup & Replication console."
+        },
+        {
+          "info": {
+            "name": "Get Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/jobs/{id}` path allows you to get a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/jobs/{id}` path allows you to edit a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Delete Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/jobs/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ]
+          },
+          "docs": "The HTTP DELETE request to the `/api/v1/jobs/{id}` path allows you to delete a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Disable Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/jobs/:id/disable",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/jobs/{id}/disable` path allows you to disable a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Enable Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/jobs/:id/enable",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/jobs/{id}/enable` path allows you to enable a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Start Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/jobs/:id/start",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/jobs/{id}/start` path allows you to start a job that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Stop Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/jobs/:id/stop",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/jobs/{id}/stop` path allows you to stop a job that has the specified `id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

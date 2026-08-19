@@ -1,0 +1,1176 @@
+{
+  "item": [
+    {
+      "id": "50e62c1b-df29-4c83-a5c6-c6e788d42f3c",
+      "name": "RetentionSettings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8840646-f27c-40ee-9fcb-f537dea47075",
+          "name": "Get Retention Settings",
+          "request": {
+            "name": "Get Retention Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "retentionSettings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2206f673-12fd-4071-9b47-0c59c23c23b0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lingeringSnapshotRetentionDisabled\": true,\n  \"keepAllSessions\": true,\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": 1908,\n    \"retentionDurationType\": \"Monthly\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": 3253,\n    \"retentionDurationType\": \"Daily\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"POST\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85f49c60-2334-4660-8397-04bd888fe35c",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da558d81-dc5a-4e50-8b99-02c9c97f844a",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a7ca0ec-ac6c-46fc-aad4-f9f8dcc70368",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "350667de-d66d-4f80-b5e2-6acf165e3889",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c97c49-95dc-4af7-8d7d-1d4871735017",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61c4b076-25ff-45e6-9e07-66baa531e9a2",
+          "name": "Update Retention Settings",
+          "request": {
+            "name": "Update Retention Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "retentionSettings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "931300a8-1d8b-4270-a816-27e3c65e5eaf",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c479816d-8a49-46de-a6f5-01acf2fb4b61",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86f8c902-6367-433e-bc73-c36b29ee5e33",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9127a7d-9d5f-4adc-907e-430aa747b800",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a64f8c3-fd9c-46b8-afc8-f33ecd02a325",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30b0339b-339b-4f2a-a48a-6973573a155d",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4df75b7c-c899-4a22-9055-82ada781d91a",
+          "name": "Set Default Retention Settings",
+          "request": {
+            "name": "Set Default Retention Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "retentionSettings",
+                "reset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46bd5ae1-c31a-45be-8246-33183dbabf2e",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lingeringSnapshotRetentionDisabled\": \"<boolean>\",\n  \"keepAllSessions\": \"<boolean>\",\n  \"lingeringSnapshotRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"sessionsRetention\": {\n    \"timeRetentionDuration\": \"<integer>\",\n    \"retentionDurationType\": \"<string>\"\n  },\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ab57b5c-32cc-4782-9a1c-bcdf9d24cfd8",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab1c8686-0660-4c19-9959-1e0b313ba331",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18463a96-0617-486f-ba5d-119b038aae46",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "609bbeb6-6506-4ffd-adf1-1cd6b8a5bc4e",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1409367-8bdb-4cb1-ae4e-18281b6ae647",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "retentionSettings",
+                    "reset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uzjWliFXZvJPvYQvKAMRCMZ.majNsS4Vxvj6G0dIt+HqGBhWxO\",\n  \"title\": \"string\",\n  \"status\": 562,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"https://tpmbVRdkpJFIOUmSxlCS.mifivWXG6-d7+x6iuhILvZQTzt\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bd52197f-edc6-4f28-b2ed-4f3735400857",
+    "name": "Veeam Backup for AWS public API 1.0 Agents RetentionSettings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

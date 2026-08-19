@@ -1,0 +1,1227 @@
+{
+  "item": [
+    {
+      "id": "43fb56cd-32ab-47b3-bd1b-447bacf737e5",
+      "name": "Login",
+      "description": {
+        "content": "The authorization process involves obtaining an access token and a refresh token.<br>For details on the authorization process and security settings, see [Authorization and Security](https://helpcenter.veeam.com/docs/backup/vbr_rest/authorization_security.html?ver=120).<SecurityDefinitions />",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "991feaa0-d724-4abd-b200-65580720ce7b",
+          "name": "Get Authorization Code",
+          "request": {
+            "name": "Get Authorization Code",
+            "description": {
+              "content": "The HTTP POST request to the `/api/oauth2/authorization_code` path allows you to get an authorization code that is used to obtain an access token. For more information on authorization process, see [Requesting Authorization](https://helpcenter.veeam.com/docs/backup/vbr_rest/requesting_authorization.html?ver=120).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "oauth2",
+                "authorization_code"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f1630aa0-5dcf-4df1-8478-45f0981e2266",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "authorization_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"AAEAAPcbxUSe0PNKAN+ilV5d4M5Fkv9ONjwRa4hfZYoemxIDA/IHbrjldYbfu1MemydXxGR4KYe5woGq09k+URepuiwUVsg3WbXC179ECOARXmfMH9dFI5H4aiXTotwPvuXLAC2AU4nFSUI2Kr2jlg4Vm8hTEPisaEiOolaVPA5CTzSEribGVaPYwvzyEIn7qy+lLnvGN2dm46W6Q0QJ2dpw1SCI2DZRCRIz+L8Nq804hNwDQJk9TCPJ61ztwF4FM+wO2ToNvMkL6aVay7STpeTRlkFf5i5dAm2qC0a1fcDdkkxt2lwv47t52I2tyZafpdLXs1eb+y7ZnuYQGbDI3epq5GAIAAAAK1kt2wvg2Qg=\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a51de40-c90c-4526-9516-2dda99a741fc",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "authorization_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4adaa49-ca1b-4372-a34f-4b207be17f90",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "authorization_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b62b555-78eb-411c-925b-b1988d6b30ea",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "authorization_code"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9463bf84-2328-4cb5-8ee6-4fd59330e711",
+          "name": "Log Out",
+          "request": {
+            "name": "Log Out",
+            "description": {
+              "content": "The HTTP POST request to the `/api/oauth2/logout` path allows you to perform the logout operation. After you log out, your access and refresh tokens are expired.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "oauth2",
+                "logout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb521fc7-0ad0-473e-8dc7-f0436074dcc9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7d8a55d-0692-430f-a7bc-2b0349a470b0",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da768896-a6c6-43cb-80e6-4dd4a9702139",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a98e2342-7c2a-47a4-8d52-2602ab6a1475",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d0146a1-e414-4bb3-9128-df5ef27ee71e",
+          "name": "Get Access Token",
+          "request": {
+            "name": "Get Access Token",
+            "description": {
+              "content": "The HTTP POST request to the `/api/oauth2/token` path allows you to get an access token and a refresh token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "oauth2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "password",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "Authorization code. Required if the `grant_type` value is `authorization_code`."
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "Password. Required if the `grant_type` value is `password`."
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "Refresh token. Required if the `grant_type` value is `refresh_token`."
+                },
+                {
+                  "disabled": false,
+                  "key": "use_short_term_refresh",
+                  "value": "<boolean>",
+                  "description": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes."
+                },
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<string>",
+                  "description": "User name. Required if the `grant_type` value is `password`."
+                },
+                {
+                  "disabled": false,
+                  "key": "vbr_token",
+                  "value": "<string>",
+                  "description": "Veeam Backup & Replication platform service token."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ae12346-b697-472e-95db-7ef76277c78a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "password"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code. Required if the `grant_type` value is `authorization_code`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Password. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Refresh token. Required if the `grant_type` value is `refresh_token`.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.",
+                        "type": "text/plain"
+                      },
+                      "key": "use_short_term_refresh",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "User name. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Veeam Backup & Replication platform service token.",
+                        "type": "text/plain"
+                      },
+                      "key": "vbr_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 900,\n  \".expires\": \"2022-04-24T14:39:18+01:00\",\n  \"refresh_token\": \"eyJhbGciOiJSUzUxMiIsImtpZCI6IjRFOTE2QjIwMTkzMENEOUFFNDRDMjAwMTlGODdGMkE0RUYyMjczMDMiLCJ0eXAiOiJKV1QifQ.eyJ1bmlxdWVfbmFtZSI6InNoZWlsYS5kLmNvcnkiLCJ0b2tlbl9pZCI6IjEwNTA4YWUyLTk0YzctNGRkNi04YzEyLWZjNGY1NDQ1MzM0YSIsInNob3J0X3Rlcm1fZXhwaXJhdGlvbiI6IkZhbHNlIiwibmJmIjoxNjQzMDMwNjU5LCJleHAiOjE2NDQyNDAyNTksImlhdCI6MTY0MzAzMDY1OSwiYXVkIjoicmVmcmVzaCJ9.RXx9xPlpoUuRwO7sTkBTXntpc3vixXc2kgfCPfRcpePdzOGbLqn64c1hCHTGgXPKgZ4ogEY58N2D3xUPd6spAdfbOkF_XwjEEDpxf03rl7LYMo-OXQ0PxVtUCJK3_o6Dfah0YV6IYu5yctvd-_1MKaac7vV5Zl87qhlF8w4e7LT0QPD_Vhp2JUoD3dSTvYw9WvNDqaRotYfaWj05yTB3PArVwSiPDg1oZXSLxROmDDtKf5FFqSgOdp4LxJmD6sYlv_2FQqG-tNwPqRyzKIaqiDDQXBR9MVmFHBl9iUcYOqvX9ZlCa7oPP_txjopks-NcpdyPkSH74hvoeOs3hujW8w\",\n  \".issued\": \"2022-04-24T14:24:18+01:00\",\n  \"token_type\": \"bearer\",\n  \"access_token\": \"eyJhbGciOiJSUzUxMiIsImtpZCI6IjRFOTE2QjIwMTkzMENEOUFFNDRDMjAwMTlGODdGMkE0RUYyMjczMDMiLCJ0eXAiOiJKV1QifQ.eyJ1bmlxdWVfbmFtZSI6InNoZWlsYS5kLmNvcnkiLCJuYmYiOjE2NDMwMzA2NTgsImV4cCI6MTY0MzAzMTU1OCwiaWF0IjoxNjQzMDMwNjU4LCJhdWQiOiJhY2Nlc3MifQ.PYyLnd-AGcQDiMN6RibL_3D-IzngzGqM0Du0huiEbswyqB9JATF3PJvPPKQn1H27xYEiznDyhAnbs9qZNNXlK0E7yRZbifUat16C1XDCvKFXAkije_44xakcUf5aUeU5YVRyjHa-hTRTkwISj9lBCNf_WdpttkK2stgyRCafrj057ATgUyru6o5gZhTYIS4cioAXmhvLvB7Qrn4X080DHH0-KqYeSQwnQASi1HDuogfkEmxyu8380fbGJiyK4eKGLJ2hmq5DsMmL0BSSzIvUiifLPS5_Ei4-9EOFOv3RlLmk6eQNefaLrkRSsV7QSgGZDLc98zIBlD2yrUccx2cj9A\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fba0b70-ac57-4b1a-a88d-fb718f5ac89b",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "password"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code. Required if the `grant_type` value is `authorization_code`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Password. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Refresh token. Required if the `grant_type` value is `refresh_token`.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.",
+                        "type": "text/plain"
+                      },
+                      "key": "use_short_term_refresh",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "User name. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Veeam Backup & Replication platform service token.",
+                        "type": "text/plain"
+                      },
+                      "key": "vbr_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60e5019e-5dfb-44ac-b77a-8633a09e092d",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "password"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code. Required if the `grant_type` value is `authorization_code`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Password. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Refresh token. Required if the `grant_type` value is `refresh_token`.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.",
+                        "type": "text/plain"
+                      },
+                      "key": "use_short_term_refresh",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "User name. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Veeam Backup & Replication platform service token.",
+                        "type": "text/plain"
+                      },
+                      "key": "vbr_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cff8c51-c97f-4312-a328-cc66e22e9374",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "password"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code. Required if the `grant_type` value is `authorization_code`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Password. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Refresh token. Required if the `grant_type` value is `refresh_token`.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.",
+                        "type": "text/plain"
+                      },
+                      "key": "use_short_term_refresh",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "User name. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Veeam Backup & Replication platform service token.",
+                        "type": "text/plain"
+                      },
+                      "key": "vbr_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d92fb85-fb70-474b-9f5b-21c35cdfde99",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "password"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code. Required if the `grant_type` value is `authorization_code`.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Password. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Refresh token. Required if the `grant_type` value is `refresh_token`.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.",
+                        "type": "text/plain"
+                      },
+                      "key": "use_short_term_refresh",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "User name. Required if the `grant_type` value is `password`.",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Veeam Backup & Replication platform service token.",
+                        "type": "text/plain"
+                      },
+                      "key": "vbr_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aea22b6c-b801-4562-b228-f111f07ead26",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Login API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

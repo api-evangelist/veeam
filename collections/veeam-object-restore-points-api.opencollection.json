@@ -1,0 +1,161 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Object Restore Points API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Object Restore Points",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Restore Points",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/objectRestorePoints",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of restore points to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of restore points to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts restore points by one of the restore point parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts restore points in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "createdAfterFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns restore points that are created after the specified date and time."
+              },
+              {
+                "name": "createdBeforeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns restore points that are created before the specified date and time."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters restore points by the `nameFilter` pattern. The pattern can match any restore point parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+              },
+              {
+                "name": "platformNameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters restore points by name of the backup object platform."
+              },
+              {
+                "name": "platformIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters restore points by ID of the backup object platform."
+              },
+              {
+                "name": "backupIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters restore points by backup ID."
+              },
+              {
+                "name": "backupObjectIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters restore points by backup object ID."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/objectRestorePoints` path allows you to get an array of all restore points created on the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Restore Point",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/objectRestorePoints/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the restore point."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/objectRestorePoints/{id}` path allows you to get a restore point that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get Restore Point Disks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/objectRestorePoints/:id/disks",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the restore point."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/objectRestorePoints/{id}/disks` path allows you to get an array of disks from a restore point that has the specified `id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

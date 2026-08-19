@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Encryption API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Encryption",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Encryption Passwords",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/encryptionPasswords",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of passwords to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of passwords to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts passwords by one of the password parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts passwords in the ascending order by the `orderColumn` parameter."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/encryptionPasswords` path allows you to get an array of all passwords that are used for data encryption."
+        },
+        {
+          "info": {
+            "name": "Add Encryption Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/encryptionPasswords",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/encryptionPasswords` path allows you to add an encryption password."
+        },
+        {
+          "info": {
+            "name": "Get Encryption Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/encryptionPasswords/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the encryption password."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/encryptionPasswords/{id}` path allows you to get an encryption password that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Encryption Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/encryptionPasswords/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the encryption password."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/encryptionPasswords/{id}` path allows you to edit an encryption password that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Remove Encryption Password",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/encryptionPasswords/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the encryption password."
+              }
+            ]
+          },
+          "docs": "The HTTP DELETE request to the `/api/v1/encryptionPasswords/{id}` path allows you to remove an encryption password that has the specified `id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

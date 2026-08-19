@@ -1,0 +1,1025 @@
+{
+  "item": [
+    {
+      "id": "7fcfabc0-0506-4e3e-b4d7-eecdbe2c757a",
+      "name": "Inventory Browser",
+      "description": {
+        "content": "The Inventory Browser section defines paths and operations for retrieving VMware vSphere servers and their virtual infrastructure objects (data centers, clusters, hosts, resource pools, VMs).<br> <div class=\"note\"><strong>NOTE</strong><br>In the current version, you can browse VMware vSphere objects only.</div>",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "946a9662-b80b-407e-921f-21a469271515",
+          "name": "Get All VMware vSphere Servers",
+          "request": {
+            "name": "Get All VMware vSphere Servers",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/inventory/vmware/hosts` path allows you to get an array of all VMware vSphere servers added to the backup infrastructure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "inventory",
+                "vmware",
+                "hosts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>",
+                  "description": "Number of VMware vSphere servers to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of VMware vSphere servers to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderColumn",
+                  "value": "<string>",
+                  "description": "Sorts VMware vSphere servers by one of the VMware vSphere server parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>",
+                  "description": "Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "nameFilter",
+                  "value": "<string>",
+                  "description": "Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5c7e336-f834-4c49-a945-c3aea690239a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech01.local\",\n        \"name\": \"vcenter01.tech01.local\",\n        \"objectId\": \"d766a026-a7a7-4d6e-add0-9599a291394f\",\n        \"type\": \"vCenterServer\"\n      },\n      \"size\": \"N/A\"\n    },\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter02.tech02.local\",\n        \"name\": \"vcenter02.tech02.local\",\n        \"objectId\": \"bd49ae5e-d5ec-4013-8ffa-c91beadce052\",\n        \"type\": \"vCenterServer\"\n      },\n      \"size\": \"N/A\"\n    }\n  ],\n  \"pagination\": {\n    \"count\": 2,\n    \"limit\": 200,\n    \"skip\": 0,\n    \"total\": 2\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "041c2806-97ef-440d-95ad-f544b04451bd",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a50f515-afb6-4a7d-b13c-dee7c6e44959",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4b05634-775d-48b5-82b3-0f0eef6e8842",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "645da8f2-ac16-40da-a548-d8220561ee49",
+          "name": "Get VMware vSphere Server Objects",
+          "request": {
+            "name": "Get VMware vSphere Server Objects",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/inventory/vmware/hosts/{name}` path allows you to get an array of virtual infrastructure objects of the VMware vSphere server that has the specified `name`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "inventory",
+                "vmware",
+                "hosts",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>",
+                  "description": "Number of objects to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of objects to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderColumn",
+                  "value": "<string>",
+                  "description": "Sorts objects by one of the object parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>",
+                  "description": "Sorts objects in the ascending order by the `orderColumn` parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "objectIdFilter",
+                  "value": "<string>",
+                  "description": "Filters objects by object ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "hierarchyTypeFilter",
+                  "value": "<string>",
+                  "description": "Filters objects by hierarchy type."
+                },
+                {
+                  "disabled": false,
+                  "key": "nameFilter",
+                  "value": "<string>",
+                  "description": "Filters objects by the `nameFilter` pattern. The pattern can match any object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+                },
+                {
+                  "disabled": false,
+                  "key": "typeFilter",
+                  "value": "<string>",
+                  "description": "Filters objects by virtual infrastructure type."
+                },
+                {
+                  "disabled": false,
+                  "key": "parentContainerNameFilter",
+                  "value": "<string>",
+                  "description": "Filters objects by name of the parent container."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the VMware vSphere server."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ce67000-5fae-40ce-935c-76783052fee2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "objectIdFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hierarchyTypeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentContainerNameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the VMware vSphere server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech.local\",\n        \"name\": \"Prague\",\n        \"objectId\": \"datacenter-42371\",\n        \"type\": \"Datacenter\"\n      },\n      \"size\": \"N/A\"\n    },\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech.local\",\n        \"name\": \"Templates\",\n        \"objectId\": \"group-h42373\",\n        \"type\": \"Folder\"\n      },\n      \"size\": \"N/A\"\n    },\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech.local\",\n        \"name\": \"esx03.tech.local\",\n        \"objectId\": \"host-42428\",\n        \"type\": \"Host\"\n      },\n      \"size\": \"N/A\"\n    },\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech.local\",\n        \"name\": \"Services\",\n        \"objectId\": \"resgroup-65867\",\n        \"type\": \"ResourcePool\"\n      },\n      \"size\": \"N/A\"\n    },\n    {\n      \"inventoryObject\": {\n        \"hostName\": \"vcenter01.tech.local\",\n        \"name\": \"winsrv01\",\n        \"objectId\": \"vm-62230\",\n        \"type\": \"VirtualMachine\"\n      },\n      \"size\": \"220 GB\"\n    }\n  ],\n  \"pagination\": {\n    \"limit\": 200,\n    \"skip\": 0,\n    \"total\": 5,\n    \"count\": 5\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ded6c004-8a96-4634-ac6c-537647feae61",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "objectIdFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hierarchyTypeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentContainerNameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the VMware vSphere server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d95e912-4f51-4724-a252-6e1a2c195b3f",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "objectIdFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hierarchyTypeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentContainerNameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the VMware vSphere server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e602db18-57bd-4e1b-be84-2c9150e7181f",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "objectIdFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hierarchyTypeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentContainerNameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the VMware vSphere server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41f6c8ae-f82f-464c-a932-def775d99708",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inventory",
+                    "vmware",
+                    "hosts",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "objectIdFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hierarchyTypeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentContainerNameFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the VMware vSphere server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"MethodNotAllowed\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "963973c1-ccd4-45a3-809e-eb44d74bebf5",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Inventory Browser API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

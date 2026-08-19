@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Backup Objects API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backup Objects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Backup Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupObjects",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of backup objects to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of backup objects to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts backup objects by one of the backup object parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts backup objects in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backup objects by the `nameFilter` pattern. The pattern can match any backup object parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+              },
+              {
+                "name": "platformNameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backup objects by platform ID."
+              },
+              {
+                "name": "platformIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backup objects by platform ID."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backup objects by object type."
+              },
+              {
+                "name": "viTypeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backup objects by the type of VMware vSphere server."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupObjects` path allows you to get an array of virtual infrastructure objects (VMs and VM containers) that are included in backups created by the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Backup Object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupObjects/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup object."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupObjects/{id}` path allows you to get a backup object that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get Restore Points",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupObjects/:id/restorePoints",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup object."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupObjects/{id}/restorePoints` path allows you to get an array of restore points of a backup object that has the specified `id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

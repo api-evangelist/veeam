@@ -1,0 +1,922 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Repositories API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "RepositoriesGetAll",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/repositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "SearchPattern",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "CreateRepository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/repositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "RepositoriesGetOneById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/repositories/:repositoryId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "UpdateRepository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/repositories/:repositoryId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "DeleteRepository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/repositories/:repositoryId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "RescanRepository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/repositories/:repositoryId/rescan",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "RepositoryValidateSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/repositories/settings/validate",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "RepositoryPasswordIsCorrect",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/repositories/:repositoryId/checkPassword",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "ExportRepositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/repositories/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Get All Repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of repositories to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of repositories to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repositories by one of the repository parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repositories in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by repository type."
+              },
+              {
+                "name": "hostIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by ID of the backup server."
+              },
+              {
+                "name": "pathFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by path to the folder where backup files are stored."
+              },
+              {
+                "name": "vmbApiFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by VM Backup API parameters converted to the base64 string. To obtain the string, call the `GetApiProductInfoString` method of VM Backup API."
+              },
+              {
+                "name": "vmbApiPlatform",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by ID of a platform that you use to communicate with VM Backup API."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/repositories` path allows you to get an array of all backup repositories that are added to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Add Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "overwriteOwner",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/repositories` path allows you to add a repository to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Get All Repository States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/states",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of repository states to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of repository states to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repository states by one of the state parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repository states in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "idFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by repository ID."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by the `nameFilter` pattern. The pattern can match any repository state parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by repository type."
+              },
+              {
+                "name": "capacityFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by repository capacity."
+              },
+              {
+                "name": "freeSpaceFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by repository free space."
+              },
+              {
+                "name": "usedSpaceFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repository states by repository used space."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/repositories/states` path allows you to get an array of all repository states. The states include repository location and brief statistics, such as repository capacity, free and used space."
+        },
+        {
+          "info": {
+            "name": "Get Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup repository."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/repositories/{id}` path allows you to get a backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/backupInfrastructure/repositories/{id}` path allows you to edit a backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Remove Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup repository."
+              },
+              {
+                "name": "deleteBackups",
+                "value": "",
+                "type": "query",
+                "description": "If *true*, Veeam Backup & Replication will remove backup files."
+              }
+            ]
+          },
+          "docs": "The HTTP DELETE request to the `/api/v1/backupInfrastructure/repositories/{id}` path allows you to remove a backup repository that has the specified `id` from the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Get Repository Access Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/:id/accessPermissions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup repository."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/repositories/{id}/accessPermissions` path allows you to get access permissions of a repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Repository Access Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/repositories/:id/accessPermissions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/backupInfrastructure/repositories/{id}/accessPermissions` path allows you to edit access permissions of a repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get All Scale-Out Backup Repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of repositories to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of repositories to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repositories by one of the repository parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts repositories in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/scaleOutRepositories` path allows you to get an array of all scale-out backup repositories that are added to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Add Scale-Out Backup Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories` path allows you to add a scale-out backup repository to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Get Scale-Out Backup Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}` path allows you to get a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Scale-Out Backup Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}` path allows you to edit a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Remove Scale-Out Backup Repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              },
+              {
+                "name": "deleteBackups",
+                "value": "",
+                "type": "query",
+                "description": "If *true*, Veeam Backup & Replication will remove backup files."
+              }
+            ]
+          },
+          "docs": "The HTTP DELETE request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}` path allows you to remove a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get Scale-Out Backup Repository Access Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/accessPermissions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/accessPermissions` path allows you to get access permissions of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Scale-Out Backup Repository Access Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/accessPermissions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/accessPermissions` path allows you to edit access permissions of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Disable Maintenance Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/disableMaintenanceMode",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableMaintenanceMode` path allows you to disable the Maintenance mode for specified extents of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Disable Sealed Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/disableSealedMode",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableSealedMode` path allows you to disable the Sealed mode for specified extents of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Enable Maintenance Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/enableMaintenanceMode",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableMaintenanceMode` path allows you to enable the Maintenance mode for specified extents of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Enable Sealed Mode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/enableSealedMode",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableSealedMode` path allows you to enable the Sealed mode for specified extents of a scale-out backup repository that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Evacuate Backups from Performance Extent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/scaleOutRepositories/:id/evacuateBackups",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the scale-out backup repository."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/evacuateBackups` path allows you to evacuate backups from specified performance extents of a scale-out backup repository that has the specified `id`.<br>Before you evacuate backups from performance extents, you must put them into the Maintenance mode."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

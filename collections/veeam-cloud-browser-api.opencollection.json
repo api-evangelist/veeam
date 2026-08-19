@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Cloud Browser API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cloud Browser",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Cloud Hierarchy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/cloudBrowser",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/cloudBrowser` path allows you to browse cloud resources (compute or storage) available for the specified storage account."
+        },
+        {
+          "info": {
+            "name": "New Folder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/cloudBrowser/newFolder",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/cloudBrowser/newFolder` path allows you to create a new folder in the cloud infrastructure.<br><div class=\"note\"><strong>NOTE</strong><br>The REST API does not create new containers, you can create a folder in an existing container only.</div>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

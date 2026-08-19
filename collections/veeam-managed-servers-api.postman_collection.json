@@ -1,0 +1,2500 @@
+{
+  "item": [
+    {
+      "id": "56b05165-bbcf-4e43-beb6-37b27cc8db12",
+      "name": "Managed Servers",
+      "description": {
+        "content": "The Managed Servers section defines paths and operations for managing servers.<br> <div class=\"note\"><strong>NOTE</strong><br>In the current version, the REST API supports the following server types&#58; *VMware vSphere*, *Linux* and *Windows*.</div>",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83586bff-1db1-4648-8ba1-54c7fbd109e4",
+          "name": "Get All Servers",
+          "request": {
+            "name": "Get All Servers",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers` path allows you to get an array of all servers that are added to the backup infrastructure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>",
+                  "description": "Number of servers to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of servers to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderColumn",
+                  "value": "<string>",
+                  "description": "Sorts servers by one of the server parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderAsc",
+                  "value": "<boolean>",
+                  "description": "Sorts servers in the ascending order by the `orderColumn` parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "nameFilter",
+                  "value": "<string>",
+                  "description": "Filters servers by the `nameFilter` pattern. The pattern can match any server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+                },
+                {
+                  "disabled": false,
+                  "key": "typeFilter",
+                  "value": "<string>",
+                  "description": "Filters servers by server type."
+                },
+                {
+                  "disabled": false,
+                  "key": "viTypeFilter",
+                  "value": "<string>",
+                  "description": "Filters servers by the type of VMware vSphere server."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8a9be07-9f70-4936-a997-92e50aa19dbe",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viTypeFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"credentialsId\": \"b860489e-490d-4e43-b20a-a91c4e7d2e76\",\n      \"description\": \"Created by TECH\\\\sheila.d.cory\",\n      \"id\": \"535b5414-788d-4720-a53a-ecc830d2589b\",\n      \"name\": \"172.17.53.67\",\n      \"sshSettings\": {\n        \"managementPort\": 6162,\n        \"portRangeEnd\": 3300,\n        \"portRangeStart\": 2500,\n        \"serverThisSide\": false,\n        \"sshTimeOutMs\": 20000\n      },\n      \"type\": \"LinuxHost\"\n    },\n    {\n      \"credentialsId\": \"fa4769b5-6722-4968-838b-866c29bd14d4\",\n      \"description\": \"Created by TECH\\\\sheila.d.cory\",\n      \"id\": \"ee50f2fb-034f-41cd-8dc8-904aeae2d0d8\",\n      \"name\": \"enterprise04.tech.local\",\n      \"networkSettings\": {\n        \"components\": [\n          {\n            \"componentName\": \"DeployerSvc\",\n            \"port\": 6160\n          },\n          {\n            \"componentName\": \"Transport\",\n            \"port\": 6162\n          },\n          {\n            \"componentName\": \"Nfs\",\n            \"port\": 6161\n          },\n          {\n            \"componentName\": \"RestoreProxy\",\n            \"port\": 6170\n          },\n          {\n            \"componentName\": \"WanAccelerator\",\n            \"port\": 6164\n          },\n          {\n            \"componentName\": \"Tape\",\n            \"port\": 6166\n          },\n          {\n            \"componentName\": \"CloudGate\",\n            \"port\": 6168\n          },\n          {\n            \"componentName\": \"AgentConfigureService\",\n            \"port\": 9380\n          },\n          {\n            \"componentName\": \"FileSystemVssIntegration\",\n            \"port\": 6210\n          },\n          {\n            \"componentName\": \"VssHwSnapshotProvider\",\n            \"port\": 6211\n          }\n        ],\n        \"portRangeEnd\": 3300,\n        \"portRangeStart\": 2500,\n        \"serverThisSide\": false\n      },\n      \"type\": \"WindowsHost\"\n    },\n    {\n      \"credentialsId\": \"fa4769b5-6722-4968-838b-866c29bd14d4\",\n      \"description\": \"Created by TECH\\\\administrator\",\n      \"id\": \"de28dc43-b8ee-4e17-8e63-3d38b6604033\",\n      \"name\": \"vcenter01.tech.local\",\n      \"port\": 443,\n      \"type\": \"ViHost\",\n      \"viHostType\": \"VC\"\n    }\n  ],\n  \"pagination\": {\n    \"total\": 3,\n    \"count\": 3,\n    \"limit\": 200,\n    \"skip\": 0\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56680062-1fb7-4942-ac64-8e3762a803d3",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viTypeFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32ff427f-1959-4c77-91c6-cd8bba6317ee",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viTypeFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "348d2f2b-eecd-44aa-9285-22caaeaf12f2",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderColumn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderAsc",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "nameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "typeFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "viTypeFilter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "466edc4c-48c4-492a-83fc-b4b47af57f13",
+          "name": "Add Server",
+          "request": {
+            "name": "Add Server",
+            "description": {
+              "content": "The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers` path allows you to add a server to the backup infrastructure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"port\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"componentName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"port\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"portRangeEnd\": \"<integer>\",\n    \"portRangeStart\": \"<integer>\",\n    \"serverThisSide\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf21315a-dbb6-4c43-bb8f-1054c0ee3fae",
+              "name": "Infrastructure session has been created to add the server. To check the progress, track the session `state`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"d7af15f3-8808-454e-ba79-2c2267acb05d\",\n  \"description\": \"Backup Repository\",\n  \"name\": \"enterprise01.tech.local\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3313,\n    \"portRangeStart\": 2517,\n    \"serverThisSide\": true\n  },\n  \"type\": \"WindowsHost\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionType\": \"Infrastructure\",\n  \"id\": \"59f85a1e-2016-4d08-aea5-2676a03d548c\",\n  \"name\": \"Infrastructure Item Saving\",\n  \"state\": \"Working\",\n  \"usn\": 0,\n  \"activityId\": \"59f85a1e-2016-4d08-aea5-2676a03d548c\",\n  \"creationTime\": \"2022-01-28T19:48:43.117+01:00\",\n  \"progressPercent\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59ec34f3-0490-4882-8a3d-7676d5c7aa17",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"d7af15f3-8808-454e-ba79-2c2267acb05d\",\n  \"description\": \"Backup Repository\",\n  \"name\": \"enterprise01.tech.local\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3313,\n    \"portRangeStart\": 2517,\n    \"serverThisSide\": true\n  },\n  \"type\": \"WindowsHost\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b883a71-91a3-48f7-901b-a494e5af02ba",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"d7af15f3-8808-454e-ba79-2c2267acb05d\",\n  \"description\": \"Backup Repository\",\n  \"name\": \"enterprise01.tech.local\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3313,\n    \"portRangeStart\": 2517,\n    \"serverThisSide\": true\n  },\n  \"type\": \"WindowsHost\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e505184b-d2e1-4af0-a892-4614df48b5c8",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"d7af15f3-8808-454e-ba79-2c2267acb05d\",\n  \"description\": \"Backup Repository\",\n  \"name\": \"enterprise01.tech.local\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3313,\n    \"portRangeStart\": 2517,\n    \"serverThisSide\": true\n  },\n  \"type\": \"WindowsHost\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a35ce85c-8b6d-4e9a-8867-72401e1cd5dc",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"credentialsId\": \"d7af15f3-8808-454e-ba79-2c2267acb05d\",\n  \"description\": \"Backup Repository\",\n  \"name\": \"enterprise01.tech.local\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3313,\n    \"portRangeStart\": 2517,\n    \"serverThisSide\": true\n  },\n  \"type\": \"WindowsHost\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03f75eba-0b20-4716-8e25-7ca5c13b7890",
+          "name": "Remove Server",
+          "request": {
+            "name": "Remove Server",
+            "description": {
+              "content": "The HTTP DELETE request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to remove a managed server that has the specified `id` from the backup infrastructure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the managed server."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b369c728-e2c1-465f-9291-de67ec77ecd0",
+              "name": "InfrastructureItemDeletion session has been created to remove the server. To check the progress, track the session `state`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"state\": \"Working\",\n  \"sessionType\": \"InfrastructureItemDeletion\",\n  \"id\": \"af1a6027-3845-487e-9a16-6849f4775a1e\",\n  \"progressPercent\": 0,\n  \"creationTime\": \"2022-01-28T20:21:08.81+01:00\",\n  \"usn\": 0,\n  \"activityId\": \"fc5683a4-8c25-4f8e-97cc-0a40745a5729\",\n  \"name\": \"Infrastructure Item Deletion\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1f2ff83-340d-4dec-985b-5c3dc156a968",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b379a9d-31c2-4bd9-bb71-1c5a7024d476",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79016bb7-1dcc-4c9f-9b45-496dd6424f9e",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6279147-1bce-40af-a9c8-f6f966788d87",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7fdb3ae6-a9b0-41d8-a905-f6c64b615022",
+          "name": "Get Server",
+          "request": {
+            "name": "Get Server",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to get a managed server that has the specified `id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the managed server."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c41928d-6533-4ce9-9c27-084e0066e75e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"Backup repository\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": \"DeployerSvc\",\n        \"port\": 6160\n      },\n      {\n        \"componentName\": \"Transport\",\n        \"port\": 6162\n      },\n      {\n        \"componentName\": \"Nfs\",\n        \"port\": 6161\n      },\n      {\n        \"componentName\": \"RestoreProxy\",\n        \"port\": 6170\n      },\n      {\n        \"componentName\": \"WanAccelerator\",\n        \"port\": 6164\n      },\n      {\n        \"componentName\": \"Tape\",\n        \"port\": 6166\n      },\n      {\n        \"componentName\": \"CloudGate\",\n        \"port\": 6168\n      },\n      {\n        \"componentName\": \"AgentConfigureService\",\n        \"port\": 9380\n      },\n      {\n        \"componentName\": \"FileSystemVssIntegration\",\n        \"port\": 6210\n      },\n      {\n        \"componentName\": \"VssHwSnapshotProvider\",\n        \"port\": 6211\n      }\n    ],\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false\n  },\n  \"id\": \"fc5683a4-8c25-4f8e-97cc-0a40745a5729\",\n  \"credentialsId\": \"97d00492-92b7-4929-9e11-68eaa63b88e3\",\n  \"name\": \"enterprise05.tech.local\",\n  \"type\": \"WindowsHost\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30f5016e-5f58-4d65-b6bd-6ed2d4e6b546",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "952ea03a-102d-4229-8213-b23cd4f87d79",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da280175-af0f-4bcf-bece-876c55dd989b",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daf42aee-7463-4350-978d-06998151dd18",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5924e9aa-b2ec-4082-99b1-3e6dfba1410f",
+          "name": "Edit Server",
+          "request": {
+            "name": "Edit Server",
+            "description": {
+              "content": "The HTTP PUT request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to edit a managed server that has the specified `id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the managed server."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credentialsId\": \"<uuid>\",\n  \"description\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"networkSettings\": {\n    \"components\": [\n      {\n        \"componentName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"port\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"componentName\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"port\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"portRangeEnd\": \"<integer>\",\n    \"portRangeStart\": \"<integer>\",\n    \"serverThisSide\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29c34430-6bbb-407e-b460-476758a7dc7c",
+              "name": "Infrastructure session has been created to edit the server. To check the progress, track the session `state`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Infrastructure Item Saving\",\n  \"usn\": 0,\n  \"activityId\": \"e81a72de-9b0a-4f4a-a451-0d0ece4c54b2\",\n  \"progressPercent\": 0,\n  \"sessionType\": \"Infrastructure\",\n  \"creationTime\": \"2022-01-28T20:18:47.563+01:00\",\n  \"id\": \"e81a72de-9b0a-4f4a-a451-0d0ece4c54b2\",\n  \"state\": \"Working\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fddd1cc-cb7b-4f3a-a1fe-6b031c81ad20",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e37ffb4-0da8-4c8a-8f7b-1f123d7424ab",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18d64190-768e-426d-8e94-a03ab890d0cc",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d174ac4e-32f3-48da-847c-9863cbf8feda",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "555484fa-9b96-4a61-a1b5-059f6bdadcc1",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"71988b5d-e338-4c62-81e5-05ea944d233e\",\n  \"description\": \"Backup repository\",\n  \"name\": \"linuxsrv01.tech.local\",\n  \"type\": \"LinuxHost\",\n  \"credentialsId\": \"76571109-fe6e-4638-ad37-2f1f30e3e9f1\",\n  \"sshSettings\": {\n    \"managementPort\": 6162,\n    \"portRangeEnd\": 3300,\n    \"portRangeStart\": 2500,\n    \"serverThisSide\": false,\n    \"sshTimeOutMs\": 20000\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "caf57812-add9-49de-b9a0-75d062d4a6b8",
+          "name": "Change to Single-Use Credentials",
+          "request": {
+            "name": "Change to Single-Use Credentials",
+            "description": {
+              "content": "The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers/{id}/updateSingleUseCredentials` path allows you to change from persistent to single-use credentials used to access a Linux server that has the specified `id`. Single-use type of credentials is required if you want to use the Linux server as a hardened repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "backupInfrastructure",
+                "managedServers",
+                ":id",
+                "updateSingleUseCredentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) ID of the managed server."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63c1dd53-4b66-4769-9ec9-119c1f26f443",
+              "name": "Infrastructure session has been created to edit the server. To check the progress, track the session `state`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"creationTime\": \"2022-01-28T20:18:47.563+01:00\",\n  \"name\": \"Infrastructure Item Saving\",\n  \"sessionType\": \"Infrastructure\",\n  \"state\": \"Working\",\n  \"usn\": 0,\n  \"id\": \"e81a72de-9b0a-4f4a-a451-0d0ece4c54b2\",\n  \"progressPercent\": 0,\n  \"activityId\": \"e81a72de-9b0a-4f4a-a451-0d0ece4c54b2\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90b4a44d-758e-48e9-8d91-5192cc463da1",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63b0a11d-96f3-4bdb-ab96-fc44c3d7d014",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdecfb9e-97b6-4b41-9efd-e463ba8fbded",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f60aa014-75d7-49fa-a4ea-42338e037080",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4b7a6b2-eeba-4a96-8955-b3f7c51a83ec",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "backupInfrastructure",
+                    "managedServers",
+                    ":id",
+                    "updateSingleUseCredentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) ID of the managed server."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"<string>\",\n  \"password\": \"<string>\",\n  \"type\": \"<string>\",\n  \"username\": \"<string>\",\n  \"SSHPort\": \"<integer>\",\n  \"addToSudoers\": \"<boolean>\",\n  \"autoElevated\": \"<boolean>\",\n  \"passphrase\": \"<string>\",\n  \"privateKey\": \"<string>\",\n  \"rootPassword\": \"<string>\",\n  \"tag\": \"<string>\",\n  \"useSu\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"NotFound\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6ae5aa67-09c2-46b5-9434-92767f60118e",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Managed Servers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

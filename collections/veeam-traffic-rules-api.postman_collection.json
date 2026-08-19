@@ -1,0 +1,647 @@
+{
+  "item": [
+    {
+      "id": "4733ce5f-785b-4e10-9169-09ea76bb0e26",
+      "name": "Traffic Rules",
+      "description": {
+        "content": "The Traffic Rules section defines paths and operations for retrieving and editing information about network traffic rules that are configured on the backup server.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d12651e8-f240-442c-b7dc-387e83728120",
+          "name": "Get Traffic Rules",
+          "request": {
+            "name": "Get Traffic Rules",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/trafficRules` path allows you to get network traffic rules that control traffic transferred between backup infrastructure components.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "trafficRules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef8a5901-b64e-434c-b9b5-42274e9a4889",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 1,\n      \"throttlingWindowEnabled\": false,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"uploadStreamsCount\": 5,\n  \"preferredNetworks\": {\n    \"isEnabled\": false,\n    \"networks\": []\n  },\n  \"useMultipleStreamsPerJob\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05a9260e-4753-45f7-9bbd-b0f48b8566fd",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "161199a4-d2aa-40e7-ba90-dfdcde449cbe",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb4b859c-07d9-465c-9fbd-fad8b943bc7c",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a96cffa3-d584-405e-ad55-08d4698e093c",
+          "name": "Edit Traffic Rules",
+          "request": {
+            "name": "Edit Traffic Rules",
+            "description": {
+              "content": "The HTTP PUT request to the `/api/v1/trafficRules` path allows you to edit network traffic rules that are configured on the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "trafficRules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"useMultipleStreamsPerJob\": \"<boolean>\",\n  \"preferredNetworks\": {\n    \"isEnabled\": \"<boolean>\",\n    \"networks\": [\n      {\n        \"cidrNotation\": \"<string>\",\n        \"ipAddress\": \"<string>\",\n        \"subnetMask\": \"<string>\"\n      },\n      {\n        \"cidrNotation\": \"<string>\",\n        \"ipAddress\": \"<string>\",\n        \"subnetMask\": \"<string>\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"name\": \"<string>\",\n      \"sourceIPStart\": \"<string>\",\n      \"sourceIPEnd\": \"<string>\",\n      \"targetIPStart\": \"<string>\",\n      \"targetIPEnd\": \"<string>\",\n      \"encryptionEnabled\": \"<boolean>\",\n      \"id\": \"<uuid>\",\n      \"throttlingEnabled\": \"<boolean>\",\n      \"throttlingUnit\": \"<string>\",\n      \"throttlingValue\": \"<integer>\",\n      \"throttlingWindowEnabled\": \"<boolean>\",\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"hours\": \"<string>\"\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"hours\": \"<string>\"\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"sourceIPStart\": \"<string>\",\n      \"sourceIPEnd\": \"<string>\",\n      \"targetIPStart\": \"<string>\",\n      \"targetIPEnd\": \"<string>\",\n      \"encryptionEnabled\": \"<boolean>\",\n      \"id\": \"<uuid>\",\n      \"throttlingEnabled\": \"<boolean>\",\n      \"throttlingUnit\": \"<string>\",\n      \"throttlingValue\": \"<integer>\",\n      \"throttlingWindowEnabled\": \"<boolean>\",\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"hours\": \"<string>\"\n          },\n          {\n            \"day\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"hours\": \"<string>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"uploadStreamsCount\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a3035c51-ca9b-4158-a69b-16f686064391",
+              "name": "Infrastructure session has been created to edit the traffic rules. To check the progress, track the session `state`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"uploadStreamsCount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"uploadStreamsCount\": 5,\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02178e6f-1176-469a-b834-1dab7e911378",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"uploadStreamsCount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e5ae5c2-b0f6-4c6d-a2de-6e26b3ad78e3",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"uploadStreamsCount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab6198ed-de57-4697-b7d2-e2610d220074",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"uploadStreamsCount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "938251d6-a22b-4377-b35b-bb5f98c0f9f6",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "trafficRules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"preferredNetworks\": {\n    \"isEnabled\": true,\n    \"networks\": [\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"124.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      },\n      {\n        \"cidrNotation\": \"8\",\n        \"ipAddress\": \"123.0.0.0\",\n        \"subnetMask\": \"255.0.0.0\"\n      }\n    ]\n  },\n  \"trafficRules\": [\n    {\n      \"encryptionEnabled\": true,\n      \"id\": \"622b0112-a972-49c2-9987-24a57ddc930a\",\n      \"name\": \"Internet\",\n      \"sourceIPEnd\": \"\",\n      \"sourceIPStart\": \"Any\",\n      \"targetIPEnd\": \"\",\n      \"targetIPStart\": \"Internet\",\n      \"throttlingEnabled\": false,\n      \"throttlingUnit\": \"MbitPerSpec\",\n      \"throttlingValue\": 2,\n      \"throttlingWindowEnabled\": true,\n      \"throttlingWindowOptions\": {\n        \"days\": [\n          {\n            \"day\": \"sunday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"monday\",\n            \"hours\": \"0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"tuesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"wednesday\",\n            \"hours\": \"1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"thursday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"friday\",\n            \"hours\": \"1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          },\n          {\n            \"day\": \"saturday\",\n            \"hours\": \"1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1\"\n          }\n        ]\n      }\n    }\n  ],\n  \"useMultipleStreamsPerJob\": true,\n  \"uploadStreamsCount\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"UnknownError\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ed67bf61-75d1-4b14-91c7-14890023d9a1",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Traffic Rules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

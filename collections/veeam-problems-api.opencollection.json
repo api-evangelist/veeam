@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Problems API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Problems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "AccessDenied",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/accessDenied"
+          }
+        },
+        {
+          "info": {
+            "name": "NoAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/noAccessToken"
+          }
+        },
+        {
+          "info": {
+            "name": "InvalidAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/invalidAccessToken"
+          }
+        },
+        {
+          "info": {
+            "name": "ExpiredAccessToken",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/expiredAccessToken"
+          }
+        },
+        {
+          "info": {
+            "name": "ResourceNotFound",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/resourceNotFound"
+          }
+        },
+        {
+          "info": {
+            "name": "ValidationError",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/validationError"
+          }
+        },
+        {
+          "info": {
+            "name": "ServiceUnavailable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/serviceUnavailable"
+          }
+        },
+        {
+          "info": {
+            "name": "ActionNotImplemented",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/notImplemented"
+          }
+        },
+        {
+          "info": {
+            "name": "UnknownError",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/unknownError"
+          }
+        },
+        {
+          "info": {
+            "name": "RepositoryUsedByPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/repositoryUsedByPolicy"
+          }
+        },
+        {
+          "info": {
+            "name": "UnsupportedApiVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/unsupportedApiVersion"
+          }
+        },
+        {
+          "info": {
+            "name": "ApiVersionUnspecified",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/apiVersionUnspecified"
+          }
+        },
+        {
+          "info": {
+            "name": "InvalidApiVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/invalidApiVersion"
+          }
+        },
+        {
+          "info": {
+            "name": "AmbiguousApiVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/ambiguousApiVersion"
+          }
+        },
+        {
+          "info": {
+            "name": "FailedToRemoveUserPolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/failedToRemoveUserPolicy"
+          }
+        },
+        {
+          "info": {
+            "name": "PolicyAlreadyStarted",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/policyAlreadyStarted"
+          }
+        },
+        {
+          "info": {
+            "name": "LicenseAgreementsIsNotAccepted",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/problems/licenseAgreementsIsNotAccepted"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

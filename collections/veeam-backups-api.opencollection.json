@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Backups API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Backups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backups",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of backups to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of backups to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts backups by one of the backup parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts backups in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backups by the `nameFilter` pattern. The pattern can match any backup parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "createdAfterFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns backups that are created after the specified date and time."
+              },
+              {
+                "name": "createdBeforeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns backups that are created before the specified date and time."
+              },
+              {
+                "name": "platformIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backups by ID of the backup object platform."
+              },
+              {
+                "name": "jobIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backups by ID of the parent job."
+              },
+              {
+                "name": "policyTagFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters backups by retention policy tag."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backups` path allows you to get an array of all backups that are created on or imported to the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backups/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backups/{id}` path allows you to get a backup that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get Backup Objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backups/:id/objects",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the backup."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backups/{id}/objects` path allows you to get an array of virtual infrastructure objects (VMs and VM containers) that are included in a backup that has the specified ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

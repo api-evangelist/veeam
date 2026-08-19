@@ -1,0 +1,345 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Restore API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Restore",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All FCD Mounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/fcd",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of mounts to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of mounts to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts mounts by one of the mount parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts mounts in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "stateFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters mounts by mount state."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/restore/instantRecovery/vmware/fcd` path allows you to get an array of FCD mounts."
+        },
+        {
+          "info": {
+            "name": "Start Instant FCD Recovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/fcd",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/fcd/` path allows you to start Instant FCD Recovery from the restore point to the destination cluster.<br>Specify the destination cluster in the `destinationCluster` parameter of the request body as a model of the VMware vSphere object. For details on how to get the cluster model, see [Get VMware vSphere Server Objects](#tag/Inventory-Browser/operation/GetVmwareHostObject)."
+        },
+        {
+          "info": {
+            "name": "Get FCD Mount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/fcd/:mountId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/restore/instantRecovery/vmware/fcd/{mountId}` path allows you to get information about the mounted vPower NFS datastore, such as restore session ID, mount state, instant FCD recovery settings and disks that will be recovered."
+        },
+        {
+          "info": {
+            "name": "Stop FCD Publishing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/fcd/:mountId/dismount",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/fcd/{mountId}/dismount` path allows you to stop publishing the recovered FCDs and remove the disks from the datastore."
+        },
+        {
+          "info": {
+            "name": "Start FCD Migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/fcd/:mountId/migrate",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/fcd/{mountId}/migrate` path allows you to start migration of FCDs from the specified mount.<br>In the request body specify FCD migration configuration:<ul> <li>Disks for migration</li> <li>Target datastore</li> <li>Storage policy that will be applied to the migrated disks</li></ul> For details on how to get models of the datastore and storage policy, see [Get VMware vSphere Server Objects](#tag/Inventory-Browser/operation/GetVm"
+        },
+        {
+          "info": {
+            "name": "Get All VM Mounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/vm",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of mounts to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of mounts to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts mounts by one of the mount parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts mounts in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "stateFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters mounts by mount state."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/restore/instantRecovery/vmware/vm` path allows you to get an array of VM mounts."
+        },
+        {
+          "info": {
+            "name": "Start Instant Recovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/vm",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/vm/` path allows you to start Instant Recovery of a VMware vSphere VM to VMware vSphere. You can recover a VM from the specified restore point to the original location with initial VM settings, or to any location but with different settings."
+        },
+        {
+          "info": {
+            "name": "Get VM Mount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/vm/:mountId",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/restore/instantRecovery/vmware/vm/{mountId}` path allows you to get a VM mount that has the specified `mountID`."
+        },
+        {
+          "info": {
+            "name": "Start VM Migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/vm/:mountId/migrate",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/vm/{mountId}/migrate` path allows you to start VM migration from the specified mount."
+        },
+        {
+          "info": {
+            "name": "Stop VM Publishing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/instantRecovery/vmware/vm/:mountId/unmount",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mountId",
+                "value": "",
+                "type": "path",
+                "description": "Mount ID."
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/instantRecovery/vmware/vm/{mountId}/unmount` path allows you to stop publishing the recovered VM and remove it from the destination host."
+        },
+        {
+          "info": {
+            "name": "Start Entire VM Restore",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/restore/vmRestore/vmware/",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/restore/vmRestore/vmware/` path allows you to perform entire VM restore of a VMware vSphere VM to VMware vSphere. You can restore a VM from the specified restore point to the original location with initial VM settings, or to any location but with different settings."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

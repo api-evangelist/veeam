@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents General Options API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "General Options",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Notification Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/generalOptions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/generalOptions` path allows you to get notification settings of Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Edit Notification Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/generalOptions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/generalOptions` path allows you to edit notification settings of Veeam Backup & Replication."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

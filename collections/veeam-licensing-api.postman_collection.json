@@ -1,0 +1,2431 @@
+{
+  "item": [
+    {
+      "id": "f7046a3f-5aeb-4866-b55c-71ade3159768",
+      "name": "Licensing",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a685e17f-9b1d-4074-b592-975772675c6b",
+          "name": "Get License",
+          "request": {
+            "name": "Get License",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "license"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ea35520-e3ed-4f26-a45c-ec49abf1f10c",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"licenseType\": \"Managed\",\n  \"instancesUses\": 3402.9038846291646,\n  \"instances\": 5387,\n  \"licensedTo\": \"string\",\n  \"licenseExpires\": \"2000-07-09T12:12:06.071Z\",\n  \"licenseId\": \"string\",\n  \"supportId\": \"string\",\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "025febec-626b-4046-8898-a93c67ad9f54",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "affda168-8ed8-42f7-8b30-ff8d93c018e5",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d55927bd-c313-4e22-a92d-8f75080694c3",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea8807e2-579b-4901-a34d-94244b87b96e",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee14dc43-fae9-4719-a259-9fc8c9f36797",
+          "name": "Install License",
+          "request": {
+            "name": "Install License",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "license"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "licenseFile",
+                  "type": "file",
+                  "description": "(Required) The .lic license to upload."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "18821d19-7413-4aa3-9f15-fba9ffd52282",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The .lic license to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "licenseFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"licenseType\": \"Managed\",\n  \"instancesUses\": 7066.576814036758,\n  \"instances\": 4274,\n  \"licensedTo\": \"string\",\n  \"licenseExpires\": \"1977-04-05T03:02:05.866Z\",\n  \"licenseId\": \"string\",\n  \"supportId\": \"string\",\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"POST\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea0d2fbf-2c69-4345-ae25-638d8bfab8bb",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The .lic license to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "licenseFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0c4b50c-3dd6-42a4-96d8-90e40450417a",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The .lic license to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "licenseFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "704ea2e5-fc06-4c30-bc8f-a619ffefee10",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The .lic license to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "licenseFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e8baa94-f626-45ae-90cb-4969c9a1ca55",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The .lic license to upload.",
+                        "type": "text/plain"
+                      },
+                      "key": "licenseFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2506c189-3870-4f0b-81ce-be8de0815ff7",
+          "name": "Remove License",
+          "request": {
+            "name": "Remove License",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "license"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "980d54f0-4c0c-474a-8eac-fe8d53587c0c",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6597e3b7-e1de-4113-9456-89524725ec1c",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdfc0e7e-3947-4598-a157-eebe5487a85d",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d592fbfe-f101-444a-999d-65dc8025d48b",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df1a440f-94ed-4770-9e7f-e03265fa5e53",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "307074ec-0131-4b02-aad3-051b3a65528e",
+          "name": "Export License",
+          "request": {
+            "name": "Export License",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "license",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee9fd988-edd7-4f60-8a8f-8cc647ced90f",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "f86c60e4-94a1-4e8f-97b8-a4b9ef82b036",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "347bf62d-6efd-4471-aa4e-a2381f022ec7",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "bc57644e-52cb-42e6-a52a-100dd5c54d88",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "492b0714-1b00-41f5-b451-7fb89fbfcedb",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "license",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f3c0780-ce32-41fb-b037-6604ab6313a5",
+          "name": "Get Licensed Workloads",
+          "request": {
+            "name": "Get Licensed Workloads",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "licensedWorkloads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "Offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "SearchPattern",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46540813-2f01-4fcc-86e5-6a15c1e59457",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "licensedWorkloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalCount\": 9674,\n  \"results\": [\n    {\n      \"id\": \"40338608-6a3d-5ef5-c1e6-5fdb13fa4e50\",\n      \"name\": \"string\",\n      \"lastBackupTime\": \"1975-09-22T12:24:16.450Z\",\n      \"_links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"GET\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"PUT\"\n        }\n      ]\n    },\n    {\n      \"id\": \"bac485eb-70e4-ee50-d36c-b8628cbfa0f3\",\n      \"name\": \"string\",\n      \"lastBackupTime\": \"1988-01-13T13:48:16.958Z\",\n      \"_links\": [\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"DELETE\"\n        },\n        {\n          \"rel\": \"string\",\n          \"href\": \"string\",\n          \"method\": \"GET\"\n        }\n      ]\n    }\n  ],\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a6bb746-01ea-4940-8808-8469d1e59ace",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "licensedWorkloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f78487e-a797-49d7-b5f8-d3ed0869313c",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "licensedWorkloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e78025-ccbb-4160-a643-9e8d3aaf0c3d",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "licensedWorkloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6f7520a-16d4-441c-824f-9a343bc9ed32",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "licensedWorkloads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "SearchPattern",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0494397-3671-4b92-a3b9-7a7115778b07",
+          "name": "Get All License Notifications",
+          "request": {
+            "name": "Get All License Notifications",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "alerts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bdcccd06-1d55-4cd2-9f1e-4ebb2f2923d0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"notificationType\": \"Expiration\",\n      \"notificationSeverity\": \"Warning\",\n      \"message\": \"string\",\n      \"replies\": [\n        {\n          \"replyId\": \"6786ac39-9513-50bb-592e-86dcde2ceffb\",\n          \"notificationType\": \"Marketplace\",\n          \"replyText\": \"string\"\n        },\n        {\n          \"replyId\": \"0404b2ee-d384-cad3-1ecc-c87a4ad598dc\",\n          \"notificationType\": \"Exceed\",\n          \"replyText\": \"string\"\n        }\n      ]\n    },\n    {\n      \"notificationType\": \"Marketplace\",\n      \"notificationSeverity\": \"Error\",\n      \"message\": \"string\",\n      \"replies\": [\n        {\n          \"replyId\": \"e3a71e8d-cf1b-2fec-fdd2-03938523d64d\",\n          \"notificationType\": \"Exceed\",\n          \"replyText\": \"string\"\n        },\n        {\n          \"replyId\": \"f9bb433b-0d15-da58-e52d-566eb6208873\",\n          \"notificationType\": \"Exceed\",\n          \"replyText\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"PUT\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f66ed1d2-265b-472a-b03e-9307e41f3ed0",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51bf6903-e294-4d1a-bc40-5aedf6411b16",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcaa0383-df3d-4108-a849-7d818f624833",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2de2b21-d6b9-451c-8f42-fa7e4650bc65",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7abd6927-f4c6-4383-97f8-b382d83365f9",
+          "name": "Resolve License Notifications",
+          "request": {
+            "name": "Resolve License Notifications",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "licensing",
+                "alerts",
+                "resolve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6761ef5c-f565-41dc-9abc-ade729fa1dbd",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cd7450c-6ed2-439c-8931-a9f103cd18aa",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbab343c-3667-4902-b9ef-50e23e15122e",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92be64a0-d55b-48da-a9d9-36424f491a23",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8a60eaa-9e2c-4c37-8ccf-96fd9872b2a9",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "licensing",
+                    "alerts",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notificationsToResolve\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedReplies\": [\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    },\n    {\n      \"replyId\": \"<uuid>\",\n      \"notificationType\": \"<string>\",\n      \"replyText\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://pLjXrWnUecnseyIh.kcsucVI2bnt4vEc+.xrGslChl0io+jkfNQVFES,vL,Trtdaeuer..HH4vR6KET3Cu\",\n  \"title\": \"string\",\n  \"status\": 571,\n  \"errorCode\": \"InvalidToken\",\n  \"details\": \"string\",\n  \"instance\": \"http://kMBujmOFPvZBdffHtAyvNITIoB.hpp+0is-Q3oyxUecMdAbPs9Bnc9DcvSr5qlMNmuyaDoDSSnH6+Zm.hm0mUiaHImnEPDYFZ5a+gR8v67rDZPXtbE1YZ\",\n  \"data\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "743837f4-2f7c-4c77-8261-56f563f095e4",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Licensing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

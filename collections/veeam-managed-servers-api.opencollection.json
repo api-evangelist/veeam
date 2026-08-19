@@ -1,0 +1,216 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Managed Servers API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Managed Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of servers to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of servers to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts servers by one of the server parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts servers in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters servers by the `nameFilter` pattern. The pattern can match any server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters servers by server type."
+              },
+              {
+                "name": "viTypeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters servers by the type of VMware vSphere server."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers` path allows you to get an array of all servers that are added to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Add Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers` path allows you to add a server to the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Get Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the managed server."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to get a managed server that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Edit Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the managed server."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to edit a managed server that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Remove Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the managed server."
+              }
+            ]
+          },
+          "docs": "The HTTP DELETE request to the `/api/v1/backupInfrastructure/managedServers/{id}` path allows you to remove a managed server that has the specified `id` from the backup infrastructure."
+        },
+        {
+          "info": {
+            "name": "Change to Single-Use Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/backupInfrastructure/managedServers/:id/updateSingleUseCredentials",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the managed server."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/backupInfrastructure/managedServers/{id}/updateSingleUseCredentials` path allows you to change from persistent to single-use credentials used to access a Linux server that has the specified `id`. Single-use type of credentials is required if you want to use the Linux server as a hardened repository."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

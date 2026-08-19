@@ -1,0 +1,1061 @@
+{
+  "item": [
+    {
+      "id": "fa3a4807-2d55-4fdf-9cdc-17c0e89c2aac",
+      "name": "Configuration Backup",
+      "description": {
+        "content": "The Configuration Backup section defines paths and operations for managing backup of the configuration database that Veeam Backup & Replication uses.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3c3b9b59-c7b7-4579-b171-bfe3a59e0436",
+          "name": "Get Configuration Backup",
+          "request": {
+            "name": "Get Configuration Backup",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/configBackup` path allows you to get configuration backup of the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "configBackup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10e2fb30-7a6c-4777-92be-4eb526769de2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"encryption\": {\n    \"isEnabled\": true,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"schedule\": {\n    \"daily\": {\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\",\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ]\n    },\n    \"isEnabled\": true,\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    }\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\",\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\"\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\",\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"restorePointsToKeep\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "374bf2cb-1d94-4bbb-ab3b-729839f8c451",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78644b9e-a60a-4e97-8e8c-7c2655350350",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5405786d-994a-468c-9b5a-3e604095bd5e",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e56920fc-8ee4-4de3-9b0a-f4658a1bceae",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d091c912-9881-474a-ae0a-031e805316e6",
+          "name": "Edit Configuration Backup",
+          "request": {
+            "name": "Edit Configuration Backup",
+            "description": {
+              "content": "The HTTP PUT request to the `/api/v1/configBackup` path allows you to edit configuration backup of the backup server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "configBackup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isEnabled\": \"<boolean>\",\n  \"backupRepositoryId\": \"<uuid>\",\n  \"restorePointsToKeep\": \"<integer>\",\n  \"notifications\": {\n    \"SNMPEnabled\": \"<boolean>\",\n    \"SMTPSettings\": {\n      \"isEnabled\": \"<boolean>\",\n      \"recipients\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"settingsType\": \"<string>\",\n      \"subject\": \"<string>\",\n      \"notifyOnSuccess\": \"<boolean>\",\n      \"notifyOnWarning\": \"<boolean>\",\n      \"notifyOnError\": \"<boolean>\"\n    }\n  },\n  \"schedule\": {\n    \"isEnabled\": \"<boolean>\",\n    \"daily\": {\n      \"isEnabled\": true,\n      \"dailyKind\": \"<string>\",\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"localTime\": \"<time>\"\n    },\n    \"monthly\": {\n      \"isEnabled\": false,\n      \"dayNumberInMonth\": \"<string>\",\n      \"dayOfMonth\": \"<integer>\",\n      \"dayOfWeek\": \"<string>\",\n      \"localTime\": \"<time>\",\n      \"months\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"lastSuccessfulBackup\": {\n    \"lastSuccessfulTime\": \"<dateTime>\",\n    \"sessionId\": \"<uuid>\"\n  },\n  \"encryption\": {\n    \"isEnabled\": \"<boolean>\",\n    \"passwordId\": \"<uuid>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa03857d-586a-4625-be5b-0ef75fc0bb1f",
+              "name": "Configuration backup settings have been updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lastSuccessfulBackup\": {\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\",\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\"\n  },\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\",\n      \"isEnabled\": false\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true,\n    \"monthly\": {\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1,\n      \"dayOfWeek\": \"saturday\"\n    }\n  },\n  \"isEnabled\": true,\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"restorePointsToKeep\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e81a2d5-57e8-40a4-9ca6-c2234c5e3338",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "227be4df-bec8-44ae-8136-70e55534f188",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f9c195c-2fcf-4261-a867-1b6506e043eb",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64ed228f-0541-4c73-b6ab-b69415bef285",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9ad2a6d-56a1-4a99-b4d3-737e739822bd",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notifications\": {\n    \"SMTPSettings\": {\n      \"isEnabled\": false,\n      \"notifyOnError\": true,\n      \"notifyOnSuccess\": true,\n      \"notifyOnWarning\": true,\n      \"recipients\": [],\n      \"settingsType\": \"Custom\",\n      \"subject\": \"[%JobResult%] %JobName% (%Time%)\"\n    },\n    \"SNMPEnabled\": true\n  },\n  \"schedule\": {\n    \"monthly\": {\n      \"dayOfWeek\": \"saturday\",\n      \"isEnabled\": false,\n      \"localTime\": \"10:00 PM\",\n      \"months\": [\n        \"January\",\n        \"February\",\n        \"March\",\n        \"April\",\n        \"May\",\n        \"June\",\n        \"July\",\n        \"August\",\n        \"September\",\n        \"October\",\n        \"November\",\n        \"December\"\n      ],\n      \"dayNumberInMonth\": \"Fourth\",\n      \"dayOfMonth\": 1\n    },\n    \"daily\": {\n      \"dailyKind\": \"Everyday\",\n      \"days\": [\n        \"monday\",\n        \"tuesday\",\n        \"wednesday\",\n        \"thursday\",\n        \"friday\",\n        \"saturday\",\n        \"sunday\"\n      ],\n      \"isEnabled\": true,\n      \"localTime\": \"10:00 AM\"\n    },\n    \"isEnabled\": true\n  },\n  \"backupRepositoryId\": \"d4b5e196-f3ad-474c-99bc-dfef051dae07\",\n  \"restorePointsToKeep\": 10,\n  \"encryption\": {\n    \"isEnabled\": false,\n    \"passwordId\": \"ebf6c20f-7126-4186-a1b8-24e6c541161c\"\n  },\n  \"isEnabled\": true,\n  \"lastSuccessfulBackup\": {\n    \"sessionId\": \"a8f1b5ba-a6dc-416d-9b17-95e92c0d7e76\",\n    \"lastSuccessfulTime\": \"2022-01-21T10:00:35.033+01:00\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "befa816e-e1e4-496b-b4ee-499099d610b0",
+          "name": "Start Configuration Backup",
+          "request": {
+            "name": "Start Configuration Backup",
+            "description": {
+              "content": "The HTTP POST request to the `/api/v1/configBackup` path allows you to start configuration backup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "configBackup",
+                "backup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63a640a6-0e4d-4afd-b5f9-0a49ba42b5aa",
+              "name": "Configuration backup has been started.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup",
+                    "backup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"activityId\": \"99d1bf3d-e2e0-4bec-b2b3-820c0b87d212\",\n  \"sessionType\": \"ConfigurationBackup\",\n  \"id\": \"d20f79d1-962d-4cb1-809b-0364c5b90696\",\n  \"name\": \"Backup Configuration Job\",\n  \"usn\": 0,\n  \"progressPercent\": 0,\n  \"state\": \"Starting\",\n  \"creationTime\": \"2022-01-26T17:13:29.097+01:00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37859302-357f-454b-9612-4dddfa198917",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup",
+                    "backup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a6de637-05ba-4976-a6bb-8caf8e45e61d",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup",
+                    "backup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92a339ae-be9f-407b-9a18-29146d5d4854",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup",
+                    "backup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e6a9f92-ed88-4c29-b12c-51a6b79a8b75",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "configBackup",
+                    "backup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d2fc060e-12d4-4e94-9ee7-c2fd18b8c3ad",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Configuration Backup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

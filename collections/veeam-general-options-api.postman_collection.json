@@ -1,0 +1,757 @@
+{
+  "item": [
+    {
+      "id": "48e36952-1b66-46af-b1bc-ee1014fd5ff0",
+      "name": "General Options",
+      "description": {
+        "content": "The General Options section defines paths and operations for retrieving and editing general settings of Veeam Backup & Replication.<br> <div class=\"note\"><strong>NOTE</strong><br>In the current version of the REST API, you can configure notification settings only.</div>",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c66567f6-8ef0-4016-8cd6-91e6f6d93c79",
+          "name": "Get Notification Settings",
+          "request": {
+            "name": "Get Notification Settings",
+            "description": {
+              "content": "The HTTP GET request to the `/api/v1/generalOptions` path allows you to get notification settings of Veeam Backup & Replication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "generalOptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1dd552f-eb59-41a3-b5d4-fa869911910c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"emailSettings\": {\n    \"sendDailyReportsAt\": \"2019-01-01T22:00:00+01:00\",\n    \"smtpServerName\": \"\",\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": false,\n      \"authRequred\": false,\n      \"port\": 25,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"isEnabled\": false,\n    \"notifyOnFailure\": true,\n    \"notifyOnLastRetry\": true,\n    \"to\": \"\",\n    \"notifyOnSuccess\": true,\n    \"notifyOnWarning\": true\n  },\n  \"notifications\": {\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceThreshold\": 5,\n    \"skipVMSpaceThresholdEnabled\": true,\n    \"storageSpaceThreshold\": 10,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 10,\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9005f685-dca2-4075-9cbe-d38650f6e612",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa89b8c6-d247-4790-b1cf-abd7d564722c",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6675ed9-a0b6-4123-b1a6-1a70d63e5e32",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cee2cde3-c07a-4b5e-98ad-7e2781d5c486",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e72e9730-40bc-4176-aeb6-f823b5f22f15",
+          "name": "Edit Notification Settings",
+          "request": {
+            "name": "Edit Notification Settings",
+            "description": {
+              "content": "The HTTP PUT request to the `/api/v1/generalOptions` path allows you to edit notification settings of Veeam Backup & Replication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "generalOptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                "key": "x-api-version",
+                "value": "1.1-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailSettings\": {\n    \"isEnabled\": \"<boolean>\",\n    \"smtpServerName\": \"<string>\",\n    \"advancedSmtpOptions\": {\n      \"port\": \"<integer>\",\n      \"timeoutMs\": \"<integer>\",\n      \"SSLEnabled\": \"<boolean>\",\n      \"authRequired\": \"<boolean>\",\n      \"credentialsId\": \"<uuid>\"\n    },\n    \"from\": \"<string>\",\n    \"to\": \"<string>\",\n    \"subject\": \"<string>\",\n    \"sendDailyReportsAt\": \"<dateTime>\",\n    \"notifyOnSuccess\": \"<boolean>\",\n    \"notifyOnWarning\": \"<boolean>\",\n    \"notifyOnFailure\": \"<boolean>\",\n    \"notifyOnLastRetry\": \"<boolean>\"\n  },\n  \"notifications\": {\n    \"storageSpaceThresholdEnabled\": \"<boolean>\",\n    \"storageSpaceThreshold\": \"<integer>\",\n    \"datastoreSpaceThresholdEnabled\": \"<boolean>\",\n    \"datastoreSpaceThreshold\": \"<integer>\",\n    \"skipVMSpaceThresholdEnabled\": \"<boolean>\",\n    \"skipVMSpaceThreshold\": \"<integer>\",\n    \"notifyOnSupportExpiration\": \"<boolean>\",\n    \"notifyOnUpdates\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b22fe01d-7076-4027-b5d1-6231ac8366d3",
+              "name": "Notification settings have been updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"emailSettings\": {\n    \"isEnabled\": \"<boolean>\",\n    \"smtpServerName\": \"<string>\",\n    \"advancedSmtpOptions\": {\n      \"port\": \"<integer>\",\n      \"timeoutMs\": \"<integer>\",\n      \"SSLEnabled\": \"<boolean>\",\n      \"authRequired\": \"<boolean>\",\n      \"credentialsId\": \"<uuid>\"\n    },\n    \"from\": \"<string>\",\n    \"to\": \"<string>\",\n    \"subject\": \"<string>\",\n    \"sendDailyReportsAt\": \"<dateTime>\",\n    \"notifyOnSuccess\": \"<boolean>\",\n    \"notifyOnWarning\": \"<boolean>\",\n    \"notifyOnFailure\": \"<boolean>\",\n    \"notifyOnLastRetry\": \"<boolean>\"\n  },\n  \"notifications\": {\n    \"storageSpaceThresholdEnabled\": \"<boolean>\",\n    \"storageSpaceThreshold\": \"<integer>\",\n    \"datastoreSpaceThresholdEnabled\": \"<boolean>\",\n    \"datastoreSpaceThreshold\": \"<integer>\",\n    \"skipVMSpaceThresholdEnabled\": \"<boolean>\",\n    \"skipVMSpaceThreshold\": \"<integer>\",\n    \"notifyOnSupportExpiration\": \"<boolean>\",\n    \"notifyOnUpdates\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c0d94db-9758-4626-8662-fb5333d9ab81",
+              "name": "Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cbaab53-8a5b-4750-af71-85b0269e822e",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f70f920-0318-4619-8449-96595bec13c0",
+              "name": "Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69190af0-a93a-4319-86a6-d1ee730719aa",
+              "name": "Not found. No object was found with the path parameter specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a899e223-0500-48e7-ab5f-509939836c00",
+              "name": "Internal server error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generalOptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.",
+                    "key": "x-api-version",
+                    "value": "1.1-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"emailSettings\": {\n    \"smtpServerName\": \"\",\n    \"advancedSmtpOptions\": {\n      \"SSLEnabled\": true,\n      \"authRequred\": true,\n      \"credentialsId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"port\": 2425,\n      \"timeoutMs\": 100000\n    },\n    \"from\": \"\",\n    \"notifyOnFailure\": true,\n    \"notifyOnWarning\": true,\n    \"sendDailyReportsAt\": \"2022-01-01 22:00:00\",\n    \"isEnabled\": true,\n    \"notifyOnLastRetry\": true,\n    \"notifyOnSuccess\": true,\n    \"subject\": \"[%JobResult%] %JobName% (%ObjectCount% objects) %Issues%\",\n    \"to\": \"\"\n  },\n  \"notifications\": {\n    \"datastoreSpaceThresholdEnabled\": true,\n    \"notifyOnSupportExpiration\": true,\n    \"notifyOnUpdates\": true,\n    \"skipVMSpaceTreshold\": 5,\n    \"skipVMSpaceTresholdEnabled\": true,\n    \"storageSpaceThreshold\": 15,\n    \"storageSpaceThresholdEnabled\": true,\n    \"datastoreSpaceThreshold\": 13\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errorCode\": \"ExpiredToken\",\n  \"message\": \"string\",\n  \"resourceId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ed269626-3f70-46e6-a3d7-4299b9d0ffcd",
+    "name": "Veeam Backup for AWS public API 1.0 Agents General Options API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

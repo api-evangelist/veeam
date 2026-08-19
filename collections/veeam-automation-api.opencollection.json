@@ -1,0 +1,492 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Automation API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Automation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export Cloud Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/cloudcredentials/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/cloudcredentials/export` path allows you to export cloud credentials from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Cloud Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/cloudcredentials/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/cloudcredentials/import` path allows you to import cloud credentials to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/credentials/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/credentials/export` path allows you to export credentials from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/credentials/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/credentials/import` path allows you to import credentials to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Encryption Passwords",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/encryptionPasswords/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/encryptionPasswords/export` path allows you to export encryption passwords from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Encryption Passwords",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/encryptionPasswords/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/encryptionPasswords/import` path allows you to import encryption passwords to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/jobs/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/jobs/export` path allows you to export jobs from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/jobs/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/jobs/import` path allows you to import jobs to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/managedServers/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/managedServers/export` path allows you to export managed servers from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/managedServers/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/managedServers/import` path allows you to import managed servers to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/proxies/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/proxies/export` path allows you to export backup proxies from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Proxies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/proxies/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/proxies/import` path allows you to import backup proxies to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Export Repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/repositories/export",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/repositories/export` path allows you to export backup repositories from Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Import Repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/repositories/import",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/repositories/import` path allows you to import backup repositories to Veeam Backup & Replication."
+        },
+        {
+          "info": {
+            "name": "Get All Automation Sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/automation/sessions",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of sessions to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of sessions to return."
+              },
+              {
+                "name": "orderColumn",
+                "value": "",
+                "type": "query",
+                "description": "Sorts sessions by one of the session parameters."
+              },
+              {
+                "name": "orderAsc",
+                "value": "",
+                "type": "query",
+                "description": "Sorts sessions in the ascending order by the `orderColumn` parameter."
+              },
+              {
+                "name": "nameFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters sessions by the `nameFilter` pattern. The pattern can match any session parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both."
+              },
+              {
+                "name": "createdAfterFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns sessions that are created after the specified date and time."
+              },
+              {
+                "name": "createdBeforeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns sessions that are created before the specified date and time."
+              },
+              {
+                "name": "endedAfterFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns sessions that are finished after the specified date and time."
+              },
+              {
+                "name": "endedBeforeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Returns sessions that are finished before the specified date and time."
+              },
+              {
+                "name": "typeFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters sessions by session type."
+              },
+              {
+                "name": "stateFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters sessions by session state."
+              },
+              {
+                "name": "resultFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters sessions by session result."
+              },
+              {
+                "name": "jobIdFilter",
+                "value": "",
+                "type": "query",
+                "description": "Filters sessions by job ID."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/automation/sessions` path allows you to get an array of all automation sessions performed on the backup server."
+        },
+        {
+          "info": {
+            "name": "Get Automation Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/automation/sessions/:id",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/automation/sessions/{id}` path allows you to get an automation session that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Get Automation Session Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/automation/sessions/:id/logs",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session."
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/automation/sessions/{id}/logs` path allows you to get an array of log records of an automation session that has the specified `id`."
+        },
+        {
+          "info": {
+            "name": "Stop Automation Session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/automation/sessions/:id/stop",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the session."
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/automation/sessions/{id}/stop` path allows you to stop an automation session that has the specified `id`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

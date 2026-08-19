@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Veeam Backup for AWS public API 1.0 Agents Configuration Backup API",
+    "version": "1.0-rev0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Configuration Backup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Configuration Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/configBackup",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP GET request to the `/api/v1/configBackup` path allows you to get configuration backup of the backup server."
+        },
+        {
+          "info": {
+            "name": "Edit Configuration Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/configBackup",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The HTTP PUT request to the `/api/v1/configBackup` path allows you to edit configuration backup of the backup server."
+        },
+        {
+          "info": {
+            "name": "Start Configuration Backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/configBackup/backup",
+            "headers": [
+              {
+                "name": "x-api-version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "The HTTP POST request to the `/api/v1/configBackup` path allows you to start configuration backup."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

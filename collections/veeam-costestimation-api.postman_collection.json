@@ -1,0 +1,537 @@
+{
+  "item": [
+    {
+      "id": "19623f82-edc0-4577-ab5b-fc4a53d5213d",
+      "name": "CostEstimation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e52062de-3e86-4ed1-866a-88ef186f8319",
+          "name": "Get Cost Estimation",
+          "request": {
+            "name": "Get Cost Estimation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "costEstimation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "VirtualMachineNameFilter",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "Sort",
+                  "value": "<string>,<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"amazonAccountId\": \"<uuid>\",\n  \"backupType\": \"<string>\",\n  \"snapshotSettings\": {\n    \"additionalTags\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"copyTagsFromVolumeEnabled\": \"<boolean>\",\n    \"tryCreateVSSSnapshot\": \"<boolean>\"\n  },\n  \"replicaSettings\": {\n    \"mapping\": [\n      {\n        \"sourceRegionId\": \"<uuid>\",\n        \"targetRegionId\": \"<uuid>\",\n        \"targetAmazonAccountId\": \"<uuid>\",\n        \"encryptionKey\": \"<string>\"\n      },\n      {\n        \"sourceRegionId\": \"<uuid>\",\n        \"targetRegionId\": \"<uuid>\",\n        \"targetAmazonAccountId\": \"<uuid>\",\n        \"encryptionKey\": \"<string>\"\n      }\n    ],\n    \"additionalTags\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"copyTagsFromVolumeEnabled\": \"<boolean>\"\n  },\n  \"backupSettings\": {\n    \"targetRepositoryId\": \"<uuid>\"\n  },\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"selectedItems\": {\n    \"virtualMachineIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"tagIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  },\n  \"excludedItems\": {\n    \"virtualMachineIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"tagIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  },\n  \"scheduleSettings\": {\n    \"dailyScheduleEnabled\": \"<boolean>\",\n    \"weeklyScheduleEnabled\": \"<boolean>\",\n    \"monthlyScheduleEnabled\": \"<boolean>\",\n    \"yearlyScheduleEnabled\": \"<boolean>\",\n    \"dailySchedule\": {\n      \"kind\": \"<string>\",\n      \"runsPerHour\": \"<integer>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"weeklySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"monthlySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"dayNumberInMonth\": \"<string>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"dayOfWeek\": \"<string>\",\n      \"dayOfMonth\": \"<integer>\",\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"yearlySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"dayNumberInMonth\": \"<string>\",\n      \"month\": \"<string>\",\n      \"retention\": {\n        \"count\": \"<integer>\",\n        \"type\": \"<string>\"\n      },\n      \"dayOfWeek\": \"<string>\",\n      \"dayOfMonth\": \"<integer>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"retrySettings\": {\n    \"retryTimes\": \"<integer>\"\n  },\n  \"policyNotificationSettings\": {\n    \"recipient\": \"<string>\",\n    \"notifyOnSuccess\": \"<boolean>\",\n    \"notifyOnWarning\": \"<boolean>\",\n    \"notifyOnFailure\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0bcdaf1b-2a6d-42ef-82fa-02010df3ee9d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "VirtualMachineNameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalCount\": 6977,\n  \"items\": [\n    {\n      \"virtualMachineId\": \"ccdfd6cf-11bc-dba4-a955-792c68c9ee00\",\n      \"virtualMachineName\": \"string\",\n      \"trafficCost\": 3799.4234808632964,\n      \"transactionCost\": 4788.212186634516,\n      \"totalCost\": 5800.761102495904,\n      \"snapshotCost\": 3934.703514019986,\n      \"replicaCost\": 2663.454800400359,\n      \"backupCost\": 4241.117391848428\n    },\n    {\n      \"virtualMachineId\": \"bdfc0bf2-b016-067d-1a86-f1839b1ecc09\",\n      \"virtualMachineName\": \"string\",\n      \"trafficCost\": 1430.8135445901005,\n      \"transactionCost\": 9996.755409291916,\n      \"totalCost\": 7758.987608576858,\n      \"snapshotCost\": 6389.107768191169,\n      \"replicaCost\": 8326.295027118336,\n      \"backupCost\": 8220.32658146525\n    }\n  ],\n  \"isEmpty\": true,\n  \"totalTrafficCost\": 7769.215359957947,\n  \"totalTransactionCost\": 9703.584870073206,\n  \"totalCost\": 1750.084016556609,\n  \"totalSnapshotCost\": 3039.255158657286,\n  \"totalReplicaCost\": 4535.6182049566705,\n  \"totalBackupCost\": 1262.7133955624204,\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"PUT\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"DELETE\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1759e7b-1b6b-4a5c-9545-7b3bd0fc1ca6",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "VirtualMachineNameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uOBUEyd.pkbaorvdVS5mjQbb33VVrkwYBprJnaPpDIAhV\",\n  \"title\": \"string\",\n  \"status\": 484,\n  \"errorCode\": \"ServiceUnavailable\",\n  \"details\": \"string\",\n  \"instance\": \"https://DBn.uqxhxGYPTSt5u8EXRXCKveBioJlDk018AEML1AaCk0DJj3TiTpTnpiv3JXiCccOBF\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9813c061-2e50-4728-99a5-a6101b8017ab",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "VirtualMachineNameFilter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "Offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "Sort",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://uOBUEyd.pkbaorvdVS5mjQbb33VVrkwYBprJnaPpDIAhV\",\n  \"title\": \"string\",\n  \"status\": 484,\n  \"errorCode\": \"ServiceUnavailable\",\n  \"details\": \"string\",\n  \"instance\": \"https://DBn.uqxhxGYPTSt5u8EXRXCKveBioJlDk018AEML1AaCk0DJj3TiTpTnpiv3JXiCccOBF\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cea3d76a-5de6-44e4-b7df-09266b8d8e12",
+          "name": "Export Cost Estimation",
+          "request": {
+            "name": "Export Cost Estimation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "costEstimation",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/csv"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"amazonAccountId\": \"<uuid>\",\n  \"backupType\": \"<string>\",\n  \"snapshotSettings\": {\n    \"additionalTags\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"copyTagsFromVolumeEnabled\": \"<boolean>\",\n    \"tryCreateVSSSnapshot\": \"<boolean>\"\n  },\n  \"replicaSettings\": {\n    \"mapping\": [\n      {\n        \"sourceRegionId\": \"<uuid>\",\n        \"targetRegionId\": \"<uuid>\",\n        \"targetAmazonAccountId\": \"<uuid>\",\n        \"encryptionKey\": \"<string>\"\n      },\n      {\n        \"sourceRegionId\": \"<uuid>\",\n        \"targetRegionId\": \"<uuid>\",\n        \"targetAmazonAccountId\": \"<uuid>\",\n        \"encryptionKey\": \"<string>\"\n      }\n    ],\n    \"additionalTags\": [\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"key\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ],\n    \"copyTagsFromVolumeEnabled\": \"<boolean>\"\n  },\n  \"backupSettings\": {\n    \"targetRepositoryId\": \"<uuid>\"\n  },\n  \"regionIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"selectedItems\": {\n    \"virtualMachineIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"tagIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  },\n  \"excludedItems\": {\n    \"virtualMachineIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"tagIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  },\n  \"scheduleSettings\": {\n    \"dailyScheduleEnabled\": \"<boolean>\",\n    \"weeklyScheduleEnabled\": \"<boolean>\",\n    \"monthlyScheduleEnabled\": \"<boolean>\",\n    \"yearlyScheduleEnabled\": \"<boolean>\",\n    \"dailySchedule\": {\n      \"kind\": \"<string>\",\n      \"runsPerHour\": \"<integer>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"days\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"hours\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"weeklySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"days\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"monthlySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"dayNumberInMonth\": \"<string>\",\n      \"snapshotOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"dayOfWeek\": \"<string>\",\n      \"dayOfMonth\": \"<integer>\",\n      \"backupOptions\": {\n        \"retention\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"replicaOptions\": {\n        \"retention\": {\n          \"count\": \"<integer>\"\n        },\n        \"schedule\": {\n          \"months\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      }\n    },\n    \"yearlySchedule\": {\n      \"timeLocal\": \"<dateTime>\",\n      \"dayNumberInMonth\": \"<string>\",\n      \"month\": \"<string>\",\n      \"retention\": {\n        \"count\": \"<integer>\",\n        \"type\": \"<string>\"\n      },\n      \"dayOfWeek\": \"<string>\",\n      \"dayOfMonth\": \"<integer>\"\n    }\n  },\n  \"description\": \"<string>\",\n  \"retrySettings\": {\n    \"retryTimes\": \"<integer>\"\n  },\n  \"policyNotificationSettings\": {\n    \"recipient\": \"<string>\",\n    \"notifyOnSuccess\": \"<boolean>\",\n    \"notifyOnWarning\": \"<boolean>\",\n    \"notifyOnFailure\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a03bab57-9330-448c-bf69-ac93372bafab",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "81be6d84-8765-4baf-a4e9-d34cd7a270e1",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            },
+            {
+              "id": "799ebd82-4202-419c-be23-6a31ae7d38eb",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "costEstimation",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/csv"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>\n  <type>(string)</type>\n  <title>(string)</title>\n  <status>(integer)</status>\n  <errorCode>(string)</errorCode>\n  <details>(string)</details>\n  <instance>(string)</instance>\n  <data>\n  </data>\n</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eb81c327-28d9-4383-8a8a-11d41e0d2d30",
+    "name": "Veeam Backup for AWS public API 1.0 Agents CostEstimation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}

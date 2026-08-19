@@ -1,0 +1,2784 @@
+{
+  "item": [
+    {
+      "id": "a994ccd7-c0ea-4c44-a4b5-2b2c42524792",
+      "name": "Workers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67eb1ab1-7cc1-49fa-b114-54a256e5629d",
+          "name": "Get Service Account Settings",
+          "request": {
+            "name": "Get Service Account Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "serviceAccount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f7d2bac-a9d1-4651-9e1a-6e9f00fc4c49",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAmazonAccountId\": \"a761130d-691c-65f5-8ae6-a9ec5f48d22a\",\n  \"serviceAmazonAccountName\": \"string\",\n  \"serviceAmazonAccountRegionType\": \"China\",\n  \"serviceRegion\": \"string\",\n  \"_links\": [\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"PUT\"\n    },\n    {\n      \"rel\": \"string\",\n      \"href\": \"string\",\n      \"method\": \"GET\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "928e244f-4e04-4d0b-8537-f7205435a01d",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "414529cd-db4b-4e8c-8de2-b386606de622",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "685d2068-a00d-48b7-8f4a-a2893a10e058",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20c2b7a0-9178-40ac-b983-ae426ee5c54e",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "abcb37f3-186a-43bf-94db-c19d8a634a6f",
+          "name": "Update Service Account Settings",
+          "request": {
+            "name": "Update Service Account Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "serviceAccount"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0ba4a06-2a15-4928-9579-c87bda97b12a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d4b6fcc-2a7d-4683-b135-a031e8efd0a3",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1696734-71f0-4c9d-9660-598b07ec90e4",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "283f7e28-c141-4bca-b834-610c24377a92",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83c92065-abf2-45cd-8fdf-bd60b4f38737",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88ffb5f7-79f3-4b6a-98c2-8838acc21b67",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "serviceAccount"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAmazonAccountId\": \"<uuid>\",\n  \"serviceAmazonAccountName\": \"<string>\",\n  \"serviceAmazonAccountRegionType\": \"<string>\",\n  \"serviceRegion\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b76b202e-693d-46d9-9cf9-46f5811254d6",
+          "name": "Get All Region Settings",
+          "request": {
+            "name": "Get All Region Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a6c906b-87df-4d07-8681-a0908697580d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalCount\": 5613,\n  \"results\": [\n    {\n      \"regionId\": \"a7ce3986-8fc4-cab6-c17e-1d4b890b32d2\",\n      \"cloudNetworkId\": \"string\",\n      \"cloudSubnetworkId\": \"string\",\n      \"cloudSecurityGroupId\": \"string\",\n      \"regionName\": \"string\",\n      \"parentReiognId\": \"637f3b9c-c8df-8128-0795-5f7d0d322096\",\n      \"parentRegionName\": \"string\",\n      \"cloudNetworkName\": \"string\",\n      \"cloudSubnetworkName\": \"string\",\n      \"cloudSecurityGroupName\": \"string\",\n      \"_links\": [\n        {\n          \"rel\": \"<string>\",\n          \"href\": \"<string>\",\n          \"method\": \"<string>\"\n        },\n        {\n          \"rel\": \"<string>\",\n          \"href\": \"<string>\",\n          \"method\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"regionId\": \"ea22389c-d760-4123-05fa-9ff72c55c442\",\n      \"cloudNetworkId\": \"string\",\n      \"cloudSubnetworkId\": \"string\",\n      \"cloudSecurityGroupId\": \"string\",\n      \"regionName\": \"string\",\n      \"parentReiognId\": \"6e856458-47b9-02ba-718c-481cfe65fc42\",\n      \"parentRegionName\": \"string\",\n      \"cloudNetworkName\": \"string\",\n      \"cloudSubnetworkName\": \"string\",\n      \"cloudSecurityGroupName\": \"string\",\n      \"_links\": [\n        {\n          \"rel\": \"<string>\",\n          \"href\": \"<string>\",\n          \"method\": \"<string>\"\n        },\n        {\n          \"rel\": \"<string>\",\n          \"href\": \"<string>\",\n          \"method\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "248efbc3-0830-42c6-93c6-ab9343d67ffc",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4de925b7-995a-462f-ad77-f23b4d98be01",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09f07e93-367f-41ff-85ca-9d6cd5dbf80f",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c4ca196-1474-491b-81f0-00941bfc7850",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d02f5725-7c9b-4bb7-9018-e0c227f52432",
+          "name": "Create Region Settings",
+          "request": {
+            "name": "Create Region Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5e0ff8cf-f85f-4e06-82af-85ce3c52c2ac",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regionId\": \"4902fbe6-704a-99ad-6dfd-2bd1a287d77e\",\n  \"cloudNetworkId\": \"string\",\n  \"cloudSubnetworkId\": \"string\",\n  \"cloudSecurityGroupId\": \"string\",\n  \"regionName\": \"string\",\n  \"parentReiognId\": \"d894c28d-12ae-95a3-3863-f8ca76e74fe1\",\n  \"parentRegionName\": \"string\",\n  \"cloudNetworkName\": \"string\",\n  \"cloudSubnetworkName\": \"string\",\n  \"cloudSecurityGroupName\": \"string\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "310d0e20-0b62-4dbf-ab24-89397c552921",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2008f0d4-c026-44a4-a683-dbfcd15c715a",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37bd3166-f695-473a-8d9d-f3c395ad9380",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c52a63a-181c-4178-ab9e-107537c7be39",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"availableZoneId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e999604-a6d2-459c-a73e-f8b149cd2a4b",
+          "name": "Get Region Settings",
+          "request": {
+            "name": "Get Region Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "regions",
+                ":regionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "regionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d20ba8df-23cb-47d0-87bb-ec602f72fb76",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regionId\": \"4902fbe6-704a-99ad-6dfd-2bd1a287d77e\",\n  \"cloudNetworkId\": \"string\",\n  \"cloudSubnetworkId\": \"string\",\n  \"cloudSecurityGroupId\": \"string\",\n  \"regionName\": \"string\",\n  \"parentReiognId\": \"d894c28d-12ae-95a3-3863-f8ca76e74fe1\",\n  \"parentRegionName\": \"string\",\n  \"cloudNetworkName\": \"string\",\n  \"cloudSubnetworkName\": \"string\",\n  \"cloudSecurityGroupName\": \"string\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97025f11-eea5-4cc7-8986-661465bb0a9a",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4395373-edc3-42e1-9499-bee686899f4a",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc125465-a42b-4d2e-80da-7258c79370dc",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eb92794-7e25-4c18-a44a-d5009372481a",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "daf7be28-dd13-41bb-8c7b-702d921b6536",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6ff3f68-bdee-4c94-b375-6d1e7072ad67",
+          "name": "Update Region Settings",
+          "request": {
+            "name": "Update Region Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "regions",
+                ":regionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "regionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb0b3280-1015-4f83-a4ad-25c03da13809",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ddf1da6-d43d-4293-95d5-f7325dba9e73",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ed17b6f-c3fa-4084-8b17-7e0cfde5fbba",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2488299-6f7a-4644-8ff2-61ba63a79177",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c39ae637-35d3-4738-bc38-b7870461de49",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "224c796e-2303-4b44-8c27-68637f1f861c",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"regionId\": \"<uuid>\",\n  \"cloudNetworkId\": \"<string>\",\n  \"cloudSubnetworkId\": \"<string>\",\n  \"cloudSecurityGroupId\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"parentReiognId\": \"<uuid>\",\n  \"parentRegionName\": \"<string>\",\n  \"cloudNetworkName\": \"<string>\",\n  \"cloudSubnetworkName\": \"<string>\",\n  \"cloudSecurityGroupName\": \"<string>\",\n  \"_links\": [\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    },\n    {\n      \"rel\": \"<string>\",\n      \"href\": \"<string>\",\n      \"method\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be44faf9-d9dc-4d76-af78-502347569de8",
+          "name": "Delete Region Settings",
+          "request": {
+            "name": "Delete Region Settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "settings",
+                "regions",
+                ":regionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "regionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "x-api-version",
+                "value": "1.0-rev0"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd880fb3-f15a-4b7e-9ddf-2e48cf5ac8f8",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe793c53-b7d3-418d-8963-df26cc724422",
+              "name": "Bad Request. The request body is malformed, incomplete or otherwise invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8d61607-4747-48b1-9d07-da1e6892c3ed",
+              "name": "Unauthorized. The authorization header has been expected but not found (or found but is expired).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8824d17a-e1bc-4ebd-9a40-e408ab8a0b77",
+              "name": "Forbidden. The user sending a request does not have adequate privileges to access one or more objects specified in the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5fa78b0-a3f6-4815-94e3-28f5d6dabfb5",
+              "name": "Not Found. One or more resources specified in the request could not be found in the specified resource collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c08da6cd-2b1a-4f23-b36f-bcd1c78080ca",
+              "name": "Internal Server Error. The request has been received but could not be completed because of an internal error at the server side.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "settings",
+                    "regions",
+                    ":regionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "regionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "x-api-version",
+                    "value": "1.0-rev0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://xgWEagbEcBIBYWaOTfVyr.rlimU3AgyVrez3brLWxmDeaLvEkLi79aofa2IIzcTdWgYBvSpG41og4\",\n  \"title\": \"string\",\n  \"status\": 506,\n  \"errorCode\": \"InvalidURI\",\n  \"details\": \"string\",\n  \"instance\": \"https://LtINBEIKRShGyhkIRTBGjfFOUjxV.dycbNZ-2LcztOeBKs9GA,V0k0.qsXi9iFG-rdhwWWtPecN1jEVqdoTWlQltg3zhmwDMCnuO+MGT\",\n  \"data\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "deafed9c-789d-454c-985c-9851a0d38b91",
+    "name": "Veeam Backup for AWS public API 1.0 Agents Workers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.",
+      "type": "text/plain"
+    }
+  }
+}
