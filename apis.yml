@@ -27,6 +27,19 @@ tags:
   - Restore
   - Replication
   - Data Protection
+  - Microsoft-365
+  - AWS
+  - Azure
+  - Google Cloud
+  - Ransomware Recovery
+tags_raw:
+  - Backup
+  - Data Management
+  - Disaster Recovery
+  - Cloud Backup
+  - Restore
+  - Replication
+  - Data Protection
   - Microsoft 365
   - AWS
   - Azure
@@ -74,6 +87,13 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
   baseURL: https://localhost:4443
   tags:
+  - Microsoft-365
+  - Exchange Online
+  - SharePoint
+  - OneDrive
+  - Team
+  - SaaS Backup
+  tags_raw:
   - Microsoft 365
   - Exchange Online
   - SharePoint
@@ -301,6 +321,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - Cost Estimation
+  tags_raw:
   - CostEstimation
   properties:
   - type: OpenAPI
@@ -327,6 +349,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - Email Notifications
+  tags_raw:
   - EmailNotifications
   properties:
   - type: OpenAPI
@@ -368,6 +392,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - IAM Roles
+  tags_raw:
   - IAMRoles
   properties:
   - type: OpenAPI
@@ -413,6 +439,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -684,7 +712,8 @@ apis:
   description: The Test API from Veeam — 1 operation(s) for test.
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
-  tags:
+  tags: []
+  tags_raw:
   - Test
   properties:
   - type: OpenAPI
@@ -735,6 +764,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
