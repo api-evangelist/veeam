@@ -1,6 +1,18 @@
 aid: veeam
 name: Veeam
 description: Veeam is a backup and data management platform providing REST APIs for managing backup jobs, restore operations, protected workloads, and cloud backup policies across on-premises, virtual, and cloud environments. The Veeam platform covers Backup & Replication, Backup for Microsoft 365, Backup for AWS, Azure, and Google Cloud, Veeam ONE monitoring, Recovery Orchestrator, and Service Provider Console.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -811,6 +823,9 @@ apis:
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 common:
+  - type: CapabilityMap
+    url: capabilities/veeam-capability-edges.yml
+    name: Veeam Business Capability Map
   - type: AgenticAccess
     url: agentic-access/veeam-agentic-access.yml
   - type: VulnerabilityDisclosure
