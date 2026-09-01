@@ -335,7 +335,7 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
-  - CostEstimation
+  - Cost Estimation
   tags_raw:
   - CostEstimation
   properties:
@@ -363,7 +363,7 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
-  - EmailNotifications
+  - Email Notifications
   tags_raw:
   - EmailNotifications
   properties:
@@ -406,7 +406,7 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
-  - IAMRoles
+  - IAM Roles
   tags_raw:
   - IAMRoles
   properties:
