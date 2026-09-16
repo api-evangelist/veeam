@@ -329,20 +329,6 @@ apis:
     url: openapi/veeam-connection-api-openapi.yml
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
-- aid: veeam:veeam-costestimation-api
-  name: Veeam CostEstimation API
-  description: The CostEstimation API from Veeam — 2 operation(s) for costestimation.
-  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
-  baseURL: https://localhost:9419
-  tags:
-  - Cost Estimation
-  tags_raw:
-  - CostEstimation
-  properties:
-  - type: OpenAPI
-    url: openapi/veeam-costestimation-api-openapi.yml
-  - type: Documentation
-    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 - aid: veeam:veeam-credentials-api
   name: Veeam Credentials API
   description: >-
@@ -355,20 +341,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/veeam-credentials-api-openapi.yml
-  - type: Documentation
-    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
-- aid: veeam:veeam-emailnotifications-api
-  name: Veeam EmailNotifications API
-  description: The EmailNotifications API from Veeam — 2 operation(s) for emailnotifications.
-  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
-  baseURL: https://localhost:9419
-  tags:
-  - Email Notifications
-  tags_raw:
-  - EmailNotifications
-  properties:
-  - type: OpenAPI
-    url: openapi/veeam-emailnotifications-api-openapi.yml
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 - aid: veeam:veeam-encryption-api
@@ -398,20 +370,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/veeam-general-options-api-openapi.yml
-  - type: Documentation
-    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
-- aid: veeam:veeam-iamroles-api
-  name: Veeam IAMRoles API
-  description: The IAMRoles API from Veeam — 6 operation(s) for iamroles.
-  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
-  baseURL: https://localhost:9419
-  tags:
-  - IAM Roles
-  tags_raw:
-  - IAMRoles
-  properties:
-  - type: OpenAPI
-    url: openapi/veeam-iamroles-api-openapi.yml
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 - aid: veeam:veeam-instances-api
@@ -820,6 +778,42 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/veeam-workers-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-cost-estimation-api
+  name: Veeam Cost Estimation API
+  description: The Cost Estimation API from Veeam — 2 operation(s) for cost estimation.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Cost Estimation
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-cost-estimation-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-email-notifications-api
+  name: Veeam Email Notifications API
+  description: The Email Notifications API from Veeam — 2 operation(s) for email notifications.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - Email Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-email-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
+- aid: veeam:veeam-iam-roles-api
+  name: Veeam IAM Roles API
+  description: The IAM Roles API from Veeam — 6 operation(s) for iam roles.
+  humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
+  baseURL: https://localhost:9419
+  tags:
+  - IAM Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/veeam-iam-roles-api-openapi.yml
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vac/rest/about_rest.html
 common:
