@@ -598,6 +598,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
@@ -710,6 +712,8 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/backup/vbr_rest/overview.html
   baseURL: https://localhost:9419
   tags:
+  - Tokens
+  tags_raw:
   - Token
   properties:
   - type: OpenAPI
