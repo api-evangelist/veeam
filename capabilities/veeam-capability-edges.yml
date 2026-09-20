@@ -1,0 +1,117 @@
+slug: veeam
+provider: Veeam
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 10
+edges:
+- tag: Restore
+  spec_file: veeam-restore-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.85
+  evidence: POST /api/v1/restore/instantRecovery/vmware/vm InstantViVMRecoveryMount Start Instant Recovery;
+    POST /api/v1/restore/vmRestore/vmware/ EntireVmRestoreVmware Start Entire VM Restore
+  reason: Operations execute instant recovery, mounting, migration and full VM restore from backups —
+    the recovery half of IT disaster recovery. Unambiguously Disaster Recovery Management.
+- tag: Users
+  spec_file: veeam-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /api/v1/users CreateUser; POST /api/v1/users/{userId}/enableMfa EnableMfa; UserPasswordValidationSpec
+  reason: The operations create, update and delete user accounts, validate passwords and enable/disable
+    multi-factor authentication for the Veeam product — user account administration and authentication
+    strength, i.e. identity and access management. It is administrative user management rather than any
+    workforce/HR capability.
+- tag: AmazonConnections
+  spec_file: veeam-amazonconnections-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/amazonConnections CreateAmazonConnection; BrowseCloudNetworks; BrowseCloudSubnetworks;
+    BrowseCloudSecurityGroups; BrowseAvailabilityZones
+  reason: Registers cloud account connections and enumerates AWS networks, subnets, security groups, availability
+    zones and encryption keys — management of cloud compute/network/storage infrastructure.
+- tag: Backup Objects
+  spec_file: veeam-backup-objects-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.7
+  evidence: GET /api/v1/backupObjects/{id}/restorePoints GetBackupObjectRestorePoints; schema ObjectRestorePointModel
+  reason: Read access to protected backup objects and their restore points — the inventory underpinning
+    backup/restore and IT disaster recovery.
+- tag: Backups
+  spec_file: veeam-backups-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.7
+  evidence: GET /api/v1/backups GetAllBackups; GET /api/v1/backups/{id}/objects GetBackupObjects
+  reason: Enumerates backup sets and their contained protected objects; backup and restore stewardship
+    is IT disaster recovery management.
+- tag: Jobs
+  spec_file: veeam-jobs-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.7
+  evidence: POST /api/v1/jobs/{id}/start StartJob Start Job; schemas BackupStorageSettingModel, GFSPolicySettingsWeeklyModel,
+    BackupJobVirtualMachinesModel
+  reason: Full lifecycle of backup jobs — creation, scheduling, retention (GFS) policy, enable/disable,
+    start/stop — which is the core of IT backup and recovery operations.
+- tag: Managed Servers
+  spec_file: veeam-managed-servers-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /api/v1/backupInfrastructure/managedServers GetAllManagedServers Get All Servers; schemas
+    WindowsHostSpec, LinuxHostModel, ViHostModel
+  reason: Registers and maintains Windows/Linux/vSphere hosts as part of the backup infrastructure, including
+    credential handling — management of compute infrastructure inventory, which fits IT Infrastructure
+    Management.
+- tag: Object Restore Points
+  spec_file: veeam-object-restore-points-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.7
+  evidence: GET /api/v1/objectRestorePoints GetAllObjectRestorePoints Get All Restore Points; GET .../{id}/disks
+    Get Restore Point Disks
+  reason: Exposes the catalogue of backup restore points and their disks — the recovery-point inventory
+    that underpins IT/operational restore. Mapped to Disaster Recovery Management; read-only nature keeps
+    confidence moderate.
+- tag: Policies
+  spec_file: veeam-policies-api-openapi.yml
+  capability_id: BC-160.20
+  capability_id_l1: BC-160
+  capability_name: Disaster Recovery Management
+  confidence: 0.7
+  evidence: POST /api/v1/policies CreatePolicy; schemas PolicyBackupSettings, DailySnapshotScheduleSettings,
+    YearlyRetentionOptions, PolicyBackupItems
+  reason: These 'policies' are backup/snapshot protection policies with schedules, retention options and
+    protected item selection, started/stopped on demand — the configuration of backup protection, i.e.
+    IT disaster recovery. Not enterprise policy management (BC-130.20), which the tag word could otherwise
+    suggest.
+- tag: Proxies
+  spec_file: veeam-proxies-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /api/v1/backupInfrastructure/proxies CreateProxy Add Proxy; schemas ViProxyModel, EBackupProxyTransportMode
+  reason: CRUD over backup proxy servers and their transport/server settings — provisioning and stewardship
+    of infrastructure components, mapped to IT Infrastructure Management.
