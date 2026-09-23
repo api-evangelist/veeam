@@ -1,17 +1,22 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Login API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Login API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
-- description: The authorization process involves obtaining an access token and a refresh token.<br>For details on the authorization process and security settings, see [Authorization and Security](https://helpcenter.veeam.com/docs/backup/vbr_rest/authorization_security.html?ver=120).<SecurityDefinitions />
+- description: 'The authorization process involves obtaining an access token and a refresh token.
+
+    For details on the authorization process and security settings, see Authorization and Security.'
   name: Login
 paths:
   /api/oauth2/authorization_code:
     post:
-      description: The HTTP POST request to the `/api/oauth2/authorization_code` path allows you to get an authorization code that is used to obtain an access token. For more information on authorization process, see [Requesting Authorization](https://helpcenter.veeam.com/docs/backup/vbr_rest/requesting_authorization.html?ver=120).
+      description: The HTTP POST request to the `/api/oauth2/authorization_code` path allows you to get an authorization code that is used to obtain an access token. For more information on authorization process, see Requesting Authorization.
       operationId: CreateAuthorizationCode
       parameters:
       - $ref: '#/components/parameters/apiVersionParam'
@@ -95,6 +100,70 @@ paths:
       - Login
 components:
   schemas:
+    TokenLoginSpec:
+      properties:
+        code:
+          description: Authorization code. Required if the `grant_type` value is `authorization_code`.
+          type: string
+        grant_type:
+          $ref: '#/components/schemas/ELoginGrantType'
+        password:
+          description: Password. Required if the `grant_type` value is `password`.
+          format: password
+          type: string
+        refresh_token:
+          description: Refresh token. Required if the `grant_type` value is `refresh_token`.
+          type: string
+        use_short_term_refresh:
+          description: If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.
+          type: boolean
+        username:
+          description: User name. Required if the `grant_type` value is `password`.
+          type: string
+        vbr_token:
+          description: Veeam Backup & Replication platform service token.
+          type: string
+      required:
+      - grant_type
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ELoginGrantType:
+      default: password
+      description: Authorization grant type.<br>Available values:<ul> <li>`password` — used to obtain an access token by providing a user name and password.</li> <li>`refresh_token` — used to refresh an expired or lost access token by providing a refresh token.</li> <li>`authorization_code` — used to obtain an access token by providing an authorization code.</li> <li>`vbr_token` — used to obtain an access token by providing a Veeam Backup & Replication token. This grant type is only used in a restricted mode for integration with Veeam Backup & Replication.</li></ul>
+      enum:
+      - password
+      - refresh_token
+      - authorization_code
+      - vbr_token
+      type: string
     TokenModel:
       properties:
         .expires:
@@ -126,44 +195,6 @@ components:
       - refresh_token
       - token_type
       type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    TokenLoginSpec:
-      properties:
-        code:
-          description: Authorization code. Required if the `grant_type` value is `authorization_code`.
-          type: string
-        grant_type:
-          $ref: '#/components/schemas/ELoginGrantType'
-        password:
-          description: Password. Required if the `grant_type` value is `password`.
-          format: password
-          type: string
-        refresh_token:
-          description: Refresh token. Required if the `grant_type` value is `refresh_token`.
-          type: string
-        use_short_term_refresh:
-          description: If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.
-          type: boolean
-        username:
-          description: User name. Required if the `grant_type` value is `password`.
-          type: string
-        vbr_token:
-          description: Veeam Backup & Replication platform service token.
-          type: string
-      required:
-      - grant_type
-      type: object
-    ELoginGrantType:
-      default: password
-      description: Authorization grant type.<br>Available values:<ul> <li>`password` — used to obtain an access token by providing a user name and password.</li> <li>`refresh_token` — used to refresh an expired or lost access token by providing a refresh token.</li> <li>`authorization_code` — used to obtain an access token by providing an authorization code.</li> <li>`vbr_token` — used to obtain an access token by providing a Veeam Backup & Replication token. This grant type is only used in a restricted mode for integration with Veeam Backup & Replication.</li></ul>
-      enum:
-      - password
-      - refresh_token
-      - authorization_code
-      - vbr_token
-      type: string
     AuthorizationCodeModel:
       properties:
         code:
@@ -172,57 +203,31 @@ components:
       required:
       - code
       type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
+    InternalServerError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -234,7 +239,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

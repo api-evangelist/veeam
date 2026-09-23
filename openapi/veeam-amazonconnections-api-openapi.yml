@@ -1,8 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents AmazonConnections API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Backup for AWS public API 1.0 Amazon Connections API
 security:
 - Bearer: []
 tags:
@@ -56,6 +55,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get all amazon connections
+      x-summary-source: derived
     post:
       x-veeam-authorize:
         roles:
@@ -108,6 +109,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Create amazon connection
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}:
     get:
       x-veeam-authorize:
@@ -171,6 +174,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get amazon connection by id
+      x-summary-source: derived
     delete:
       x-veeam-authorize:
         roles:
@@ -225,6 +230,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Delete amazon connection
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/cloudNetworks:
     get:
       x-veeam-authorize:
@@ -295,6 +302,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse cloud networks
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/cloudSubnetworks:
     get:
       x-veeam-authorize:
@@ -380,6 +389,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse cloud subnetworks
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/cloudSecurityGroups:
     get:
       x-veeam-authorize:
@@ -457,6 +468,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse cloud security groups
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/availabilityZones:
     get:
       x-veeam-authorize:
@@ -511,6 +524,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse availability zones
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/validateS3endpoint:
     get:
       x-veeam-authorize:
@@ -570,6 +585,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate S3 endpoint
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/cloudEncryptionKeys:
     get:
       x-veeam-authorize:
@@ -640,6 +657,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse encryption keys
+      x-summary-source: derived
   /api/v1/amazonConnections/{amazonConnectionId}/browseBucketFolders/{bucketId}:
     get:
       x-veeam-authorize:
@@ -731,128 +750,37 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Browse bucket folders
+      x-summary-source: derived
 components:
   schemas:
-    Link:
-      required:
-      - rel
-      - href
-      - method
+    CloudNetworkStates:
+      enum:
+      - Available
+      - Pending
+      type: string
+    CloudSecurityGroupsFilters:
       type: object
       properties:
-        rel:
+        cloudNetworkId:
           type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    AmazonConnectionsPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
+        offset:
           type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/AmazonConnection'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    CloudNetwork:
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    BucketFolder:
       required:
-      - resourceId
-      - cidrBlock
-      - state
-      - isDefault
-      type: object
-      properties:
-        resourceId:
-          type: string
-        name:
-          type: string
-        cidrBlock:
-          type: string
-        state:
-          $ref: '#/components/schemas/CloudNetworkStates'
-        isDefault:
-          type: boolean
-    Region:
-      required:
-      - id
       - name
+      - folderId
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
         name:
           type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    Error:
-      description: ''
-      required:
-      - type
-      - title
-      - status
-      - errorCode
-      type: object
-      properties:
-        type:
+        folderId:
+          format: uuid
           type: string
-          format: uri
-          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
-        title:
-          type: string
-          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
-        status:
-          type: integer
-          format: int32
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        details:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        instance:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-          format: uri
-        data:
-          type: object
-          description: Error payload
-          additionalProperties:
-            type: object
     CloudEncryptionKeysFilters:
       type: object
       properties:
@@ -862,11 +790,15 @@ components:
         limit:
           type: integer
           format: int32
-    CloudNetworkStates:
-      enum:
-      - Available
-      - Pending
-      type: string
+    CloudNetworksFilters:
+      type: object
+      properties:
+        Offset:
+          type: integer
+          format: int32
+        Limit:
+          type: integer
+          format: int32
     AmazonConnection:
       required:
       - id
@@ -898,30 +830,17 @@ components:
           type: string
         availabilityZone:
           type: string
-    CloudNetworksFilters:
+    CloudEncryptionKey:
+      required:
+      - arn
+      - name
       type: object
       properties:
-        Offset:
-          type: integer
-          format: int32
-        Limit:
-          type: integer
-          format: int32
-    CloudSubnetworksFilters:
-      type: object
-      properties:
-        cloudNetworkId:
+        arn:
           type: string
-        availabilityZone:
+        name:
           type: string
-          format: uuid
-        Offset:
-          type: integer
-          format: int32
-        Limit:
-          type: integer
-          format: int32
-    BucketFoldersPage:
+    CloudEncryptionKeysPage:
       required:
       - totalCount
       - results
@@ -934,7 +853,7 @@ components:
           uniqueItems: false
           type: array
           items:
-            $ref: '#/components/schemas/BucketFolder'
+            $ref: '#/components/schemas/CloudEncryptionKey'
         _links:
           type: array
           uniqueItems: false
@@ -959,7 +878,25 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    CloudEncryptionKeysPage:
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    BucketFoldersPage:
       required:
       - totalCount
       - results
@@ -972,38 +909,154 @@ components:
           uniqueItems: false
           type: array
           items:
-            $ref: '#/components/schemas/CloudEncryptionKey'
+            $ref: '#/components/schemas/BucketFolder'
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    BucketFolder:
+    AmazonConnectionsPage:
       required:
-      - name
-      - folderId
+      - totalCount
+      - results
       type: object
       properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonConnection'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Error:
+      description: ''
+      required:
+      - type
+      - title
+      - status
+      - errorCode
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          exclusiveMaximum: 600
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    CloudSubnetS3EndpointValidationResult:
+      required:
+      - isValid
+      - details
+      type: object
+      properties:
+        isValid:
+          type: boolean
+        details:
+          type: string
+    CloudSecurityGroupsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudSecurityGroup'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudNetwork:
+      required:
+      - resourceId
+      - cidrBlock
+      - state
+      - isDefault
+      type: object
+      properties:
+        resourceId:
+          type: string
         name:
           type: string
-        folderId:
-          format: uuid
+        cidrBlock:
           type: string
-    AmazonConnectionSpec:
-      required:
-      - RegionId
+        state:
+          $ref: '#/components/schemas/CloudNetworkStates'
+        isDefault:
+          type: boolean
+    CloudSubnetworksFilters:
       type: object
       properties:
-        AmazonAccountId:
+        cloudNetworkId:
+          type: string
+        availabilityZone:
           type: string
           format: uuid
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        RegionId:
-          type: string
-          format: uuid
+        Offset:
+          type: integer
+          format: int32
+        Limit:
+          type: integer
+          format: int32
     RegionsPage:
       required:
       - totalCount
@@ -1042,65 +1095,22 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    BucketFoldersFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
-    CloudSecurityGroupsFilters:
-      type: object
-      properties:
-        cloudNetworkId:
-          type: string
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    CloudSecurityGroupsPage:
+    Region:
       required:
-      - totalCount
-      - results
+      - id
+      - name
       type: object
       properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudSecurityGroup'
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    CloudSubnetS3EndpointValidationResult:
-      required:
-      - isValid
-      - details
-      type: object
-      properties:
-        isValid:
-          type: boolean
-        details:
-          type: string
-    BucketFoldersFiltersOrderColumns:
-      enum:
-      - NameAsc
-      - NameDesc
-      type: string
     CloudSecurityGroup:
       required:
       - resourceId
@@ -1114,16 +1124,26 @@ components:
           type: string
         name:
           type: string
-    CloudEncryptionKey:
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
+    AmazonConnectionSpec:
       required:
-      - arn
-      - name
+      - RegionId
       type: object
       properties:
-        arn:
+        AmazonAccountId:
           type: string
-        name:
+          format: uuid
+        accessKey:
           type: string
+        secretKey:
+          type: string
+        RegionId:
+          type: string
+          format: uuid
   parameters:
     apiVersionParam:
       name: x-api-version

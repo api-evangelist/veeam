@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Connection API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Connection API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
@@ -68,6 +71,39 @@ components:
           description: SSH key fingerprint used to verify the server identity.
           type: string
       type: object
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
     CertificateModel:
       description: Certificate settings.
       properties:
@@ -111,13 +147,6 @@ components:
       - validBy
       - validFrom
       type: object
-    EManagedServerType:
-      description: Type of the server.
-      enum:
-      - WindowsHost
-      - LinuxHost
-      - ViHost
-      type: string
     HostConnectionSpec:
       properties:
         credentialsId:
@@ -137,57 +166,31 @@ components:
       - credentialsId
       - type
       type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
+    InternalServerError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -199,7 +202,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Backups API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Backups API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
@@ -228,65 +231,14 @@ paths:
         - ViewBackupObjects
 components:
   schemas:
-    EVmwareInventoryType:
-      description: Type of the VMware vSphere object.
+    EBackupsFiltersOrderColumn:
       enum:
-      - Unknown
-      - VirtualMachine
-      - vCenterServer
-      - Datacenter
-      - Cluster
-      - Host
-      - ResourcePool
-      - Folder
-      - Datastore
-      - DatastoreCluster
-      - StoragePolicy
-      - Template
-      - ComputeResource
-      - VirtualApp
-      - Tag
-      - Category
-      - Multitag
-      - Network
+      - Name
+      - CreationTime
+      - PlatformId
+      - JobId
+      - PolicyTag
       type: string
-    BaseBackupObjectModel:
-      properties:
-        id:
-          description: ID of the object.
-          format: uuid
-          type: string
-        name:
-          description: Name of the object.
-          type: string
-        platformId:
-          description: Id of the platform where the object was created.
-          format: uuid
-          type: string
-        platformName:
-          $ref: '#/components/schemas/EPlatformType'
-        restorePointsCount:
-          description: Number of restore points.
-          type: integer
-        type:
-          description: Type of the object.
-          type: string
-      type: object
-    ViBackupObjectModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
-      - properties:
-          objectId:
-            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
-            type: string
-          path:
-            description: Path to the object.
-            type: string
-          viType:
-            $ref: '#/components/schemas/EVmwareInventoryType'
-        required:
-        - objectId
-        type: object
     BackupObjectsResult:
       properties:
         data:
@@ -313,35 +265,86 @@ components:
       - data
       - pagination
       type: object
-    BackupsFilters:
+    PaginationResult:
+      description: Pagination settings.
       properties:
-        createdAfterFilter:
-          format: date-time
-          type: string
-        createdBeforeFilter:
-          format: date-time
-          type: string
-        jobIdFilter:
-          format: uuid
-          type: string
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
         limit:
+          description: Maximum number of results to return.
           format: int32
           type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
-        platformIdFilter:
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    BaseBackupObjectModel:
+      properties:
+        id:
+          description: ID of the object.
           format: uuid
           type: string
-        policyTagFilter:
+        name:
+          description: Name of the object.
           type: string
-        skip:
-          format: int32
+        platformId:
+          description: Id of the platform where the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        restorePointsCount:
+          description: Number of restore points.
           type: integer
+        type:
+          description: Type of the object.
+          type: string
       type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    BackupObjectModel:
+      allOf:
+      - discriminator:
+          mapping:
+            VMware: '#/components/schemas/ViBackupObjectModel'
+          propertyName: platformName
+        oneOf:
+        - $ref: '#/components/schemas/ViBackupObjectModel'
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
     BackupModel:
       properties:
         creationTime:
@@ -381,63 +384,72 @@ components:
       - creationTime
       - repositoryId
       type: object
-    EBackupsFiltersOrderColumn:
-      enum:
-      - Name
-      - CreationTime
-      - PlatformId
-      - JobId
-      - PolicyTag
-      type: string
-    PaginationResult:
-      description: Pagination settings.
+    BackupsFilters:
       properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        jobIdFilter:
+          format: uuid
+          type: string
         limit:
-          description: Maximum number of results to return.
           format: int32
           type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
+        platformIdFilter:
+          format: uuid
+          type: string
+        policyTagFilter:
+          type: string
         skip:
-          description: Number of skipped results.
           format: int32
           type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
       type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
     EPlatformType:
       description: Platform name.
       enum:
@@ -450,40 +462,31 @@ components:
       - NasBackup
       - CustomPlatform
       type: string
-    BackupObjectModel:
-      allOf:
-      - discriminator:
-          mapping:
-            VMware: '#/components/schemas/ViBackupObjectModel'
-          propertyName: platformName
-        oneOf:
-        - $ref: '#/components/schemas/ViBackupObjectModel'
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
     NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -495,7 +498,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

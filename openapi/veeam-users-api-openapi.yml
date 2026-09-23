@@ -1,8 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Users API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Backup for AWS public API 1.0 Users API
 security:
 - Bearer: []
 tags:
@@ -100,6 +99,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Users get all
+      x-summary-source: derived
     post:
       x-veeam-authorize:
         roles:
@@ -163,6 +164,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Create user
+      x-summary-source: derived
   /api/v1/users/{userId}:
     get:
       x-veeam-authorize:
@@ -224,6 +227,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Users get by name
+      x-summary-source: derived
     put:
       x-veeam-authorize:
         roles:
@@ -301,6 +306,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Update user
+      x-summary-source: derived
     delete:
       x-veeam-authorize:
         roles:
@@ -354,6 +361,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Delete user
+      x-summary-source: derived
   /api/v1/users/validateName:
     post:
       x-veeam-authorize:
@@ -424,6 +433,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate name
+      x-summary-source: derived
   /api/v1/users/validateDescription:
     post:
       x-veeam-authorize:
@@ -494,6 +505,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate description
+      x-summary-source: derived
   /api/v1/users/validatePassword:
     post:
       x-veeam-authorize:
@@ -564,6 +577,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate password
+      x-summary-source: derived
   /api/v1/users/{userId}/enableMfa:
     post:
       tags:
@@ -639,6 +654,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Enable mfa
+      x-summary-source: derived
   /api/v1/users/{userId}/disableMfa:
     post:
       tags:
@@ -690,6 +707,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Disable mfa
+      x-summary-source: derived
   /api/v1/users/{userId}/acceptMfa:
     post:
       tags:
@@ -758,6 +777,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Accept mfa
+      x-summary-source: derived
   /api/v1/users/isFirstLogin:
     get:
       x-veeam-authorize:
@@ -815,6 +836,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       security: []
+      summary: Is first login
+      x-summary-source: derived
   /api/v1/users/checkInstanceId:
     post:
       x-veeam-authorize:
@@ -878,6 +901,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       security: []
+      summary: Check instance
+      x-summary-source: derived
   /api/v1/users/createDefaultUser:
     post:
       x-veeam-authorize:
@@ -950,6 +975,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       security: []
+      summary: Create default user
+      x-summary-source: derived
   /api/v1/users/export:
     post:
       x-veeam-authorize:
@@ -990,8 +1017,70 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Export users
+      x-summary-source: derived
 components:
   schemas:
+    UserPasswordValidationSpec:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          minLength: 1
+          type: string
+    UserUpdateSpec:
+      type: object
+      properties:
+        description:
+          type: string
+        password:
+          type: string
+        oldPassword:
+          type: string
+    UserMfaAccept:
+      required:
+      - code
+      - token
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+        token:
+          minLength: 1
+          type: string
+    UsersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    UserDescriptionValidationSpec:
+      required:
+      - description
+      type: object
+      properties:
+        description:
+          type: string
+    UserMfaSetup:
+      type: object
+      properties:
+        recreate:
+          type: boolean
     Link:
       required:
       - rel
@@ -1010,19 +1099,6 @@ components:
           - POST
           - PUT
           - DELETE
-    ValidationMessage:
-      type: object
-      properties:
-        severity:
-          enum:
-          - Warning
-          - Error
-          type: string
-        message:
-          type: string
-        contextId:
-          type: string
-          format: uuid
     UserMfaData:
       type: object
       properties:
@@ -1046,25 +1122,37 @@ components:
       properties:
         isFirstLogin:
           type: boolean
-    UserMfaAccept:
-      required:
-      - code
-      - token
+    ValidationMessage:
       type: object
       properties:
-        code:
-          minLength: 1
+        severity:
+          enum:
+          - Warning
+          - Error
           type: string
-        token:
-          minLength: 1
+        message:
           type: string
-    UserDescriptionValidationSpec:
-      required:
-      - description
+        contextId:
+          type: string
+          format: uuid
+    UsersFilters:
       type: object
       properties:
-        description:
+        searchPattern:
           type: string
+        offset:
+          type: integer
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: -1
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersSortColumns'
+          uniqueItems: false
     Error:
       description: ''
       required:
@@ -1086,8 +1174,7 @@ components:
           format: int32
           description: The HTTP status code generated by the origin server for this occurrence of the problem.
           minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
+          exclusiveMaximum: 600
         errorCode:
           description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
           enum:
@@ -1114,6 +1201,34 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    User:
+      required:
+      - name
+      - description
+      - mfaEnabled
+      - isDefault
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        mfaEnabled:
+          type: boolean
+        isDefault:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CheckInstanceIdSpec:
+      type: object
+      required:
+      - instanceId
+      properties:
+        instanceId:
+          type: string
     UserCreateSpec:
       required:
       - name
@@ -1136,20 +1251,6 @@ components:
       properties:
         isValid:
           type: boolean
-    UserUpdateSpec:
-      type: object
-      properties:
-        description:
-          type: string
-        password:
-          type: string
-        oldPassword:
-          type: string
-    UserMfaSetup:
-      type: object
-      properties:
-        recreate:
-          type: boolean
     DefaultUserSpec:
       type: object
       required:
@@ -1160,68 +1261,6 @@ components:
           $ref: '#/components/schemas/CheckInstanceIdSpec'
         userSpec:
           $ref: '#/components/schemas/UserCreateSpec'
-    UsersFilters:
-      type: object
-      properties:
-        searchPattern:
-          type: string
-        offset:
-          type: integer
-          format: int32
-          minimum: 0
-        limit:
-          type: integer
-          format: int32
-          minimum: -1
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersSortColumns'
-          uniqueItems: false
-    CheckInstanceIdSpec:
-      type: object
-      required:
-      - instanceId
-      properties:
-        instanceId:
-          type: string
-    User:
-      required:
-      - name
-      - description
-      - mfaEnabled
-      - isDefault
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        mfaEnabled:
-          type: boolean
-        isDefault:
-          type: boolean
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    UserNameValidationSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
-    UserPasswordValidationSpec:
-      required:
-      - password
-      type: object
-      properties:
-        password:
-          minLength: 1
-          type: string
     UsersSortColumns:
       type: string
       enum:
@@ -1233,25 +1272,14 @@ components:
       - isDefaultDesc
       - mfaEnabledAsc
       - mfaEnabledDesc
-    UsersPage:
+    UserNameValidationSpec:
       required:
-      - totalCount
-      - results
+      - name
       type: object
       properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+        name:
+          minLength: 1
+          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

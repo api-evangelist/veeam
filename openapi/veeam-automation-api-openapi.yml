@@ -1,12 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Automation API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Automation API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
-- description: The Automation section defines paths and operations for granular import and export of objects available in the REST API. It can be useful, for example, if you set up the backup infrastructure using JSON specification or migrate the infrastructure to another backup server. For details, see [Mass Deployment](https://helpcenter.veeam.com/docs/backup/vbr_rest/automation.html?ver=120).
+- description: The Automation section defines paths and operations for granular import and export of objects available in the REST API. It can be useful, for example, if you set up the backup infrastructure using JSON specification or migrate the infrastructure to another backup server. For details, see Mass Deployment.
   name: Automation
 paths:
   /api/v1/automation/cloudcredentials/export:
@@ -698,357 +701,49 @@ paths:
         - StopSessions
 components:
   schemas:
-    VmwareObjectDiskModel:
+    ProxyDatastoreModel:
       properties:
-        disks:
-          description: Array of disks.
-          items:
-            description: ID of the disk.
-            type: string
-          type: array
-        disksToProcess:
-          $ref: '#/components/schemas/EVmwareDisksTypeToProcess'
-        removeFromVMConfiguration:
-          description: If *true*, the disk is removed from VM configuration.
-          type: boolean
-        vmObject:
+        datastore:
           $ref: '#/components/schemas/VmwareObjectModel'
-      required:
-      - disks
-      - disksToProcess
-      - vmObject
-      type: object
-    LinuxLocalStorageImportSpec:
-      properties:
-        description:
-          description: Description of the backup repository.
-          type: string
-        hostName:
-          description: ID of the server that is used as a backup repository.
-          type: string
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the backup repository.
-          type: string
-        repository:
-          $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
-        tag:
-          description: Tag that identifies the backup repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - description
-      - hostName
-      - kind
-      - mountServer
-      - name
-      - repository
-      - tag
-      - type
-      type: object
-    BackupLinuxScriptModel:
-      description: Paths to pre-freeze and post-thaw scripts for Linux VMs.
-      properties:
-        postThawScript:
-          description: Path to a post-thaw script.
-          type: string
-        preFreezeScript:
-          description: Path to a pre-freeze script.
-          type: string
-      type: object
-    GFSPolicySettingsWeeklyModel:
-      description: Weekly GFS retention policy.
-      properties:
-        desiredTime:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          description: If *true*, the weekly GFS retention policy is enabled.
-          type: boolean
-        keepForNumberOfWeeks:
-          description: Number of weeks to keep full backups for archival purposes. Possible values are from 1 through 9999.
+        vmCount:
+          description: Number of VMs.
           type: integer
-      required:
-      - isEnabled
       type: object
-    JobScriptsSettingsModel:
-      description: Script settings.
+    ProxyExportSpec:
       properties:
-        dayOfWeek:
-          description: Days of the week when the scripts must be executed.
+        ids:
+          description: Array of backup proxy IDs.
           items:
-            $ref: '#/components/schemas/EDayOfWeek'
+            format: uuid
+            type: string
           type: array
           uniqueItems: true
-        periodicityType:
-          $ref: '#/components/schemas/EScriptPeriodicityType'
-        postCommand:
-          $ref: '#/components/schemas/ScriptCommand'
-        preCommand:
-          $ref: '#/components/schemas/ScriptCommand'
-        runScriptEvery:
-          description: Number of the backup job session after which the scripts must be executed.
-          type: integer
-      type: object
-    ERepositoryConnectionType:
-      description: Repository connection type (direct or through a gateway server).
-      enum:
-      - Direct
-      - SelectedGateway
-      type: string
-    GuestOsCredentialsPerMachineImportModel:
-      properties:
-        linuxCreds:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        vmObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        windowsCreds:
-          $ref: '#/components/schemas/CredentialsImportModel'
-      required:
-      - vmObject
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    EVmwareDisksTypeToProcess:
-      description: Type of disk selection.
-      enum:
-      - AllDisks
-      - SystemOnly
-      - SelectedDisks
-      type: string
-    EDayNumberInMonth:
-      description: Week day number in the month.
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      - OnDay
-      type: string
-    BackupApplicationSettingsImportModel:
-      properties:
-        exclusions:
-          $ref: '#/components/schemas/BackupFSExclusionsModel'
-        oracle:
-          $ref: '#/components/schemas/BackupOracleSettingsImportModel'
-        scripts:
-          $ref: '#/components/schemas/BackupScriptSettingsModel'
-        sql:
-          $ref: '#/components/schemas/BackupSQLSettingsImportModel'
-        transactionLogs:
-          $ref: '#/components/schemas/ETransactionLogsSettings'
-        usePersistentGuestAgent:
-          description: If *true*, persistent guest agent is used.
-          type: boolean
-        vmObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        vss:
-          $ref: '#/components/schemas/EApplicationSettingsVSS'
-      required:
-      - vmObject
-      - vss
-      type: object
-    NetworkRepositorySettingsModel:
-      description: Repository settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-      type: object
-    AmazonS3GlacierStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/AmazonS3StorageAccountImportModel'
-        bucket:
-          $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
-        description:
-          description: Description of the object storage repository.
-          type: string
-        name:
-          description: Name of the object storage repository.
-          type: string
-        proxyAppliance:
-          $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
-        tag:
-          description: Tag that identifies the object storage repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - bucket
-      - mountServer
-      type: object
-    SessionsResult:
-      properties:
-        data:
-          description: Array of sessions.
-          items:
-            $ref: '#/components/schemas/SessionModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    GFSPolicySettingsYearlyModel:
-      description: Yearly GFS retention policy.
-      properties:
-        desiredTime:
-          $ref: '#/components/schemas/EMonth'
-        isEnabled:
-          description: If *true*, the yearly GFS retention policy is enabled.
-          type: boolean
-        keepForNumberOfYears:
-          description: Number of years to keep full backups for archival purposes. Possible values are from 1 through 999.
-          type: integer
-      required:
-      - isEnabled
-      type: object
-    AzureArchiveStorageAccountImportModel:
-      description: Account used to access the Azure Archive storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
-        credentials:
-          $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionType:
-          $ref: '#/components/schemas/EAzureRegionType'
-      required:
-      - credentials
-      - regionType
-      - gatewayServer
-      type: object
-    AzureDataBoxStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/AzureDataBoxStorageAccountImportModel'
-        container:
-          $ref: '#/components/schemas/AzureDataBoxStorageContainerModel'
-        description:
-          description: Description of the object storage repository.
-          type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the object storage repository.
-          type: string
-        tag:
-          description: Tag that identifies the object storage repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - container
-      - mountServer
-      type: object
-    EConsumptionLimitKind:
-      description: Measurement unit.
-      enum:
-      - TB
-      - PB
-      type: string
-    WasabiCloudStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/WasabiCloudStorageAccountImportModel'
-        bucket:
-          $ref: '#/components/schemas/WasabiCloudStorageBucketModel'
-        description:
-          description: Description of the object storage repository.
-          type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the object storage repository.
-          type: string
-        proxyAppliance:
-          $ref: '#/components/schemas/S3CompatibleProxyModel'
-        tag:
-          description: Tag that identifies the object storage repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - bucket
-      - mountServer
-      type: object
-    BackupFSExclusionsModel:
-      description: VM guest OS file exclusion.
-      properties:
-        exclusionPolicy:
-          $ref: '#/components/schemas/EBackupExclusionPolicy'
-        itemsList:
-          description: Array of files and folders. Full paths to files and folders, environmental variables and file masks with the asterisk (*) and question mark (?) characters can be used.
+        names:
+          description: Array of backup proxy names. Wildcard characters are supported.
           items:
             type: string
           type: array
+          uniqueItems: true
+        types:
+          description: Array of backup proxy types.
+          items:
+            $ref: '#/components/schemas/EProxyType'
+          type: array
+          uniqueItems: true
+      type: object
+    GFSPolicySettingsMonthlyModel:
+      description: Monthly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/ESennightOfMonth'
+        isEnabled:
+          description: If *true*, the monthly GFS retention policy is enabled.
+          type: boolean
+        keepForNumberOfMonths:
+          description: Number of months to keep full backups for archival purposes. Possible values are from 1 through 999.
+          type: integer
       required:
-      - exclusionPolicy
+      - isEnabled
       type: object
     NfsStorageImportSpec:
       properties:
@@ -1079,46 +774,16 @@ components:
       - tag
       - type
       type: object
-    BackupScheduleModel:
-      description: Job scheduling options.
-      properties:
-        afterThisJob:
-          $ref: '#/components/schemas/ScheduleAfterThisJobModel'
-        backupWindow:
-          $ref: '#/components/schemas/ScheduleBackupWindowModel'
-        continuously:
-          $ref: '#/components/schemas/ScheduleBackupWindowModel'
-        daily:
-          $ref: '#/components/schemas/ScheduleDailyModel'
-        monthly:
-          $ref: '#/components/schemas/ScheduleMonthlyModel'
-        periodically:
-          $ref: '#/components/schemas/SchedulePeriodicallyModel'
-        retry:
-          $ref: '#/components/schemas/ScheduleRetryModel'
-        runAutomatically:
-          default: false
-          description: If *true*, job scheduling is enabled.
-          type: boolean
-      required:
-      - runAutomatically
-      type: object
-    AdvancedStorageScheduleWeeklyModel:
-      description: Weekly schedule settings.
-      properties:
-        days:
-          description: Days of the week when the operation is performed.
-          items:
-            $ref: '#/components/schemas/EDayOfWeek'
-          type: array
-          uniqueItems: true
-        isEnabled:
-          default: false
-          description: If *true*, the weekly schedule is enabled.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
+    ESennightOfMonth:
+      description: Sennight of the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Fifth
+      - Last
+      type: string
     BackupLogShippingServersImportModel:
       description: Log shipping server used to transport logs.
       properties:
@@ -1132,30 +797,6 @@ components:
           type: array
       required:
       - autoSelection
-      type: object
-    ECertificateFileFormatType:
-      description: Certificate file format.
-      enum:
-      - pfx
-      type: string
-    BackupStorageSettingModel:
-      description: Storage settings.
-      properties:
-        compressionLevel:
-          $ref: '#/components/schemas/ECompressionLevel'
-        enableInlineDataDedup:
-          description: If *true*, Veeam Backup & Replication deduplicates VM data before storing it in the backup repository.
-          type: boolean
-        encryption:
-          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
-        excludeDeletedFileBlocks:
-          description: If *true*, Veeam Backup & Replication does not copy deleted file blocks.
-          type: boolean
-        excludeSwapFileBlocks:
-          description: If *true*, Veeam Backup & Replication excludes swap file blocks from processing.
-          type: boolean
-        storageOptimization:
-          $ref: '#/components/schemas/EStorageOptimization'
       type: object
     RepositoryImportSpecCollection:
       properties:
@@ -1250,201 +891,409 @@ components:
           type: array
           uniqueItems: true
       type: object
-    EBackupOracleLogsSettings:
-      description: Type of archived logs processing.
+    ProxyImportSpec:
+      properties:
+        description:
+          description: Description of the backup proxy.
+          type: string
+        server:
+          $ref: '#/components/schemas/ProxyServerSettingsImportSpec'
+        type:
+          $ref: '#/components/schemas/EProxyType'
+      required:
+      - description
+      - server
+      - type
+      type: object
+    ScriptCommand:
+      description: Script settings.
+      properties:
+        command:
+          description: Path to the script.
+          type: string
+        isEnabled:
+          description: If *true*, script execution is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    ERepositoryConnectionType:
+      description: Repository connection type (direct or through a gateway server).
       enum:
-      - preserve
-      - deleteExpiredHours
-      - deleteExpiredGBs
+      - Direct
+      - SelectedGateway
       type: string
-    AzureArchiveStorageContainerModel:
-      description: Azure Archive container where backup data is stored.
+    CloudCredentialsImportModel:
+      description: Cloud credentials used for connection.
+      properties:
+        name:
+          description: User name, account name or access key.
+          type: string
+        tag:
+          description: Tag used to identify the cloud credentials record.
+          type: string
+        type:
+          $ref: '#/components/schemas/ECloudCredentialsType'
+      required:
+      - name
+      - tag
+      - type
+      type: object
+    EApplicationSettingsVSS:
+      description: Behavior scenario for application-aware processing.
+      enum:
+      - requireSuccess
+      - ignoreFailures
+      - disabled
+      type: string
+    EAmazonRegionType:
+      description: AWS region type.
+      enum:
+      - China
+      - Global
+      - Government
+      type: string
+    AzureBlobStorageContainerModel:
+      description: Azure Blob storage container.
       properties:
         containerName:
-          description: Name of an Azure Archive container.
+          description: Container name.
           type: string
         folderName:
           description: Name of the folder that the object storage repository is mapped to.
           type: string
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
       required:
       - containerName
       - folderName
       type: object
-    EAzureRegionType:
-      description: Region where your Microsoft Azure container is located.
-      enum:
-      - China
-      - Germany
-      - Global
-      - Government
-      type: string
-    EPeriodicallyKinds:
-      description: Time unit for periodic job scheduling.
-      enum:
-      - Hours
-      - Minutes
-      - Seconds
-      - Days
-      type: string
-    CloudCredentialsExportSpec:
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
       properties:
-        ids:
-          description: Array of cloud credentials IDs that you want to export.
+        days:
+          description: Array of per-day schemes.
           items:
-            format: uuid
-            type: string
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
           type: array
-          uniqueItems: true
-        names:
-          description: Array of cloud credentials user names. Wildcard characters are supported.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        types:
-          description: Array of cloud credentials types that you want to export.
-          items:
-            $ref: '#/components/schemas/ECloudCredentialsType'
-          type: array
-          uniqueItems: true
+      required:
+      - days
       type: object
-    ManageServerImportSpecCollection:
+    PaginationResult:
+      description: Pagination settings.
       properties:
-        linuxHosts:
-          description: Array of managed Linux servers.
-          items:
-            $ref: '#/components/schemas/LinuxHostImportSpec'
-          type: array
-          uniqueItems: true
-        viHosts:
-          description: Array of VMware vSphere servers.
-          items:
-            $ref: '#/components/schemas/ViHostImportSpec'
-          type: array
-          uniqueItems: true
-        windowsHosts:
-          description: Array of managed Microsoft Windows servers.
-          items:
-            $ref: '#/components/schemas/WindowsHostImportSpec'
-          type: array
-          uniqueItems: true
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
       type: object
-    LinuxLocalRepositorySettingsModel:
-      description: Repository settings.
+    EBackupModeType:
+      description: Type of the backup method used to create a restore point.
+      enum:
+      - Full
+      - Incremental
+      - ReverseIncremental
+      - Transofrm
+      - TransformForeverIncremental
+      type: string
+    EBackupScriptProcessingMode:
+      description: Scenario for scripts execution.
+      enum:
+      - disableExec
+      - ignoreExecFailures
+      - requireSuccess
+      type: string
+    NfsRepositoryShareSettingsSpec:
       properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
+        gatewayServer:
+          $ref: '#/components/schemas/RepositoryShareGatewayImportSpec'
+        sharePath:
+          description: Path to the shared folder that is used as a backup repository.
+          type: string
+      required:
+      - sharePath
+      type: object
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    IBMCloudStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/IBMCloudStorageAccountImportModel'
+        bucket:
+          $ref: '#/components/schemas/IBMCloudStorageBucketModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
         enableTaskLimit:
           description: If *true*, the maximum number of concurrent tasks is limited.
           type: boolean
         maxTaskCount:
           description: Maximum number of concurrent tasks.
           type: integer
-        path:
-          description: Path to the folder where backup files are stored.
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
           type: string
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-        useFastCloningOnXFSVolumes:
-          description: If *true*, fast cloning on XFS volumes is used.
+        proxyAppliance:
+          $ref: '#/components/schemas/S3CompatibleProxyModel'
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
+      - description
+      - tag
+      - type
+      - account
+      - bucket
+      - mountServer
+      type: object
+    SmbStorageImportSpec:
+      properties:
+        description:
+          description: Description of the backup repository.
+          type: string
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the backup repository.
+          type: string
+        repository:
+          $ref: '#/components/schemas/NetworkRepositorySettingsModel'
+        share:
+          $ref: '#/components/schemas/SmbRepositoryShareSettingsSpec'
+        tag:
+          description: Tag that identifies the backup repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - description
+      - kind
+      - mountServer
+      - name
+      - repository
+      - share
+      - tag
+      - type
+      type: object
+    ERetentionPolicyType:
+      description: Type of the retention policy.
+      enum:
+      - RestorePoints
+      - Days
+      type: string
+    BackupJobExclusionsTemplates:
+      description: VM templates exclusion.
+      properties:
+        excludeFromIncremental:
+          description: If *true*, VM templates are excluded from the incremental backup.
+          type: boolean
+        isEnabled:
+          description: If *true*, VM templates are excluded from the backup.
           type: boolean
       type: object
-    SessionResultModel:
-      description: Session result.
+    ScheduleAfterThisJobModel:
+      description: Job chaining options.
       properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
+        isEnabled:
+          description: If *true*, job chaining is enabled.
           type: boolean
+        jobName:
+          description: Name of the preceding job.
+          type: string
+      required:
+      - isEnabled
+      type: object
+    FullBackupMaintenanceModel:
+      description: Maintenance settings for full backup files.
+      properties:
+        RemoveData:
+          $ref: '#/components/schemas/FullBackupMaintenanceRemoveDataModel'
+        defragmentAndCompact:
+          $ref: '#/components/schemas/FullBackupMaintenanceDefragmentAndCompactModel'
+      type: object
+    EncryptionPasswordImportSpec:
+      properties:
+        hint:
+          description: Hint for the encryption password.
+          type: string
+        password:
+          description: Password.
+          type: string
+        tag:
+          description: Tag for the encryption password.
+          type: string
+      required:
+      - hint
+      - password
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    EJobType:
+      description: Type of the job.
+      enum:
+      - Backup
+      type: string
+    AmazonS3GlacierStorageBucketModel:
+      description: Amazon S3 Glacier bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of an Amazon S3 Glacier bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutabilityEnabled:
+          description: If *true*, storage immutability is enabled.
+          type: boolean
+        regionId:
+          description: ID of a region where the Amazon S3 bucket is located.
+          type: string
+        useDeepArchive:
+          description: If *true*, Glacier Deep Archive is used for backups with the retention policy over 180 days.
+          type: boolean
+      required:
+      - regionId
+      - bucketName
+      - folderName
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
         message:
-          description: Message that explains the session result.
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
           type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
       required:
-      - result
+      - errorCode
+      - message
       type: object
-    WindowsHostPortsModel:
-      description: Veeam Backup & Replication components installed on the server and ports used by the components.
+    BackupObjectIndexingModel:
+      description: Guest OS indexing options for the VM.
       properties:
-        components:
-          description: Array of Veeam Backup & Replication components.
+        guestFSIndexingMode:
+          $ref: '#/components/schemas/EGuestFSIndexingMode'
+        indexingList:
+          description: Array of folders. Environmental variables and full paths to folders can be used.
           items:
-            $ref: '#/components/schemas/WindowsHostComponentPortModel'
+            type: string
           type: array
-        portRangeEnd:
-          description: End port used for data transfer.
+      required:
+      - guestFSIndexingMode
+      type: object
+    SessionsFilters:
+      properties:
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        endedAfterFilter:
+          format: date-time
+          type: string
+        endedBeforeFilter:
+          format: date-time
+          type: string
+        jobIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
           type: integer
-        portRangeStart:
-          description: Start port used for data transfer.
-          type: integer
-        serverThisSide:
-          description: If *true*, the server is run on this side.
+        nameFilter:
+          type: string
+        orderAsc:
           type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/ESessionsFiltersOrderColumn'
+        resultFilter:
+          $ref: '#/components/schemas/ESessionResult'
+        skip:
+          format: int32
+          type: integer
+        stateFilter:
+          $ref: '#/components/schemas/ESessionState'
+        typeFilter:
+          $ref: '#/components/schemas/ESessionType'
       type: object
-    ProxyImportSpecCollection:
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    BackupApplicationAwareProcessingImportModel:
+      description: Application-aware processing settings.
       properties:
-        proxies:
-          description: Array of backup proxies.
+        appSettings:
+          description: Array of VMware vSphere objects and their application settings.
           items:
-            $ref: '#/components/schemas/ProxyImportSpec'
+            $ref: '#/components/schemas/BackupApplicationSettingsImportModel'
           type: array
-          uniqueItems: true
+        isEnabled:
+          description: If *true*, application-aware processing is enabled.
+          type: boolean
       required:
-      - proxies
+      - isEnabled
       type: object
-    AzureBlobStorageAccountImportModel:
-      description: Account used to access the Azure Blob storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
-        credentials:
-          $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionType:
-          $ref: '#/components/schemas/EAzureRegionType'
-      required:
-      - credentials
-      - regionType
-      - gatewayServer
-      type: object
-    AzureComputeCloudCredentialsSubscriptionSpec:
-      description: Microsoft Azure compute account. For password-based authentication, specify client secret. For certificate-based authentication, specify certificate and password.
-      properties:
-        applicationId:
-          description: Client ID assigned to the Azure Active Directory application.
-          type: string
-        certificate:
-          $ref: '#/components/schemas/CertificateUploadSpec'
-        secret:
-          description: (For password-based authentication) Client secret assigned to the Azure Active Directory application.
-          type: string
-        tenantId:
-          description: ID of a tenant where the Azure Active Directory application is registered in.
-          type: string
-      required:
-      - tenantId
-      - applicationId
-      type: object
-    ESennightOfMonth:
-      description: Sennight of the month.
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Fifth
-      - Last
-      type: string
-    ERotatedDriveCleanupMode:
-      description: Cleanup mode:<ul> <li>`Disabled` — continue the backup chain on an inserted drive.</li> <li>`ClearBackupFolder` — delete existing backups belonging to the job.</li> <li>`ClearRepositoryFolder` — delete all existing backups from repository.</li></ul>
-      enum:
-      - Disabled
-      - ClearBackupFolder
-      - ClearRepositoryFolder
-      type: string
     WindowsLocalStorageImportSpec:
       properties:
         description:
@@ -1475,217 +1324,65 @@ components:
       - tag
       - type
       type: object
-    BackupRepositoryImportModel:
-      description: Backup repository.
-      properties:
-        name:
-          description: Name of the backup repository.
-          type: string
-        tag:
-          description: Tag that identifies the backup repository.
-          type: string
-      required:
-      - name
-      type: object
-    AmazonSnowballEdgeStorageAccountImportModel:
-      description: AWS account used to access the AWS Snowball Edge storage.
+    WasabiCloudStorageAccountImportModel:
+      description: Account used to access the Wasabi Cloud storage.
       properties:
         connectionSettings:
           $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
         credentials:
           $ref: '#/components/schemas/CloudCredentialsImportModel'
         regionId:
-          description: For AWS Snowball Edge, the region is *snow*.
-          type: string
-        servicePoint:
-          description: Service point address and port number of the AWS Snowball Edge device.
+          description: ID of a region where the storage is located.
           type: string
       required:
-      - servicePoint
       - regionId
       - credentials
       - connectionSettings
       type: object
-    BackupWindowDayHoursModel:
-      description: Hourly scheme for a day.
+    ProxyDatastoreSettingsModel:
+      description: Datastores to which the backup proxy has a direct SAN or NFS connection.
       properties:
-        day:
-          $ref: '#/components/schemas/EDayOfWeek'
-        hours:
-          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
-          type: string
-      required:
-      - day
-      - hours
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
-    MountServerSettingsImportSpec:
-      description: Settings for the mount server that is used for file-level and application items restore.
-      properties:
-        mountServerName:
-          description: Name of the mount server.
-          type: string
-        vPowerNFSEnabled:
-          description: If *true*, the vPower NFS Service is enabled on the mount server.
+        autoSelect:
+          description: If *true*, all datastores that the backup proxy can access are detected automatically.
           type: boolean
-        vPowerNFSPortSettings:
-          $ref: '#/components/schemas/VPowerNFSPortSettingsModel'
-        writeCacheFolder:
-          description: Path to the folder used for writing cache during mount operations.
-          type: string
-      required:
-      - mountServerName
-      - vPowerNFSEnabled
-      - writeCacheFolder
-      type: object
-    ECredentialsType:
-      description: Credentials type.
-      enum:
-      - Standard
-      - Linux
-      type: string
-    EGuestFSIndexingMode:
-      description: Indexing mode.
-      enum:
-      - disable
-      - indexAll
-      - indexAllExcept
-      - indexOnly
-      type: string
-    VPowerNFSPortSettingsModel:
-      description: Network ports used by the vPower NFS Service.
-      properties:
-        mountPort:
-          description: Mount port.
-          type: integer
-        vPowerNFSPort:
-          description: vPower NFS port.
-          type: integer
-      type: object
-    BackupApplicationAwareProcessingImportModel:
-      description: Application-aware processing settings.
-      properties:
-        appSettings:
-          description: Array of VMware vSphere objects and their application settings.
+        datastores:
+          description: Array of datastores to which the backup proxy has a direct SAN or NFS connection.
           items:
-            $ref: '#/components/schemas/BackupApplicationSettingsImportModel'
+            $ref: '#/components/schemas/ProxyDatastoreModel'
           type: array
+      required:
+      - autoSelect
+      type: object
+    GFSPolicySettingsWeeklyModel:
+      description: Weekly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/EDayOfWeek'
         isEnabled:
-          description: If *true*, application-aware processing is enabled.
+          description: If *true*, the weekly GFS retention policy is enabled.
           type: boolean
+        keepForNumberOfWeeks:
+          description: Number of weeks to keep full backups for archival purposes. Possible values are from 1 through 9999.
+          type: integer
       required:
       - isEnabled
       type: object
-    AzureBlobStorageContainerModel:
-      description: Azure Blob storage container.
+    EmailNotificationSettingsModel:
+      description: Email notification settings for the backup job.
       properties:
-        containerName:
-          description: Container name.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - containerName
-      - folderName
-      type: object
-    SmbRepositoryShareSettingsSpec:
-      description: Share settings.
-      properties:
-        credentials:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        gatewayServer:
-          $ref: '#/components/schemas/RepositoryShareGatewayImportSpec'
-        sharePath:
-          description: Path to the shared folder that is used as a backup repository.
-          type: string
-      required:
-      - credentials
-      - sharePath
-      type: object
-    AmazonS3StorageBucketModel:
-      description: Amazon S3 bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of an Amazon S3 bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        infrequentAccessStorage:
-          $ref: '#/components/schemas/AmazonS3IAStorageModel'
-        regionId:
-          description: ID of a region where the Amazon S3 bucket is located.
-          type: string
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - regionId
-      - bucketName
-      - folderName
-      type: object
-    JobImportSpec:
-      properties:
-        description:
-          description: Description of the job.
-          type: string
-        guestProcessing:
-          $ref: '#/components/schemas/BackupJobGuestProcessingImportModel'
-        isHighPriority:
-          description: If *true*, the job has a high priority in getting backup infrastructure resources.
-          type: boolean
-        name:
-          description: Name of the job.
-          type: string
-        schedule:
-          $ref: '#/components/schemas/BackupScheduleModel'
-        storage:
-          $ref: '#/components/schemas/BackupJobStorageImportModel'
-        type:
-          $ref: '#/components/schemas/EJobType'
-        virtualMachines:
-          $ref: '#/components/schemas/BackupJobVirtualMachinesSpec'
-      required:
-      - description
-      - guestProcessing
-      - isHighPriority
-      - name
-      - schedule
-      - storage
-      - type
-      - virtualMachines
-      type: object
-    NotificationVmAttributeSettingsModel:
-      description: VM attribute settings.
-      properties:
-        appendToExisitingValue:
-          description: If *true*, information about successfully performed backup is appended to the existing value of the attribute added by the user.
-          type: boolean
+        customNotificationSettings:
+          $ref: '#/components/schemas/EmailCustomNotificationType'
         isEnabled:
-          description: If *true*, information about successfully performed backup is written to a VM attribute.
+          description: If *true*, email notifications are enabled for this job.
           type: boolean
-        notes:
-          description: Name of the VM attribute.
-          type: string
+        notificationType:
+          $ref: '#/components/schemas/EEmailNotificationType'
+        recipients:
+          description: Array of recipient’s email addresses.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
       required:
       - isEnabled
       type: object
@@ -1711,123 +1408,146 @@ components:
       - accessKey
       - secretKey
       type: object
-    ERetentionPolicyType:
-      description: Type of the retention policy.
-      enum:
-      - RestorePoints
-      - Days
-      type: string
-    EAzureComputeCredentialsDeploymentType:
-      description: Deployment type (global Microsoft Azure or Microsoft Azure Stack Hub).
-      enum:
-      - MicrosoftAzure
-      - MicrosoftAzureStack
-      type: string
-    AzureStorageProxyModel:
-      description: Azure storage proxy appliance.
+    MountServerSettingsImportSpec:
+      description: Settings for the mount server that is used for file-level and application items restore.
       properties:
-        instanceSize:
-          description: Size of the appliance.
+        mountServerName:
+          description: Name of the mount server.
           type: string
-        redirectorPort:
-          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
-          type: integer
-        resourceGroup:
-          description: Resource group associated with the proxy appliance.
-          type: string
-        subnet:
-          description: Subnet for the proxy appliance.
-          type: string
-        subscriptionId:
-          description: ID that Veeam Backup & Replication assigned to the Azure subscription.
-          format: uuid
-          type: string
-        virtualNetwork:
-          description: Network to which the helper appliance is connected.
+        vPowerNFSEnabled:
+          description: If *true*, the vPower NFS Service is enabled on the mount server.
+          type: boolean
+        vPowerNFSPortSettings:
+          $ref: '#/components/schemas/VPowerNFSPortSettingsModel'
+        writeCacheFolder:
+          description: Path to the folder used for writing cache during mount operations.
           type: string
       required:
-      - subscriptionId
+      - mountServerName
+      - vPowerNFSEnabled
+      - writeCacheFolder
       type: object
-    BackupProxyImportModel:
+    SessionLogResult:
+      description: Log of the session.
       properties:
-        name:
-          description: Name of the backup proxy.
-          type: string
-        tag:
-          description: Tag assigned to the backup proxy.
-          type: string
-        type:
-          $ref: '#/components/schemas/EBackupProxyImportType'
-      required:
-      - name
-      - type
-      type: object
-    ObjectStorageConsumptionLimitModel:
-      description: Soft consumption limit for the storage. The limit can be exceeded temporarily.
-      properties:
-        consumptionLimitCount:
-          description: Limit value.
+        records:
+          description: Array of log records.
+          items:
+            $ref: '#/components/schemas/SessionLogRecordModel'
+          type: array
+        totalRecords:
+          description: Total number of records.
           type: integer
-        consumptionLimitKind:
-          $ref: '#/components/schemas/EConsumptionLimitKind'
+      type: object
+    ScheduleRetryModel:
+      description: Retry options.
+      properties:
+        awaitMinutes:
+          default: 10
+          description: Time interval between job retries in minutes. Must be greater than zero.
+          type: integer
         isEnabled:
-          description: If *true*, the consumption limit is enabled.
+          default: false
+          description: If *true*, retry options are enabled.
+          type: boolean
+        retryCount:
+          default: 3
+          description: Number of retries set for the job. Must be greater than zero.
+          type: integer
+      type: object
+    GFSPolicySettingsModel:
+      description: GFS retention policy settings.
+      properties:
+        isEnabled:
+          description: If *true*, the long-term (GFS) retention policy is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/GFSPolicySettingsMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/GFSPolicySettingsWeeklyModel'
+        yearly:
+          $ref: '#/components/schemas/GFSPolicySettingsYearlyModel'
+      required:
+      - isEnabled
+      type: object
+    ECertificateFileFormatType:
+      description: Certificate file format.
+      enum:
+      - pfx
+      type: string
+    CredentialsLinuxSettingsImportModel:
+      description: Additional Linux account settings.
+      properties:
+        SSHPort:
+          description: SSH port used to connect to a Linux server.
+          type: integer
+        addToSudoers:
+          description: If *true*, the account is automatically added to the sudoers file.
+          type: boolean
+        autoElevated:
+          description: If *true*, the permissions of the account are automatically elevated to the root user.
+          type: boolean
+        passphrase:
+          description: Passphrase that protects the private key.
+          type: string
+        privateKey:
+          description: Private key.
+          type: string
+        rootPassword:
+          description: Password for the root account.
+          type: string
+        useSu:
+          description: If *true*, the `su` command is used for Linux distributions where the `sudo` command is not available.
           type: boolean
       type: object
-    ManageServerExportSpec:
+    BackupJobGuestProcessingImportModel:
+      description: Guest processing settings.
       properties:
-        ids:
-          description: Array of server IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-        names:
-          description: Array of server names. Wildcard characters are supported.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        types:
-          description: Array of server types.
-          items:
-            $ref: '#/components/schemas/EManagedServerType'
-          type: array
-          uniqueItems: true
+        applicationAwareProcessing:
+          $ref: '#/components/schemas/BackupApplicationAwareProcessingImportModel'
+        guestCredentials:
+          $ref: '#/components/schemas/GuestOsCredentialsImportModel'
+        guestFileSystemIndexing:
+          $ref: '#/components/schemas/GuestFileSystemIndexingModel'
+        guestInteractionProxies:
+          $ref: '#/components/schemas/GuestInteractionProxiesSettingsImportModel'
+      required:
+      - applicationAwareProcessing
+      - guestFileSystemIndexing
       type: object
-    BackupOracleSettingsImportModel:
-      description: Oracle archived log settings.
+    FullBackupMaintenanceRemoveDataModel:
+      description: Backup data setting for deleted VMs.
       properties:
-        archiveLogs:
-          $ref: '#/components/schemas/EBackupOracleLogsSettings'
-        backupLogs:
-          description: If *true*, archived logs are backed up.
-          type: boolean
-        backupMinsCount:
-          description: Frequency of archived log backup, in minutes.
+        afterDays:
+          description: Number of days.
           type: integer
-        credentials:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        deleteGBsCount:
-          description: Maximum size for archived logs in GB. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredGBs*.
-          type: integer
-        deleteHoursCount:
-          description: Time period in hours to keep archived logs. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredHours*.
-          type: integer
-        keepDaysCount:
-          description: Number of days to keep archived logs.
-          type: integer
-        logShippingServers:
-          $ref: '#/components/schemas/BackupLogShippingServersImportModel'
-        retainLogBackups:
-          $ref: '#/components/schemas/ERetainLogBackupsType'
-        useGuestCredentials:
-          description: If *true*, Veeam Backup & Replication uses credentials specified in the guest processing settings.
+        isEnabled:
+          description: If *true*, Veeam Backup & Replication keeps the backup data of deleted VMs for the `afterDays` number of days.
           type: boolean
       required:
-      - archiveLogs
-      - useGuestCredentials
+      - isEnabled
+      type: object
+    AzureComputeCloudCredentialsDeploymentModel:
+      description: Environment to restore workloads to.
+      properties:
+        deploymentType:
+          $ref: '#/components/schemas/EAzureComputeCredentialsDeploymentType'
+        region:
+          $ref: '#/components/schemas/EAzureRegionType'
+      required:
+      - deploymentType
+      type: object
+    BackupJobRetentionPolicySettingsModel:
+      description: Retention policy settings.
+      properties:
+        quantity:
+          description: Number of restore points or days to keep.
+          type: integer
+        type:
+          $ref: '#/components/schemas/ERetentionPolicyType'
+      required:
+      - quantity
+      - type
       type: object
     VmwareObjectModel:
       description: VMware vSphere object.
@@ -1848,92 +1568,47 @@ components:
       - type
       - hostName
       type: object
-    SchedulePeriodicallyModel:
-      description: Periodic scheduling options.
+    BackupWindowsScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Microsoft Windows VMs.
       properties:
-        backupWindow:
-          $ref: '#/components/schemas/BackupWindowSettingModel'
-        frequency:
-          description: Number of time units that defines the time interval.
-          type: integer
-        isEnabled:
-          default: false
-          description: If *true*, periodic schedule is enabled.
+        postThawScript:
+          description: Path to a post-thaw script.
+          type: string
+        preFreezeScript:
+          description: Path to a pre-freeze script.
+          type: string
+      type: object
+    VSphereChangedBlockTrackingSettingsModel:
+      description: CBT settings for the backup job.
+      properties:
+        enableCBTautomatically:
+          description: If *true*, CBT is enabled for all processed VMs even if CBT is disabled in VM configuration. CBT is used for VMs with virtual hardware version 7 or later. These VMs must not have existing snapshots.
           type: boolean
-        periodicallyKind:
-          $ref: '#/components/schemas/EPeriodicallyKinds'
-        startTimeWithinAnHour:
-          description: Start time within an hour, in minutes.
-          type: integer
+        isEnabled:
+          description: If *true*, CBT data is used.
+          type: boolean
+        resetCBTonActiveFull:
+          description: If *true*, CBT is reset before creating active full backups.
+          type: boolean
       required:
       - isEnabled
       type: object
-    WindowsHostComponentPortModel:
-      description: Ports used by Veeam Backup & Replication components.
+    EBackupOracleLogsSettings:
+      description: Type of archived logs processing.
+      enum:
+      - preserve
+      - deleteExpiredHours
+      - deleteExpiredGBs
+      type: string
+    ObjectStorageImmutabilityModel:
+      description: Object storage immutability.
       properties:
-        componentName:
-          $ref: '#/components/schemas/EWindowsHostComponentType'
-        port:
-          description: Port used by the component.
+        daysCount:
+          description: Immutability period.
           type: integer
-      required:
-      - componentName
-      - port
-      type: object
-    EBackupProxyImportType:
-      enum:
-      - vmware
-      type: string
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    ERepositoryType:
-      description: Repository type.
-      enum:
-      - WinLocal
-      - LinuxLocal
-      - Smb
-      - Nfs
-      - AzureBlob
-      - AzureDataBox
-      - AzureArchive
-      - AmazonS3
-      - AmazonSnowballEdge
-      - AmazonS3Glacier
-      - S3Compatible
-      - GoogleCloud
-      - IBMCloud
-      - ExtendableRepository
-      - DDBoost
-      - ExaGrid
-      - HPStoreOnceIntegration
-      - Quantum
-      - WasabiCloud
-      - LinuxHardened
-      - Infinidat
-      - Fujitsu
-      type: string
-    CredentialsImportModel:
-      description: Credentials used for connection.
-      properties:
-        credentialsName:
-          description: User name, account name or access key.
-          type: string
-        credentialsTag:
-          description: Tag used to identify the credentials record.
-          type: string
-      required:
-      - credentialsName
-      type: object
-    RepositoryShareGatewayImportSpec:
-      description: Settings for the gateway server.
-      properties:
-        autoSelect:
-          description: If *true*, Veeam Backup & Replication automatically selects a gateway server.
+        isEnabled:
+          description: If *true*, storage immutability is enabled.
           type: boolean
-        gatewayServerName:
-          description: Name of the gateway server.
-          type: string
       type: object
     IBMCloudStorageAccountImportModel:
       description: Account used to access the IBM Cloud storage.
@@ -1954,224 +1629,840 @@ components:
       - credentials
       - connectionSettings
       type: object
-    EBackupModeType:
-      description: Type of the backup method used to create a restore point.
-      enum:
-      - Full
-      - Incremental
-      - ReverseIncremental
-      - Transofrm
-      - TransformForeverIncremental
-      type: string
-    CloudCredentialsImportSpecCollection:
+    WindowsHostPortsModel:
+      description: Veeam Backup & Replication components installed on the server and ports used by the components.
       properties:
-        amazon:
-          description: Array of AWS accounts.
+        components:
+          description: Array of Veeam Backup & Replication components.
           items:
-            $ref: '#/components/schemas/AmazonCloudCredentialsImportSpec'
+            $ref: '#/components/schemas/WindowsHostComponentPortModel'
           type: array
-          uniqueItems: true
-        azureCompute:
-          description: Array of Azure compute accounts.
-          items:
-            $ref: '#/components/schemas/AzureComputeCloudCredentialsImportSpec'
-          type: array
-          uniqueItems: true
-        azureStorage:
-          description: Array of Azure storage accounts.
-          items:
-            $ref: '#/components/schemas/AzureStorageCloudCredentialsImportSpec'
-          type: array
-          uniqueItems: true
-        google:
-          description: Array of Google accounts.
-          items:
-            $ref: '#/components/schemas/GoogleCloudCredentialsImportSpec'
-          type: array
-          uniqueItems: true
-      required:
-      - credentials
-      type: object
-    BackupJobVirtualMachinesSpec:
-      description: Arrays of objects that you want to back up or exclude from the backup.
-      properties:
-        excludes:
-          $ref: '#/components/schemas/BackupJobExclusionsSpec'
-        includes:
-          description: Array of objects that you want to back up.
-          items:
-            $ref: '#/components/schemas/VmwareObjectModel'
-          type: array
-      required:
-      - includes
-      type: object
-    FullBackupMaintenanceRemoveDataModel:
-      description: Backup data setting for deleted VMs.
-      properties:
-        afterDays:
-          description: Number of days.
+        portRangeEnd:
+          description: End port used for data transfer.
           type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+      type: object
+    IBMCloudStorageBucketModel:
+      description: IBM Cloud bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of an IBM Cloud bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - bucketName
+      - folderName
+      type: object
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
+    AdvancedStorageScheduleMonthlyModel:
+      description: Monthly schedule settings.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonths:
+          description: Day of the month when the operation is performed.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
         isEnabled:
-          description: If *true*, Veeam Backup & Replication keeps the backup data of deleted VMs for the `afterDays` number of days.
+          description: If *true*, the monthly schedule is enabled.
+          type: boolean
+        months:
+          description: Months when the operation is performed.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    EProxyType:
+      description: Type of the backup proxy.
+      enum:
+      - ViProxy
+      type: string
+    ERotatedDriveCleanupMode:
+      description: Cleanup mode:<ul> <li>`Disabled` — continue the backup chain on an inserted drive.</li> <li>`ClearBackupFolder` — delete existing backups belonging to the job.</li> <li>`ClearRepositoryFolder` — delete all existing backups from repository.</li></ul>
+      enum:
+      - Disabled
+      - ClearBackupFolder
+      - ClearRepositoryFolder
+      type: string
+    ScheduleBackupWindowModel:
+      description: Backup window settings.
+      properties:
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        isEnabled:
+          default: false
+          description: If *true*, backup window is enabled.
           type: boolean
       required:
       - isEnabled
       type: object
-    BackupSQLSettingsImportModel:
-      description: Microsoft SQL Server transaction log settings.
-      properties:
-        backupMinsCount:
-          description: Frequency of transaction log backup, in minutes.
-          type: integer
-        keepDaysCount:
-          description: Number of days to keep transaction logs in the backup repository.
-          type: integer
-        logShippingServers:
-          $ref: '#/components/schemas/BackupLogShippingServersImportModel'
-        logsProcessing:
-          $ref: '#/components/schemas/ESQLLogsProcessing'
-        retainLogBackups:
-          $ref: '#/components/schemas/ERetainLogBackupsType'
-      required:
-      - logsProcessing
-      type: object
-    EDailyKinds:
-      description: Kind of daily scheduling scheme.
-      enum:
-      - Everyday
-      - WeekDays
-      - SelectedDays
-      type: string
-    GuestInteractionProxiesSettingsImportModel:
-      description: Guest interaction proxy used to deploy the runtime process on the VM guest OS.
-      properties:
-        automaticSelection:
-          default: true
-          description: If *true*, Veeam Backup & Replication automatically selects the guest interaction proxy.
-          type: boolean
-        proxies:
-          description: Array of proxies specified explicitly. The array must contain Microsoft Windows servers added to the backup infrastructure only.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-      required:
-      - automaticSelection
-      type: object
-    GuestFileSystemIndexingModel:
-      description: VM guest OS file indexing.
-      properties:
-        indexingSettings:
-          description: Array of VMs with guest OS file indexing options.
-          items:
-            $ref: '#/components/schemas/BackupIndexingSettingsModel'
-          type: array
-        isEnabled:
-          description: If *true*, file indexing is enabled.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    BackupJobGuestProcessingImportModel:
-      description: Guest processing settings.
-      properties:
-        applicationAwareProcessing:
-          $ref: '#/components/schemas/BackupApplicationAwareProcessingImportModel'
-        guestCredentials:
-          $ref: '#/components/schemas/GuestOsCredentialsImportModel'
-        guestFileSystemIndexing:
-          $ref: '#/components/schemas/GuestFileSystemIndexingModel'
-        guestInteractionProxies:
-          $ref: '#/components/schemas/GuestInteractionProxiesSettingsImportModel'
-      required:
-      - applicationAwareProcessing
-      - guestFileSystemIndexing
-      type: object
-    AzureDataBoxStorageAccountImportModel:
-      description: Account used to access the Azure Data Box storage.
+    S3CompatibleStorageAccountImportModel:
+      description: Account used to access the S3 compatible storage.
       properties:
         connectionSettings:
           $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
         credentials:
           $ref: '#/components/schemas/CloudCredentialsImportModel'
-        serviceEndpoint:
-          description: Service endpoint address of the Azure Data Box device.
+        regionId:
+          description: ID of a region where the storage is located.
+          type: string
+        servicePoint:
+          description: Endpoint address of the storage.
           type: string
       required:
-      - serviceEndpoint
+      - servicePoint
+      - regionId
       - credentials
       - connectionSettings
       type: object
-    LinuxHardenedStorageImportSpec:
+    CredentialsExportSpec:
       properties:
+        ids:
+          description: Array of credentials IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+        names:
+          description: Array of credentials user names. Wildcard characters are supported.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        showHiddenCreds:
+          description: If *true*, service credentials are exported.
+          type: boolean
+        types:
+          description: Array of credentials types.
+          items:
+            $ref: '#/components/schemas/ECredentialsType'
+          type: array
+          uniqueItems: true
+      type: object
+    GuestOsCredentialsPerMachineImportModel:
+      properties:
+        linuxCreds:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        windowsCreds:
+          $ref: '#/components/schemas/CredentialsImportModel'
+      required:
+      - vmObject
+      type: object
+    VmwareObjectDiskModel:
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            description: ID of the disk.
+            type: string
+          type: array
+        disksToProcess:
+          $ref: '#/components/schemas/EVmwareDisksTypeToProcess'
+        removeFromVMConfiguration:
+          description: If *true*, the disk is removed from VM configuration.
+          type: boolean
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - disks
+      - disksToProcess
+      - vmObject
+      type: object
+    ESessionsFiltersOrderColumn:
+      enum:
+      - Name
+      - SessionType
+      - CreationTime
+      - EndTime
+      - State
+      - Result
+      type: string
+    WindowsLocalRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        path:
+          description: Path to the folder where backup files are stored.
+          type: string
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+      type: object
+    SessionsResult:
+      properties:
+        data:
+          description: Array of sessions.
+          items:
+            $ref: '#/components/schemas/SessionModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    AmazonS3GlacierStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/AmazonS3StorageAccountImportModel'
+        bucket:
+          $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
         description:
-          description: Description of the backup repository.
+          description: Description of the object storage repository.
           type: string
-        hostName:
-          description: ID of the server that is used as a backup repository.
-          type: string
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
         name:
-          description: Name of the backup repository.
+          description: Name of the object storage repository.
           type: string
-        repository:
-          $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
+        proxyAppliance:
+          $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
         tag:
-          description: Tag that identifies the backup repository.
+          description: Tag that identifies the object storage repository.
           type: string
         type:
           $ref: '#/components/schemas/ERepositoryType'
       required:
-      - description
-      - hostName
-      - kind
-      - mountServer
       - name
-      - repository
+      - description
       - tag
       - type
+      - account
+      - bucket
+      - mountServer
       type: object
-    ERetainLogBackupsType:
-      description: Retention policy for the logs stored in the backup repository.
-      enum:
-      - untilBackupDeleted
-      - KeepOnlyDays
-      type: string
-    ActiveFullSettingsModel:
-      description: Active full backup settings.
+    AzureComputeCloudCredentialsImportSpec:
       properties:
+        connectionName:
+          description: Name under which the cloud credentials record is shown in Veeam Backup & Replication.
+          type: string
+        description:
+          description: Description of the cloud credentials record.
+          type: string
+        existingAccount:
+          $ref: '#/components/schemas/AzureComputeCredentialsExistingAccountSpec'
+        tag:
+          description: Tag used to identify the cloud credentials record.
+          type: string
+        type:
+          $ref: '#/components/schemas/ECloudCredentialsType'
+      required:
+      - type
+      - tag
+      - connectionName
+      - existingAccount
+      type: object
+    AmazonSnowballEdgeStorageBucketModel:
+      description: Amazon S3 bucket.
+      properties:
+        bucketName:
+          description: Name of the Amazon S3 bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      type: object
+    WasabiCloudStorageBucketModel:
+      description: Wasabi bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of a Wasabi bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - bucketName
+      - folderName
+      type: object
+    CredentialsImportModel:
+      description: Credentials used for connection.
+      properties:
+        credentialsName:
+          description: User name, account name or access key.
+          type: string
+        credentialsTag:
+          description: Tag used to identify the credentials record.
+          type: string
+      required:
+      - credentialsName
+      type: object
+    ScheduleDailyModel:
+      description: Daily scheduling options.
+      properties:
+        dailyKind:
+          $ref: '#/components/schemas/EDailyKinds'
+        days:
+          description: Days of the week when the job must start.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
         isEnabled:
-          description: If *true*, active full backups are enabled.
+          default: true
+          description: If *true*, daily schedule is enabled.
           type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
       required:
       - isEnabled
       type: object
-    ProxyDatastoreModel:
+    BackupStorageSettingModel:
+      description: Storage settings.
       properties:
-        datastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        vmCount:
-          description: Number of VMs.
-          type: integer
+        compressionLevel:
+          $ref: '#/components/schemas/ECompressionLevel'
+        enableInlineDataDedup:
+          description: If *true*, Veeam Backup & Replication deduplicates VM data before storing it in the backup repository.
+          type: boolean
+        encryption:
+          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
+        excludeDeletedFileBlocks:
+          description: If *true*, Veeam Backup & Replication does not copy deleted file blocks.
+          type: boolean
+        excludeSwapFileBlocks:
+          description: If *true*, Veeam Backup & Replication excludes swap file blocks from processing.
+          type: boolean
+        storageOptimization:
+          $ref: '#/components/schemas/EStorageOptimization'
       type: object
-    ProxyImportSpec:
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    BackupFSExclusionsModel:
+      description: VM guest OS file exclusion.
+      properties:
+        exclusionPolicy:
+          $ref: '#/components/schemas/EBackupExclusionPolicy'
+        itemsList:
+          description: Array of files and folders. Full paths to files and folders, environmental variables and file masks with the asterisk (*) and question mark (?) characters can be used.
+          items:
+            type: string
+          type: array
+      required:
+      - exclusionPolicy
+      type: object
+    ObjectStorageConnectionImportSpec:
+      description: Object storage connection settings.
+      properties:
+        connectionType:
+          $ref: '#/components/schemas/ERepositoryConnectionType'
+        gatewayServers:
+          description: Array of gateway server IDs. The value is *null* if the connection type is *Direct*.
+          items:
+            type: string
+          type: array
+      required:
+      - connectionType
+      type: object
+    ProxyImportSpecCollection:
+      properties:
+        proxies:
+          description: Array of backup proxies.
+          items:
+            $ref: '#/components/schemas/ProxyImportSpec'
+          type: array
+          uniqueItems: true
+      required:
+      - proxies
+      type: object
+    WindowsHostComponentPortModel:
+      description: Ports used by Veeam Backup & Replication components.
+      properties:
+        componentName:
+          $ref: '#/components/schemas/EWindowsHostComponentType'
+        port:
+          description: Port used by the component.
+          type: integer
+      required:
+      - componentName
+      - port
+      type: object
+    GoogleCloudStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/GoogleCloudStorageAccountImportModel'
+        bucket:
+          $ref: '#/components/schemas/GoogleCloudStorageBucketModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
+          type: string
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
+      - description
+      - tag
+      - type
+      - account
+      - bucket
+      - mountServer
+      type: object
+    SessionLogRecordModel:
+      description: Record of the session log.
       properties:
         description:
-          description: Description of the backup proxy.
+          description: Description of the log record.
           type: string
-        server:
-          $ref: '#/components/schemas/ProxyServerSettingsImportSpec'
-        type:
-          $ref: '#/components/schemas/EProxyType'
+        id:
+          description: ID of the log record.
+          type: integer
+        startTime:
+          description: Date and time when the operation was started.
+          format: date-time
+          type: string
+        status:
+          $ref: '#/components/schemas/ETaskLogRecordStatus'
+        title:
+          description: Title of the log record.
+          type: string
+        updateTime:
+          description: Date and time when the log record was updated.
+          format: date-time
+          type: string
+      type: object
+    EBackupProxyTransportMode:
+      description: Transport mode of the backup proxy.
+      enum:
+      - auto
+      - directAccess
+      - virtualAppliance
+      - network
+      type: string
+    GoogleCloudStorageBucketModel:
+      description: Google Cloud object storage bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of a Google Cloud bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        nearlineStorageEnabled:
+          description: If *true*, the nearline storage class is used.
+          type: boolean
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
       required:
+      - bucketName
+      - folderName
+      type: object
+    GuestOsCredentialsImportModel:
+      description: VM custom credentials.
+      properties:
+        credentialsPerMachine:
+          description: Individual credentials for VMs.
+          items:
+            $ref: '#/components/schemas/GuestOsCredentialsPerMachineImportModel'
+          type: array
+          uniqueItems: true
+        creds:
+          $ref: '#/components/schemas/CredentialsImportModel'
+      type: object
+    AzureArchiveStorageContainerModel:
+      description: Azure Archive container where backup data is stored.
+      properties:
+        containerName:
+          description: Name of an Azure Archive container.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+      required:
+      - containerName
+      - folderName
+      type: object
+    JobScriptsSettingsModel:
+      description: Script settings.
+      properties:
+        dayOfWeek:
+          description: Days of the week when the scripts must be executed.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        periodicityType:
+          $ref: '#/components/schemas/EScriptPeriodicityType'
+        postCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        preCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        runScriptEvery:
+          description: Number of the backup job session after which the scripts must be executed.
+          type: integer
+      type: object
+    EAzureRegionType:
+      description: Region where your Microsoft Azure container is located.
+      enum:
+      - China
+      - Germany
+      - Global
+      - Government
+      type: string
+    EAzureComputeCredentialsDeploymentType:
+      description: Deployment type (global Microsoft Azure or Microsoft Azure Stack Hub).
+      enum:
+      - MicrosoftAzure
+      - MicrosoftAzureStack
+      type: string
+    BackupApplicationSettingsImportModel:
+      properties:
+        exclusions:
+          $ref: '#/components/schemas/BackupFSExclusionsModel'
+        oracle:
+          $ref: '#/components/schemas/BackupOracleSettingsImportModel'
+        scripts:
+          $ref: '#/components/schemas/BackupScriptSettingsModel'
+        sql:
+          $ref: '#/components/schemas/BackupSQLSettingsImportModel'
+        transactionLogs:
+          $ref: '#/components/schemas/ETransactionLogsSettings'
+        usePersistentGuestAgent:
+          description: If *true*, persistent guest agent is used.
+          type: boolean
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        vss:
+          $ref: '#/components/schemas/EApplicationSettingsVSS'
+      required:
+      - vmObject
+      - vss
+      type: object
+    AmazonSnowballEdgeStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountImportModel'
+        bucket:
+          $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
+          type: string
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
       - description
-      - server
+      - tag
       - type
+      - account
+      - bucket
+      - mountServer
+      type: object
+    PrimaryStorageIntegrationSettingsModel:
+      description: Primary storage integration settings for the backup job.
+      properties:
+        failoverToStandardBackup:
+          description: If *true*, failover to the regular VM processing mode is enabled. In this case, if backup from storage snapshot fails, VM snapshots are used.
+          type: boolean
+        isEnabled:
+          description: If *true*, the primary storage integration is enabled. In this case, storage snapshots (instead of VM snapshots) are used for VM data processing.
+          type: boolean
+        limitProcessedVm:
+          description: If *true*, the number of processed VMs per storage snapshot is limited.
+          type: boolean
+        limitProcessedVmCount:
+          description: Number of processed VMs per storage snapshot.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    EBackupProxyImportType:
+      enum:
+      - vmware
+      type: string
+    AzureDataBoxStorageContainerModel:
+      description: Azure Data Box container where backup data is stored.
+      properties:
+        containerName:
+          description: Container name.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+      type: object
+    AzureBlobStorageAccountImportModel:
+      description: Account used to access the Azure Blob storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
+        credentials:
+          $ref: '#/components/schemas/CloudCredentialsImportModel'
+        regionType:
+          $ref: '#/components/schemas/EAzureRegionType'
+      required:
+      - credentials
+      - regionType
+      - gatewayServer
+      type: object
+    BackupJobAdvancedSettingsModel:
+      description: Advanced settings of the backup job.
+      properties:
+        activeFulls:
+          $ref: '#/components/schemas/ActiveFullSettingsModel'
+        backupHealth:
+          $ref: '#/components/schemas/BackupHealthCheckSettingsModels'
+        backupModeType:
+          $ref: '#/components/schemas/EBackupModeType'
+        fullBackupMaintenance:
+          $ref: '#/components/schemas/FullBackupMaintenanceModel'
+        notifications:
+          $ref: '#/components/schemas/NotificationSettingsModel'
+        scripts:
+          $ref: '#/components/schemas/JobScriptsSettingsModel'
+        storageData:
+          $ref: '#/components/schemas/BackupStorageSettingModel'
+        storageIntegration:
+          $ref: '#/components/schemas/PrimaryStorageIntegrationSettingsModel'
+        synthenticFulls:
+          $ref: '#/components/schemas/SyntheticFullSettingsModel'
+        vSphere:
+          $ref: '#/components/schemas/BackupJobAdvancedSettingsVSphereModel'
+      required:
+      - backupModeType
+      type: object
+    LinuxLocalRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        path:
+          description: Path to the folder where backup files are stored.
+          type: string
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+        useFastCloningOnXFSVolumes:
+          description: If *true*, fast cloning on XFS volumes is used.
+          type: boolean
+      type: object
+    AzureDataBoxStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/AzureDataBoxStorageAccountImportModel'
+        container:
+          $ref: '#/components/schemas/AzureDataBoxStorageContainerModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
+          type: string
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
+      - description
+      - tag
+      - type
+      - account
+      - container
+      - mountServer
+      type: object
+    BackupJobExclusionsSpec:
+      description: Objects that you want to exclude from the backup.
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            $ref: '#/components/schemas/VmwareObjectDiskModel'
+          type: array
+        templates:
+          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
+        vms:
+          description: Array of VMs.
+          items:
+            $ref: '#/components/schemas/VmwareObjectModel'
+          type: array
+      type: object
+    CertificateUploadSpec:
+      description: Certificate settings (for certificate-based authentication).
+      properties:
+        certificate:
+          description: Base64-encoded string of the content of a PFX certificate file.
+          type: string
+        formatType:
+          $ref: '#/components/schemas/ECertificateFileFormatType'
+        password:
+          description: Decryption password for the certificate file.
+          type: string
+      required:
+      - certificate
+      - formatType
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    LinuxHostImportSpec:
+      properties:
+        credentials:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        description:
+          description: Description of the server.
+          type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        sshFingerprint:
+          description: SSH key fingerprint used to verify the server identity.
+          type: string
+        sshSettings:
+          $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - credentials
+      - description
+      - name
+      - type
+      - sshFingerprint
+      type: object
+    NetworkRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+      type: object
+    RepositoryShareGatewayImportSpec:
+      description: Settings for the gateway server.
+      properties:
+        autoSelect:
+          description: If *true*, Veeam Backup & Replication automatically selects a gateway server.
+          type: boolean
+        gatewayServerName:
+          description: Name of the gateway server.
+          type: string
+      type: object
+    AmazonS3StorageAccountImportModel:
+      description: Account used to access the Amazon S3 storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
+        credentials:
+          $ref: '#/components/schemas/CloudCredentialsImportModel'
+        regionType:
+          $ref: '#/components/schemas/EAmazonRegionType'
+      required:
+      - credentials
+      - regionType
+      - connectionSettings
       type: object
     AmazonS3StorageImportSpec:
       properties:
@@ -2209,87 +2500,36 @@ components:
       - bucket
       - mountServer
       type: object
-    CloudCredentialsImportModel:
-      description: Cloud credentials used for connection.
+    LinuxLocalStorageImportSpec:
       properties:
-        name:
-          description: User name, account name or access key.
-          type: string
-        tag:
-          description: Tag used to identify the cloud credentials record.
-          type: string
-        type:
-          $ref: '#/components/schemas/ECloudCredentialsType'
-      required:
-      - name
-      - tag
-      - type
-      type: object
-    AzureBlobStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/AzureBlobStorageAccountImportModel'
-        container:
-          $ref: '#/components/schemas/AzureBlobStorageContainerModel'
         description:
-          description: Description of the object storage repository.
+          description: Description of the backup repository.
           type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
+        hostName:
+          description: ID of the server that is used as a backup repository.
+          type: string
         mountServer:
           $ref: '#/components/schemas/MountServerSettingsImportSpec'
         name:
-          description: Name of the object storage repository.
+          description: Name of the backup repository.
           type: string
-        proxyAppliance:
-          $ref: '#/components/schemas/AzureStorageProxyModel'
+        repository:
+          $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
         tag:
-          description: Tag that identifies the object storage repository.
+          description: Tag that identifies the backup repository.
           type: string
         type:
           $ref: '#/components/schemas/ERepositoryType'
       required:
-      - name
       - description
+      - hostName
+      - kind
+      - mountServer
+      - name
+      - repository
       - tag
       - type
-      - account
-      - container
-      - mountServer
       type: object
-    ProxyExportSpec:
-      properties:
-        ids:
-          description: Array of backup proxy IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-        names:
-          description: Array of backup proxy names. Wildcard characters are supported.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        types:
-          description: Array of backup proxy types.
-          items:
-            $ref: '#/components/schemas/EProxyType'
-          type: array
-          uniqueItems: true
-      type: object
-    EApplicationSettingsVSS:
-      description: Behavior scenario for application-aware processing.
-      enum:
-      - requireSuccess
-      - ignoreFailures
-      - disabled
-      type: string
     EWindowsHostComponentType:
       description: Veeam Backup & Replication component.
       enum:
@@ -2316,159 +2556,239 @@ components:
       - Cdp
       - VamRedist
       type: string
-    AdvancedStorageScheduleMonthlyModel:
-      description: Monthly schedule settings.
+    JobImportSpecCollection:
       properties:
-        dayNumberInMonth:
-          $ref: '#/components/schemas/EDayNumberInMonth'
-        dayOfMonths:
-          description: Day of the month when the operation is performed.
-          type: integer
-        dayOfWeek:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          description: If *true*, the monthly schedule is enabled.
-          type: boolean
-        months:
-          description: Months when the operation is performed.
+        jobs:
+          description: Array of jobs.
           items:
-            $ref: '#/components/schemas/EMonth'
+            $ref: '#/components/schemas/JobImportSpec'
           type: array
           uniqueItems: true
       required:
-      - isEnabled
+      - jobs
       type: object
-    AmazonS3StorageProxyApplianceModel:
-      description: Amazon S3 proxy appliance.
+    GuestInteractionProxiesSettingsImportModel:
+      description: Guest interaction proxy used to deploy the runtime process on the VM guest OS.
       properties:
-        ec2InstanceType:
-          description: EC2 instance type for the proxy appliance.
-          type: string
-        redirectorPort:
-          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
-          type: integer
-        securityGroup:
-          description: Security group associated with the proxy appliance.
-          type: string
-        subnet:
-          description: Subnet for the proxy appliance.
-          type: string
-        vpc:
-          description: Amazon VPC where Veeam Backup & Replication launches the target instance.
-          type: string
-      type: object
-    BackupIndexingSettingsModel:
-      properties:
-        LinuxIndexing:
-          $ref: '#/components/schemas/BackupObjectIndexingModel'
-        WindowsIndexing:
-          $ref: '#/components/schemas/BackupObjectIndexingModel'
-        vmObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-      required:
-      - vmObject
-      type: object
-    GFSPolicySettingsModel:
-      description: GFS retention policy settings.
-      properties:
-        isEnabled:
-          description: If *true*, the long-term (GFS) retention policy is enabled.
+        automaticSelection:
+          default: true
+          description: If *true*, Veeam Backup & Replication automatically selects the guest interaction proxy.
           type: boolean
-        monthly:
-          $ref: '#/components/schemas/GFSPolicySettingsMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/GFSPolicySettingsWeeklyModel'
-        yearly:
-          $ref: '#/components/schemas/GFSPolicySettingsYearlyModel'
+        proxies:
+          description: Array of proxies specified explicitly. The array must contain Microsoft Windows servers added to the backup infrastructure only.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
       required:
-      - isEnabled
+      - automaticSelection
       type: object
-    BackupStorageSettingsEncryptionModel:
-      description: Encryption of backup files.
+    EmailCustomNotificationType:
+      description: Custom notification settings.
       properties:
-        encryptionPasswordIdOrNull:
-          description: ID of the password used for encryption. The value is *null* for exported objects.
-          format: uuid
-          type: string
-        encryptionPasswordTag:
-          description: Tag used to identify the password.
-          type: string
-        isEnabled:
-          description: If *true*, the content of backup files is encrypted.
+        SuppressNotificationUntilLastRetry:
+          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
           type: boolean
-      required:
-      - isEnabled
-      type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    EProxyType:
-      description: Type of the backup proxy.
-      enum:
-      - ViProxy
-      type: string
-    S3CompatibleStorageAccountImportModel:
-      description: Account used to access the S3 compatible storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
-        credentials:
-          $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionId:
-          description: ID of a region where the storage is located.
+        notifyOnError:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li> <li>*%ObjectCount%* — number of VMs in the job</li> <li>*%Issues%* — number of VMs in the job that have finished with the Warning or Failed status</li></ul>
           type: string
-        servicePoint:
-          description: Endpoint address of the storage.
-          type: string
-      required:
-      - servicePoint
-      - regionId
-      - credentials
-      - connectionSettings
       type: object
-    AmazonSnowballEdgeStorageBucketModel:
-      description: Amazon S3 bucket.
+    EGuestFSIndexingMode:
+      description: Indexing mode.
+      enum:
+      - disable
+      - indexAll
+      - indexAllExcept
+      - indexOnly
+      type: string
+    S3CompatibleStorageBucketModel:
+      description: Bucket where backup data is stored.
       properties:
         bucketName:
-          description: Name of the Amazon S3 bucket.
+          description: Bucket name.
           type: string
         folderName:
           description: Name of the folder that the object storage repository is mapped to.
           type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
         storageConsumptionLimit:
           $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - bucketName
+      - folderName
       type: object
-    AmazonS3StorageAccountImportModel:
-      description: Account used to access the Amazon S3 storage.
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    BackupJobAdvancedSettingsVSphereModel:
+      description: VMware vSphere settings for the backup job.
+      properties:
+        changedBlockTracking:
+          $ref: '#/components/schemas/VSphereChangedBlockTrackingSettingsModel'
+        enableVMWareToolsQuiescence:
+          description: If *true*, VMware Tools quiescence is enabled for freezing the VM file system and application data.
+          type: boolean
+      type: object
+    AzureDataBoxStorageAccountImportModel:
+      description: Account used to access the Azure Data Box storage.
       properties:
         connectionSettings:
           $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
         credentials:
           $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionType:
-          $ref: '#/components/schemas/EAmazonRegionType'
+        serviceEndpoint:
+          description: Service endpoint address of the Azure Data Box device.
+          type: string
       required:
+      - serviceEndpoint
       - credentials
-      - regionType
       - connectionSettings
       type: object
-    FullBackupMaintenanceDefragmentAndCompactModel:
-      description: Compact operation settings.
+    ECompressionLevel:
+      description: Compression level.
+      enum:
+      - None
+      - DedupFriendly
+      - Optimal
+      - High
+      - Extreme
+      type: string
+    JobImportSpec:
+      properties:
+        description:
+          description: Description of the job.
+          type: string
+        guestProcessing:
+          $ref: '#/components/schemas/BackupJobGuestProcessingImportModel'
+        isHighPriority:
+          description: If *true*, the job has a high priority in getting backup infrastructure resources.
+          type: boolean
+        name:
+          description: Name of the job.
+          type: string
+        schedule:
+          $ref: '#/components/schemas/BackupScheduleModel'
+        storage:
+          $ref: '#/components/schemas/BackupJobStorageImportModel'
+        type:
+          $ref: '#/components/schemas/EJobType'
+        virtualMachines:
+          $ref: '#/components/schemas/BackupJobVirtualMachinesSpec'
+      required:
+      - description
+      - guestProcessing
+      - isHighPriority
+      - name
+      - schedule
+      - storage
+      - type
+      - virtualMachines
+      type: object
+    ViHostImportSpec:
+      properties:
+        certificateThumbprint:
+          description: Certificate thumbprint used to verify the server identity.
+          type: string
+        credentials:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        description:
+          description: Description of the server.
+          type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        port:
+          description: Port used to communicate with the server.
+          type: integer
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+        viHostType:
+          $ref: '#/components/schemas/EViHostType'
+      required:
+      - credentials
+      - description
+      - name
+      - type
+      - viHostType
+      type: object
+    AzureStorageProxyModel:
+      description: Azure storage proxy appliance.
+      properties:
+        instanceSize:
+          description: Size of the appliance.
+          type: string
+        redirectorPort:
+          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
+          type: integer
+        resourceGroup:
+          description: Resource group associated with the proxy appliance.
+          type: string
+        subnet:
+          description: Subnet for the proxy appliance.
+          type: string
+        subscriptionId:
+          description: ID that Veeam Backup & Replication assigned to the Azure subscription.
+          format: uuid
+          type: string
+        virtualNetwork:
+          description: Network to which the helper appliance is connected.
+          type: string
+      required:
+      - subscriptionId
+      type: object
+    ProxyServerSettingsImportSpec:
+      description: Settings of the server that is used as a backup proxy.
+      properties:
+        connectedDatastores:
+          $ref: '#/components/schemas/ProxyDatastoreSettingsModel'
+        failoverToNetwork:
+          description: (For the Direct storage access and Virtual appliance transport modes) If *true*, Veeam Backup & Replication failovers to the network transport mode in case the primary mode fails or is unavailable.
+          type: boolean
+        hostName:
+          description: Name of the server.
+          type: string
+        hostTag:
+          description: Tag assigned to the server.
+          type: string
+        hostToProxyEncryption:
+          description: (For the Network mode) If *true*, VM data is transferred over an encrypted TLS connection.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        transportMode:
+          $ref: '#/components/schemas/EBackupProxyTransportMode'
+      required:
+      - hostName
+      type: object
+    SyntheticFullSettingsModel:
+      description: Synthetic full backup settings.
       properties:
         isEnabled:
-          description: If *true*, Veeam Backup & Replication compacts full backup files.
+          description: If *true*, active full backups are enabled.
           type: boolean
         monthly:
           $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
@@ -2477,62 +2797,212 @@ components:
       required:
       - isEnabled
       type: object
-    JobExportSpec:
+    WasabiCloudStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/WasabiCloudStorageAccountImportModel'
+        bucket:
+          $ref: '#/components/schemas/WasabiCloudStorageBucketModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
+          type: string
+        proxyAppliance:
+          $ref: '#/components/schemas/S3CompatibleProxyModel'
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
+      - description
+      - tag
+      - type
+      - account
+      - bucket
+      - mountServer
+      type: object
+    VPowerNFSPortSettingsModel:
+      description: Network ports used by the vPower NFS Service.
+      properties:
+        mountPort:
+          description: Mount port.
+          type: integer
+        vPowerNFSPort:
+          description: vPower NFS port.
+          type: integer
+      type: object
+    ETaskLogRecordStatus:
+      enum:
+      - None
+      - Succeeded
+      - Warning
+      - Failed
+      type: string
+    CloudCredentialsExportSpec:
       properties:
         ids:
-          description: Array of job IDs.
+          description: Array of cloud credentials IDs that you want to export.
           items:
             format: uuid
             type: string
           type: array
           uniqueItems: true
         names:
-          description: Array of job names. Wildcard characters are supported.
+          description: Array of cloud credentials user names. Wildcard characters are supported.
           items:
             type: string
           type: array
           uniqueItems: true
         types:
-          description: Array of job types.
+          description: Array of cloud credentials types that you want to export.
+          items:
+            $ref: '#/components/schemas/ECloudCredentialsType'
+          type: array
+          uniqueItems: true
+      type: object
+    GFSPolicySettingsYearlyModel:
+      description: Yearly GFS retention policy.
+      properties:
+        desiredTime:
+          $ref: '#/components/schemas/EMonth'
+        isEnabled:
+          description: If *true*, the yearly GFS retention policy is enabled.
+          type: boolean
+        keepForNumberOfYears:
+          description: Number of years to keep full backups for archival purposes. Possible values are from 1 through 999.
+          type: integer
+      required:
+      - isEnabled
+      type: object
+    BackupJobImportProxiesModel:
+      description: Backup proxies.
+      properties:
+        automaticSelection:
+          default: true
+          description: If *true*, backup proxies are detected and assigned automatically.
+          type: boolean
+        proxies:
+          description: Array of backup proxies.
+          items:
+            $ref: '#/components/schemas/BackupProxyImportModel'
+          type: array
+      required:
+      - automaticSelection
+      type: object
+    BackupScheduleModel:
+      description: Job scheduling options.
+      properties:
+        afterThisJob:
+          $ref: '#/components/schemas/ScheduleAfterThisJobModel'
+        backupWindow:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        continuously:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+        periodically:
+          $ref: '#/components/schemas/SchedulePeriodicallyModel'
+        retry:
+          $ref: '#/components/schemas/ScheduleRetryModel'
+        runAutomatically:
+          default: false
+          description: If *true*, job scheduling is enabled.
+          type: boolean
+      required:
+      - runAutomatically
+      type: object
+    AmazonS3StorageBucketModel:
+      description: Amazon S3 bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of an Amazon S3 bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        infrequentAccessStorage:
+          $ref: '#/components/schemas/AmazonS3IAStorageModel'
+        regionId:
+          description: ID of a region where the Amazon S3 bucket is located.
+          type: string
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - regionId
+      - bucketName
+      - folderName
+      type: object
+    RepositoryExportSpec:
+      properties:
+        ids:
+          description: Array of repository IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+        names:
+          description: Array of repository names. Wildcard characters are supported.
           items:
             type: string
           type: array
           uniqueItems: true
-      type: object
-    ScheduleMonthlyModel:
-      description: Monthly scheduling options.
-      properties:
-        dayNumberInMonth:
-          $ref: '#/components/schemas/EDayNumberInMonth'
-        dayOfMonth:
-          description: Day of the month when the job must start.
-          type: integer
-        dayOfWeek:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          default: false
-          description: If *true*, monthly schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-        months:
-          description: Months when the job must start.
+        types:
+          description: Array of repository types.
           items:
-            $ref: '#/components/schemas/EMonth'
+            $ref: '#/components/schemas/ERepositoryType'
           type: array
           uniqueItems: true
+      type: object
+    EViHostType:
+      description: Type of the VMware vSphere server.
+      enum:
+      - ESX
+      - ESXi
+      - VC
+      type: string
+    BackupScriptSettingsModel:
+      description: Pre-freeze and post-thaw scripts.
+      properties:
+        linuxScripts:
+          $ref: '#/components/schemas/BackupLinuxScriptModel'
+        scriptProcessingMode:
+          $ref: '#/components/schemas/EBackupScriptProcessingMode'
+        windowsScripts:
+          $ref: '#/components/schemas/BackupWindowsScriptModel'
+      required:
+      - scriptProcessingMode
+      type: object
+    NotificationVmAttributeSettingsModel:
+      description: VM attribute settings.
+      properties:
+        appendToExisitingValue:
+          description: If *true*, information about successfully performed backup is appended to the existing value of the attribute added by the user.
+          type: boolean
+        isEnabled:
+          description: If *true*, information about successfully performed backup is written to a VM attribute.
+          type: boolean
+        notes:
+          description: Name of the VM attribute.
+          type: string
       required:
       - isEnabled
-      type: object
-    FullBackupMaintenanceModel:
-      description: Maintenance settings for full backup files.
-      properties:
-        RemoveData:
-          $ref: '#/components/schemas/FullBackupMaintenanceRemoveDataModel'
-        defragmentAndCompact:
-          $ref: '#/components/schemas/FullBackupMaintenanceDefragmentAndCompactModel'
       type: object
     S3CompatibleStorageImportSpec:
       properties:
@@ -2570,115 +3040,25 @@ components:
       - bucket
       - mountServer
       type: object
-    ETransactionLogsSettings:
-      description: Transaction logs settings that define whether copy-only backups must be created, or transaction logs for Microsoft Exchange, Microsoft SQL and Oracle VMs must be processed.<br> If transaction log processing is selected, specify the following parameters:<ul> <li>[For Microsoft SQL Server VMs] Microsoft SQL Server transaction log settings</li> <li>[For Oracle VMs] Oracle archived log settings</li></ul>
-      enum:
-      - process
-      - copyOnly
-      type: string
-    WindowsHostImportSpec:
+    SchedulePeriodicallyModel:
+      description: Periodic scheduling options.
       properties:
-        credentials:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        description:
-          description: Description of the server.
-          type: string
-        name:
-          description: Full DNS name or IP address of the server.
-          type: string
-        networkSettings:
-          $ref: '#/components/schemas/WindowsHostPortsModel'
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      required:
-      - description
-      - name
-      - type
-      type: object
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
-    GoogleCloudCredentialsImportSpec:
-      properties:
-        accessKey:
-          description: Access ID of a Google HMAC key.
-          type: string
-        description:
-          description: Description of the cloud credentials record.
-          type: string
-        secretKey:
-          description: Secret linked to the access ID.
-          type: string
-        tag:
-          description: Tag used to identify the cloud credentials record.
-          type: string
-        type:
-          $ref: '#/components/schemas/ECloudCredentialsType'
-      required:
-      - type
-      - tag
-      - accessKey
-      - secretKey
-      type: object
-    PrimaryStorageIntegrationSettingsModel:
-      description: Primary storage integration settings for the backup job.
-      properties:
-        failoverToStandardBackup:
-          description: If *true*, failover to the regular VM processing mode is enabled. In this case, if backup from storage snapshot fails, VM snapshots are used.
-          type: boolean
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        frequency:
+          description: Number of time units that defines the time interval.
+          type: integer
         isEnabled:
-          description: If *true*, the primary storage integration is enabled. In this case, storage snapshots (instead of VM snapshots) are used for VM data processing.
+          default: false
+          description: If *true*, periodic schedule is enabled.
           type: boolean
-        limitProcessedVm:
-          description: If *true*, the number of processed VMs per storage snapshot is limited.
-          type: boolean
-        limitProcessedVmCount:
-          description: Number of processed VMs per storage snapshot.
+        periodicallyKind:
+          $ref: '#/components/schemas/EPeriodicallyKinds'
+        startTimeWithinAnHour:
+          description: Start time within an hour, in minutes.
           type: integer
       required:
       - isEnabled
-      type: object
-    GoogleCloudStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/GoogleCloudStorageAccountImportModel'
-        bucket:
-          $ref: '#/components/schemas/GoogleCloudStorageBucketModel'
-        description:
-          description: Description of the object storage repository.
-          type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the object storage repository.
-          type: string
-        tag:
-          description: Tag that identifies the object storage repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - bucket
-      - mountServer
       type: object
     EStorageOptimization:
       description: Storage optimization that depends on the target type.
@@ -2690,217 +3070,29 @@ components:
       - LocalTargetLarge8192
       - LocalTargetLarge4096
       type: string
-    EBackupProxyTransportMode:
-      description: Transport mode of the backup proxy.
-      enum:
-      - auto
-      - directAccess
-      - virtualAppliance
-      - network
-      type: string
-    S3CompatibleStorageBucketModel:
-      description: Bucket where backup data is stored.
+    S3CompatibleProxyModel:
+      description: Proxy appliance for the S3 compatible storage.
       properties:
-        bucketName:
-          description: Bucket name.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    SessionLogResult:
-      description: Log of the session.
-      properties:
-        records:
-          description: Array of log records.
-          items:
-            $ref: '#/components/schemas/SessionLogRecordModel'
-          type: array
-        totalRecords:
-          description: Total number of records.
-          type: integer
-      type: object
-    ScheduleRetryModel:
-      description: Retry options.
-      properties:
-        awaitMinutes:
-          default: 10
-          description: Time interval between job retries in minutes. Must be greater than zero.
-          type: integer
-        isEnabled:
-          default: false
-          description: If *true*, retry options are enabled.
-          type: boolean
-        retryCount:
-          default: 3
-          description: Number of retries set for the job. Must be greater than zero.
-          type: integer
-      type: object
-    BackupJobImportProxiesModel:
-      description: Backup proxies.
-      properties:
-        automaticSelection:
-          default: true
-          description: If *true*, backup proxies are detected and assigned automatically.
-          type: boolean
-        proxies:
-          description: Array of backup proxies.
-          items:
-            $ref: '#/components/schemas/BackupProxyImportModel'
-          type: array
-      required:
-      - automaticSelection
-      type: object
-    SmbStorageImportSpec:
-      properties:
-        description:
-          description: Description of the backup repository.
-          type: string
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the backup repository.
-          type: string
-        repository:
-          $ref: '#/components/schemas/NetworkRepositorySettingsModel'
-        share:
-          $ref: '#/components/schemas/SmbRepositoryShareSettingsSpec'
-        tag:
-          description: Tag that identifies the backup repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - description
-      - kind
-      - mountServer
-      - name
-      - repository
-      - share
-      - tag
-      - type
-      type: object
-    AmazonS3IAStorageModel:
-      description: Standard Infrequent Access.
-      properties:
-        isEnabled:
-          description: If *true*, Standard Infrequent Access is enabled.
-          type: boolean
-        singleZoneEnabled:
-          description: If *true*, Amazon S3 One Zone-Infrequent Access is enabled.
-          type: boolean
-      type: object
-    LinuxHardenedRepositorySettingsModel:
-      description: Repository settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        makeRecentBackupsImmutableDays:
-          description: Number of days to keep immutable backups.
-          type: integer
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        path:
-          description: Path to the folder where backup files are stored.
-          type: string
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-        useFastCloningOnXFSVolumes:
-          description: If *true*, fast cloning on XFS volumes is used.
-          type: boolean
-      type: object
-    ObjectStorageConnectionImportSpec:
-      description: Object storage connection settings.
-      properties:
-        connectionType:
-          $ref: '#/components/schemas/ERepositoryConnectionType'
-        gatewayServers:
-          description: Array of gateway server IDs. The value is *null* if the connection type is *Direct*.
-          items:
-            type: string
-          type: array
-      required:
-      - connectionType
-      type: object
-    AmazonSnowballEdgeStorageImportSpec:
-      properties:
-        account:
-          $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountImportModel'
-        bucket:
-          $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
-        description:
-          description: Description of the object storage repository.
-          type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the object storage repository.
-          type: string
-        tag:
-          description: Tag that identifies the object storage repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - bucket
-      - mountServer
-      type: object
-    EBackupExclusionPolicy:
-      description: Exclusion policy.
-      enum:
-      - disabled
-      - excludeOnly
-      - includeOnly
-      type: string
-    ESessionsFiltersOrderColumn:
-      enum:
-      - Name
-      - SessionType
-      - CreationTime
-      - EndTime
-      - State
-      - Result
-      type: string
-    WasabiCloudStorageAccountImportModel:
-      description: Account used to access the Wasabi Cloud storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
-        credentials:
-          $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionId:
-          description: ID of a region where the storage is located.
+        managedServerId:
+          description: ID of a managed server used as a proxy appliance.
+          format: uuid
           type: string
       required:
-      - regionId
-      - credentials
-      - connectionSettings
+      - managedServerId
+      type: object
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
       type: object
     AzureArchiveStorageImportSpec:
       properties:
@@ -2930,80 +3122,6 @@ components:
       - container
       - mountServer
       type: object
-    CredentialsExportSpec:
-      properties:
-        ids:
-          description: Array of credentials IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-        names:
-          description: Array of credentials user names. Wildcard characters are supported.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        showHiddenCreds:
-          description: If *true*, service credentials are exported.
-          type: boolean
-        types:
-          description: Array of credentials types.
-          items:
-            $ref: '#/components/schemas/ECredentialsType'
-          type: array
-          uniqueItems: true
-      type: object
-    AzureComputeCloudCredentialsDeploymentModel:
-      description: Environment to restore workloads to.
-      properties:
-        deploymentType:
-          $ref: '#/components/schemas/EAzureComputeCredentialsDeploymentType'
-        region:
-          $ref: '#/components/schemas/EAzureRegionType'
-      required:
-      - deploymentType
-      type: object
-    EBackupScriptProcessingMode:
-      description: Scenario for scripts execution.
-      enum:
-      - disableExec
-      - ignoreExecFailures
-      - requireSuccess
-      type: string
-    EncryptionPasswordImportSpecCollection:
-      properties:
-        encryptionPasswords:
-          description: Array of encryption passwords.
-          items:
-            $ref: '#/components/schemas/EncryptionPasswordImportSpec'
-          type: array
-          uniqueItems: true
-      type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
     EManagedServerType:
       description: Type of the server.
       enum:
@@ -3029,458 +3147,18 @@ components:
           description: If *true*, the repository drive is rotated.
           type: boolean
       type: object
-    EEmailNotificationType:
-      description: Type of email notification settings (global notification settings specified for the backup server, or custom notification settings specified for this job).
-      enum:
-      - UseGlobalNotificationSettings
-      - UseCustomNotificationSettings
-      type: string
-    SessionsFilters:
-      properties:
-        createdAfterFilter:
-          format: date-time
-          type: string
-        createdBeforeFilter:
-          format: date-time
-          type: string
-        endedAfterFilter:
-          format: date-time
-          type: string
-        endedBeforeFilter:
-          format: date-time
-          type: string
-        jobIdFilter:
-          format: uuid
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/ESessionsFiltersOrderColumn'
-        resultFilter:
-          $ref: '#/components/schemas/ESessionResult'
-        skip:
-          format: int32
-          type: integer
-        stateFilter:
-          $ref: '#/components/schemas/ESessionState'
-        typeFilter:
-          $ref: '#/components/schemas/ESessionType'
-      type: object
-    WindowsLocalRepositorySettingsModel:
-      description: Repository settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        path:
-          description: Path to the folder where backup files are stored.
-          type: string
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-      type: object
-    NfsRepositoryShareSettingsSpec:
-      properties:
-        gatewayServer:
-          $ref: '#/components/schemas/RepositoryShareGatewayImportSpec'
-        sharePath:
-          description: Path to the shared folder that is used as a backup repository.
-          type: string
-      required:
-      - sharePath
-      type: object
-    ProxyServerSettingsImportSpec:
-      description: Settings of the server that is used as a backup proxy.
-      properties:
-        connectedDatastores:
-          $ref: '#/components/schemas/ProxyDatastoreSettingsModel'
-        failoverToNetwork:
-          description: (For the Direct storage access and Virtual appliance transport modes) If *true*, Veeam Backup & Replication failovers to the network transport mode in case the primary mode fails or is unavailable.
-          type: boolean
-        hostName:
-          description: Name of the server.
-          type: string
-        hostTag:
-          description: Tag assigned to the server.
-          type: string
-        hostToProxyEncryption:
-          description: (For the Network mode) If *true*, VM data is transferred over an encrypted TLS connection.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        transportMode:
-          $ref: '#/components/schemas/EBackupProxyTransportMode'
-      required:
-      - hostName
-      type: object
-    ESQLLogsProcessing:
-      description: Type of transaction logs processing.
-      enum:
-      - truncate
-      - preserve
-      - backup
-      - neverTruncate
-      type: string
     EScriptPeriodicityType:
       description: Type of script periodicity.
       enum:
       - Days
       - BackupSessions
       type: string
-    SessionLogRecordModel:
-      description: Record of the session log.
-      properties:
-        description:
-          description: Description of the log record.
-          type: string
-        id:
-          description: ID of the log record.
-          type: integer
-        startTime:
-          description: Date and time when the operation was started.
-          format: date-time
-          type: string
-        status:
-          $ref: '#/components/schemas/ETaskLogRecordStatus'
-        title:
-          description: Title of the log record.
-          type: string
-        updateTime:
-          description: Date and time when the log record was updated.
-          format: date-time
-          type: string
-      type: object
-    SyntheticFullSettingsModel:
-      description: Synthetic full backup settings.
-      properties:
-        isEnabled:
-          description: If *true*, active full backups are enabled.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
-      required:
-      - isEnabled
-      type: object
-    EmailNotificationSettingsModel:
-      description: Email notification settings for the backup job.
-      properties:
-        customNotificationSettings:
-          $ref: '#/components/schemas/EmailCustomNotificationType'
-        isEnabled:
-          description: If *true*, email notifications are enabled for this job.
-          type: boolean
-        notificationType:
-          $ref: '#/components/schemas/EEmailNotificationType'
-        recipients:
-          description: Array of recipient’s email addresses.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-      required:
-      - isEnabled
-      type: object
-    EViHostType:
-      description: Type of the VMware vSphere server.
+    ECredentialsType:
+      description: Credentials type.
       enum:
-      - ESX
-      - ESXi
-      - VC
+      - Standard
+      - Linux
       type: string
-    CredentialsLinuxSettingsImportModel:
-      description: Additional Linux account settings.
-      properties:
-        SSHPort:
-          description: SSH port used to connect to a Linux server.
-          type: integer
-        addToSudoers:
-          description: If *true*, the account is automatically added to the sudoers file.
-          type: boolean
-        autoElevated:
-          description: If *true*, the permissions of the account are automatically elevated to the root user.
-          type: boolean
-        passphrase:
-          description: Passphrase that protects the private key.
-          type: string
-        privateKey:
-          description: Private key.
-          type: string
-        rootPassword:
-          description: Password for the root account.
-          type: string
-        useSu:
-          description: If *true*, the `su` command is used for Linux distributions where the `sudo` command is not available.
-          type: boolean
-      type: object
-    JobImportSpecCollection:
-      properties:
-        jobs:
-          description: Array of jobs.
-          items:
-            $ref: '#/components/schemas/JobImportSpec'
-          type: array
-          uniqueItems: true
-      required:
-      - jobs
-      type: object
-    ProxyDatastoreSettingsModel:
-      description: Datastores to which the backup proxy has a direct SAN or NFS connection.
-      properties:
-        autoSelect:
-          description: If *true*, all datastores that the backup proxy can access are detected automatically.
-          type: boolean
-        datastores:
-          description: Array of datastores to which the backup proxy has a direct SAN or NFS connection.
-          items:
-            $ref: '#/components/schemas/ProxyDatastoreModel'
-          type: array
-      required:
-      - autoSelect
-      type: object
-    ScheduleAfterThisJobModel:
-      description: Job chaining options.
-      properties:
-        isEnabled:
-          description: If *true*, job chaining is enabled.
-          type: boolean
-        jobName:
-          description: Name of the preceding job.
-          type: string
-      required:
-      - isEnabled
-      type: object
-    ViHostImportSpec:
-      properties:
-        certificateThumbprint:
-          description: Certificate thumbprint used to verify the server identity.
-          type: string
-        credentials:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        description:
-          description: Description of the server.
-          type: string
-        name:
-          description: Full DNS name or IP address of the server.
-          type: string
-        port:
-          description: Port used to communicate with the server.
-          type: integer
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-        viHostType:
-          $ref: '#/components/schemas/EViHostType'
-      required:
-      - credentials
-      - description
-      - name
-      - type
-      - viHostType
-      type: object
-    CredentialsImportSpecCollection:
-      properties:
-        credentials:
-          description: Array of credentials.
-          items:
-            $ref: '#/components/schemas/CredentialsImportSpec'
-          type: array
-          uniqueItems: true
-      required:
-      - credentials
-      type: object
-    ObjectStorageImmutabilityModel:
-      description: Object storage immutability.
-      properties:
-        daysCount:
-          description: Immutability period.
-          type: integer
-        isEnabled:
-          description: If *true*, storage immutability is enabled.
-          type: boolean
-      type: object
-    EncryptionPasswordImportSpec:
-      properties:
-        hint:
-          description: Hint for the encryption password.
-          type: string
-        password:
-          description: Password.
-          type: string
-        tag:
-          description: Tag for the encryption password.
-          type: string
-      required:
-      - hint
-      - password
-      type: object
-    BackupJobExclusionsTemplates:
-      description: VM templates exclusion.
-      properties:
-        excludeFromIncremental:
-          description: If *true*, VM templates are excluded from the incremental backup.
-          type: boolean
-        isEnabled:
-          description: If *true*, VM templates are excluded from the backup.
-          type: boolean
-      type: object
-    BackupJobAdvancedSettingsVSphereModel:
-      description: VMware vSphere settings for the backup job.
-      properties:
-        changedBlockTracking:
-          $ref: '#/components/schemas/VSphereChangedBlockTrackingSettingsModel'
-        enableVMWareToolsQuiescence:
-          description: If *true*, VMware Tools quiescence is enabled for freezing the VM file system and application data.
-          type: boolean
-      type: object
-    AzureDataBoxStorageContainerModel:
-      description: Azure Data Box container where backup data is stored.
-      properties:
-        containerName:
-          description: Container name.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-      type: object
-    EAmazonRegionType:
-      description: AWS region type.
-      enum:
-      - China
-      - Global
-      - Government
-      type: string
-    S3CompatibleProxyModel:
-      description: Proxy appliance for the S3 compatible storage.
-      properties:
-        managedServerId:
-          description: ID of a managed server used as a proxy appliance.
-          format: uuid
-          type: string
-      required:
-      - managedServerId
-      type: object
-    BackupJobAdvancedSettingsModel:
-      description: Advanced settings of the backup job.
-      properties:
-        activeFulls:
-          $ref: '#/components/schemas/ActiveFullSettingsModel'
-        backupHealth:
-          $ref: '#/components/schemas/BackupHealthCheckSettingsModels'
-        backupModeType:
-          $ref: '#/components/schemas/EBackupModeType'
-        fullBackupMaintenance:
-          $ref: '#/components/schemas/FullBackupMaintenanceModel'
-        notifications:
-          $ref: '#/components/schemas/NotificationSettingsModel'
-        scripts:
-          $ref: '#/components/schemas/JobScriptsSettingsModel'
-        storageData:
-          $ref: '#/components/schemas/BackupStorageSettingModel'
-        storageIntegration:
-          $ref: '#/components/schemas/PrimaryStorageIntegrationSettingsModel'
-        synthenticFulls:
-          $ref: '#/components/schemas/SyntheticFullSettingsModel'
-        vSphere:
-          $ref: '#/components/schemas/BackupJobAdvancedSettingsVSphereModel'
-      required:
-      - backupModeType
-      type: object
-    EJobType:
-      description: Type of the job.
-      enum:
-      - Backup
-      type: string
-    IBMCloudStorageBucketModel:
-      description: IBM Cloud bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of an IBM Cloud bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    ETaskLogRecordStatus:
-      enum:
-      - None
-      - Succeeded
-      - Warning
-      - Failed
-      type: string
-    ScheduleDailyModel:
-      description: Daily scheduling options.
-      properties:
-        dailyKind:
-          $ref: '#/components/schemas/EDailyKinds'
-        days:
-          description: Days of the week when the job must start.
-          items:
-            $ref: '#/components/schemas/EDayOfWeek'
-          type: array
-          uniqueItems: true
-        isEnabled:
-          default: true
-          description: If *true*, daily schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-      required:
-      - isEnabled
-      type: object
-    BackupWindowSettingModel:
-      description: Time scheme that defines permitted days and hours for the job to start.
-      properties:
-        days:
-          description: Array of per-day schemes.
-          items:
-            $ref: '#/components/schemas/BackupWindowDayHoursModel'
-          type: array
-      required:
-      - days
-      type: object
-    EmailCustomNotificationType:
-      description: Custom notification settings.
-      properties:
-        SuppressNotificationUntilLastRetry:
-          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
-          type: boolean
-        notifyOnError:
-          description: If *true*, email notifications are sent when the job fails.
-          type: boolean
-        notifyOnSuccess:
-          description: If *true*, email notifications are sent when the job completes successfully.
-          type: boolean
-        notifyOnWarning:
-          description: If *true*, email notifications are sent when the job completes with a warning.
-          type: boolean
-        subject:
-          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li> <li>*%ObjectCount%* — number of VMs in the job</li> <li>*%Issues%* — number of VMs in the job that have finished with the Warning or Failed status</li></ul>
-          type: string
-      type: object
     BackupJobStorageImportModel:
       description: Backup storage settings.
       properties:
@@ -3499,46 +3177,355 @@ components:
       - backupRepository
       - retentionPolicy
       type: object
-    BackupJobExclusionsSpec:
-      description: Objects that you want to exclude from the backup.
+    BackupRepositoryImportModel:
+      description: Backup repository.
       properties:
-        disks:
-          description: Array of disks.
+        name:
+          description: Name of the backup repository.
+          type: string
+        tag:
+          description: Tag that identifies the backup repository.
+          type: string
+      required:
+      - name
+      type: object
+    ManageServerExportSpec:
+      properties:
+        ids:
+          description: Array of server IDs.
           items:
-            $ref: '#/components/schemas/VmwareObjectDiskModel'
+            format: uuid
+            type: string
           type: array
-        templates:
-          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
-        vms:
-          description: Array of VMs.
+          uniqueItems: true
+        names:
+          description: Array of server names. Wildcard characters are supported.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        types:
+          description: Array of server types.
+          items:
+            $ref: '#/components/schemas/EManagedServerType'
+          type: array
+          uniqueItems: true
+      type: object
+    AzureComputeCloudCredentialsSubscriptionSpec:
+      description: Microsoft Azure compute account. For password-based authentication, specify client secret. For certificate-based authentication, specify certificate and password.
+      properties:
+        applicationId:
+          description: Client ID assigned to the Azure Active Directory application.
+          type: string
+        certificate:
+          $ref: '#/components/schemas/CertificateUploadSpec'
+        secret:
+          description: (For password-based authentication) Client secret assigned to the Azure Active Directory application.
+          type: string
+        tenantId:
+          description: ID of a tenant where the Azure Active Directory application is registered in.
+          type: string
+      required:
+      - tenantId
+      - applicationId
+      type: object
+    AzureStorageCloudCredentialsImportSpec:
+      properties:
+        account:
+          description: Name of the Azure storage account.
+          type: string
+        description:
+          description: Description of the cloud credentials record.
+          type: string
+        sharedKey:
+          description: Shared key of the Azure storage account.
+          type: string
+        tag:
+          description: Tag used to identify the cloud credentials record.
+          type: string
+        type:
+          $ref: '#/components/schemas/ECloudCredentialsType'
+      required:
+      - type
+      - tag
+      - account
+      - sharedKey
+      type: object
+    ManageServerImportSpecCollection:
+      properties:
+        linuxHosts:
+          description: Array of managed Linux servers.
+          items:
+            $ref: '#/components/schemas/LinuxHostImportSpec'
+          type: array
+          uniqueItems: true
+        viHosts:
+          description: Array of VMware vSphere servers.
+          items:
+            $ref: '#/components/schemas/ViHostImportSpec'
+          type: array
+          uniqueItems: true
+        windowsHosts:
+          description: Array of managed Microsoft Windows servers.
+          items:
+            $ref: '#/components/schemas/WindowsHostImportSpec'
+          type: array
+          uniqueItems: true
+      type: object
+    BackupJobVirtualMachinesSpec:
+      description: Arrays of objects that you want to back up or exclude from the backup.
+      properties:
+        excludes:
+          $ref: '#/components/schemas/BackupJobExclusionsSpec'
+        includes:
+          description: Array of objects that you want to back up.
           items:
             $ref: '#/components/schemas/VmwareObjectModel'
           type: array
-      type: object
-    BackupHealthCheckSettingsModels:
-      description: Health check settings for the for the latest restore point in the backup chain.
-      properties:
-        isEnabled:
-          description: If *true*, the health check is enabled.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
       required:
-      - isEnabled
+      - includes
       type: object
-    ScriptCommand:
-      description: Script settings.
+    ERetainLogBackupsType:
+      description: Retention policy for the logs stored in the backup repository.
+      enum:
+      - untilBackupDeleted
+      - KeepOnlyDays
+      type: string
+    WindowsHostImportSpec:
       properties:
-        command:
-          description: Path to the script.
+        credentials:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        description:
+          description: Description of the server.
           type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        networkSettings:
+          $ref: '#/components/schemas/WindowsHostPortsModel'
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - description
+      - name
+      - type
+      type: object
+    BackupOracleSettingsImportModel:
+      description: Oracle archived log settings.
+      properties:
+        archiveLogs:
+          $ref: '#/components/schemas/EBackupOracleLogsSettings'
+        backupLogs:
+          description: If *true*, archived logs are backed up.
+          type: boolean
+        backupMinsCount:
+          description: Frequency of archived log backup, in minutes.
+          type: integer
+        credentials:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        deleteGBsCount:
+          description: Maximum size for archived logs in GB. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredGBs*.
+          type: integer
+        deleteHoursCount:
+          description: Time period in hours to keep archived logs. This parameter should be specified if the `EBackupOracleLogsSettings` value is *deleteExpiredHours*.
+          type: integer
+        keepDaysCount:
+          description: Number of days to keep archived logs.
+          type: integer
+        logShippingServers:
+          $ref: '#/components/schemas/BackupLogShippingServersImportModel'
+        retainLogBackups:
+          $ref: '#/components/schemas/ERetainLogBackupsType'
+        useGuestCredentials:
+          description: If *true*, Veeam Backup & Replication uses credentials specified in the guest processing settings.
+          type: boolean
+      required:
+      - archiveLogs
+      - useGuestCredentials
+      type: object
+    AzureBlobStorageImportSpec:
+      properties:
+        account:
+          $ref: '#/components/schemas/AzureBlobStorageAccountImportModel'
+        container:
+          $ref: '#/components/schemas/AzureBlobStorageContainerModel'
+        description:
+          description: Description of the object storage repository.
+          type: string
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the object storage repository.
+          type: string
+        proxyAppliance:
+          $ref: '#/components/schemas/AzureStorageProxyModel'
+        tag:
+          description: Tag that identifies the object storage repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - name
+      - description
+      - tag
+      - type
+      - account
+      - container
+      - mountServer
+      type: object
+    EConsumptionLimitKind:
+      description: Measurement unit.
+      enum:
+      - TB
+      - PB
+      type: string
+    BackupSQLSettingsImportModel:
+      description: Microsoft SQL Server transaction log settings.
+      properties:
+        backupMinsCount:
+          description: Frequency of transaction log backup, in minutes.
+          type: integer
+        keepDaysCount:
+          description: Number of days to keep transaction logs in the backup repository.
+          type: integer
+        logShippingServers:
+          $ref: '#/components/schemas/BackupLogShippingServersImportModel'
+        logsProcessing:
+          $ref: '#/components/schemas/ESQLLogsProcessing'
+        retainLogBackups:
+          $ref: '#/components/schemas/ERetainLogBackupsType'
+      required:
+      - logsProcessing
+      type: object
+    EDayNumberInMonth:
+      description: Week day number in the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    GoogleCloudStorageAccountImportModel:
+      description: Account used to access the Google Cloud storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
+        credentials:
+          $ref: '#/components/schemas/CloudCredentialsImportModel'
+        regionId:
+          description: ID of a region where the storage bucket is located.
+          type: string
+      required:
+      - credentials
+      - regionId
+      - connectionSettings
+      type: object
+    AzureArchiveStorageAccountImportModel:
+      description: Account used to access the Azure Archive storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
+        credentials:
+          $ref: '#/components/schemas/CloudCredentialsImportModel'
+        regionType:
+          $ref: '#/components/schemas/EAzureRegionType'
+      required:
+      - credentials
+      - regionType
+      - gatewayServer
+      type: object
+    EncryptionPasswordExportSpec:
+      properties:
+        hints:
+          description: Array of password hints.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        ids:
+          description: Array of password IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+        modificationTimeFrom:
+          description: Date and time when the password was last modified.
+          format: date-time
+          type: string
+        tags:
+          description: Array of password tags.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+      type: object
+    CredentialsImportSpecCollection:
+      properties:
+        credentials:
+          description: Array of credentials.
+          items:
+            $ref: '#/components/schemas/CredentialsImportSpec'
+          type: array
+          uniqueItems: true
+      required:
+      - credentials
+      type: object
+    GuestFileSystemIndexingModel:
+      description: VM guest OS file indexing.
+      properties:
+        indexingSettings:
+          description: Array of VMs with guest OS file indexing options.
+          items:
+            $ref: '#/components/schemas/BackupIndexingSettingsModel'
+          type: array
         isEnabled:
-          description: If *true*, script execution is enabled.
+          description: If *true*, file indexing is enabled.
           type: boolean
       required:
       - isEnabled
+      type: object
+    ObjectStorageConsumptionLimitModel:
+      description: Soft consumption limit for the storage. The limit can be exceeded temporarily.
+      properties:
+        consumptionLimitCount:
+          description: Limit value.
+          type: integer
+        consumptionLimitKind:
+          $ref: '#/components/schemas/EConsumptionLimitKind'
+        isEnabled:
+          description: If *true*, the consumption limit is enabled.
+          type: boolean
+      type: object
+    GoogleCloudCredentialsImportSpec:
+      properties:
+        accessKey:
+          description: Access ID of a Google HMAC key.
+          type: string
+        description:
+          description: Description of the cloud credentials record.
+          type: string
+        secretKey:
+          description: Secret linked to the access ID.
+          type: string
+        tag:
+          description: Tag used to identify the cloud credentials record.
+          type: string
+        type:
+          $ref: '#/components/schemas/ECloudCredentialsType'
+      required:
+      - type
+      - tag
+      - accessKey
+      - secretKey
       type: object
     SessionModel:
       properties:
@@ -3594,202 +3581,32 @@ components:
       - state
       - usn
       type: object
-    BackupJobRetentionPolicySettingsModel:
-      description: Retention policy settings.
+    FullBackupMaintenanceDefragmentAndCompactModel:
+      description: Compact operation settings.
       properties:
-        quantity:
-          description: Number of restore points or days to keep.
-          type: integer
-        type:
-          $ref: '#/components/schemas/ERetentionPolicyType'
-      required:
-      - quantity
-      - type
-      type: object
-    GuestOsCredentialsImportModel:
-      description: VM custom credentials.
-      properties:
-        credentialsPerMachine:
-          description: Individual credentials for VMs.
-          items:
-            $ref: '#/components/schemas/GuestOsCredentialsPerMachineImportModel'
-          type: array
-          uniqueItems: true
-        creds:
-          $ref: '#/components/schemas/CredentialsImportModel'
-      type: object
-    GoogleCloudStorageAccountImportModel:
-      description: Account used to access the Google Cloud storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
-        credentials:
-          $ref: '#/components/schemas/CloudCredentialsImportModel'
-        regionId:
-          description: ID of a region where the storage bucket is located.
-          type: string
-      required:
-      - credentials
-      - regionId
-      - connectionSettings
-      type: object
-    BackupScriptSettingsModel:
-      description: Pre-freeze and post-thaw scripts.
-      properties:
-        linuxScripts:
-          $ref: '#/components/schemas/BackupLinuxScriptModel'
-        scriptProcessingMode:
-          $ref: '#/components/schemas/EBackupScriptProcessingMode'
-        windowsScripts:
-          $ref: '#/components/schemas/BackupWindowsScriptModel'
-      required:
-      - scriptProcessingMode
-      type: object
-    EncryptionPasswordExportSpec:
-      properties:
-        hints:
-          description: Array of password hints.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        ids:
-          description: Array of password IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-        modificationTimeFrom:
-          description: Date and time when the password was last modified.
-          format: date-time
-          type: string
-        tags:
-          description: Array of password tags.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-      type: object
-    AzureComputeCredentialsExistingAccountSpec:
-      description: Existing Azure Active Directory application.
-      properties:
-        deployment:
-          $ref: '#/components/schemas/AzureComputeCloudCredentialsDeploymentModel'
-        subscription:
-          $ref: '#/components/schemas/AzureComputeCloudCredentialsSubscriptionSpec'
-      required:
-      - deployment
-      - subscription
-      type: object
-    LinuxHostSSHSettingsModel:
-      description: SSH settings.
-      properties:
-        managementPort:
-          description: Port used as a control channel from the Veeam Backup & Replication console to the Linux server.
-          type: integer
-        portRangeEnd:
-          description: End port used for data transfer.
-          type: integer
-        portRangeStart:
-          description: Start port used for data transfer.
-          type: integer
-        serverThisSide:
-          description: If *true*, the server is run on this side.
-          type: boolean
-        sshTimeOutMs:
-          description: SSH timeout, in ms. If a task targeted at the server is inactive after the timeout, the task is terminated.
-          type: integer
-      type: object
-    NotificationSettingsModel:
-      description: Notification settings for the backup job.
-      properties:
-        emailNotifications:
-          $ref: '#/components/schemas/EmailNotificationSettingsModel'
-        sendSNMPNotifications:
-          description: If *true*, SNMP notifications are enabled for this job.
-          type: boolean
-        vmAttribute:
-          $ref: '#/components/schemas/NotificationVmAttributeSettingsModel'
-      type: object
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
-    LinuxHostImportSpec:
-      properties:
-        credentials:
-          $ref: '#/components/schemas/CredentialsImportModel'
-        description:
-          description: Description of the server.
-          type: string
-        name:
-          description: Full DNS name or IP address of the server.
-          type: string
-        sshFingerprint:
-          description: SSH key fingerprint used to verify the server identity.
-          type: string
-        sshSettings:
-          $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      required:
-      - credentials
-      - description
-      - name
-      - type
-      - sshFingerprint
-      type: object
-    ECloudCredentialsType:
-      description: Cloud credentials type.
-      enum:
-      - AzureStorage
-      - AzureCompute
-      - Amazon
-      - Google
-      type: string
-    BackupWindowsScriptModel:
-      description: Paths to pre-freeze and post-thaw scripts for Microsoft Windows VMs.
-      properties:
-        postThawScript:
-          description: Path to a post-thaw script.
-          type: string
-        preFreezeScript:
-          description: Path to a pre-freeze script.
-          type: string
-      type: object
-    WasabiCloudStorageBucketModel:
-      description: Wasabi bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of a Wasabi bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    GFSPolicySettingsMonthlyModel:
-      description: Monthly GFS retention policy.
-      properties:
-        desiredTime:
-          $ref: '#/components/schemas/ESennightOfMonth'
         isEnabled:
-          description: If *true*, the monthly GFS retention policy is enabled.
+          description: If *true*, Veeam Backup & Replication compacts full backup files.
           type: boolean
-        keepForNumberOfMonths:
-          description: Number of months to keep full backups for archival purposes. Possible values are from 1 through 999.
-          type: integer
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    BackupStorageSettingsEncryptionModel:
+      description: Encryption of backup files.
+      properties:
+        encryptionPasswordIdOrNull:
+          description: ID of the password used for encryption. The value is *null* for exported objects.
+          format: uuid
+          type: string
+        encryptionPasswordTag:
+          description: Tag used to identify the password.
+          type: string
+        isEnabled:
+          description: If *true*, the content of backup files is encrypted.
+          type: boolean
       required:
       - isEnabled
       type: object
@@ -3816,17 +3633,266 @@ components:
       - type
       - username
       type: object
-    ScheduleBackupWindowModel:
-      description: Backup window settings.
+    BackupIndexingSettingsModel:
       properties:
-        backupWindow:
-          $ref: '#/components/schemas/BackupWindowSettingModel'
+        LinuxIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        WindowsIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - vmObject
+      type: object
+    CloudCredentialsImportSpecCollection:
+      properties:
+        amazon:
+          description: Array of AWS accounts.
+          items:
+            $ref: '#/components/schemas/AmazonCloudCredentialsImportSpec'
+          type: array
+          uniqueItems: true
+        azureCompute:
+          description: Array of Azure compute accounts.
+          items:
+            $ref: '#/components/schemas/AzureComputeCloudCredentialsImportSpec'
+          type: array
+          uniqueItems: true
+        azureStorage:
+          description: Array of Azure storage accounts.
+          items:
+            $ref: '#/components/schemas/AzureStorageCloudCredentialsImportSpec'
+          type: array
+          uniqueItems: true
+        google:
+          description: Array of Google accounts.
+          items:
+            $ref: '#/components/schemas/GoogleCloudCredentialsImportSpec'
+          type: array
+          uniqueItems: true
+      required:
+      - credentials
+      type: object
+    ESQLLogsProcessing:
+      description: Type of transaction logs processing.
+      enum:
+      - truncate
+      - preserve
+      - backup
+      - neverTruncate
+      type: string
+    EVmwareDisksTypeToProcess:
+      description: Type of disk selection.
+      enum:
+      - AllDisks
+      - SystemOnly
+      - SelectedDisks
+      type: string
+    EEmailNotificationType:
+      description: Type of email notification settings (global notification settings specified for the backup server, or custom notification settings specified for this job).
+      enum:
+      - UseGlobalNotificationSettings
+      - UseCustomNotificationSettings
+      type: string
+    BackupHealthCheckSettingsModels:
+      description: Health check settings for the for the latest restore point in the backup chain.
+      properties:
         isEnabled:
-          default: false
-          description: If *true*, backup window is enabled.
+          description: If *true*, the health check is enabled.
           type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
       required:
       - isEnabled
+      type: object
+    ETransactionLogsSettings:
+      description: Transaction logs settings that define whether copy-only backups must be created, or transaction logs for Microsoft Exchange, Microsoft SQL and Oracle VMs must be processed.<br> If transaction log processing is selected, specify the following parameters:<ul> <li>[For Microsoft SQL Server VMs] Microsoft SQL Server transaction log settings</li> <li>[For Oracle VMs] Oracle archived log settings</li></ul>
+      enum:
+      - process
+      - copyOnly
+      type: string
+    LinuxHostSSHSettingsModel:
+      description: SSH settings.
+      properties:
+        managementPort:
+          description: Port used as a control channel from the Veeam Backup & Replication console to the Linux server.
+          type: integer
+        portRangeEnd:
+          description: End port used for data transfer.
+          type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+        sshTimeOutMs:
+          description: SSH timeout, in ms. If a task targeted at the server is inactive after the timeout, the task is terminated.
+          type: integer
+      type: object
+    JobExportSpec:
+      properties:
+        ids:
+          description: Array of job IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+        names:
+          description: Array of job names. Wildcard characters are supported.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+        types:
+          description: Array of job types.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+      type: object
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    AzureComputeCredentialsExistingAccountSpec:
+      description: Existing Azure Active Directory application.
+      properties:
+        deployment:
+          $ref: '#/components/schemas/AzureComputeCloudCredentialsDeploymentModel'
+        subscription:
+          $ref: '#/components/schemas/AzureComputeCloudCredentialsSubscriptionSpec'
+      required:
+      - deployment
+      - subscription
+      type: object
+    ERepositoryType:
+      description: Repository type.
+      enum:
+      - WinLocal
+      - LinuxLocal
+      - Smb
+      - Nfs
+      - AzureBlob
+      - AzureDataBox
+      - AzureArchive
+      - AmazonS3
+      - AmazonSnowballEdge
+      - AmazonS3Glacier
+      - S3Compatible
+      - GoogleCloud
+      - IBMCloud
+      - ExtendableRepository
+      - DDBoost
+      - ExaGrid
+      - HPStoreOnceIntegration
+      - Quantum
+      - WasabiCloud
+      - LinuxHardened
+      - Infinidat
+      - Fujitsu
+      type: string
+    ECloudCredentialsType:
+      description: Cloud credentials type.
+      enum:
+      - AzureStorage
+      - AzureCompute
+      - Amazon
+      - Google
+      type: string
+    NotificationSettingsModel:
+      description: Notification settings for the backup job.
+      properties:
+        emailNotifications:
+          $ref: '#/components/schemas/EmailNotificationSettingsModel'
+        sendSNMPNotifications:
+          description: If *true*, SNMP notifications are enabled for this job.
+          type: boolean
+        vmAttribute:
+          $ref: '#/components/schemas/NotificationVmAttributeSettingsModel'
+      type: object
+    LinuxHardenedRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        makeRecentBackupsImmutableDays:
+          description: Number of days to keep immutable backups.
+          type: integer
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        path:
+          description: Path to the folder where backup files are stored.
+          type: string
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+        useFastCloningOnXFSVolumes:
+          description: If *true*, fast cloning on XFS volumes is used.
+          type: boolean
+      type: object
+    LinuxHardenedStorageImportSpec:
+      properties:
+        description:
+          description: Description of the backup repository.
+          type: string
+        hostName:
+          description: ID of the server that is used as a backup repository.
+          type: string
+        mountServer:
+          $ref: '#/components/schemas/MountServerSettingsImportSpec'
+        name:
+          description: Name of the backup repository.
+          type: string
+        repository:
+          $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
+        tag:
+          description: Tag that identifies the backup repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      required:
+      - description
+      - hostName
+      - kind
+      - mountServer
+      - name
+      - repository
+      - tag
+      - type
       type: object
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
@@ -3850,229 +3916,166 @@ components:
       - Multitag
       - Network
       type: string
-    BackupObjectIndexingModel:
-      description: Guest OS indexing options for the VM.
+    ActiveFullSettingsModel:
+      description: Active full backup settings.
       properties:
-        guestFSIndexingMode:
-          $ref: '#/components/schemas/EGuestFSIndexingMode'
-        indexingList:
-          description: Array of folders. Environmental variables and full paths to folders can be used.
-          items:
-            type: string
-          type: array
+        isEnabled:
+          description: If *true*, active full backups are enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
       required:
-      - guestFSIndexingMode
+      - isEnabled
       type: object
-    ECompressionLevel:
-      description: Compression level.
+    EBackupExclusionPolicy:
+      description: Exclusion policy.
+      enum:
+      - disabled
+      - excludeOnly
+      - includeOnly
+      type: string
+    EncryptionPasswordImportSpecCollection:
+      properties:
+        encryptionPasswords:
+          description: Array of encryption passwords.
+          items:
+            $ref: '#/components/schemas/EncryptionPasswordImportSpec'
+          type: array
+          uniqueItems: true
+      type: object
+    EPeriodicallyKinds:
+      description: Time unit for periodic job scheduling.
+      enum:
+      - Hours
+      - Minutes
+      - Seconds
+      - Days
+      type: string
+    BackupProxyImportModel:
+      properties:
+        name:
+          description: Name of the backup proxy.
+          type: string
+        tag:
+          description: Tag assigned to the backup proxy.
+          type: string
+        type:
+          $ref: '#/components/schemas/EBackupProxyImportType'
+      required:
+      - name
+      - type
+      type: object
+    AmazonSnowballEdgeStorageAccountImportModel:
+      description: AWS account used to access the AWS Snowball Edge storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionImportSpec'
+        credentials:
+          $ref: '#/components/schemas/CloudCredentialsImportModel'
+        regionId:
+          description: For AWS Snowball Edge, the region is *snow*.
+          type: string
+        servicePoint:
+          description: Service point address and port number of the AWS Snowball Edge device.
+          type: string
+      required:
+      - servicePoint
+      - regionId
+      - credentials
+      - connectionSettings
+      type: object
+    SmbRepositoryShareSettingsSpec:
+      description: Share settings.
+      properties:
+        credentials:
+          $ref: '#/components/schemas/CredentialsImportModel'
+        gatewayServer:
+          $ref: '#/components/schemas/RepositoryShareGatewayImportSpec'
+        sharePath:
+          description: Path to the shared folder that is used as a backup repository.
+          type: string
+      required:
+      - credentials
+      - sharePath
+      type: object
+    ESessionResult:
+      description: Result status.
       enum:
       - None
-      - DedupFriendly
-      - Optimal
-      - High
-      - Extreme
+      - Success
+      - Warning
+      - Failed
       type: string
-    AmazonS3GlacierStorageBucketModel:
-      description: Amazon S3 Glacier bucket where backup data is stored.
+    AdvancedStorageScheduleWeeklyModel:
+      description: Weekly schedule settings.
       properties:
-        bucketName:
-          description: Name of an Amazon S3 Glacier bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutabilityEnabled:
-          description: If *true*, storage immutability is enabled.
-          type: boolean
-        regionId:
-          description: ID of a region where the Amazon S3 bucket is located.
-          type: string
-        useDeepArchive:
-          description: If *true*, Glacier Deep Archive is used for backups with the retention policy over 180 days.
-          type: boolean
-      required:
-      - regionId
-      - bucketName
-      - folderName
-      type: object
-    AzureStorageCloudCredentialsImportSpec:
-      properties:
-        account:
-          description: Name of the Azure storage account.
-          type: string
-        description:
-          description: Description of the cloud credentials record.
-          type: string
-        sharedKey:
-          description: Shared key of the Azure storage account.
-          type: string
-        tag:
-          description: Tag used to identify the cloud credentials record.
-          type: string
-        type:
-          $ref: '#/components/schemas/ECloudCredentialsType'
-      required:
-      - type
-      - tag
-      - account
-      - sharedKey
-      type: object
-    AzureComputeCloudCredentialsImportSpec:
-      properties:
-        connectionName:
-          description: Name under which the cloud credentials record is shown in Veeam Backup & Replication.
-          type: string
-        description:
-          description: Description of the cloud credentials record.
-          type: string
-        existingAccount:
-          $ref: '#/components/schemas/AzureComputeCredentialsExistingAccountSpec'
-        tag:
-          description: Tag used to identify the cloud credentials record.
-          type: string
-        type:
-          $ref: '#/components/schemas/ECloudCredentialsType'
-      required:
-      - type
-      - tag
-      - connectionName
-      - existingAccount
-      type: object
-    GoogleCloudStorageBucketModel:
-      description: Google Cloud object storage bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of a Google Cloud bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        nearlineStorageEnabled:
-          description: If *true*, the nearline storage class is used.
-          type: boolean
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    RepositoryExportSpec:
-      properties:
-        ids:
-          description: Array of repository IDs.
+        days:
+          description: Days of the week when the operation is performed.
           items:
-            format: uuid
-            type: string
+            $ref: '#/components/schemas/EDayOfWeek'
           type: array
           uniqueItems: true
-        names:
-          description: Array of repository names. Wildcard characters are supported.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
-        types:
-          description: Array of repository types.
-          items:
-            $ref: '#/components/schemas/ERepositoryType'
-          type: array
-          uniqueItems: true
-      type: object
-    VSphereChangedBlockTrackingSettingsModel:
-      description: CBT settings for the backup job.
-      properties:
-        enableCBTautomatically:
-          description: If *true*, CBT is enabled for all processed VMs even if CBT is disabled in VM configuration. CBT is used for VMs with virtual hardware version 7 or later. These VMs must not have existing snapshots.
-          type: boolean
         isEnabled:
-          description: If *true*, CBT data is used.
-          type: boolean
-        resetCBTonActiveFull:
-          description: If *true*, CBT is reset before creating active full backups.
+          default: false
+          description: If *true*, the weekly schedule is enabled.
           type: boolean
       required:
       - isEnabled
       type: object
-    EMonth:
-      description: Month.
-      enum:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-      type: string
-    IBMCloudStorageImportSpec:
+    AmazonS3StorageProxyApplianceModel:
+      description: Amazon S3 proxy appliance.
       properties:
-        account:
-          $ref: '#/components/schemas/IBMCloudStorageAccountImportModel'
-        bucket:
-          $ref: '#/components/schemas/IBMCloudStorageBucketModel'
-        description:
-          description: Description of the object storage repository.
+        ec2InstanceType:
+          description: EC2 instance type for the proxy appliance.
           type: string
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
+        redirectorPort:
+          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
           type: integer
-        mountServer:
-          $ref: '#/components/schemas/MountServerSettingsImportSpec'
-        name:
-          description: Name of the object storage repository.
+        securityGroup:
+          description: Security group associated with the proxy appliance.
           type: string
-        proxyAppliance:
-          $ref: '#/components/schemas/S3CompatibleProxyModel'
-        tag:
-          description: Tag that identifies the object storage repository.
+        subnet:
+          description: Subnet for the proxy appliance.
           type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      required:
-      - name
-      - description
-      - tag
-      - type
-      - account
-      - bucket
-      - mountServer
+        vpc:
+          description: Amazon VPC where Veeam Backup & Replication launches the target instance.
+          type: string
       type: object
-    CertificateUploadSpec:
-      description: Certificate settings (for certificate-based authentication).
+    AmazonS3IAStorageModel:
+      description: Standard Infrequent Access.
       properties:
-        certificate:
-          description: Base64-encoded string of the content of a PFX certificate file.
+        isEnabled:
+          description: If *true*, Standard Infrequent Access is enabled.
+          type: boolean
+        singleZoneEnabled:
+          description: If *true*, Amazon S3 One Zone-Infrequent Access is enabled.
+          type: boolean
+      type: object
+    BackupLinuxScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Linux VMs.
+      properties:
+        postThawScript:
+          description: Path to a post-thaw script.
           type: string
-        formatType:
-          $ref: '#/components/schemas/ECertificateFileFormatType'
-        password:
-          description: Decryption password for the certificate file.
+        preFreezeScript:
+          description: Path to a pre-freeze script.
           type: string
-      required:
-      - certificate
-      - formatType
       type: object
   responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     Forbidden:
       content:
         application/json:
@@ -4085,12 +4088,12 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    InternalServerError:
+    BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -4102,7 +4105,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

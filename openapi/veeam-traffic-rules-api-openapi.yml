@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Traffic Rules API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Traffic Rules API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
@@ -182,6 +185,118 @@ paths:
         - UpdateTrafficRules
 components:
   schemas:
+    PreferredNetworkModel:
+      properties:
+        cidrNotation:
+          description: CIDR notation.
+          type: string
+        ipAddress:
+          description: IP address.
+          type: string
+        subnetMask:
+          description: Subnet mask.
+          type: string
+      type: object
+    PreferredNetworksModel:
+      description: Preferred networks used for backup and replication traffic.
+      properties:
+        isEnabled:
+          description: If *true*, prefered networks are enabled.
+          type: boolean
+        networks:
+          description: Array of networks.
+          items:
+            $ref: '#/components/schemas/PreferredNetworkModel'
+          type: array
+      required:
+      - isEnabled
+      type: object
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
+      properties:
+        days:
+          description: Array of per-day schemes.
+          items:
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
+          type: array
+      required:
+      - days
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    GlobalNetworkTrafficRulesModel:
+      properties:
+        preferredNetworks:
+          $ref: '#/components/schemas/PreferredNetworksModel'
+        trafficRules:
+          description: Array of traffic rules.
+          items:
+            $ref: '#/components/schemas/TrafficRuleModel'
+          type: array
+        uploadStreamsCount:
+          description: Number of TCP/IP connections per job.
+          format: integer
+          type: integer
+        useMultipleStreamsPerJob:
+          description: If *true*, Veeam Backup & Replication uses multiple TCP/IP transfer connection for every job session.
+          type: boolean
+      required:
+      - useMultipleStreamsPerJob
+      type: object
+    ESpeedUnit:
+      description: Traffic speed unit.
+      enum:
+      - KbytePerSec
+      - MbitPerSpec
+      - MbytePerSec
+      type: string
     TrafficRuleModel:
       properties:
         encryptionEnabled:
@@ -227,143 +342,31 @@ components:
       - targetIPStart
       - targetIPEnd
       type: object
-    BackupWindowDayHoursModel:
-      description: Hourly scheme for a day.
-      properties:
-        day:
-          $ref: '#/components/schemas/EDayOfWeek'
-        hours:
-          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
-          type: string
-      required:
-      - day
-      - hours
-      type: object
-    GlobalNetworkTrafficRulesModel:
-      properties:
-        preferredNetworks:
-          $ref: '#/components/schemas/PreferredNetworksModel'
-        trafficRules:
-          description: Array of traffic rules.
-          items:
-            $ref: '#/components/schemas/TrafficRuleModel'
-          type: array
-        uploadStreamsCount:
-          description: Number of TCP/IP connections per job.
-          format: integer
-          type: integer
-        useMultipleStreamsPerJob:
-          description: If *true*, Veeam Backup & Replication uses multiple TCP/IP transfer connection for every job session.
-          type: boolean
-      required:
-      - useMultipleStreamsPerJob
-      type: object
-    BackupWindowSettingModel:
-      description: Time scheme that defines permitted days and hours for the job to start.
-      properties:
-        days:
-          description: Array of per-day schemes.
-          items:
-            $ref: '#/components/schemas/BackupWindowDayHoursModel'
-          type: array
-      required:
-      - days
-      type: object
-    PreferredNetworkModel:
-      properties:
-        cidrNotation:
-          description: CIDR notation.
-          type: string
-        ipAddress:
-          description: IP address.
-          type: string
-        subnetMask:
-          description: Subnet mask.
-          type: string
-      type: object
-    ESpeedUnit:
-      description: Traffic speed unit.
-      enum:
-      - KbytePerSec
-      - MbitPerSpec
-      - MbytePerSec
-      type: string
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
-    PreferredNetworksModel:
-      description: Preferred networks used for backup and replication traffic.
-      properties:
-        isEnabled:
-          description: If *true*, prefered networks are enabled.
-          type: boolean
-        networks:
-          description: Array of networks.
-          items:
-            $ref: '#/components/schemas/PreferredNetworkModel'
-          type: array
-      required:
-      - isEnabled
-      type: object
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
+    InternalServerError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -375,7 +378,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

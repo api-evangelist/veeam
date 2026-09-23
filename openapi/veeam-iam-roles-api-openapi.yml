@@ -1,12 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents IAMRoles API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Backup for AWS public API 1.0 IAM Roles API
 security:
 - Bearer: []
 tags:
-- name: IAMRoles
+- name: IAM Roles
 paths:
   /api/v1/accounts/amazon:
     get:
@@ -15,7 +14,7 @@ paths:
         - Portal Administrator
         - Portal Operator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: AmazonAccountsGetAll
       parameters:
       - name: SearchPattern
@@ -93,12 +92,14 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Amazon accounts get all
+      x-summary-source: derived
     post:
       x-veeam-authorize:
         roles:
         - Portal Administrator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: AddAmazonAccount
       parameters:
       - $ref: '#/components/parameters/apiVersionParam'
@@ -160,13 +161,15 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Add amazon account
+      x-summary-source: derived
   /api/v1/accounts/amazon/validateName:
     post:
       x-veeam-authorize:
         roles:
         - Portal Administrator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: ValidateAmazonAccountName
       parameters:
       - $ref: '#/components/parameters/apiVersionParam'
@@ -228,13 +231,15 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate amazon account name
+      x-summary-source: derived
   /api/v1/accounts/amazon/{amazonAccountId}/validateDelete:
     post:
       x-veeam-authorize:
         roles:
         - Portal Administrator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: ValidateDeleteAmazonAccount
       parameters:
       - name: amazonAccountId
@@ -305,6 +310,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate delete amazon account
+      x-summary-source: derived
   /api/v1/accounts/amazon/{amazonAccountId}:
     get:
       x-veeam-authorize:
@@ -312,7 +319,7 @@ paths:
         - Portal Administrator
         - Portal Operator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: AmazonAccountsGetOneById
       parameters:
       - name: amazonAccountId
@@ -368,9 +375,11 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Amazon accounts get one by id
+      x-summary-source: derived
     put:
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: UpdateAmazonAccount
       parameters:
       - name: amazonAccountId
@@ -443,9 +452,11 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Update amazon account
+      x-summary-source: derived
     delete:
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: DeleteAmazonAccount
       parameters:
       - name: amazonAccountId
@@ -494,6 +505,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Delete amazon account
+      x-summary-source: derived
   /api/v1/accounts/amazon/{amazonAccountId}/rescan:
     post:
       x-veeam-authorize:
@@ -501,7 +514,7 @@ paths:
         - Portal Administrator
         - Portal Operator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: RescanAmazonAccount
       parameters:
       - name: amazonAccountId
@@ -563,13 +576,15 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Rescan amazon account
+      x-summary-source: derived
   /api/v1/accounts/amazon/export:
     post:
       x-veeam-authorize:
         roles:
         - Portal Administrator
       tags:
-      - IAMRoles
+      - IAM Roles
       operationId: ExportAmazonAccounts
       parameters:
       - $ref: '#/components/parameters/apiVersionParam'
@@ -603,8 +618,109 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Export amazon accounts
+      x-summary-source: derived
 components:
   schemas:
+    AmazonAccountIAMRoleFromAnotherAccountUpdateSpec:
+      required:
+      - accountId
+      - roleName
+      type: object
+      properties:
+        accountId:
+          type: string
+        roleName:
+          type: string
+        externalId:
+          type: string
+    AmazonAccountIAMRoleCreateSpec:
+      required:
+      - roleName
+      type: object
+      properties:
+        roleName:
+          type: string
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    AmazonAccountIAMRole:
+      required:
+      - roleName
+      - isDefault
+      type: object
+      properties:
+        parentAmazonAccountId:
+          format: uuid
+          type: string
+        roleName:
+          type: string
+        isDefault:
+          type: boolean
+    AmazonAccountCreateSpec:
+      required:
+      - name
+      - username
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+        description:
+          maxLength: 512
+          minLength: 0
+          type: string
+        accessKeys:
+          $ref: '#/components/schemas/AmazonAccountAccessKeysCreateSpec'
+        IAMRole:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleCreateSpec'
+        IAMRoleFromAnotherAccount:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountCreateSpec'
+    AmazonAccountAccessKeysUpdateSpec:
+      required:
+      - accessKey
+      - secretKey
+      - defaultRegionType
+      type: object
+      properties:
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        defaultRegionType:
+          $ref: '#/components/schemas/RegionTypes'
+    RescanCloudAccountSpec:
+      type: object
+      properties:
+        regionIds:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+            format: uuid
+    AmazonAccountsSortColumns:
+      enum:
+      - nameAsc
+      - nameDesc
+      type: string
+    RegionTypes:
+      enum:
+      - Global
+      - Emulator
+      - Government
+      - China
+      type: string
     Link:
       required:
       - rel
@@ -623,6 +739,18 @@ components:
           - POST
           - PUT
           - DELETE
+    AmazonAccountIAMRoleFromAnotherAccountCreateSpec:
+      required:
+      - accountId
+      - roleName
+      type: object
+      properties:
+        accountId:
+          type: string
+        roleName:
+          type: string
+        externalId:
+          type: string
     ValidationMessage:
       type: object
       properties:
@@ -636,57 +764,34 @@ components:
         contextId:
           type: string
           format: uuid
-    AmazonAccountIAMRoleFromAnotherAccountUpdateSpec:
+    AmazonAccountIAMRoleUpdateSpec:
       required:
-      - accountId
       - roleName
       type: object
       properties:
-        accountId:
-          type: string
         roleName:
           type: string
-        externalId:
-          type: string
-    RegionTypes:
-      enum:
-      - Global
-      - Emulator
-      - Government
-      - China
-      type: string
-    AmazonAccountIAMRoleFromAnotherAccount:
+    AmazonAccountNameValidationSpec:
       required:
-      - parentAmazonAccountId
-      - accountId
-      - roleName
+      - name
       type: object
       properties:
-        parentAmazonAccountId:
-          format: uuid
+        name:
+          minLength: 1
           type: string
-        accountId:
-          type: string
-        roleName:
-          type: string
-    AmazonAccountsFilters:
+    AmazonAccountAccessKeysCreateSpec:
+      required:
+      - accessKey
+      - secretKey
+      - defaultRegionType
       type: object
       properties:
-        searchPattern:
+        accessKey:
           type: string
-        offset:
-          type: integer
-          format: int32
-          minimum: 0
-        limit:
-          type: integer
-          format: int32
-          minimum: -1
-        sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/AmazonAccountsSortColumns'
+        secretKey:
+          type: string
+        defaultRegionType:
+          $ref: '#/components/schemas/RegionTypes'
     Error:
       description: ''
       required:
@@ -708,8 +813,7 @@ components:
           format: int32
           description: The HTTP status code generated by the origin server for this occurrence of the problem.
           minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
+          exclusiveMaximum: 600
         errorCode:
           description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
           enum:
@@ -736,76 +840,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    AmazonAccountAccessKeysCreateSpec:
-      required:
-      - accessKey
-      - secretKey
-      - defaultRegionType
-      type: object
-      properties:
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        defaultRegionType:
-          $ref: '#/components/schemas/RegionTypes'
-    AmazonAccountIAMRoleCreateSpec:
-      required:
-      - roleName
-      type: object
-      properties:
-        roleName:
-          type: string
-    RescanCloudAccountSpec:
-      type: object
-      properties:
-        regionIds:
-          type: array
-          uniqueItems: false
-          items:
-            type: string
-            format: uuid
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    AmazonAccountCreateSpec:
-      required:
-      - name
-      - username
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 0
-          type: string
-        description:
-          maxLength: 512
-          minLength: 0
-          type: string
-        accessKeys:
-          $ref: '#/components/schemas/AmazonAccountAccessKeysCreateSpec'
-        IAMRole:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleCreateSpec'
-        IAMRoleFromAnotherAccount:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountCreateSpec'
-    AmazonAccountNameValidationSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
     AmazonAccountsPage:
       required:
       - results
@@ -825,72 +859,20 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    AmazonAccountAccessKeys:
+    AmazonAccountIAMRoleFromAnotherAccount:
       required:
-      - accessKey
-      - defaultRegionType
-      type: object
-      properties:
-        accessKey:
-          type: string
-        defaultRegion:
-          $ref: '#/components/schemas/RegionTypes'
-    AmazonAccountIAMRole:
-      required:
+      - parentAmazonAccountId
+      - accountId
       - roleName
-      - isDefault
       type: object
       properties:
         parentAmazonAccountId:
           format: uuid
           type: string
-        roleName:
-          type: string
-        isDefault:
-          type: boolean
-    AmazonAccountIAMRoleFromAnotherAccountCreateSpec:
-      required:
-      - accountId
-      - roleName
-      type: object
-      properties:
         accountId:
           type: string
         roleName:
           type: string
-        externalId:
-          type: string
-    AmazonAccountUpdateSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 0
-          type: string
-        description:
-          maxLength: 512
-          minLength: 0
-          type: string
-        accessKeys:
-          $ref: '#/components/schemas/AmazonAccountAccessKeysUpdateSpec'
-        IAMRole:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleUpdateSpec'
-        IAMRoleFromAnotherAccount:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountUpdateSpec'
-    AmazonAccountIAMRoleUpdateSpec:
-      required:
-      - roleName
-      type: object
-      properties:
-        roleName:
-          type: string
-    AmazonAccountsSortColumns:
-      enum:
-      - nameAsc
-      - nameDesc
-      type: string
     AmazonAccount:
       required:
       - id
@@ -921,18 +903,52 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    AmazonAccountAccessKeysUpdateSpec:
+    AmazonAccountUpdateSpec:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+        description:
+          maxLength: 512
+          minLength: 0
+          type: string
+        accessKeys:
+          $ref: '#/components/schemas/AmazonAccountAccessKeysUpdateSpec'
+        IAMRole:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleUpdateSpec'
+        IAMRoleFromAnotherAccount:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountUpdateSpec'
+    AmazonAccountsFilters:
+      type: object
+      properties:
+        searchPattern:
+          type: string
+        offset:
+          type: integer
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: -1
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/AmazonAccountsSortColumns'
+    AmazonAccountAccessKeys:
       required:
       - accessKey
-      - secretKey
       - defaultRegionType
       type: object
       properties:
         accessKey:
           type: string
-        secretKey:
-          type: string
-        defaultRegionType:
+        defaultRegion:
           $ref: '#/components/schemas/RegionTypes'
   parameters:
     apiVersionParam:

@@ -1,8 +1,12 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Repositories API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Repositories API
+  x-refined-note:
+  - x-veeam-prev-version differs across the merged source definitions and was not carried
+  version: '1.0'
+  description: 'Operations tagged Repositories across 2 of this provider''s published API definitions: veeam-backup-aws-openapi.yml, veeam-backup-replication-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
@@ -108,6 +112,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Repositories get all
+      x-summary-source: derived
     post:
       x-veeam-authorize:
         roles:
@@ -172,6 +178,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Create repository
+      x-summary-source: derived
   /api/v1/repositories/{repositoryId}:
     get:
       x-veeam-authorize:
@@ -226,6 +234,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Repositories get one by id
+      x-summary-source: derived
     put:
       x-veeam-authorize:
         roles:
@@ -305,6 +315,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Update repository
+      x-summary-source: derived
     delete:
       x-veeam-authorize:
         roles:
@@ -360,6 +372,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Delete repository
+      x-summary-source: derived
   /api/v1/repositories/{repositoryId}/rescan:
     post:
       x-veeam-authorize:
@@ -414,6 +428,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Rescan repository
+      x-summary-source: derived
   /api/v1/repositories/settings/validate:
     post:
       x-veeam-authorize:
@@ -483,6 +499,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Repository validate settings
+      x-summary-source: derived
   /api/v1/repositories/{repositoryId}/checkPassword:
     post:
       x-veeam-authorize:
@@ -551,6 +569,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Repository password is correct
+      x-summary-source: derived
   /api/v1/repositories/export:
     post:
       x-veeam-authorize:
@@ -592,6 +612,8 @@ paths:
             application/xml:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Export repositories
+      x-summary-source: derived
   /api/v1/backupInfrastructure/repositories:
     get:
       description: The HTTP GET request to the `/api/v1/backupInfrastructure/repositories` path allows you to get an array of all backup repositories that are added to the backup infrastructure.
@@ -813,6 +835,8 @@ paths:
       x-veeam-authorize:
         claims:
         - CreateRepositories
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/repositories/states:
     get:
       description: The HTTP GET request to the `/api/v1/backupInfrastructure/repositories/states` path allows you to get an array of all repository states. The states include repository location and brief statistics, such as repository capacity, free and used space.
@@ -941,6 +965,8 @@ paths:
       x-veeam-authorize:
         claims:
         - ViewRepositories
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/repositories/{id}:
     delete:
       description: The HTTP DELETE request to the `/api/v1/backupInfrastructure/repositories/{id}` path allows you to remove a backup repository that has the specified `id` from the backup infrastructure.
@@ -1079,6 +1105,8 @@ paths:
       x-veeam-authorize:
         claims:
         - UpdateRepositories
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/repositories/{id}/accessPermissions:
     get:
       description: The HTTP GET request to the `/api/v1/backupInfrastructure/repositories/{id}/accessPermissions` path allows you to get access permissions of a repository that has the specified `id`.
@@ -1152,6 +1180,8 @@ paths:
       x-veeam-authorize:
         claims:
         - UpdateRepositoryAccessPermissions
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories:
     get:
       description: The HTTP GET request to the `/api/v1/backupInfrastructure/scaleOutRepositories` path allows you to get an array of all scale-out backup repositories that are added to the backup infrastructure.
@@ -1246,6 +1276,8 @@ paths:
       x-veeam-authorize:
         claims:
         - CreateScaleOutRepositories
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}:
     delete:
       description: The HTTP DELETE request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}` path allows you to remove a scale-out backup repository that has the specified `id`.
@@ -1361,6 +1393,8 @@ paths:
       x-veeam-authorize:
         claims:
         - UpdateScaleOutRepositories
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/accessPermissions:
     get:
       description: The HTTP GET request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/accessPermissions` path allows you to get access permissions of a scale-out backup repository that has the specified `id`.
@@ -1434,6 +1468,8 @@ paths:
       x-veeam-authorize:
         claims:
         - UpdateRepositoryAccessPermissions
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableMaintenanceMode:
     post:
       description: The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableMaintenanceMode` path allows you to disable the Maintenance mode for specified extents of a scale-out backup repository that has the specified `id`.
@@ -1474,6 +1510,8 @@ paths:
       x-veeam-authorize:
         claims:
         - DisableRepositoryMaintenanceMode
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableSealedMode:
     post:
       description: The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/disableSealedMode` path allows you to disable the Sealed mode for specified extents of a scale-out backup repository that has the specified `id`.
@@ -1514,6 +1552,8 @@ paths:
       x-veeam-authorize:
         claims:
         - DisableRepositorySealedMode
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableMaintenanceMode:
     post:
       description: The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableMaintenanceMode` path allows you to enable the Maintenance mode for specified extents of a scale-out backup repository that has the specified `id`.
@@ -1554,6 +1594,8 @@ paths:
       x-veeam-authorize:
         claims:
         - EnableRepositoryMaintenanceMode
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableSealedMode:
     post:
       description: The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/enableSealedMode` path allows you to enable the Sealed mode for specified extents of a scale-out backup repository that has the specified `id`.
@@ -1594,9 +1636,13 @@ paths:
       x-veeam-authorize:
         claims:
         - EnableRepositorySealedMode
+    servers:
+    - url: /
   /api/v1/backupInfrastructure/scaleOutRepositories/{id}/evacuateBackups:
     post:
-      description: The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/evacuateBackups` path allows you to evacuate backups from specified performance extents of a scale-out backup repository that has the specified `id`.<br>Before you evacuate backups from performance extents, you must put them into the Maintenance mode.
+      description: 'The HTTP POST request to the `/api/v1/backupInfrastructure/scaleOutRepositories/{id}/evacuateBackups` path allows you to evacuate backups from specified performance extents of a scale-out backup repository that has the specified `id`.
+
+        Before you evacuate backups from performance extents, you must put them into the Maintenance mode.'
       operationId: EvacuateBackupsFromScaleOutExtent
       parameters:
       - $ref: '#/components/parameters/apiVersionParam_2'
@@ -1634,38 +1680,95 @@ paths:
       x-veeam-authorize:
         claims:
         - EvacuateExtentBackups
+    servers:
+    - url: /
 components:
   schemas:
-    ERepositoryConnectionType:
-      description: Repository connection type (direct or through a gateway server).
-      enum:
-      - Direct
-      - SelectedGateway
+    RepositoryPasswordValidationResult:
+      required:
+      - isSuccess
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+    RepositoriesPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Repository'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    ValidationMessage:
+      type: object
+      properties:
+        severity:
+          enum:
+          - Warning
+          - Error
+          type: string
+        message:
+          type: string
+        contextId:
+          type: string
+          format: uuid
+    RepositoryCreateSpec:
+      required:
+      - name
+      - amazonBucketId
+      - amazonAccountId
+      - amazonStorageFolder
+      - enableEncryption
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        amazonBucketId:
+          type: string
+          format: uuid
+        amazonStorageFolder:
+          type: string
+        password:
+          type: string
+        hint:
+          type: string
+        enableEncryption:
+          type: boolean
+    RepositoriesSortColumns:
       type: string
-    AmazonS3StorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonS3StorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: Amazon S3 storage.
+      enum:
+      - nameAsc
+      - nameDesc
+      - descriptionAsc
+      - descriptionDesc
+      - amazonAccountNameAsc
+      - amazonAccountNameDesc
+      - amazonBucketAsc
+      - amazonBucketDesc
+      - amazonStorageFolderAsc
+      - amazonStorageFolderDesc
+      - regionAsc
+      - regionDesc
+      - encryptionAsc
+      - encryptionDesc
     Error:
       description: ''
       required:
@@ -1687,8 +1790,7 @@ components:
           format: int32
           description: The HTTP status code generated by the origin server for this occurrence of the problem.
           minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
+          exclusiveMaximum: 600
         errorCode:
           description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
           enum:
@@ -1715,236 +1817,57 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    RepositoryModel:
-      allOf:
-      - discriminator:
-          mapping:
-            AmazonS3: '#/components/schemas/AmazonS3StorageModel'
-            AmazonS3Glacier: '#/components/schemas/AmazonS3GlacierStorageModel'
-            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeStorageModel'
-            AzureArchive: '#/components/schemas/AzureArchiveStorageModel'
-            AzureBlob: '#/components/schemas/AzureBlobStorageModel'
-            AzureDataBox: '#/components/schemas/AzureDataBoxStorageModel'
-            GoogleCloud: '#/components/schemas/GoogleCloudStorageModel'
-            IBMCloud: '#/components/schemas/IBMCloudStorageModel'
-            LinuxHardened: '#/components/schemas/LinuxHardenedStorageModel'
-            LinuxLocal: '#/components/schemas/LinuxLocalStorageModel'
-            Nfs: '#/components/schemas/NfsStorageModel'
-            S3Compatible: '#/components/schemas/S3CompatibleStorageModel'
-            Smb: '#/components/schemas/SmbStorageModel'
-            WasabiCloud: '#/components/schemas/WasabiCloudStorageModel'
-            WinLocal: '#/components/schemas/WindowsLocalStorageModel'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/WindowsLocalStorageModel'
-        - $ref: '#/components/schemas/LinuxLocalStorageModel'
-        - $ref: '#/components/schemas/NfsStorageModel'
-        - $ref: '#/components/schemas/SmbStorageModel'
-        - $ref: '#/components/schemas/AzureBlobStorageModel'
-        - $ref: '#/components/schemas/AzureDataBoxStorageModel'
-        - $ref: '#/components/schemas/AmazonS3StorageModel'
-        - $ref: '#/components/schemas/AmazonSnowballEdgeStorageModel'
-        - $ref: '#/components/schemas/S3CompatibleStorageModel'
-        - $ref: '#/components/schemas/GoogleCloudStorageModel'
-        - $ref: '#/components/schemas/IBMCloudStorageModel'
-        - $ref: '#/components/schemas/AmazonS3GlacierStorageModel'
-        - $ref: '#/components/schemas/AzureArchiveStorageModel'
-        - $ref: '#/components/schemas/WasabiCloudStorageModel'
-        - $ref: '#/components/schemas/LinuxHardenedStorageModel'
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-    RepositoriesSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - descriptionAsc
-      - descriptionDesc
-      - amazonAccountNameAsc
-      - amazonAccountNameDesc
-      - amazonBucketAsc
-      - amazonBucketDesc
-      - amazonStorageFolderAsc
-      - amazonStorageFolderDesc
-      - regionAsc
-      - regionDesc
-      - encryptionAsc
-      - encryptionDesc
-    NetworkRepositorySettingsModel:
-      description: Repository settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-      type: object
-    EConsumptionLimitKind:
-      description: Measurement unit.
-      enum:
-      - TB
-      - PB
-      type: string
-    SessionLink:
-      required:
-      - sessionId
+    RepositoriesFilters:
       type: object
       properties:
-        sessionId:
+        SearchPattern:
           type: string
-          format: uuid
-        _links:
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
           type: array
           uniqueItems: false
           items:
-            $ref: '#/components/schemas/Link'
-    S3CompatibleStorageAccountModel:
-      description: Account used to access the S3 compatible storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of a cloud credentials record used to access the storage.
-          format: uuid
-          type: string
-        regionId:
-          description: ID of a region where the storage is located.
-          type: string
-        servicePoint:
-          description: Endpoint address and port number of the storage.
-          type: string
+            $ref: '#/components/schemas/RepositoriesSortColumns'
+    Link:
       required:
-      - servicePoint
-      - regionId
-      - credentialsId
-      - gatewayServer
+      - rel
+      - href
+      - method
       type: object
-    AzureArchiveStorageContainerModel:
-      description: Azure Archive container where backup data is stored.
       properties:
-        containerName:
-          description: Name of an Azure Archive container.
+        rel:
           type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
+        href:
           type: string
-      required:
-      - containerName
-      - folderName
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    RepositoryEmbedded:
       type: object
-    LinuxLocalStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          hostId:
-            description: ID of the server that is used as a backup repository.
-            format: uuid
-            type: string
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
-        required:
-        - hostId
-        - mountServer
-        - repository
-        type: object
-      description: Linux-based repository.
-    EPlacementPolicyType:
-      description: Type of placement policy.
-      enum:
-      - DataLocality
-      - Performance
-      type: string
-      x-enumDescriptions:
-        DataLocality: Veeam Backup & Replication stores full and incremental backup files to the same performance extent of the scale-out backup repository.
-        Performance: Veeam Backup & Replication stores full and incremental backup files to different performance extents of the scale-out backup repository.
-    S3CompatibleStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          account:
-            $ref: '#/components/schemas/S3CompatibleStorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/S3CompatibleStorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/S3CompatibleProxyModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: S3 compatible storage.
-    EAzureRegionType:
-      description: Region where your Microsoft Azure container is located.
-      enum:
-      - China
-      - Germany
-      - Global
-      - Government
-      type: string
-    LinuxLocalRepositorySettingsModel:
-      description: Repository settings.
       properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        path:
-          description: Path to the folder where backup files are stored.
+        amazonAccount:
           type: string
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-        useFastCloningOnXFSVolumes:
-          description: If *true*, fast cloning on XFS volumes is used.
-          type: boolean
-      type: object
-    EAllowedBackupsType:
-      description: Type of backup files that can be stored on the extent.
-      enum:
-      - All
-      - FullsOnly
-      - IncrementsOnly
-      - None
-      type: string
-    SessionResultModel:
-      description: Session result.
-      properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
+        amazonAccountLink:
+          $ref: '#/components/schemas/Link'
+        region:
           type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
+        regionLink:
+          $ref: '#/components/schemas/Link'
+        bucket:
+          type: string
+        bucketLink:
+          $ref: '#/components/schemas/Link'
     RepositoryUpdateSpec:
       required:
       - name
@@ -1967,14 +1890,87 @@ components:
           type: string
         enableEncryption:
           type: boolean
-    AzureBlobStorageSpec:
+    RepositoryPasswordValidationSpec:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          minLength: 1
+          type: string
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Repository:
+      required:
+      - id
+      - name
+      - description
+      - amazonAccountId
+      - amazonStorageFolder
+      - enableEncryption
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        amazonStorageFolder:
+          type: string
+        amazonBucketId:
+          type: string
+          format: uuid
+        hint:
+          type: string
+        enableEncryption:
+          type: boolean
+        _embedded:
+          $ref: '#/components/schemas/RepositoryEmbedded'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    AmazonS3GlacierStorageSpec:
       allOf:
       - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
           account:
-            $ref: '#/components/schemas/AzureBlobStorageAccountModel'
-          container:
-            $ref: '#/components/schemas/AzureBlobStorageContainerModel'
+            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: Amazon S3 Glacier storage.
+    GoogleCloudStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/GoogleCloudStorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/GoogleCloudStorageBucketModel'
           enableTaskLimit:
             description: If *true*, the maximum number of concurrent tasks is limited.
             type: boolean
@@ -1983,204 +1979,26 @@ components:
             type: integer
           mountServer:
             $ref: '#/components/schemas/MountServerSettingsModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AzureStorageProxyModel'
         required:
         - account
-        - container
+        - bucket
         - mountServer
         type: object
-      description: Microsoft Azure Blob storage.
-    AmazonS3StorageAccountModel:
-      description: Account used to access the Amazon S3 storage.
+      description: Google Cloud storage.
+    BaseRepositorySpec:
       properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of the cloud credentials record.
-          format: uuid
-          type: string
-        regionType:
-          $ref: '#/components/schemas/EAmazonRegionType'
-      required:
-      - credentialsId
-      - regionType
-      - gatewayServer
-      type: object
-    ObjectStorageConnectionModel:
-      description: Object storage connection settings.
-      properties:
-        connectionType:
-          $ref: '#/components/schemas/ERepositoryConnectionType'
-        gatewayServerIds:
-          description: Array of gateway server IDs. The value is *null* if the connection type is *Direct*.
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - connectionType
-      type: object
-    ERotatedDriveCleanupMode:
-      description: Cleanup mode:<ul> <li>`Disabled` — continue the backup chain on an inserted drive.</li> <li>`ClearBackupFolder` — delete existing backups belonging to the job.</li> <li>`ClearRepositoryFolder` — delete all existing backups from repository.</li></ul>
-      enum:
-      - Disabled
-      - ClearBackupFolder
-      - ClearRepositoryFolder
-      type: string
-    NfsStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
-          share:
-            $ref: '#/components/schemas/NfsRepositoryShareSettingsModel'
-        required:
-        - mountServer
-        - repository
-        - share
-        type: object
-      description: NFS backup repository.
-    BackupPlacementSettingsModel:
-      properties:
-        allowedBackups:
-          $ref: '#/components/schemas/EAllowedBackupsType'
-        extentId:
-          description: ID of a performance extent.
-          format: uuid
-          type: string
-      required:
-      - extentId
-      - allowedBackups
-      type: object
-    ScaleOutRepositoryModel:
-      properties:
-        archiveTier:
-          $ref: '#/components/schemas/ArchiveTierModel'
-        capacityTier:
-          $ref: '#/components/schemas/CapacityTierModel'
         description:
-          description: Description of the scale-out backup repository.
-          type: string
-        id:
-          description: ID of the scale-out backup repository.
-          format: uuid
+          description: Description of the backup repository.
           type: string
         name:
-          description: Name of the scale-out backup repository.
+          description: Name of the backup repository.
           type: string
-        performanceTier:
-          $ref: '#/components/schemas/PerformanceTierModel'
-        placementPolicy:
-          $ref: '#/components/schemas/PlacementPolicyModel'
         tag:
-          description: Tag assigned to the scale-out backup repository.
+          description: Tag that identifies the backup repository.
           type: string
-      required:
-      - id
-      - name
-      - description
-      - performanceTier
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
       type: object
-    BackupWindowDayHoursModel:
-      description: Hourly scheme for a day.
-      properties:
-        day:
-          $ref: '#/components/schemas/EDayOfWeek'
-        hours:
-          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
-          type: string
-      required:
-      - day
-      - hours
-      type: object
-    AzureArchiveStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AzureArchiveStorageAccountModel'
-          container:
-            $ref: '#/components/schemas/AzureArchiveStorageContainerModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AzureStorageProxyModel'
-        required:
-        - account
-        - container
-        - proxyAppliance
-        type: object
-      description: Microsoft Azure Archive storage.
-    PerformanceExtentSpec:
-      properties:
-        id:
-          description: ID of a backup repository added as a performance extent.
-          format: uuid
-          type: string
-      required:
-      - id
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
-    RepositoriesResult:
-      properties:
-        data:
-          description: Array of backup repositories.
-          items:
-            $ref: '#/components/schemas/RepositoryModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    VPowerNFSPortSettingsModel:
-      description: Network ports used by the vPower NFS Service.
-      properties:
-        mountPort:
-          description: Mount port.
-          type: integer
-        vPowerNFSPort:
-          description: vPower NFS port.
-          type: integer
-      type: object
-    ERepositoryFiltersOrderColumn:
-      description: Sorts repositories by one of the repository parameters.
-      enum:
-      - Name
-      - Description
-      - Type
-      - Host
-      - Path
-      type: string
-    ERepositoryExtentStatusType:
-      description: Performance extent status.
-      enum:
-      - Normal
-      - Evacuate
-      - Pending
-      - Sealed
-      - Maintenance
-      - ResyncRequired
-      - TenantEvacuating
-      type: string
     AzureBlobStorageContainerModel:
       description: Azure Blob storage container.
       properties:
@@ -2195,6 +2013,219 @@ components:
       required:
       - containerName
       - folderName
+      type: object
+    ERepositoryConnectionType:
+      description: Repository connection type (direct or through a gateway server).
+      enum:
+      - Direct
+      - SelectedGateway
+      type: string
+    ScaleOutRepositoriesResult:
+      properties:
+        data:
+          description: Array of scale-out backup repositories.
+          items:
+            $ref: '#/components/schemas/ScaleOutRepositoryModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    EAmazonRegionType:
+      description: AWS region type.
+      enum:
+      - China
+      - Global
+      - Government
+      type: string
+    AmazonSnowballEdgeStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: AWS Snowball Edge storage.
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
+      properties:
+        days:
+          description: Array of per-day schemes.
+          items:
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
+          type: array
+      required:
+      - days
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    ERepositoryExtentStatusType:
+      description: Performance extent status.
+      enum:
+      - Normal
+      - Evacuate
+      - Pending
+      - Sealed
+      - Maintenance
+      - ResyncRequired
+      - TenantEvacuating
+      type: string
+    RepositorySpec:
+      allOf:
+      - discriminator:
+          mapping:
+            AmazonS3: '#/components/schemas/AmazonS3StorageSpec'
+            AmazonS3Glacier: '#/components/schemas/AmazonS3GlacierStorageSpec'
+            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeStorageSpec'
+            AzureArchive: '#/components/schemas/AzureArchiveStorageSpec'
+            AzureBlob: '#/components/schemas/AzureBlobStorageSpec'
+            AzureDataBox: '#/components/schemas/AzureDataBoxStorageSpec'
+            GoogleCloud: '#/components/schemas/GoogleCloudStorageSpec'
+            IBMCloud: '#/components/schemas/IBMCloudStorageSpec'
+            LinuxHardened: '#/components/schemas/LinuxHardenedStorageSpec'
+            LinuxLocal: '#/components/schemas/LinuxLocalStorageSpec'
+            Nfs: '#/components/schemas/NfsStorageSpec'
+            S3Compatible: '#/components/schemas/S3CompatibleStorageSpec'
+            Smb: '#/components/schemas/SmbStorageSpec'
+            WasabiCloud: '#/components/schemas/WasabiCloudStorageSpec'
+            WinLocal: '#/components/schemas/WindowsLocalStorageSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsLocalStorageSpec'
+        - $ref: '#/components/schemas/LinuxLocalStorageSpec'
+        - $ref: '#/components/schemas/NfsStorageSpec'
+        - $ref: '#/components/schemas/SmbStorageSpec'
+        - $ref: '#/components/schemas/AzureBlobStorageSpec'
+        - $ref: '#/components/schemas/AzureDataBoxStorageSpec'
+        - $ref: '#/components/schemas/AmazonS3StorageSpec'
+        - $ref: '#/components/schemas/AmazonSnowballEdgeStorageSpec'
+        - $ref: '#/components/schemas/S3CompatibleStorageSpec'
+        - $ref: '#/components/schemas/GoogleCloudStorageSpec'
+        - $ref: '#/components/schemas/IBMCloudStorageSpec'
+        - $ref: '#/components/schemas/AmazonS3GlacierStorageSpec'
+        - $ref: '#/components/schemas/AzureArchiveStorageSpec'
+        - $ref: '#/components/schemas/WasabiCloudStorageSpec'
+        - $ref: '#/components/schemas/LinuxHardenedStorageSpec'
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+    RepositoryStatesResult:
+      properties:
+        data:
+          description: Array of repository states.
+          items:
+            $ref: '#/components/schemas/RepositoryStateModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ScaleOutExtentMaintenanceSpec:
+      properties:
+        repositoryIds:
+          description: Array of repository IDs added as scale-out backup repository extents.
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - repositoryIds
+      type: object
+    AzureBlobStorageAccountModel:
+      description: Account used to access the Azure Blob storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of the cloud credentials record.
+          format: uuid
+          type: string
+        regionType:
+          $ref: '#/components/schemas/EAzureRegionType'
+      required:
+      - credentialsId
+      - regionType
+      - connectionSettings
+      type: object
+    AmazonS3GlacierStorageBucketModel:
+      description: Amazon S3 Glacier bucket where backup data is stored.
+      properties:
+        bucketName:
+          description: Name of an Amazon S3 Glacier bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutabilityEnabled:
+          description: If *true*, storage immutability is enabled.
+          type: boolean
+        regionId:
+          description: ID of a region where the Amazon S3 bucket is located.
+          type: string
+        useDeepArchive:
+          description: If *true*, Glacier Deep Archive is used for backups with the retention policy over 180 days.
+          type: boolean
+      required:
+      - regionId
+      - bucketName
+      - folderName
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    CapacityExtentModel:
+      properties:
+        id:
+          description: ID of an object storage repository added as a capacity extent.
+          format: uuid
+          type: string
+      required:
+      - id
       type: object
     Error_2:
       properties:
@@ -2222,28 +2253,534 @@ components:
       - errorCode
       - message
       type: object
-    AmazonS3StorageBucketModel:
-      description: Amazon S3 bucket where backup data is stored.
+    NfsStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
+          share:
+            $ref: '#/components/schemas/NfsRepositoryShareSettingsModel'
+        required:
+        - mountServer
+        - repository
+        - share
+        type: object
+      description: NFS backup repository.
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    CapacityTierModel:
+      description: Capacity tier.
+      properties:
+        copyPolicyEnabled:
+          description: If *true*, Veeam Backup & Replication copies backups from the performance extents to the capacity extent as soon as the backups are created.
+          type: boolean
+        enabled:
+          description: If *true*, the capacity tier is enabled.
+          type: boolean
+        encryption:
+          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
+        extents:
+          description: Array of capacity extents.
+          items:
+            $ref: '#/components/schemas/CapacityExtentModel'
+          type: array
+        movePolicyEnabled:
+          description: If *true*, Veeam Backup & Replication moves backup files that belong to inactive backup chains from the performance extents to the capacity extent.
+          type: boolean
+        offloadWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        operationalRestorePeriodDays:
+          description: Number of days after which inactive backup chains on the performance extents are moved to the capacity extent. Specify *0* to offload inactive backup chains on the same day they are created.
+          type: integer
+        overridePolicy:
+          $ref: '#/components/schemas/CapacityTierOverridePolicyModel'
+      required:
+      - enabled
+      type: object
+    IBMCloudStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/IBMCloudStorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/IBMCloudStorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/S3CompatibleProxyModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: IBM Cloud storage.
+    AmazonSnowballEdgeStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: AWS Snowball Edge storage.
+    AmazonS3StorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonS3StorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: Amazon S3 storage.
+    AmazonS3GlacierStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: Amazon S3 Glacier storage.
+    NfsStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
+          share:
+            $ref: '#/components/schemas/NfsRepositoryShareSettingsModel'
+        required:
+        - mountServer
+        - repository
+        - share
+        type: object
+      description: NFS backup repository.
+    BaseRepositoryModel:
+      properties:
+        description:
+          description: Description of the backup repository.
+          type: string
+        id:
+          description: ID of the backup repository.
+          format: uuid
+          type: string
+        name:
+          description: Name of the backup repository.
+          type: string
+        tag:
+          description: Tag that identifies the backup repository.
+          type: string
+        type:
+          $ref: '#/components/schemas/ERepositoryType'
+      type: object
+    GoogleCloudStorageAccountModel:
+      description: Account used to access the Google Cloud storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of a cloud credentials record used to access the storage.
+          format: uuid
+          type: string
+        regionId:
+          description: ID of a region where the storage bucket is located.
+          type: string
+      required:
+      - credentialsId
+      - regionId
+      - connectionSettings
+      type: object
+    AmazonS3StorageAccountModel:
+      description: Account used to access the Amazon S3 storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of the cloud credentials record.
+          format: uuid
+          type: string
+        regionType:
+          $ref: '#/components/schemas/EAmazonRegionType'
+      required:
+      - credentialsId
+      - regionType
+      - gatewayServer
+      type: object
+    RepositoryStatesFilters:
+      description: Filters repositories by the specified parameters.
+      properties:
+        capacityFilter:
+          description: Filters repositories by repository capacity.
+          format: double
+          type: number
+        freeSpaceFilter:
+          description: Filters repositories by repository free space.
+          format: double
+          type: number
+        idFilter:
+          format: uuid
+          type: string
+        limit:
+          description: Returns the specified number of repositories.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+          type: string
+        orderAsc:
+          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/ERepositoryStatesFiltersOrderColumn'
+        skip:
+          description: Skips the specified number of repositories.
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/ERepositoryType'
+        usedSpaceFilter:
+          description: Filters repositories by repository used space.
+          format: double
+          type: number
+      type: object
+    AzureDataBoxStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AzureDataBoxStorageAccountModel'
+          container:
+            $ref: '#/components/schemas/AzureDataBoxStorageContainerModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+        required:
+        - account
+        - container
+        type: object
+      description: Microsoft Azure Data Box storage.
+    ERepositoryStatesFiltersOrderColumn:
+      description: Orders repositories by the specified column.
+      enum:
+      - Name
+      - Type
+      - Host
+      - Path
+      - CapacityGB
+      - FreeGB
+      - UsedSpaceGB
+      - Description
+      type: string
+    PerformanceExtentSpec:
+      properties:
+        id:
+          description: ID of a backup repository added as a performance extent.
+          format: uuid
+          type: string
+      required:
+      - id
+      type: object
+    S3CompatibleStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/S3CompatibleStorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/S3CompatibleStorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/S3CompatibleProxyModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: S3 compatible storage.
+    RepositoriesFilters_2:
+      properties:
+        hostIdFilter:
+          description: Filters repositories by ID of the backup server.
+          format: uuid
+          type: string
+        limit:
+          description: Maximum number of repositories to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+          type: string
+        orderAsc:
+          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/ERepositoryFiltersOrderColumn'
+        pathFilter:
+          description: Filters repositories by path to the folder where backup files are stored.
+          type: string
+        skip:
+          description: Number of repositories to skip.
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/ERepositoryType'
+        vmbApiFilter:
+          description: Filters repositories by VM Backup API parameters converted to the base64 string. To obtain the string, call the `GetApiProductInfoString` method of VM Backup API.
+          type: string
+        vmbApiPlatform:
+          description: Filters repositories by ID of a platform that you use to communicate with VM Backup API.
+          format: uuid
+          type: string
+      type: object
+    ObjectStorageImmutabilityModel:
+      description: Object storage immutability.
+      properties:
+        daysCount:
+          description: Immutability period.
+          type: integer
+        isEnabled:
+          description: If *true*, storage immutability is enabled.
+          type: boolean
+      type: object
+    RepositoryBehaviorFilters:
+      properties:
+        overwriteOwner:
+          type: boolean
+      type: object
+    IBMCloudStorageBucketModel:
+      description: IBM Cloud bucket where backup data is stored.
       properties:
         bucketName:
-          description: Name of an Amazon S3 bucket.
+          description: Name of an IBM Cloud bucket.
           type: string
         folderName:
           description: Name of the folder that the object storage repository is mapped to.
           type: string
         immutability:
           $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        infrequentAccessStorage:
-          $ref: '#/components/schemas/AmazonS3IAStorageModel'
-        regionId:
-          description: ID of a region where the Amazon S3 bucket is located.
-          type: string
         storageConsumptionLimit:
           $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
       required:
-      - regionId
       - bucketName
       - folderName
+      type: object
+    AmazonS3StorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
+          bucket:
+            $ref: '#/components/schemas/AmazonS3StorageBucketModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
+        required:
+        - account
+        - bucket
+        - mountServer
+        type: object
+      description: Amazon S3 storage.
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
+    EPlacementPolicyType:
+      description: Type of placement policy.
+      enum:
+      - DataLocality
+      - Performance
+      type: string
+      x-enumDescriptions:
+        DataLocality: Veeam Backup & Replication stores full and incremental backup files to the same performance extent of the scale-out backup repository.
+        Performance: Veeam Backup & Replication stores full and incremental backup files to different performance extents of the scale-out backup repository.
+    AzureArchiveStorageAccountModel:
+      description: Account used to access the Azure Archive storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of a cloud credentials record used to access the storage.
+          format: uuid
+          type: string
+        regionType:
+          $ref: '#/components/schemas/EAzureRegionType'
+      required:
+      - credentialsId
+      - regionType
+      - connectionSettings
+      type: object
+    ERotatedDriveCleanupMode:
+      description: Cleanup mode:<ul> <li>`Disabled` — continue the backup chain on an inserted drive.</li> <li>`ClearBackupFolder` — delete existing backups belonging to the job.</li> <li>`ClearRepositoryFolder` — delete all existing backups from repository.</li></ul>
+      enum:
+      - Disabled
+      - ClearBackupFolder
+      - ClearRepositoryFolder
+      type: string
+    RepositoryAccessPermissionsModel:
+      description: Repository access permissions.
+      properties:
+        accessPolicy:
+          $ref: '#/components/schemas/ERepositoryAccessType'
+        accounts:
+          description: (For *AllowExplicit* access policy) Array of accounts that have access to the backup repository.
+          items:
+            type: string
+          type: array
+        encryptBackups:
+          description: If *true*, Veeam Backup & Replication encrypts Veeam Agent backup files stored in the backup repository.
+          type: boolean
+        passwordId:
+          description: ID of the password used for encryption.
+          format: uuid
+          type: string
+      required:
+      - accessPolicy
+      - encryptBackups
+      type: object
+    LinuxLocalStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          hostId:
+            description: ID of the server that is used as a backup repository.
+            format: uuid
+            type: string
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
+        required:
+        - hostId
+        - mountServer
+        - repository
+        type: object
+      description: Linux-based repository.
+    WasabiCloudStorageAccountModel:
+      description: Account used to access the Wasabi Cloud storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of a cloud credentials record used to access the storage.
+          format: uuid
+          type: string
+        regionId:
+          description: ID of a region where the storage is located.
+          type: string
+      required:
+      - regionId
+      - credentialsId
+      - connectionSettings
+      type: object
+    ScaleOutRepositorySpec:
+      properties:
+        archiveTier:
+          $ref: '#/components/schemas/ArchiveTierModel'
+        capacityTier:
+          $ref: '#/components/schemas/CapacityTierModel'
+        description:
+          description: Description of the scale-out backup repository.
+          type: string
+        name:
+          description: Name of the scale-out backup repository.
+          type: string
+        performanceTier:
+          $ref: '#/components/schemas/PerformanceTierSpec'
+        placementPolicy:
+          $ref: '#/components/schemas/PlacementPolicyModel'
+        tag:
+          description: Tag assigned to the scale-out backup repository.
+          type: string
+      required:
+      - name
+      - description
+      - performanceTier
       type: object
     RepositoryStateModel:
       properties:
@@ -2290,71 +2827,30 @@ components:
       - freeGB
       - usedSpaceGB
       type: object
-    AzureStorageProxyModel:
-      description: Azure storage proxy appliance.
+    RepositoryShareGatewayModel:
+      description: Settings for the gateway server.
       properties:
-        instanceSize:
-          description: Size of the appliance.
-          type: string
-        redirectorPort:
-          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
-          type: integer
-        resourceGroup:
-          description: Resource group associated with the proxy appliance.
-          type: string
-        subnet:
-          description: Subnet for the proxy appliance.
-          type: string
-        subscriptionId:
-          description: ID that Veeam Backup & Replication assigned to the Azure subscription.
-          format: uuid
-          type: string
-        virtualNetwork:
-          description: Network to which the helper appliance is connected.
-          type: string
-      required:
-      - subscriptionId
-      type: object
-    ObjectStorageConsumptionLimitModel:
-      description: Soft consumption limit for the storage. The limit can be exceeded temporarily.
-      properties:
-        consumptionLimitCount:
-          description: Limit value.
-          type: integer
-        consumptionLimitKind:
-          $ref: '#/components/schemas/EConsumptionLimitKind'
-        isEnabled:
-          description: If *true*, the consumption limit is enabled.
+        autoSelect:
+          description: If *true*, Veeam Backup & Replication automatically selects a gateway server.
           type: boolean
-      type: object
-    PerformanceTierModel:
-      description: Performance tier.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/PerformanceTierAdvancedSettingsModel'
-        performanceExtents:
-          description: Array of performance extents.
+        gatewayServerIds:
+          description: Array of gateway server IDs.
           items:
-            $ref: '#/components/schemas/PerformanceExtentModel'
+            format: uuid
+            type: string
           type: array
       required:
-      - performanceExtents
+      - autoSelect
       type: object
-    ArchiveTierModel:
-      description: Archive tier.
+    CapacityTierOverridePolicyModel:
+      description: Policy that overrides the move policy if the scale-out backup repository is reaching its capacity.
       properties:
-        advancedSettings:
-          $ref: '#/components/schemas/ArchiveTierAdvancedSettingsModel'
-        archivePeriodDays:
-          description: Number of days after which backup chains on the capacity extent are moved to the archive extent. Specify *0* to offload inactive backup chains on the same day they are created.
-          type: integer
-        extentId:
-          description: ID of an object storage repository added as an archive extent.
-          format: uuid
-          type: string
         isEnabled:
-          description: If *true*, the archive tier is enabled.
+          description: If *true*, Veeam Backup & Replication moves oldest backup files sooner if the scale-out backup repository is reaching the threshold.
           type: boolean
+        overrideSpaceThresholdPercents:
+          description: Space threshold of the scale-out backup repository, in percent.
+          type: integer
       required:
       - isEnabled
       type: object
@@ -2382,6 +2878,70 @@ components:
         - mountServer
         type: object
       description: S3 compatible storage.
+    ObjectStorageConnectionModel:
+      description: Object storage connection settings.
+      properties:
+        connectionType:
+          $ref: '#/components/schemas/ERepositoryConnectionType'
+        gatewayServerIds:
+          description: Array of gateway server IDs. The value is *null* if the connection type is *Direct*.
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - connectionType
+      type: object
+    WindowsLocalRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        path:
+          description: Path to the folder where backup files are stored.
+          type: string
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+      type: object
+    SmbStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
+          share:
+            $ref: '#/components/schemas/SmbRepositoryShareSettingsModel'
+        required:
+        - mountServer
+        - repository
+        - share
+        type: object
+      description: SMB backup repository.
+    PerformanceTierModel:
+      description: Performance tier.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/PerformanceTierAdvancedSettingsModel'
+        performanceExtents:
+          description: Array of performance extents.
+          items:
+            $ref: '#/components/schemas/PerformanceExtentModel'
+          type: array
+      required:
+      - performanceExtents
+      type: object
     EScaleOutRepositoryFiltersOrderColumn:
       enum:
       - Name
@@ -2390,22 +2950,34 @@ components:
       - Host
       - Path
       type: string
-    WasabiCloudStorageAccountModel:
-      description: Account used to access the Wasabi Cloud storage.
+    WasabiCloudStorageBucketModel:
+      description: Wasabi bucket where backup data is stored.
       properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of a cloud credentials record used to access the storage.
-          format: uuid
+        bucketName:
+          description: Name of a Wasabi bucket.
           type: string
-        regionId:
-          description: ID of a region where the storage is located.
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
           type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
       required:
-      - regionId
-      - credentialsId
-      - connectionSettings
+      - bucketName
+      - folderName
+      type: object
+    AmazonSnowballEdgeStorageBucketModel:
+      description: Amazon S3 bucket.
+      properties:
+        bucketName:
+          description: Name of the Amazon S3 bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
       type: object
     IBMCloudStorageModel:
       allOf:
@@ -2431,182 +3003,9 @@ components:
         - mountServer
         type: object
       description: IBM Cloud storage.
-    CapacityTierModel:
-      description: Capacity tier.
-      properties:
-        copyPolicyEnabled:
-          description: If *true*, Veeam Backup & Replication copies backups from the performance extents to the capacity extent as soon as the backups are created.
-          type: boolean
-        enabled:
-          description: If *true*, the capacity tier is enabled.
-          type: boolean
-        encryption:
-          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
-        extents:
-          description: Array of capacity extents.
-          items:
-            $ref: '#/components/schemas/CapacityExtentModel'
-          type: array
-        movePolicyEnabled:
-          description: If *true*, Veeam Backup & Replication moves backup files that belong to inactive backup chains from the performance extents to the capacity extent.
-          type: boolean
-        offloadWindow:
-          $ref: '#/components/schemas/BackupWindowSettingModel'
-        operationalRestorePeriodDays:
-          description: Number of days after which inactive backup chains on the performance extents are moved to the capacity extent. Specify *0* to offload inactive backup chains on the same day they are created.
-          type: integer
-        overridePolicy:
-          $ref: '#/components/schemas/CapacityTierOverridePolicyModel'
-      required:
-      - enabled
-      type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    ERepositoryType:
-      description: Repository type.
-      enum:
-      - WinLocal
-      - LinuxLocal
-      - Smb
-      - Nfs
-      - AzureBlob
-      - AzureDataBox
-      - AzureArchive
-      - AmazonS3
-      - AmazonSnowballEdge
-      - AmazonS3Glacier
-      - S3Compatible
-      - GoogleCloud
-      - IBMCloud
-      - ExtendableRepository
-      - DDBoost
-      - ExaGrid
-      - HPStoreOnceIntegration
-      - Quantum
-      - WasabiCloud
-      - LinuxHardened
-      - Infinidat
-      - Fujitsu
-      type: string
-    ScaleOutRepositorySpec:
-      properties:
-        archiveTier:
-          $ref: '#/components/schemas/ArchiveTierModel'
-        capacityTier:
-          $ref: '#/components/schemas/CapacityTierModel'
-        description:
-          description: Description of the scale-out backup repository.
-          type: string
-        name:
-          description: Name of the scale-out backup repository.
-          type: string
-        performanceTier:
-          $ref: '#/components/schemas/PerformanceTierSpec'
-        placementPolicy:
-          $ref: '#/components/schemas/PlacementPolicyModel'
-        tag:
-          description: Tag assigned to the scale-out backup repository.
-          type: string
-      required:
-      - name
-      - description
-      - performanceTier
-      type: object
-    MountServerSettingsModel:
-      description: Settings for the mount server that is used for file-level and application items restore.
-      properties:
-        mountServerId:
-          description: ID of the mount server.
-          format: uuid
-          type: string
-        vPowerNFSEnabled:
-          description: If *true*, the vPower NFS Service is enabled on the mount server.
-          type: boolean
-        vPowerNFSPortSettings:
-          $ref: '#/components/schemas/VPowerNFSPortSettingsModel'
-        writeCacheFolder:
-          description: Path to the folder used for writing cache during mount operations.
-          type: string
-      required:
-      - mountServerId
-      - vPowerNFSEnabled
-      - writeCacheFolder
-      type: object
-    RepositoryShareGatewayModel:
-      description: Settings for the gateway server.
-      properties:
-        autoSelect:
-          description: If *true*, Veeam Backup & Replication automatically selects a gateway server.
-          type: boolean
-        gatewayServerIds:
-          description: Array of gateway server IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - autoSelect
-      type: object
-    AmazonS3GlacierStorageModel:
+    GoogleCloudStorageModel:
       allOf:
       - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: Amazon S3 Glacier storage.
-    IBMCloudStorageAccountModel:
-      description: Account used to access the IBM Cloud storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of a cloud credentials record used to access the storage.
-          format: uuid
-          type: string
-        regionId:
-          description: ID of a region where the storage is located.
-          type: string
-        servicePoint:
-          description: Endpoint address and port number of the storage.
-          type: string
-      required:
-      - servicePoint
-      - regionId
-      - credentialsId
-      - connectionSettings
-      type: object
-    AmazonS3StorageProxyApplianceModel:
-      description: Amazon S3 proxy appliance.
-      properties:
-        ec2InstanceType:
-          description: EC2 instance type for the proxy appliance.
-          type: string
-        redirectorPort:
-          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
-          type: integer
-        securityGroup:
-          description: Security group associated with the proxy appliance.
-          type: string
-        subnet:
-          description: Subnet for the proxy appliance.
-          type: string
-        vpc:
-          description: Amazon VPC where Veeam Backup & Replication launches the target instance.
-          type: string
-      type: object
-    GoogleCloudStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
           account:
             $ref: '#/components/schemas/GoogleCloudStorageAccountModel'
@@ -2626,112 +3025,46 @@ components:
         - mountServer
         type: object
       description: Google Cloud storage.
-    ERepositoryStatesFiltersOrderColumn:
-      description: Orders repositories by the specified column.
-      enum:
-      - Name
-      - Type
-      - Host
-      - Path
-      - CapacityGB
-      - FreeGB
-      - UsedSpaceGB
-      - Description
-      type: string
-    BackupStorageSettingsEncryptionModel:
-      description: Encryption of backup files.
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    ArchiveTierAdvancedSettingsModel:
+      description: Advanced settings of the archive tier.
       properties:
-        encryptionPasswordIdOrNull:
-          description: ID of the password used for encryption. The value is *null* for exported objects.
-          format: uuid
-          type: string
-        encryptionPasswordTag:
-          description: Tag used to identify the password.
-          type: string
-        isEnabled:
-          description: If *true*, the content of backup files is encrypted.
+        archiveDeduplicationEnabled:
+          description: If *true*, each backup is stored as a delta to the previous one.
           type: boolean
-      required:
-      - isEnabled
+        costOptimizedArchiveEnabled:
+          description: If *true*, backups are archived as soon as the remaining retention time is above minimum storage period for the repository.
+          type: boolean
       type: object
-    RepositoriesPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Repository'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    ESessionState:
-      description: State of the session.
+    EAllowedBackupsType:
+      description: Type of backup files that can be stored on the extent.
       enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
+      - All
+      - FullsOnly
+      - IncrementsOnly
+      - None
       type: string
-    AmazonSnowballEdgeStorageBucketModel:
-      description: Amazon S3 bucket.
+    GoogleCloudStorageBucketModel:
+      description: Google Cloud object storage bucket where backup data is stored.
       properties:
         bucketName:
-          description: Name of the Amazon S3 bucket.
+          description: Name of a Google Cloud bucket.
           type: string
         folderName:
           description: Name of the folder that the object storage repository is mapped to.
           type: string
+        nearlineStorageEnabled:
+          description: If *true*, the nearline storage class is used.
+          type: boolean
         storageConsumptionLimit:
           $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      type: object
-    CapacityTierOverridePolicyModel:
-      description: Policy that overrides the move policy if the scale-out backup repository is reaching its capacity.
-      properties:
-        isEnabled:
-          description: If *true*, Veeam Backup & Replication moves oldest backup files sooner if the scale-out backup repository is reaching the threshold.
-          type: boolean
-        overrideSpaceThresholdPercents:
-          description: Space threshold of the scale-out backup repository, in percent.
-          type: integer
       required:
-      - isEnabled
+      - bucketName
+      - folderName
       type: object
-    AzureDataBoxStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AzureDataBoxStorageAccountModel'
-          container:
-            $ref: '#/components/schemas/AzureDataBoxStorageContainerModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-        required:
-        - account
-        - container
-        type: object
-      description: Microsoft Azure Data Box storage.
-    WindowsLocalStorageSpec:
+    LinuxLocalStorageSpec:
       allOf:
       - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
@@ -2742,156 +3075,34 @@ components:
           mountServer:
             $ref: '#/components/schemas/MountServerSettingsModel'
           repository:
-            $ref: '#/components/schemas/WindowsLocalRepositorySettingsModel'
+            $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
         required:
         - hostId
         - mountServer
         - repository
         type: object
-      description: Microsoft Windows-based repository.
-    AzureDataBoxStorageAccountModel:
-      description: Account used to access the Azure Data Box storage.
+      description: Linux-based repository.
+    AzureArchiveStorageContainerModel:
+      description: Azure Archive container where backup data is stored.
       properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of the cloud credentials record.
-          format: uuid
+        containerName:
+          description: Name of an Azure Archive container.
           type: string
-        serviceEndpoint:
-          description: Service endpoint address of the Azure Data Box device.
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
           type: string
       required:
-      - serviceEndpoint
-      - credentialsId
+      - containerName
+      - folderName
       type: object
-    PlacementPolicyModel:
-      description: Backup file placement policy.
-      properties:
-        enforceStrictPlacementPolicy:
-          description: If *true*, the backup job fails in case the placement policy cannot be met.
-          type: boolean
-        settings:
-          description: Placement policy settings.
-          items:
-            $ref: '#/components/schemas/BackupPlacementSettingsModel'
-          type: array
-        type:
-          $ref: '#/components/schemas/EPlacementPolicyType'
-      required:
-      - type
-      type: object
-    EDayOfWeek:
-      description: Day of the week.
+    EAzureRegionType:
+      description: Region where your Microsoft Azure container is located.
       enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
+      - China
+      - Germany
+      - Global
+      - Government
       type: string
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    RepositoryStatesFilters:
-      description: Filters repositories by the specified parameters.
-      properties:
-        capacityFilter:
-          description: Filters repositories by repository capacity.
-          format: double
-          type: number
-        freeSpaceFilter:
-          description: Filters repositories by repository free space.
-          format: double
-          type: number
-        idFilter:
-          format: uuid
-          type: string
-        limit:
-          description: Returns the specified number of repositories.
-          format: int32
-          type: integer
-        nameFilter:
-          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
-          type: string
-        orderAsc:
-          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/ERepositoryStatesFiltersOrderColumn'
-        skip:
-          description: Skips the specified number of repositories.
-          format: int32
-          type: integer
-        typeFilter:
-          $ref: '#/components/schemas/ERepositoryType'
-        usedSpaceFilter:
-          description: Filters repositories by repository used space.
-          format: double
-          type: number
-      type: object
-    ScaleOutExtentMaintenanceSpec:
-      properties:
-        repositoryIds:
-          description: Array of repository IDs added as scale-out backup repository extents.
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - repositoryIds
-      type: object
-    AzureArchiveStorageAccountModel:
-      description: Account used to access the Azure Archive storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of a cloud credentials record used to access the storage.
-          format: uuid
-          type: string
-        regionType:
-          $ref: '#/components/schemas/EAzureRegionType'
-      required:
-      - credentialsId
-      - regionType
-      - connectionSettings
-      type: object
-    BaseRepositoryModel:
-      properties:
-        description:
-          description: Description of the backup repository.
-          type: string
-        id:
-          description: ID of the backup repository.
-          format: uuid
-          type: string
-        name:
-          description: Name of the backup repository.
-          type: string
-        tag:
-          description: Tag that identifies the backup repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      type: object
     WasabiCloudStorageModel:
       allOf:
       - $ref: '#/components/schemas/BaseRepositoryModel'
@@ -2916,113 +3127,44 @@ components:
         - mountServer
         type: object
       description: Wasabi Cloud storage.
-    RepositoryStatesResult:
-      properties:
-        data:
-          description: Array of repository states.
-          items:
-            $ref: '#/components/schemas/RepositoryStateModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    RepositoryBehaviorFilters:
-      properties:
-        overwriteOwner:
-          type: boolean
-      type: object
-    S3CompatibleStorageBucketModel:
-      description: Bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Bucket name.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    BaseRepositorySpec:
-      properties:
-        description:
-          description: Description of the backup repository.
-          type: string
-        name:
-          description: Name of the backup repository.
-          type: string
-        tag:
-          description: Tag that identifies the backup repository.
-          type: string
-        type:
-          $ref: '#/components/schemas/ERepositoryType'
-      type: object
-    LinuxLocalStorageModel:
+    RepositoryModel:
       allOf:
+      - discriminator:
+          mapping:
+            AmazonS3: '#/components/schemas/AmazonS3StorageModel'
+            AmazonS3Glacier: '#/components/schemas/AmazonS3GlacierStorageModel'
+            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeStorageModel'
+            AzureArchive: '#/components/schemas/AzureArchiveStorageModel'
+            AzureBlob: '#/components/schemas/AzureBlobStorageModel'
+            AzureDataBox: '#/components/schemas/AzureDataBoxStorageModel'
+            GoogleCloud: '#/components/schemas/GoogleCloudStorageModel'
+            IBMCloud: '#/components/schemas/IBMCloudStorageModel'
+            LinuxHardened: '#/components/schemas/LinuxHardenedStorageModel'
+            LinuxLocal: '#/components/schemas/LinuxLocalStorageModel'
+            Nfs: '#/components/schemas/NfsStorageModel'
+            S3Compatible: '#/components/schemas/S3CompatibleStorageModel'
+            Smb: '#/components/schemas/SmbStorageModel'
+            WasabiCloud: '#/components/schemas/WasabiCloudStorageModel'
+            WinLocal: '#/components/schemas/WindowsLocalStorageModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsLocalStorageModel'
+        - $ref: '#/components/schemas/LinuxLocalStorageModel'
+        - $ref: '#/components/schemas/NfsStorageModel'
+        - $ref: '#/components/schemas/SmbStorageModel'
+        - $ref: '#/components/schemas/AzureBlobStorageModel'
+        - $ref: '#/components/schemas/AzureDataBoxStorageModel'
+        - $ref: '#/components/schemas/AmazonS3StorageModel'
+        - $ref: '#/components/schemas/AmazonSnowballEdgeStorageModel'
+        - $ref: '#/components/schemas/S3CompatibleStorageModel'
+        - $ref: '#/components/schemas/GoogleCloudStorageModel'
+        - $ref: '#/components/schemas/IBMCloudStorageModel'
+        - $ref: '#/components/schemas/AmazonS3GlacierStorageModel'
+        - $ref: '#/components/schemas/AzureArchiveStorageModel'
+        - $ref: '#/components/schemas/WasabiCloudStorageModel'
+        - $ref: '#/components/schemas/LinuxHardenedStorageModel'
       - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          hostId:
-            description: ID of the server that is used as a backup repository.
-            format: uuid
-            type: string
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/LinuxLocalRepositorySettingsModel'
-        required:
-        - hostId
-        - mountServer
-        - repository
-        type: object
-      description: Linux-based repository.
-    PerformanceTierSpec:
-      description: Performance tier.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/PerformanceTierAdvancedSettingsModel'
-        performanceExtents:
-          description: Array of performance extents.
-          items:
-            $ref: '#/components/schemas/PerformanceExtentSpec'
-          type: array
-      required:
-      - performanceExtents
-      type: object
-    SmbStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
-          share:
-            $ref: '#/components/schemas/SmbRepositoryShareSettingsModel'
-        required:
-        - mountServer
-        - repository
-        - share
-        type: object
-      description: SMB backup repository.
-    AmazonS3IAStorageModel:
-      description: Standard Infrequent Access.
-      properties:
-        isEnabled:
-          description: If *true*, Standard Infrequent Access is enabled.
-          type: boolean
-        singleZoneEnabled:
-          description: If *true*, Amazon S3 One Zone-Infrequent Access is enabled.
-          type: boolean
-      type: object
-    LinuxHardenedRepositorySettingsModel:
+    LinuxLocalRepositorySettingsModel:
       description: Repository settings.
       properties:
         advancedSettings:
@@ -3033,9 +3175,6 @@ components:
         enableTaskLimit:
           description: If *true*, the maximum number of concurrent tasks is limited.
           type: boolean
-        makeRecentBackupsImmutableDays:
-          description: Number of days to keep immutable backups.
-          type: integer
         maxTaskCount:
           description: Maximum number of concurrent tasks.
           type: integer
@@ -3049,62 +3188,73 @@ components:
           description: If *true*, fast cloning on XFS volumes is used.
           type: boolean
       type: object
-    Repository:
-      required:
-      - id
-      - name
-      - description
-      - amazonAccountId
-      - amazonStorageFolder
-      - enableEncryption
+    AzureDataBoxStorageContainerModel:
+      description: Azure Data Box container where backup data is stored.
+      properties:
+        containerName:
+          description: Container name.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
       type: object
+    NfsRepositoryShareSettingsModel:
+      description: Share settings.
       properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        amazonAccountId:
-          type: string
-          format: uuid
-        amazonStorageFolder:
-          type: string
-        amazonBucketId:
-          type: string
-          format: uuid
-        hint:
-          type: string
-        enableEncryption:
-          type: boolean
-        _embedded:
-          $ref: '#/components/schemas/RepositoryEmbedded'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    AmazonSnowballEdgeStorageAccountModel:
-      description: AWS account used to access the AWS Snowball Edge storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of the cloud credentials record.
-          format: uuid
-          type: string
-        regionId:
-          description: For AWS Snowball Edge, the region is `snow`.
-          type: string
-        servicePoint:
-          description: Service point address and port number of the AWS Snowball Edge device.
+        gatewayServer:
+          $ref: '#/components/schemas/RepositoryShareGatewayModel'
+        sharePath:
+          description: Path to the shared folder that is used as a backup repository.
           type: string
       required:
-      - servicePoint
-      - regionId
-      - credentialsId
-      - gatewayServer
+      - sharePath
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    NetworkRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+      type: object
+    RepositoriesResult:
+      properties:
+        data:
+          description: Array of backup repositories.
+          items:
+            $ref: '#/components/schemas/RepositoryModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
       type: object
     WasabiCloudStorageSpec:
       allOf:
@@ -3130,145 +3280,74 @@ components:
         - mountServer
         type: object
       description: Wasabi Cloud storage.
-    CapacityExtentModel:
-      properties:
-        id:
-          description: ID of an object storage repository added as a capacity extent.
-          format: uuid
-          type: string
-      required:
-      - id
-      type: object
-    ScaleOutRepositoriesResult:
-      properties:
-        data:
-          description: Array of scale-out backup repositories.
-          items:
-            $ref: '#/components/schemas/ScaleOutRepositoryModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    SmbStorageModel:
+    AzureBlobStorageSpec:
       allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
+          account:
+            $ref: '#/components/schemas/AzureBlobStorageAccountModel'
+          container:
+            $ref: '#/components/schemas/AzureBlobStorageContainerModel'
+          enableTaskLimit:
+            description: If *true*, the maximum number of concurrent tasks is limited.
+            type: boolean
+          maxTaskCount:
+            description: Maximum number of concurrent tasks.
+            type: integer
           mountServer:
             $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/NetworkRepositorySettingsModel'
-          share:
-            $ref: '#/components/schemas/SmbRepositoryShareSettingsModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AzureStorageProxyModel'
         required:
+        - account
+        - container
         - mountServer
-        - repository
-        - share
         type: object
-      description: SMB backup repository.
-    RepositoryAdvancedSettingsModel:
-      description: Advanced settings for the backup repository.
+      description: Microsoft Azure Blob storage.
+    S3CompatibleStorageBucketModel:
+      description: Bucket where backup data is stored.
       properties:
-        RotatedDriveCleanupMode:
-          $ref: '#/components/schemas/ERotatedDriveCleanupMode'
-        alignDataBlocks:
-          description: If *true*, Veeam Backup & Replication aligns VM data saved to a backup file at a 4 KB block boundary.
-          type: boolean
-        decompressBeforeStoring:
-          description: If *true*, Veeam Backup & Replication decompresses backup data blocks before storing to improve deduplication ratios.
-          type: boolean
-        perVmBackup:
-          description: If *true*, Veeam Backup & Replication creates a separate backup file for every VM in the job.
-          type: boolean
-        rotatedDrives:
-          description: If *true*, the repository drive is rotated.
-          type: boolean
+        bucketName:
+          description: Bucket name.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - bucketName
+      - folderName
       type: object
-    NfsRepositoryShareSettingsModel:
-      description: Share settings.
+    AzureStorageProxyModel:
+      description: Azure storage proxy appliance.
       properties:
-        gatewayServer:
-          $ref: '#/components/schemas/RepositoryShareGatewayModel'
-        sharePath:
-          description: Path to the shared folder that is used as a backup repository.
+        instanceSize:
+          description: Size of the appliance.
+          type: string
+        redirectorPort:
+          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
+          type: integer
+        resourceGroup:
+          description: Resource group associated with the proxy appliance.
+          type: string
+        subnet:
+          description: Subnet for the proxy appliance.
+          type: string
+        subscriptionId:
+          description: ID that Veeam Backup & Replication assigned to the Azure subscription.
+          format: uuid
+          type: string
+        virtualNetwork:
+          description: Network to which the helper appliance is connected.
           type: string
       required:
-      - sharePath
+      - subscriptionId
       type: object
-    ArchiveTierAdvancedSettingsModel:
-      description: Advanced settings of the archive tier.
-      properties:
-        archiveDeduplicationEnabled:
-          description: If *true*, each backup is stored as a delta to the previous one.
-          type: boolean
-        costOptimizedArchiveEnabled:
-          description: If *true*, backups are archived as soon as the remaining retention time is above minimum storage period for the repository.
-          type: boolean
-      type: object
-    RepositorySpec:
-      allOf:
-      - discriminator:
-          mapping:
-            AmazonS3: '#/components/schemas/AmazonS3StorageSpec'
-            AmazonS3Glacier: '#/components/schemas/AmazonS3GlacierStorageSpec'
-            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeStorageSpec'
-            AzureArchive: '#/components/schemas/AzureArchiveStorageSpec'
-            AzureBlob: '#/components/schemas/AzureBlobStorageSpec'
-            AzureDataBox: '#/components/schemas/AzureDataBoxStorageSpec'
-            GoogleCloud: '#/components/schemas/GoogleCloudStorageSpec'
-            IBMCloud: '#/components/schemas/IBMCloudStorageSpec'
-            LinuxHardened: '#/components/schemas/LinuxHardenedStorageSpec'
-            LinuxLocal: '#/components/schemas/LinuxLocalStorageSpec'
-            Nfs: '#/components/schemas/NfsStorageSpec'
-            S3Compatible: '#/components/schemas/S3CompatibleStorageSpec'
-            Smb: '#/components/schemas/SmbStorageSpec'
-            WasabiCloud: '#/components/schemas/WasabiCloudStorageSpec'
-            WinLocal: '#/components/schemas/WindowsLocalStorageSpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/WindowsLocalStorageSpec'
-        - $ref: '#/components/schemas/LinuxLocalStorageSpec'
-        - $ref: '#/components/schemas/NfsStorageSpec'
-        - $ref: '#/components/schemas/SmbStorageSpec'
-        - $ref: '#/components/schemas/AzureBlobStorageSpec'
-        - $ref: '#/components/schemas/AzureDataBoxStorageSpec'
-        - $ref: '#/components/schemas/AmazonS3StorageSpec'
-        - $ref: '#/components/schemas/AmazonSnowballEdgeStorageSpec'
-        - $ref: '#/components/schemas/S3CompatibleStorageSpec'
-        - $ref: '#/components/schemas/GoogleCloudStorageSpec'
-        - $ref: '#/components/schemas/IBMCloudStorageSpec'
-        - $ref: '#/components/schemas/AmazonS3GlacierStorageSpec'
-        - $ref: '#/components/schemas/AzureArchiveStorageSpec'
-        - $ref: '#/components/schemas/WasabiCloudStorageSpec'
-        - $ref: '#/components/schemas/LinuxHardenedStorageSpec'
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-    AzureBlobStorageAccountModel:
-      description: Account used to access the Azure Blob storage.
+    AmazonSnowballEdgeStorageAccountModel:
+      description: AWS account used to access the AWS Snowball Edge storage.
       properties:
         connectionSettings:
           $ref: '#/components/schemas/ObjectStorageConnectionModel'
@@ -3276,85 +3355,18 @@ components:
           description: ID of the cloud credentials record.
           format: uuid
           type: string
-        regionType:
-          $ref: '#/components/schemas/EAzureRegionType'
-      required:
-      - credentialsId
-      - regionType
-      - connectionSettings
-      type: object
-    GoogleCloudStorageAccountModel:
-      description: Account used to access the Google Cloud storage.
-      properties:
-        connectionSettings:
-          $ref: '#/components/schemas/ObjectStorageConnectionModel'
-        credentialsId:
-          description: ID of a cloud credentials record used to access the storage.
-          format: uuid
-          type: string
         regionId:
-          description: ID of a region where the storage bucket is located.
+          description: For AWS Snowball Edge, the region is `snow`.
+          type: string
+        servicePoint:
+          description: Service point address and port number of the AWS Snowball Edge device.
           type: string
       required:
-      - credentialsId
+      - servicePoint
       - regionId
-      - connectionSettings
+      - credentialsId
+      - gatewayServer
       type: object
-    RepositoriesFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/RepositoriesSortColumns'
-    WindowsLocalRepositorySettingsModel:
-      description: Repository settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
-        enableReadWriteLimit:
-          description: If *true*, reading and writing speed is limited.
-          type: boolean
-        enableTaskLimit:
-          description: If *true*, the maximum number of concurrent tasks is limited.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        path:
-          description: Path to the folder where backup files are stored.
-          type: string
-        readWriteRate:
-          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
-          type: integer
-      type: object
-    AmazonS3GlacierStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonS3GlacierStorageBucketModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: Amazon S3 Glacier storage.
     WindowsLocalStorageModel:
       allOf:
       - $ref: '#/components/schemas/BaseRepositoryModel'
@@ -3373,77 +3385,187 @@ components:
         - repository
         type: object
       description: Microsoft Windows-based repository.
-    DeleteRepositoryFilters:
+    VPowerNFSPortSettingsModel:
+      description: Network ports used by the vPower NFS Service.
       properties:
-        deleteBackups:
-          type: boolean
+        mountPort:
+          description: Mount port.
+          type: integer
+        vPowerNFSPort:
+          description: vPower NFS port.
+          type: integer
       type: object
-    AmazonS3StorageSpec:
+    WindowsLocalStorageSpec:
       allOf:
       - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
-          account:
-            $ref: '#/components/schemas/AmazonS3StorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonS3StorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
+          hostId:
+            description: ID of the server that is used as a backup repository.
+            format: uuid
+            type: string
           mountServer:
             $ref: '#/components/schemas/MountServerSettingsModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AmazonS3StorageProxyApplianceModel'
+          repository:
+            $ref: '#/components/schemas/WindowsLocalRepositorySettingsModel'
         required:
-        - account
-        - bucket
+        - hostId
         - mountServer
+        - repository
         type: object
-      description: Amazon S3 storage.
-    PerformanceTierAdvancedSettingsModel:
-      description: Advanced settings of the performance tier.
+      description: Microsoft Windows-based repository.
+    AmazonS3StorageBucketModel:
+      description: Amazon S3 bucket where backup data is stored.
       properties:
-        fullWhenExtentOffline:
-          description: If *true*, Veeam Backup & Replication creates a full backup file instead of an incremental backup file in case the required extent is offline.
+        bucketName:
+          description: Name of an Amazon S3 bucket.
+          type: string
+        folderName:
+          description: Name of the folder that the object storage repository is mapped to.
+          type: string
+        immutability:
+          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
+        infrequentAccessStorage:
+          $ref: '#/components/schemas/AmazonS3IAStorageModel'
+        regionId:
+          description: ID of a region where the Amazon S3 bucket is located.
+          type: string
+        storageConsumptionLimit:
+          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
+      required:
+      - regionId
+      - bucketName
+      - folderName
+      type: object
+    S3CompatibleProxyModel:
+      description: Proxy appliance for the S3 compatible storage.
+      properties:
+        managedServerId:
+          description: ID of a managed server used as a proxy appliance.
+          format: uuid
+          type: string
+      required:
+      - managedServerId
+      type: object
+    SmbRepositoryShareSettingsModel:
+      description: Share settings.
+      properties:
+        credentialsId:
+          description: ID of the credentials record used to access the shared folder.
+          format: uuid
+          type: string
+        gatewayServer:
+          $ref: '#/components/schemas/RepositoryShareGatewayModel'
+        sharePath:
+          description: Path to the shared folder that is used as a backup repository.
+          type: string
+      required:
+      - credentialsId
+      - sharePath
+      type: object
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    RepositoryAdvancedSettingsModel:
+      description: Advanced settings for the backup repository.
+      properties:
+        RotatedDriveCleanupMode:
+          $ref: '#/components/schemas/ERotatedDriveCleanupMode'
+        alignDataBlocks:
+          description: If *true*, Veeam Backup & Replication aligns VM data saved to a backup file at a 4 KB block boundary.
+          type: boolean
+        decompressBeforeStoring:
+          description: If *true*, Veeam Backup & Replication decompresses backup data blocks before storing to improve deduplication ratios.
           type: boolean
         perVmBackup:
           description: If *true*, Veeam Backup & Replication creates a separate backup file for every VM in the job.
           type: boolean
-      type: object
-    RepositoryCreateSpec:
-      required:
-      - name
-      - amazonBucketId
-      - amazonAccountId
-      - amazonStorageFolder
-      - enableEncryption
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-        description:
-          type: string
-        amazonAccountId:
-          type: string
-          format: uuid
-        amazonBucketId:
-          type: string
-          format: uuid
-        amazonStorageFolder:
-          type: string
-        password:
-          type: string
-        hint:
-          type: string
-        enableEncryption:
+        rotatedDrives:
+          description: If *true*, the repository drive is rotated.
           type: boolean
-    AzureDataBoxStorageSpec:
+      type: object
+    AzureArchiveStorageModel:
       allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AzureArchiveStorageAccountModel'
+          container:
+            $ref: '#/components/schemas/AzureArchiveStorageContainerModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AzureStorageProxyModel'
+        required:
+        - account
+        - container
+        - proxyAppliance
+        type: object
+      description: Microsoft Azure Archive storage.
+    AzureDataBoxStorageAccountModel:
+      description: Account used to access the Azure Data Box storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of the cloud credentials record.
+          format: uuid
+          type: string
+        serviceEndpoint:
+          description: Service endpoint address of the Azure Data Box device.
+          type: string
+      required:
+      - serviceEndpoint
+      - credentialsId
+      type: object
+    IBMCloudStorageAccountModel:
+      description: Account used to access the IBM Cloud storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of a cloud credentials record used to access the storage.
+          format: uuid
+          type: string
+        regionId:
+          description: ID of a region where the storage is located.
+          type: string
+        servicePoint:
+          description: Endpoint address and port number of the storage.
+          type: string
+      required:
+      - servicePoint
+      - regionId
+      - credentialsId
+      - connectionSettings
+      type: object
+    PlacementPolicyModel:
+      description: Backup file placement policy.
+      properties:
+        enforceStrictPlacementPolicy:
+          description: If *true*, the backup job fails in case the placement policy cannot be met.
+          type: boolean
+        settings:
+          description: Placement policy settings.
+          items:
+            $ref: '#/components/schemas/BackupPlacementSettingsModel'
+          type: array
+        type:
+          $ref: '#/components/schemas/EPlacementPolicyType'
+      required:
+      - type
+      type: object
+    AzureDataBoxStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
       - properties:
           account:
             $ref: '#/components/schemas/AzureDataBoxStorageAccountModel'
@@ -3460,204 +3582,20 @@ components:
         - container
         type: object
       description: Microsoft Azure Data Box storage.
-    RepositoryEmbedded:
-      type: object
-      properties:
-        amazonAccount:
-          type: string
-        amazonAccountLink:
-          $ref: '#/components/schemas/Link'
-        region:
-          type: string
-        regionLink:
-          $ref: '#/components/schemas/Link'
-        bucket:
-          type: string
-        bucketLink:
-          $ref: '#/components/schemas/Link'
-    RepositoriesFilters_2:
-      properties:
-        hostIdFilter:
-          description: Filters repositories by ID of the backup server.
-          format: uuid
-          type: string
-        limit:
-          description: Maximum number of repositories to return.
-          format: int32
-          type: integer
-        nameFilter:
-          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
-          type: string
-        orderAsc:
-          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/ERepositoryFiltersOrderColumn'
-        pathFilter:
-          description: Filters repositories by path to the folder where backup files are stored.
-          type: string
-        skip:
-          description: Number of repositories to skip.
-          format: int32
-          type: integer
-        typeFilter:
-          $ref: '#/components/schemas/ERepositoryType'
-        vmbApiFilter:
-          description: Filters repositories by VM Backup API parameters converted to the base64 string. To obtain the string, call the `GetApiProductInfoString` method of VM Backup API.
-          type: string
-        vmbApiPlatform:
-          description: Filters repositories by ID of a platform that you use to communicate with VM Backup API.
-          format: uuid
-          type: string
-      type: object
-    ObjectStorageImmutabilityModel:
-      description: Object storage immutability.
-      properties:
-        daysCount:
-          description: Immutability period.
-          type: integer
-        isEnabled:
-          description: If *true*, storage immutability is enabled.
-          type: boolean
-      type: object
-    AzureDataBoxStorageContainerModel:
-      description: Azure Data Box container where backup data is stored.
-      properties:
-        containerName:
-          description: Container name.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-      type: object
-    EAmazonRegionType:
-      description: AWS region type.
+    EConsumptionLimitKind:
+      description: Measurement unit.
       enum:
-      - China
-      - Global
-      - Government
+      - TB
+      - PB
       type: string
-    S3CompatibleProxyModel:
-      description: Proxy appliance for the S3 compatible storage.
-      properties:
-        managedServerId:
-          description: ID of a managed server used as a proxy appliance.
-          format: uuid
-          type: string
-      required:
-      - managedServerId
-      type: object
-    RepositoryPasswordValidationResult:
-      required:
-      - isSuccess
-      type: object
-      properties:
-        isSuccess:
-          type: boolean
-    ValidationMessage:
-      type: object
-      properties:
-        severity:
-          enum:
-          - Warning
-          - Error
-          type: string
-        message:
-          type: string
-        contextId:
-          type: string
-          format: uuid
-    IBMCloudStorageBucketModel:
-      description: IBM Cloud bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of an IBM Cloud bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    AmazonSnowballEdgeStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: AWS Snowball Edge storage.
-    BackupWindowSettingModel:
-      description: Time scheme that defines permitted days and hours for the job to start.
-      properties:
-        days:
-          description: Array of per-day schemes.
-          items:
-            $ref: '#/components/schemas/BackupWindowDayHoursModel'
-          type: array
-      required:
-      - days
-      type: object
-    IBMCloudStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          account:
-            $ref: '#/components/schemas/IBMCloudStorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/IBMCloudStorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/S3CompatibleProxyModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: IBM Cloud storage.
-    AzureArchiveStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AzureArchiveStorageAccountModel'
-          container:
-            $ref: '#/components/schemas/AzureArchiveStorageContainerModel'
-          proxyAppliance:
-            $ref: '#/components/schemas/AzureStorageProxyModel'
-        required:
-        - account
-        - container
-        - proxyAppliance
-        type: object
-      description: Microsoft Azure Archive storage.
-    NfsStorageSpec:
+    ERepositoryAccessType:
+      description: Access type.
+      enum:
+      - DenyAll
+      - AllowAll
+      - AllowExplicit
+      type: string
+    SmbStorageSpec:
       allOf:
       - $ref: '#/components/schemas/BaseRepositorySpec'
       - properties:
@@ -3666,33 +3604,58 @@ components:
           repository:
             $ref: '#/components/schemas/NetworkRepositorySettingsModel'
           share:
-            $ref: '#/components/schemas/NfsRepositoryShareSettingsModel'
+            $ref: '#/components/schemas/SmbRepositoryShareSettingsModel'
         required:
         - mountServer
         - repository
         - share
         type: object
-      description: NFS backup repository.
-    RepositoryAccessPermissionsModel:
-      description: Repository access permissions.
+      description: SMB backup repository.
+    ScaleOutRepositoriesFilters:
       properties:
-        accessPolicy:
-          $ref: '#/components/schemas/ERepositoryAccessType'
-        accounts:
-          description: (For *AllowExplicit* access policy) Array of accounts that have access to the backup repository.
-          items:
-            type: string
-          type: array
-        encryptBackups:
-          description: If *true*, Veeam Backup & Replication encrypts Veeam Agent backup files stored in the backup repository.
+        limit:
+          description: Maximum number of repositories to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        orderAsc:
+          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
           type: boolean
-        passwordId:
-          description: ID of the password used for encryption.
+        orderColumn:
+          $ref: '#/components/schemas/EScaleOutRepositoryFiltersOrderColumn'
+        skip:
+          description: Number of repositories to skip.
+          format: int32
+          type: integer
+      type: object
+    ObjectStorageConsumptionLimitModel:
+      description: Soft consumption limit for the storage. The limit can be exceeded temporarily.
+      properties:
+        consumptionLimitCount:
+          description: Limit value.
+          type: integer
+        consumptionLimitKind:
+          $ref: '#/components/schemas/EConsumptionLimitKind'
+        isEnabled:
+          description: If *true*, the consumption limit is enabled.
+          type: boolean
+      type: object
+    PerformanceExtentModel:
+      properties:
+        id:
+          description: ID of the backup repository added as a performance extent.
           format: uuid
           type: string
+        name:
+          description: Name of the backup repository added as a performance extent.
+          type: string
+        status:
+          $ref: '#/components/schemas/ERepositoryExtentStatusType'
       required:
-      - accessPolicy
-      - encryptBackups
+      - id
+      - name
       type: object
     SessionModel:
       properties:
@@ -3748,217 +3711,79 @@ components:
       - state
       - usn
       type: object
-    SmbRepositoryShareSettingsModel:
-      description: Share settings.
+    ScaleOutRepositoryModel:
       properties:
-        credentialsId:
-          description: ID of the credentials record used to access the shared folder.
-          format: uuid
+        archiveTier:
+          $ref: '#/components/schemas/ArchiveTierModel'
+        capacityTier:
+          $ref: '#/components/schemas/CapacityTierModel'
+        description:
+          description: Description of the scale-out backup repository.
           type: string
-        gatewayServer:
-          $ref: '#/components/schemas/RepositoryShareGatewayModel'
-        sharePath:
-          description: Path to the shared folder that is used as a backup repository.
-          type: string
-      required:
-      - credentialsId
-      - sharePath
-      type: object
-    ERepositoryAccessType:
-      description: Access type.
-      enum:
-      - DenyAll
-      - AllowAll
-      - AllowExplicit
-      type: string
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
-    WasabiCloudStorageBucketModel:
-      description: Wasabi bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of a Wasabi bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutability:
-          $ref: '#/components/schemas/ObjectStorageImmutabilityModel'
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
-      type: object
-    ScaleOutRepositoriesFilters:
-      properties:
-        limit:
-          description: Maximum number of repositories to return.
-          format: int32
-          type: integer
-        nameFilter:
-          description: Filters repositories by the `nameFilter` pattern. The pattern can match any repository parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
-          type: string
-        orderAsc:
-          description: Sorts repositories in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EScaleOutRepositoryFiltersOrderColumn'
-        skip:
-          description: Number of repositories to skip.
-          format: int32
-          type: integer
-      type: object
-    RepositoryPasswordValidationSpec:
-      required:
-      - password
-      type: object
-      properties:
-        password:
-          minLength: 1
-          type: string
-    AmazonS3GlacierStorageBucketModel:
-      description: Amazon S3 Glacier bucket where backup data is stored.
-      properties:
-        bucketName:
-          description: Name of an Amazon S3 Glacier bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        immutabilityEnabled:
-          description: If *true*, storage immutability is enabled.
-          type: boolean
-        regionId:
-          description: ID of a region where the Amazon S3 bucket is located.
-          type: string
-        useDeepArchive:
-          description: If *true*, Glacier Deep Archive is used for backups with the retention policy over 180 days.
-          type: boolean
-      required:
-      - regionId
-      - bucketName
-      - folderName
-      type: object
-    LinuxHardenedStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          hostId:
-            description: ID of the server that is used as a backup repository.
-            format: uuid
-            type: string
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
-        required:
-        - hostId
-        - mountServer
-        - repository
-        type: object
-      description: Linux hardened repository.
-    PerformanceExtentModel:
-      properties:
         id:
-          description: ID of the backup repository added as a performance extent.
+          description: ID of the scale-out backup repository.
           format: uuid
           type: string
         name:
-          description: Name of the backup repository added as a performance extent.
+          description: Name of the scale-out backup repository.
           type: string
-        status:
-          $ref: '#/components/schemas/ERepositoryExtentStatusType'
+        performanceTier:
+          $ref: '#/components/schemas/PerformanceTierModel'
+        placementPolicy:
+          $ref: '#/components/schemas/PlacementPolicyModel'
+        tag:
+          description: Tag assigned to the scale-out backup repository.
+          type: string
       required:
       - id
       - name
+      - description
+      - performanceTier
       type: object
-    LinuxHardenedStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          hostId:
-            description: ID of the server that is used as a backup repository.
-            format: uuid
-            type: string
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-          repository:
-            $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
-        required:
-        - hostId
-        - mountServer
-        - repository
-        type: object
-      description: Linux hardened repository.
-    GoogleCloudStorageModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositoryModel'
-      - properties:
-          account:
-            $ref: '#/components/schemas/GoogleCloudStorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/GoogleCloudStorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: Google Cloud storage.
-    GoogleCloudStorageBucketModel:
-      description: Google Cloud object storage bucket where backup data is stored.
+    PerformanceTierAdvancedSettingsModel:
+      description: Advanced settings of the performance tier.
       properties:
-        bucketName:
-          description: Name of a Google Cloud bucket.
-          type: string
-        folderName:
-          description: Name of the folder that the object storage repository is mapped to.
-          type: string
-        nearlineStorageEnabled:
-          description: If *true*, the nearline storage class is used.
+        fullWhenExtentOffline:
+          description: If *true*, Veeam Backup & Replication creates a full backup file instead of an incremental backup file in case the required extent is offline.
           type: boolean
-        storageConsumptionLimit:
-          $ref: '#/components/schemas/ObjectStorageConsumptionLimitModel'
-      required:
-      - bucketName
-      - folderName
+        perVmBackup:
+          description: If *true*, Veeam Backup & Replication creates a separate backup file for every VM in the job.
+          type: boolean
       type: object
-    AmazonSnowballEdgeStorageSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseRepositorySpec'
-      - properties:
-          account:
-            $ref: '#/components/schemas/AmazonSnowballEdgeStorageAccountModel'
-          bucket:
-            $ref: '#/components/schemas/AmazonSnowballEdgeStorageBucketModel'
-          enableTaskLimit:
-            description: If *true*, the maximum number of concurrent tasks is limited.
-            type: boolean
-          maxTaskCount:
-            description: Maximum number of concurrent tasks.
-            type: integer
-          mountServer:
-            $ref: '#/components/schemas/MountServerSettingsModel'
-        required:
-        - account
-        - bucket
-        - mountServer
-        type: object
-      description: AWS Snowball Edge storage.
+    BackupStorageSettingsEncryptionModel:
+      description: Encryption of backup files.
+      properties:
+        encryptionPasswordIdOrNull:
+          description: ID of the password used for encryption. The value is *null* for exported objects.
+          format: uuid
+          type: string
+        encryptionPasswordTag:
+          description: Tag used to identify the password.
+          type: string
+        isEnabled:
+          description: If *true*, the content of backup files is encrypted.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    ArchiveTierModel:
+      description: Archive tier.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/ArchiveTierAdvancedSettingsModel'
+        archivePeriodDays:
+          description: Number of days after which backup chains on the capacity extent are moved to the archive extent. Specify *0* to offload inactive backup chains on the same day they are created.
+          type: integer
+        extentId:
+          description: ID of an object storage repository added as an archive extent.
+          format: uuid
+          type: string
+        isEnabled:
+          description: If *true*, the archive tier is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
     AzureBlobStorageModel:
       allOf:
       - $ref: '#/components/schemas/BaseRepositoryModel'
@@ -3983,19 +3808,257 @@ components:
         - mountServer
         type: object
       description: Microsoft Azure Blob storage.
+    PerformanceTierSpec:
+      description: Performance tier.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/PerformanceTierAdvancedSettingsModel'
+        performanceExtents:
+          description: Array of performance extents.
+          items:
+            $ref: '#/components/schemas/PerformanceExtentSpec'
+          type: array
+      required:
+      - performanceExtents
+      type: object
+    DeleteRepositoryFilters:
+      properties:
+        deleteBackups:
+          type: boolean
+      type: object
+    MountServerSettingsModel:
+      description: Settings for the mount server that is used for file-level and application items restore.
+      properties:
+        mountServerId:
+          description: ID of the mount server.
+          format: uuid
+          type: string
+        vPowerNFSEnabled:
+          description: If *true*, the vPower NFS Service is enabled on the mount server.
+          type: boolean
+        vPowerNFSPortSettings:
+          $ref: '#/components/schemas/VPowerNFSPortSettingsModel'
+        writeCacheFolder:
+          description: Path to the folder used for writing cache during mount operations.
+          type: string
+      required:
+      - mountServerId
+      - vPowerNFSEnabled
+      - writeCacheFolder
+      type: object
+    BackupPlacementSettingsModel:
+      properties:
+        allowedBackups:
+          $ref: '#/components/schemas/EAllowedBackupsType'
+        extentId:
+          description: ID of a performance extent.
+          format: uuid
+          type: string
+      required:
+      - extentId
+      - allowedBackups
+      type: object
+    ERepositoryType:
+      description: Repository type.
+      enum:
+      - WinLocal
+      - LinuxLocal
+      - Smb
+      - Nfs
+      - AzureBlob
+      - AzureDataBox
+      - AzureArchive
+      - AmazonS3
+      - AmazonSnowballEdge
+      - AmazonS3Glacier
+      - S3Compatible
+      - GoogleCloud
+      - IBMCloud
+      - ExtendableRepository
+      - DDBoost
+      - ExaGrid
+      - HPStoreOnceIntegration
+      - Quantum
+      - WasabiCloud
+      - LinuxHardened
+      - Infinidat
+      - Fujitsu
+      type: string
+    ERepositoryFiltersOrderColumn:
+      description: Sorts repositories by one of the repository parameters.
+      enum:
+      - Name
+      - Description
+      - Type
+      - Host
+      - Path
+      type: string
+    LinuxHardenedRepositorySettingsModel:
+      description: Repository settings.
+      properties:
+        advancedSettings:
+          $ref: '#/components/schemas/RepositoryAdvancedSettingsModel'
+        enableReadWriteLimit:
+          description: If *true*, reading and writing speed is limited.
+          type: boolean
+        enableTaskLimit:
+          description: If *true*, the maximum number of concurrent tasks is limited.
+          type: boolean
+        makeRecentBackupsImmutableDays:
+          description: Number of days to keep immutable backups.
+          type: integer
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        path:
+          description: Path to the folder where backup files are stored.
+          type: string
+        readWriteRate:
+          description: Maximum rate that restricts the total speed of reading and writing data to the backup repository disk.
+          type: integer
+        useFastCloningOnXFSVolumes:
+          description: If *true*, fast cloning on XFS volumes is used.
+          type: boolean
+      type: object
+    S3CompatibleStorageAccountModel:
+      description: Account used to access the S3 compatible storage.
+      properties:
+        connectionSettings:
+          $ref: '#/components/schemas/ObjectStorageConnectionModel'
+        credentialsId:
+          description: ID of a cloud credentials record used to access the storage.
+          format: uuid
+          type: string
+        regionId:
+          description: ID of a region where the storage is located.
+          type: string
+        servicePoint:
+          description: Endpoint address and port number of the storage.
+          type: string
+      required:
+      - servicePoint
+      - regionId
+      - credentialsId
+      - gatewayServer
+      type: object
+    AzureArchiveStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          account:
+            $ref: '#/components/schemas/AzureArchiveStorageAccountModel'
+          container:
+            $ref: '#/components/schemas/AzureArchiveStorageContainerModel'
+          proxyAppliance:
+            $ref: '#/components/schemas/AzureStorageProxyModel'
+        required:
+        - account
+        - container
+        - proxyAppliance
+        type: object
+      description: Microsoft Azure Archive storage.
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    LinuxHardenedStorageSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositorySpec'
+      - properties:
+          hostId:
+            description: ID of the server that is used as a backup repository.
+            format: uuid
+            type: string
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
+        required:
+        - hostId
+        - mountServer
+        - repository
+        type: object
+      description: Linux hardened repository.
+    LinuxHardenedStorageModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseRepositoryModel'
+      - properties:
+          hostId:
+            description: ID of the server that is used as a backup repository.
+            format: uuid
+            type: string
+          mountServer:
+            $ref: '#/components/schemas/MountServerSettingsModel'
+          repository:
+            $ref: '#/components/schemas/LinuxHardenedRepositorySettingsModel'
+        required:
+        - hostId
+        - mountServer
+        - repository
+        type: object
+      description: Linux hardened repository.
+    AmazonS3StorageProxyApplianceModel:
+      description: Amazon S3 proxy appliance.
+      properties:
+        ec2InstanceType:
+          description: EC2 instance type for the proxy appliance.
+          type: string
+        redirectorPort:
+          description: TCP port used to route requests between the proxy appliance and backup infrastructure components.
+          type: integer
+        securityGroup:
+          description: Security group associated with the proxy appliance.
+          type: string
+        subnet:
+          description: Subnet for the proxy appliance.
+          type: string
+        vpc:
+          description: Amazon VPC where Veeam Backup & Replication launches the target instance.
+          type: string
+      type: object
+    AmazonS3IAStorageModel:
+      description: Standard Infrequent Access.
+      properties:
+        isEnabled:
+          description: If *true*, Standard Infrequent Access is enabled.
+          type: boolean
+        singleZoneEnabled:
+          description: If *true*, Amazon S3 One Zone-Infrequent Access is enabled.
+          type: boolean
+      type: object
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
+    apiVersionParam_2:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
       description: Not found. No object was found with the path parameter specified in the request.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     Forbidden:
       content:
         application/json:
@@ -4008,31 +4071,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error_2'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    InternalServerError:
+    BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-  parameters:
-    apiVersionParam_2:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
   securitySchemes:
     Bearer:
       name: Authorization
       in: header
       type: apiKey
       description: Bearer \<JWT\>
+x-refined-from:
+- veeam-backup-aws-openapi.yml
+- veeam-backup-replication-openapi.yml

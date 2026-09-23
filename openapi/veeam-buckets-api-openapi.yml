@@ -1,8 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Buckets API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Backup for AWS public API 1.0 Buckets API
 security:
 - Bearer: []
 tags:
@@ -101,6 +100,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Buckets
+      x-summary-source: derived
   /api/v1/cloudInfrastructure/buckets/{bucketId}:
     get:
       x-veeam-authorize:
@@ -154,6 +155,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Bucket by id
+      x-summary-source: derived
   /api/v1/cloudInfrastructure/buckets/rescan/{amazonAccountId}:
     post:
       x-veeam-authorize:
@@ -207,6 +210,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Rescan bucket
+      x-summary-source: derived
   /api/v1/cloudInfrastructure/buckets/{bucketId}/folders:
     get:
       x-veeam-authorize:
@@ -291,6 +296,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get bucket folders
+      x-summary-source: derived
   /api/v1/cloudInfrastructure/buckets/{bucketId}/folders/{folderName}:
     get:
       x-veeam-authorize:
@@ -349,54 +356,33 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Get bucket folder
+      x-summary-source: derived
 components:
   schemas:
-    BucketFoldersFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
-    Link:
+    Bucket:
       required:
-      - rel
-      - href
-      - method
+      - id
+      - name
+      - location
       type: object
       properties:
-        rel:
+        id:
           type: string
-        href:
+          format: uuid
+        name:
           type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    BucketFoldersPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/BucketFolder'
+        location:
+          type: object
+          required:
+          - id
+          - name
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
         _links:
           type: array
           uniqueItems: false
@@ -434,76 +420,6 @@ components:
         folderId:
           format: uuid
           type: string
-    Bucket:
-      required:
-      - id
-      - name
-      - location
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        location:
-          type: object
-          required:
-          - id
-          - name
-          properties:
-            id:
-              type: string
-              format: uuid
-            name:
-              type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketsPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-    BucketFoldersFiltersOrderColumns:
-      enum:
-      - NameAsc
-      - NameDesc
-      type: string
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -525,8 +441,7 @@ components:
           format: int32
           description: The HTTP status code generated by the origin server for this occurrence of the problem.
           minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
+          exclusiveMaximum: 600
         errorCode:
           description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
           enum:
@@ -553,6 +468,99 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
+    BucketsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

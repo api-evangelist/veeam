@@ -1,8 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents VmRestorePoints API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  title: Veeam Backup for AWS public API 1.0 Vm Restore Points API
 security:
 - Bearer: []
 tags:
@@ -96,6 +95,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Restore points get all
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}:
     get:
       tags:
@@ -146,6 +147,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Restore points get one by id
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/restoreDisk:
     post:
       tags:
@@ -207,6 +210,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Restore disk
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/validateRestoreDisk:
     post:
       tags:
@@ -274,6 +279,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate restore disk
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/restoreVm:
     post:
       tags:
@@ -335,6 +342,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Restore vm
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/validateRestoreVm:
     post:
       tags:
@@ -402,6 +411,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Validate restore vm
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/restoreFile:
     post:
       tags:
@@ -510,6 +521,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Start flr
+      x-summary-source: derived
   /api/v1/vmRestorePoints/{vmRestorePointId}/defaultNetworkSettings:
     get:
       tags:
@@ -560,46 +573,26 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Error'
+      summary: Vm restore points get default network settings
+      x-summary-source: derived
 components:
   schemas:
-    Link:
+    StartFlrResponse:
       required:
-      - rel
-      - href
-      - method
+      - sessionId
+      - url
       type: object
       properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    ValidationMessage:
-      type: object
-      properties:
-        severity:
-          enum:
-          - Warning
-          - Error
-          type: string
-        message:
-          type: string
-        contextId:
+        sessionId:
           type: string
           format: uuid
-    JobTypes:
-      enum:
-      - Backup
-      - Snapshot
-      - ManualSnapshot
-      - Replica
-      type: string
+        url:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     VmRestorePointsSortColumns:
       type: string
       enum:
@@ -630,6 +623,19 @@ components:
           items:
             $ref: '#/components/schemas/VmRestorePointsSortColumns'
           uniqueItems: false
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     VirtualMachineRestoreOptions:
       type: object
       properties:
@@ -646,84 +652,54 @@ components:
           type: boolean
         toAlternative:
           $ref: '#/components/schemas/VirtualMachineToAlternativeRestoreOptions'
-    StartFlrResponse:
+    DiskRestoreOptions:
       required:
-      - sessionId
-      - url
+      - diskId
       type: object
       properties:
-        sessionId:
+        diskId:
           type: string
-          format: uuid
-        url:
+        name:
           type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    Error:
-      description: ''
+    DiskBulkRestoreOptions:
       required:
-      - type
-      - title
-      - status
-      - errorCode
-      type: object
-      properties:
-        type:
-          type: string
-          format: uri
-          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
-        title:
-          type: string
-          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
-        status:
-          type: integer
-          format: int32
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          minimum: 400
-          maximum: 600
-          exclusiveMaximum: true
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        details:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        instance:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-          format: uri
-        data:
-          type: object
-          description: Error payload
-          additionalProperties:
-            type: object
-    FlrOptions:
+      - volumes
       type: object
       properties:
         reason:
           type: string
-    Ec2DiskTypes:
-      type: string
-      enum:
-      - Standart
-      - St1
-      - Sc1
-      - Io1
-      - Gp2
+        amazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        volumes:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/DiskRestoreOptions'
+        toAlternative:
+          $ref: '#/components/schemas/DiskBulkRestoreToAlternativeOptions'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     VirtualMachineToAlternativeRestoreOptions:
       required:
       - regionId
@@ -749,6 +725,19 @@ components:
           type: boolean
         encryptionKeyId:
           type: string
+    ValidationMessage:
+      type: object
+      properties:
+        severity:
+          enum:
+          - Warning
+          - Error
+          type: string
+        message:
+          type: string
+        contextId:
+          type: string
+          format: uuid
     VmRestorePoint:
       required:
       - id
@@ -789,19 +778,69 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    SessionLink:
+    Error:
+      description: ''
       required:
-      - sessionId
+      - type
+      - title
+      - status
+      - errorCode
       type: object
       properties:
-        sessionId:
+        type:
           type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+          format: uri
+          description: An URI reference that identifies the problem type. When dereferenced, it SHOULD provide human-readable documentation for the problem type (e.g. using HTML).
+        title:
+          type: string
+          description: A short, summary of the problem type. Written in English and readable for engineers (usually not suited for non technical stakeholders and not localized)
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          minimum: 400
+          exclusiveMaximum: 600
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        details:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        instance:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+          format: uri
+        data:
+          type: object
+          description: Error payload
+          additionalProperties:
+            type: object
+    Ec2DiskTypes:
+      type: string
+      enum:
+      - Standart
+      - St1
+      - Sc1
+      - Io1
+      - Gp2
+    JobTypes:
+      enum:
+      - Backup
+      - Snapshot
+      - ManualSnapshot
+      - Replica
+      type: string
     VmBackupVolume:
       required:
       - diskId
@@ -827,27 +866,6 @@ components:
           type: string
         encryptionKeyName:
           type: string
-    DiskBulkRestoreOptions:
-      required:
-      - volumes
-      type: object
-      properties:
-        reason:
-          type: string
-        amazonAccountId:
-          type: string
-          format: uuid
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        volumes:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/DiskRestoreOptions'
-        toAlternative:
-          $ref: '#/components/schemas/DiskBulkRestoreToAlternativeOptions'
     DiskBulkRestoreToAlternativeOptions:
       required:
       - availabilityZoneId
@@ -860,34 +878,6 @@ components:
         preserveEncryptionForVolumes:
           type: boolean
         encryptionKeyId:
-          type: string
-    VmRestorePointsPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/VmRestorePoint'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    DiskRestoreOptions:
-      required:
-      - diskId
-      type: object
-      properties:
-        diskId:
-          type: string
-        name:
           type: string
     VmRestorePointDefaultNetworkSettings:
       required:
@@ -909,24 +899,31 @@ components:
           type: string
         securityGroupId:
           type: string
+    VmRestorePointsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/VmRestorePoint'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    FlrOptions:
+      type: object
+      properties:
+        reason:
+          type: string
   requestBodies:
-    VirtualMachineRestoreOptions:
-      content:
-        application/json-patch+json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        text/json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/*+json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/csp-report:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
     DiskBulkRestoreOptions:
       content:
         application/json-patch+json:
@@ -944,6 +941,23 @@ components:
         application/csp-report:
           schema:
             $ref: '#/components/schemas/DiskBulkRestoreOptions'
+    VirtualMachineRestoreOptions:
+      content:
+        application/json-patch+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        text/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/*+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/csp-report:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
   parameters:
     apiVersionParam:
       name: x-api-version

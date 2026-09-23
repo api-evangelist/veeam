@@ -1,8 +1,11 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Agents API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
@@ -212,73 +215,38 @@ paths:
         claims:
         - UpdateComputerRecoveryToken
 components:
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   schemas:
-    EComputerRecoveryTokenFiltersOrderColumn:
-      enum:
-      - Name
-      - ExpirationDate
-      type: string
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    ComputerRecoveryTokenSpec:
-      properties:
-        backupIds:
-          description: Array of backup IDs whose data you want to restore with the recovery token.
-          items:
-            format: uuid
-            type: string
-          type: array
-        expirationDate:
-          description: Date and time when the access token expires.
-          format: date-time
-          type: string
-      required:
-      - backupIds
-      - expirationDate
-      type: object
-    ComputerRecoveryTokenModel:
-      properties:
-        expirationDate:
-          description: Date and time when the recovery token expires.
-          format: date-time
-          type: string
-        id:
-          description: ID of the recovery token.
-          format: uuid
-          type: string
-        name:
-          description: Friendly name of the recovery token.
-          type: string
-        recoveryToken:
-          description: Recovery token.
-          type: string
-      required:
-      - id
-      - name
-      - expirationDate
-      type: object
-    ComputerRecoveryTokenFilters:
-      properties:
-        expirationDateAfter:
-          format: date-time
-          type: string
-        expirationDateBefore:
-          format: date-time
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
-      type: object
     ComputerRecoveryTokenResult:
       properties:
         data:
@@ -291,6 +259,9 @@ components:
       required:
       - data
       - pagination
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
       type: object
     PaginationResult:
       description: Pagination settings.
@@ -341,37 +312,69 @@ components:
       - errorCode
       - message
       type: object
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    ComputerRecoveryTokenSpec:
+      properties:
+        backupIds:
+          description: Array of backup IDs whose data you want to restore with the recovery token.
+          items:
+            format: uuid
+            type: string
+          type: array
+        expirationDate:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+      required:
+      - backupIds
+      - expirationDate
+      type: object
+    EComputerRecoveryTokenFiltersOrderColumn:
+      enum:
+      - Name
+      - ExpirationDate
+      type: string
+    ComputerRecoveryTokenModel:
+      properties:
+        expirationDate:
+          description: Date and time when the recovery token expires.
+          format: date-time
+          type: string
+        id:
+          description: ID of the recovery token.
+          format: uuid
+          type: string
+        name:
+          description: Friendly name of the recovery token.
+          type: string
+        recoveryToken:
+          description: Recovery token.
+          type: string
+      required:
+      - id
+      - name
+      - expirationDate
+      type: object
+    ComputerRecoveryTokenFilters:
+      properties:
+        expirationDateAfter:
+          format: date-time
+          type: string
+        expirationDateBefore:
+          format: date-time
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -383,7 +386,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>

@@ -1,12 +1,20 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  version: 1.0-rev0
-  title: Veeam Backup for AWS public API 1.0 Agents Jobs API
-  description: The Agents section defines paths and operations for managing recovery tokens used for bare metal recovery.
+  description: This document lists paths (endpoints) of the Veeam Backup & Replication REST API and operations that you can perform by sending HTTP requests to the paths.
+  title: Veeam Backup & Replication REST Jobs API
+  version: 1.1-rev0
+  x-veeam-prev-version: 1.0-rev2
+servers:
+- url: /
 security:
 - Bearer: []
 tags:
-- description: The Jobs section defines paths and operations for managing jobs that are coordinated by the backup server.<br> <div class="note"><strong>NOTE</strong><br>In the current version, the REST API supports only jobs of the *Backup* type that include only VMware vSphere objects of the following types&#58; *VirtualMachine*, *vCenterServer*, *Datacenter*, *Cluster*, *Host*, *ResourcePool*, *Folder*, *Template*, *Tag*, *Datastore* and *DatastoreCluster*. Objects with tags combination (or *Multitag*) are not supported.</div>
+- description: 'The Jobs section defines paths and operations for managing jobs that are coordinated by the backup server.
+
+
+    NOTE
+
+    In the current version, the REST API supports only jobs of the *Backup* type that include only VMware vSphere objects of the following types: *VirtualMachine*, *vCenterServer*, *Datacenter*, *Cluster*, *Host*, *ResourcePool*, *Folder*, *Template*, *Tag*, *Datastore* and *DatastoreCluster*. Objects with tags combination (or *Multitag*) are not supported.'
   name: Jobs
 paths:
   /api/v1/jobs:
@@ -2177,82 +2185,205 @@ paths:
         - StopJobs
 components:
   schemas:
-    VmwareObjectDiskModel:
-      properties:
-        disks:
-          description: Array of disks.
-          items:
-            description: ID of the disk.
-            type: string
-          type: array
-        disksToProcess:
-          $ref: '#/components/schemas/EVmwareDisksTypeToProcess'
-        removeFromVMConfiguration:
-          description: If *true*, the disk is removed from VM configuration.
-          type: boolean
-        vmObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-      required:
-      - disks
-      - disksToProcess
-      - vmObject
-      type: object
-    BackupLinuxScriptModel:
-      description: Paths to pre-freeze and post-thaw scripts for Linux VMs.
-      properties:
-        postThawScript:
-          description: Path to a post-thaw script.
-          type: string
-        preFreezeScript:
-          description: Path to a pre-freeze script.
-          type: string
-      type: object
-    GFSPolicySettingsWeeklyModel:
-      description: Weekly GFS retention policy.
+    GFSPolicySettingsMonthlyModel:
+      description: Monthly GFS retention policy.
       properties:
         desiredTime:
-          $ref: '#/components/schemas/EDayOfWeek'
+          $ref: '#/components/schemas/ESennightOfMonth'
         isEnabled:
-          description: If *true*, the weekly GFS retention policy is enabled.
+          description: If *true*, the monthly GFS retention policy is enabled.
           type: boolean
-        keepForNumberOfWeeks:
-          description: Number of weeks to keep full backups for archival purposes. Possible values are from 1 through 9999.
+        keepForNumberOfMonths:
+          description: Number of months to keep full backups for archival purposes. Possible values are from 1 through 999.
           type: integer
       required:
       - isEnabled
       type: object
-    JobStartSpec:
+    GuestOsCredentialsModel:
+      description: VM custom credentials.
       properties:
-        performActiveFull:
-          default: false
-          description: If *true*, Veeam Backup & Replication will perform an active full backup.
-          type: boolean
-        startChainedJobs:
-          default: false
-          description: If *true*, Veeam Backup & Replication will start chained jobs as well.
-          type: boolean
-      required:
-      - performActiveFull
-      type: object
-    JobScriptsSettingsModel:
-      description: Script settings.
-      properties:
-        dayOfWeek:
-          description: Days of the week when the scripts must be executed.
+        credentialsPerMachine:
+          description: Individual credentials for VMs.
           items:
-            $ref: '#/components/schemas/EDayOfWeek'
+            $ref: '#/components/schemas/GuestOsCredentialsPerMachineModel'
           type: array
           uniqueItems: true
-        periodicityType:
-          $ref: '#/components/schemas/EScriptPeriodicityType'
-        postCommand:
-          $ref: '#/components/schemas/ScriptCommand'
-        preCommand:
-          $ref: '#/components/schemas/ScriptCommand'
-        runScriptEvery:
-          description: Number of the backup job session after which the scripts must be executed.
-          type: integer
+        credsId:
+          description: Credentials ID for Microsoft Windows VMs.
+          format: uuid
+          type: string
+        credsType:
+          $ref: '#/components/schemas/ECredentialsType'
+      required:
+      - credsId
+      - credsType
       type: object
+    ESennightOfMonth:
+      description: Sennight of the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Fifth
+      - Last
+      type: string
+    ScriptCommand:
+      description: Script settings.
+      properties:
+        command:
+          description: Path to the script.
+          type: string
+        isEnabled:
+          description: If *true*, script execution is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    EApplicationSettingsVSS:
+      description: Behavior scenario for application-aware processing.
+      enum:
+      - requireSuccess
+      - ignoreFailures
+      - disabled
+      type: string
+    BackupWindowSettingModel:
+      description: Time scheme that defines permitted days and hours for the job to start.
+      properties:
+        days:
+          description: Array of per-day schemes.
+          items:
+            $ref: '#/components/schemas/BackupWindowDayHoursModel'
+          type: array
+      required:
+      - days
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    EBackupModeType:
+      description: Type of the backup method used to create a restore point.
+      enum:
+      - Full
+      - Incremental
+      - ReverseIncremental
+      - Transofrm
+      - TransformForeverIncremental
+      type: string
+    BaseJobModel:
+      properties:
+        description:
+          description: Description of the job.
+          type: string
+        id:
+          description: ID of the job.
+          format: uuid
+          type: string
+        isDisabled:
+          description: If *true*, the job is disabled.
+          type: boolean
+        name:
+          description: Name of the job.
+          type: string
+        type:
+          $ref: '#/components/schemas/EJobType'
+      type: object
+    EJobWorkload:
+      description: Workload which the job must process.
+      enum:
+      - application
+      - cloudVm
+      - file
+      - server
+      - workstation
+      - vm
+      type: string
+    EBackupScriptProcessingMode:
+      description: Scenario for scripts execution.
+      enum:
+      - disableExec
+      - ignoreExecFailures
+      - requireSuccess
+      type: string
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    ERetentionPolicyType:
+      description: Type of the retention policy.
+      enum:
+      - RestorePoints
+      - Days
+      type: string
+    BackupJobExclusionsTemplates:
+      description: VM templates exclusion.
+      properties:
+        excludeFromIncremental:
+          description: If *true*, VM templates are excluded from the incremental backup.
+          type: boolean
+        isEnabled:
+          description: If *true*, VM templates are excluded from the backup.
+          type: boolean
+      type: object
+    ScheduleAfterThisJobModel:
+      description: Job chaining options.
+      properties:
+        isEnabled:
+          description: If *true*, job chaining is enabled.
+          type: boolean
+        jobName:
+          description: Name of the preceding job.
+          type: string
+      required:
+      - isEnabled
+      type: object
+    FullBackupMaintenanceModel:
+      description: Maintenance settings for full backup files.
+      properties:
+        RemoveData:
+          $ref: '#/components/schemas/FullBackupMaintenanceRemoveDataModel'
+        defragmentAndCompact:
+          $ref: '#/components/schemas/FullBackupMaintenanceDefragmentAndCompactModel'
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    EJobType:
+      description: Type of the job.
+      enum:
+      - Backup
+      type: string
     Error:
       properties:
         errorCode:
@@ -2279,309 +2410,25 @@ components:
       - errorCode
       - message
       type: object
-    EVmwareDisksTypeToProcess:
-      description: Type of disk selection.
-      enum:
-      - AllDisks
-      - SystemOnly
-      - SelectedDisks
-      type: string
-    EDayNumberInMonth:
-      description: Week day number in the month.
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      - OnDay
-      type: string
-    EJobWorkload:
-      description: Workload which the job must process.
-      enum:
-      - application
-      - cloudVm
-      - file
-      - server
-      - workstation
-      - vm
-      type: string
-    EJobFiltersOrderColumn:
-      description: Orders jobs by the specified column.
-      enum:
-      - Name
-      - Type
-      - Description
-      type: string
-    GFSPolicySettingsYearlyModel:
-      description: Yearly GFS retention policy.
+    BackupObjectIndexingModel:
+      description: Guest OS indexing options for the VM.
       properties:
-        desiredTime:
-          $ref: '#/components/schemas/EMonth'
-        isEnabled:
-          description: If *true*, the yearly GFS retention policy is enabled.
-          type: boolean
-        keepForNumberOfYears:
-          description: Number of years to keep full backups for archival purposes. Possible values are from 1 through 999.
-          type: integer
-      required:
-      - isEnabled
-      type: object
-    BackupJobExclusions:
-      description: Objects excluded from the backup.
-      properties:
-        disks:
-          description: Array of VM disks excluded from the backup.
-          items:
-            $ref: '#/components/schemas/VmwareObjectDiskModel'
-          type: array
-        templates:
-          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
-        vms:
-          description: Array of VMs excluded from the backup.
-          items:
-            $ref: '#/components/schemas/VmwareObjectSizeModel'
-          type: array
-      type: object
-    BackupFSExclusionsModel:
-      description: VM guest OS file exclusion.
-      properties:
-        exclusionPolicy:
-          $ref: '#/components/schemas/EBackupExclusionPolicy'
-        itemsList:
-          description: Array of files and folders. Full paths to files and folders, environmental variables and file masks with the asterisk (*) and question mark (?) characters can be used.
+        guestFSIndexingMode:
+          $ref: '#/components/schemas/EGuestFSIndexingMode'
+        indexingList:
+          description: Array of folders. Environmental variables and full paths to folders can be used.
           items:
             type: string
           type: array
       required:
-      - exclusionPolicy
+      - guestFSIndexingMode
       type: object
-    BackupScheduleModel:
-      description: Job scheduling options.
-      properties:
-        afterThisJob:
-          $ref: '#/components/schemas/ScheduleAfterThisJobModel'
-        backupWindow:
-          $ref: '#/components/schemas/ScheduleBackupWindowModel'
-        continuously:
-          $ref: '#/components/schemas/ScheduleBackupWindowModel'
-        daily:
-          $ref: '#/components/schemas/ScheduleDailyModel'
-        monthly:
-          $ref: '#/components/schemas/ScheduleMonthlyModel'
-        periodically:
-          $ref: '#/components/schemas/SchedulePeriodicallyModel'
-        retry:
-          $ref: '#/components/schemas/ScheduleRetryModel'
-        runAutomatically:
-          default: false
-          description: If *true*, job scheduling is enabled.
-          type: boolean
-      required:
-      - runAutomatically
-      type: object
-    AdvancedStorageScheduleWeeklyModel:
-      description: Weekly schedule settings.
-      properties:
-        days:
-          description: Days of the week when the operation is performed.
-          items:
-            $ref: '#/components/schemas/EDayOfWeek'
-          type: array
-          uniqueItems: true
-        isEnabled:
-          default: false
-          description: If *true*, the weekly schedule is enabled.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    BackupStorageSettingModel:
-      description: Storage settings.
-      properties:
-        compressionLevel:
-          $ref: '#/components/schemas/ECompressionLevel'
-        enableInlineDataDedup:
-          description: If *true*, Veeam Backup & Replication deduplicates VM data before storing it in the backup repository.
-          type: boolean
-        encryption:
-          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
-        excludeDeletedFileBlocks:
-          description: If *true*, Veeam Backup & Replication does not copy deleted file blocks.
-          type: boolean
-        excludeSwapFileBlocks:
-          description: If *true*, Veeam Backup & Replication excludes swap file blocks from processing.
-          type: boolean
-        storageOptimization:
-          $ref: '#/components/schemas/EStorageOptimization'
-      type: object
-    EBackupOracleLogsSettings:
-      description: Type of archived logs processing.
-      enum:
-      - preserve
-      - deleteExpiredHours
-      - deleteExpiredGBs
-      type: string
-    EPeriodicallyKinds:
-      description: Time unit for periodic job scheduling.
-      enum:
-      - Hours
-      - Minutes
-      - Seconds
-      - Days
-      type: string
-    SessionResultModel:
-      description: Session result.
-      properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
-    BackupJobModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseJobModel'
-      - properties:
-          guestProcessing:
-            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
-          isHighPriority:
-            description: If *true*, the job has a high priority in getting backup infrastructure resources.
-            type: boolean
-          schedule:
-            $ref: '#/components/schemas/BackupScheduleModel'
-          storage:
-            $ref: '#/components/schemas/BackupJobStorageModel'
-          virtualMachines:
-            $ref: '#/components/schemas/BackupJobVirtualMachinesModel'
-        required:
-        - guestProcessing
-        - isHighPriority
-        - schedule
-        - storage
-        - virtualMachines
-        type: object
-    ESennightOfMonth:
-      description: Sennight of the month.
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Fifth
-      - Last
-      type: string
-    BackupJobSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseJobSpec'
-      - properties:
-          guestProcessing:
-            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
-          isHighPriority:
-            default: false
-            description: If *true*, the job has a high priority in getting backup infrastructure resources.
-            type: boolean
-          schedule:
-            $ref: '#/components/schemas/BackupScheduleModel'
-          storage:
-            $ref: '#/components/schemas/BackupJobStorageModel'
-          virtualMachines:
-            $ref: '#/components/schemas/BackupJobVirtualMachinesSpec'
-        required:
-        - guestProcessing
-        - isHighPriority
-        - schedule
-        - storage
-        - virtualMachines
-        type: object
-    BackupJobStorageModel:
-      description: Backup storage settings.
-      properties:
-        advancedSettings:
-          $ref: '#/components/schemas/BackupJobAdvancedSettingsModel'
-        backupProxies:
-          $ref: '#/components/schemas/BackupProxiesSettingsModel'
-        backupRepositoryId:
-          description: ID of the backup repository.
-          format: uuid
-          type: string
-        gfsPolicy:
-          $ref: '#/components/schemas/GFSPolicySettingsModel'
-        retentionPolicy:
-          $ref: '#/components/schemas/BackupJobRetentionPolicySettingsModel'
-      required:
-      - backupProxies
-      - backupRepositoryId
-      - retentionPolicy
-      type: object
-    BackupWindowDayHoursModel:
-      description: Hourly scheme for a day.
-      properties:
-        day:
-          $ref: '#/components/schemas/EDayOfWeek'
-        hours:
-          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
-          type: string
-      required:
-      - day
-      - hours
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
-    ECredentialsType:
-      description: Credentials type.
-      enum:
-      - Standard
-      - Linux
-      type: string
-    EGuestFSIndexingMode:
-      description: Indexing mode.
-      enum:
-      - disable
-      - indexAll
-      - indexAllExcept
-      - indexOnly
-      type: string
-    BackupJobGuestProcessingModel:
-      description: Guest processing settings.
-      properties:
-        appAwareProcessing:
-          $ref: '#/components/schemas/BackupApplicationAwareProcessingModel'
-        guestCredentials:
-          $ref: '#/components/schemas/GuestOsCredentialsModel'
-        guestFSIndexing:
-          $ref: '#/components/schemas/GuestFileSystemIndexingModel'
-        guestInteractionProxies:
-          $ref: '#/components/schemas/GuestInteractionProxiesSettingsModel'
-      required:
-      - appAwareProcessing
-      - guestFSIndexing
-      type: object
-    JobStatesResult:
+    JobsResult:
       properties:
         data:
-          description: Array of job states.
+          description: Array of jobs.
           items:
-            $ref: '#/components/schemas/JobStateModel'
+            $ref: '#/components/schemas/JobModel'
           type: array
         pagination:
           $ref: '#/components/schemas/PaginationResult'
@@ -2589,219 +2436,31 @@ components:
       - data
       - pagination
       type: object
-    BackupSQLSettingsModel:
-      description: Microsoft SQL Server transaction log settings.
+    VmwareObjectSizeModel:
       properties:
-        backupMinsCount:
-          description: Frequency of transaction log backup, in minutes.
-          type: integer
-        keepDaysCount:
-          description: Number of days to keep transaction logs in the backup repository.
-          type: integer
-        logShippingServers:
-          $ref: '#/components/schemas/BackupLogShippingServersModel'
-        logsProcessing:
-          $ref: '#/components/schemas/ESQLLogsProcessing'
-        retainLogBackups:
-          $ref: '#/components/schemas/ERetainLogBackupsType'
-      required:
-      - logsProcessing
-      type: object
-    NotificationVmAttributeSettingsModel:
-      description: VM attribute settings.
-      properties:
-        appendToExisitingValue:
-          description: If *true*, information about successfully performed backup is appended to the existing value of the attribute added by the user.
-          type: boolean
-        isEnabled:
-          description: If *true*, information about successfully performed backup is written to a VM attribute.
-          type: boolean
-        notes:
-          description: Name of the VM attribute.
-          type: string
-      required:
-      - isEnabled
-      type: object
-    ERetentionPolicyType:
-      description: Type of the retention policy.
-      enum:
-      - RestorePoints
-      - Days
-      type: string
-    VmwareObjectModel:
-      description: VMware vSphere object.
-      properties:
-        hostName:
-          description: Name of the VMware vSphere server that hosts the object.
-          type: string
-        name:
-          description: Name of the VMware vSphere object.
-          type: string
-        objectId:
-          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
-          type: string
-        type:
-          $ref: '#/components/schemas/EVmwareInventoryType'
-      required:
-      - name
-      - type
-      - hostName
-      type: object
-    SchedulePeriodicallyModel:
-      description: Periodic scheduling options.
-      properties:
-        backupWindow:
-          $ref: '#/components/schemas/BackupWindowSettingModel'
-        frequency:
-          description: Number of time units that defines the time interval.
-          type: integer
-        isEnabled:
-          default: false
-          description: If *true*, periodic schedule is enabled.
-          type: boolean
-        periodicallyKind:
-          $ref: '#/components/schemas/EPeriodicallyKinds'
-        startTimeWithinAnHour:
-          description: Start time within an hour, in minutes.
-          type: integer
-      required:
-      - isEnabled
-      type: object
-    BaseJobModel:
-      properties:
-        description:
-          description: Description of the job.
-          type: string
-        id:
-          description: ID of the job.
-          format: uuid
-          type: string
-        isDisabled:
-          description: If *true*, the job is disabled.
-          type: boolean
-        name:
-          description: Name of the job.
-          type: string
-        type:
-          $ref: '#/components/schemas/EJobType'
-      type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    EBackupModeType:
-      description: Type of the backup method used to create a restore point.
-      enum:
-      - Full
-      - Incremental
-      - ReverseIncremental
-      - Transofrm
-      - TransformForeverIncremental
-      type: string
-    BackupJobVirtualMachinesSpec:
-      description: Arrays of objects that you want to back up or exclude from the backup.
-      properties:
-        excludes:
-          $ref: '#/components/schemas/BackupJobExclusionsSpec'
-        includes:
-          description: Array of objects that you want to back up.
-          items:
-            $ref: '#/components/schemas/VmwareObjectModel'
-          type: array
-      required:
-      - includes
-      type: object
-    BackupApplicationSettingsModel:
-      properties:
-        exclusions:
-          $ref: '#/components/schemas/BackupFSExclusionsModel'
-        oracle:
-          $ref: '#/components/schemas/BackupOracleSettingsModel'
-        scripts:
-          $ref: '#/components/schemas/BackupScriptSettingsModel'
-        sql:
-          $ref: '#/components/schemas/BackupSQLSettingsModel'
-        transactionLogs:
-          $ref: '#/components/schemas/ETransactionLogsSettings'
-        usePersistentGuestAgent:
-          description: If *true*, persistent guest agent is used.
-          type: boolean
-        vmObject:
+        inventoryObject:
           $ref: '#/components/schemas/VmwareObjectModel'
-        vss:
-          $ref: '#/components/schemas/EApplicationSettingsVSS'
-      required:
-      - vmObject
-      - vss
-      type: object
-    FullBackupMaintenanceRemoveDataModel:
-      description: Backup data setting for deleted VMs.
-      properties:
-        afterDays:
-          description: Number of days.
-          type: integer
-        isEnabled:
-          description: If *true*, Veeam Backup & Replication keeps the backup data of deleted VMs for the `afterDays` number of days.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    EDailyKinds:
-      description: Kind of daily scheduling scheme.
-      enum:
-      - Everyday
-      - WeekDays
-      - SelectedDays
-      type: string
-    BackupProxiesSettingsModel:
-      description: Backup proxy settings.
-      properties:
-        autoSelection:
-          default: true
-          description: If *true*, backup proxies are detected and assigned automatically.
-          type: boolean
-        proxyIds:
-          description: Array of proxy IDs.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-      required:
-      - autoSelection
-      type: object
-    GuestFileSystemIndexingModel:
-      description: VM guest OS file indexing.
-      properties:
-        indexingSettings:
-          description: Array of VMs with guest OS file indexing options.
-          items:
-            $ref: '#/components/schemas/BackupIndexingSettingsModel'
-          type: array
-        isEnabled:
-          description: If *true*, file indexing is enabled.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    GuestOsCredentialsModel:
-      description: VM custom credentials.
-      properties:
-        credentialsPerMachine:
-          description: Individual credentials for VMs.
-          items:
-            $ref: '#/components/schemas/GuestOsCredentialsPerMachineModel'
-          type: array
-          uniqueItems: true
-        credsId:
-          description: Credentials ID for Microsoft Windows VMs.
-          format: uuid
+        size:
+          description: Size used by the VMware vSphere object.
           type: string
-        credsType:
-          $ref: '#/components/schemas/ECredentialsType'
       required:
-      - credsId
-      - credsType
+      - inventoryObject
       type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
     JobStatesFilters:
       description: Filters jobs by the specified parameters.
       properties:
@@ -2846,32 +2505,218 @@ components:
         workloadFilter:
           $ref: '#/components/schemas/EJobWorkload'
       type: object
-    ERetainLogBackupsType:
-      description: Retention policy for the logs stored in the backup repository.
-      enum:
-      - untilBackupDeleted
-      - KeepOnlyDays
-      type: string
-    ActiveFullSettingsModel:
-      description: Active full backup settings.
+    BackupJobModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseJobModel'
+      - properties:
+          guestProcessing:
+            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
+          isHighPriority:
+            description: If *true*, the job has a high priority in getting backup infrastructure resources.
+            type: boolean
+          schedule:
+            $ref: '#/components/schemas/BackupScheduleModel'
+          storage:
+            $ref: '#/components/schemas/BackupJobStorageModel'
+          virtualMachines:
+            $ref: '#/components/schemas/BackupJobVirtualMachinesModel'
+        required:
+        - guestProcessing
+        - isHighPriority
+        - schedule
+        - storage
+        - virtualMachines
+        type: object
+    GFSPolicySettingsWeeklyModel:
+      description: Weekly GFS retention policy.
       properties:
+        desiredTime:
+          $ref: '#/components/schemas/EDayOfWeek'
         isEnabled:
-          description: If *true*, active full backups are enabled.
+          description: If *true*, the weekly GFS retention policy is enabled.
           type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+        keepForNumberOfWeeks:
+          description: Number of weeks to keep full backups for archival purposes. Possible values are from 1 through 9999.
+          type: integer
       required:
       - isEnabled
       type: object
-    EApplicationSettingsVSS:
-      description: Behavior scenario for application-aware processing.
+    GuestOsCredentialsPerMachineModel:
+      properties:
+        linuxCredsId:
+          description: Credentials ID for a Linux VM.
+          format: uuid
+          type: string
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        windowsCredsId:
+          description: Credentials ID for a Microsoft Windows VM.
+          format: uuid
+          type: string
+      required:
+      - vmObject
+      type: object
+    EmailNotificationSettingsModel:
+      description: Email notification settings for the backup job.
+      properties:
+        customNotificationSettings:
+          $ref: '#/components/schemas/EmailCustomNotificationType'
+        isEnabled:
+          description: If *true*, email notifications are enabled for this job.
+          type: boolean
+        notificationType:
+          $ref: '#/components/schemas/EEmailNotificationType'
+        recipients:
+          description: Array of recipient’s email addresses.
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    ScheduleRetryModel:
+      description: Retry options.
+      properties:
+        awaitMinutes:
+          default: 10
+          description: Time interval between job retries in minutes. Must be greater than zero.
+          type: integer
+        isEnabled:
+          default: false
+          description: If *true*, retry options are enabled.
+          type: boolean
+        retryCount:
+          default: 3
+          description: Number of retries set for the job. Must be greater than zero.
+          type: integer
+      type: object
+    GFSPolicySettingsModel:
+      description: GFS retention policy settings.
+      properties:
+        isEnabled:
+          description: If *true*, the long-term (GFS) retention policy is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/GFSPolicySettingsMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/GFSPolicySettingsWeeklyModel'
+        yearly:
+          $ref: '#/components/schemas/GFSPolicySettingsYearlyModel'
+      required:
+      - isEnabled
+      type: object
+    JobStopSpec:
+      properties:
+        gracefullStop:
+          default: true
+          description: If *true*, Veeam Backup & Replication will produce a new restore point for those VMs that have already been processed and for VMs that are being processed at the moment.
+          type: boolean
+      required:
+      - gracefullStop
+      type: object
+    BackupLogShippingServersModel:
+      description: Log shipping server used to transport logs.
+      properties:
+        autoSelection:
+          description: If *true*, Veeam Backup & Replication chooses an optimal log shipping server automatically.
+          type: boolean
+        shippingServerIds:
+          description: Array of servers that are explicitly selected for log shipping.
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - autoSelection
+      type: object
+    FullBackupMaintenanceRemoveDataModel:
+      description: Backup data setting for deleted VMs.
+      properties:
+        afterDays:
+          description: Number of days.
+          type: integer
+        isEnabled:
+          description: If *true*, Veeam Backup & Replication keeps the backup data of deleted VMs for the `afterDays` number of days.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    BackupJobRetentionPolicySettingsModel:
+      description: Retention policy settings.
+      properties:
+        quantity:
+          description: Number of restore points or days to keep.
+          type: integer
+        type:
+          $ref: '#/components/schemas/ERetentionPolicyType'
+      required:
+      - quantity
+      - type
+      type: object
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    BackupWindowsScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Microsoft Windows VMs.
+      properties:
+        postThawScript:
+          description: Path to a post-thaw script.
+          type: string
+        preFreezeScript:
+          description: Path to a pre-freeze script.
+          type: string
+      type: object
+    VSphereChangedBlockTrackingSettingsModel:
+      description: CBT settings for the backup job.
+      properties:
+        enableCBTautomatically:
+          description: If *true*, CBT is enabled for all processed VMs even if CBT is disabled in VM configuration. CBT is used for VMs with virtual hardware version 7 or later. These VMs must not have existing snapshots.
+          type: boolean
+        isEnabled:
+          description: If *true*, CBT data is used.
+          type: boolean
+        resetCBTonActiveFull:
+          description: If *true*, CBT is reset before creating active full backups.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    EBackupOracleLogsSettings:
+      description: Type of archived logs processing.
       enum:
-      - requireSuccess
-      - ignoreFailures
-      - disabled
+      - preserve
+      - deleteExpiredHours
+      - deleteExpiredGBs
       type: string
+    BackupWindowDayHoursModel:
+      description: Hourly scheme for a day.
+      properties:
+        day:
+          $ref: '#/components/schemas/EDayOfWeek'
+        hours:
+          description: String of 24 hours in the following format:<br>*1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1*<br>where *1* means permitted, *0* means denied.
+          type: string
+      required:
+      - day
+      - hours
+      type: object
     AdvancedStorageScheduleMonthlyModel:
       description: Monthly schedule settings.
       properties:
@@ -2894,163 +2739,69 @@ components:
       required:
       - isEnabled
       type: object
-    BackupIndexingSettingsModel:
+    BackupSQLSettingsModel:
+      description: Microsoft SQL Server transaction log settings.
       properties:
-        LinuxIndexing:
-          $ref: '#/components/schemas/BackupObjectIndexingModel'
-        WindowsIndexing:
-          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        backupMinsCount:
+          description: Frequency of transaction log backup, in minutes.
+          type: integer
+        keepDaysCount:
+          description: Number of days to keep transaction logs in the backup repository.
+          type: integer
+        logShippingServers:
+          $ref: '#/components/schemas/BackupLogShippingServersModel'
+        logsProcessing:
+          $ref: '#/components/schemas/ESQLLogsProcessing'
+        retainLogBackups:
+          $ref: '#/components/schemas/ERetainLogBackupsType'
+      required:
+      - logsProcessing
+      type: object
+    JobStatesResult:
+      properties:
+        data:
+          description: Array of job states.
+          items:
+            $ref: '#/components/schemas/JobStateModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ScheduleBackupWindowModel:
+      description: Backup window settings.
+      properties:
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        isEnabled:
+          default: false
+          description: If *true*, backup window is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    VmwareObjectDiskModel:
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            description: ID of the disk.
+            type: string
+          type: array
+        disksToProcess:
+          $ref: '#/components/schemas/EVmwareDisksTypeToProcess'
+        removeFromVMConfiguration:
+          description: If *true*, the disk is removed from VM configuration.
+          type: boolean
         vmObject:
           $ref: '#/components/schemas/VmwareObjectModel'
       required:
+      - disks
+      - disksToProcess
       - vmObject
       type: object
-    GFSPolicySettingsModel:
-      description: GFS retention policy settings.
-      properties:
-        isEnabled:
-          description: If *true*, the long-term (GFS) retention policy is enabled.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/GFSPolicySettingsMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/GFSPolicySettingsWeeklyModel'
-        yearly:
-          $ref: '#/components/schemas/GFSPolicySettingsYearlyModel'
-      required:
-      - isEnabled
-      type: object
-    BackupStorageSettingsEncryptionModel:
-      description: Encryption of backup files.
-      properties:
-        encryptionPasswordIdOrNull:
-          description: ID of the password used for encryption. The value is *null* for exported objects.
-          format: uuid
-          type: string
-        encryptionPasswordTag:
-          description: Tag used to identify the password.
-          type: string
-        isEnabled:
-          description: If *true*, the content of backup files is encrypted.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    ScheduleMonthlyModel:
-      description: Monthly scheduling options.
-      properties:
-        dayNumberInMonth:
-          $ref: '#/components/schemas/EDayNumberInMonth'
-        dayOfMonth:
-          description: Day of the month when the job must start.
-          type: integer
-        dayOfWeek:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          default: false
-          description: If *true*, monthly schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-        months:
-          description: Months when the job must start.
-          items:
-            $ref: '#/components/schemas/EMonth'
-          type: array
-          uniqueItems: true
-      required:
-      - isEnabled
-      type: object
-    FullBackupMaintenanceModel:
-      description: Maintenance settings for full backup files.
-      properties:
-        RemoveData:
-          $ref: '#/components/schemas/FullBackupMaintenanceRemoveDataModel'
-        defragmentAndCompact:
-          $ref: '#/components/schemas/FullBackupMaintenanceDefragmentAndCompactModel'
-      type: object
-    JobsFilters:
-      description: Filters jobs by the specified parameters.
-      properties:
-        limit:
-          description: Returns the specified number of jobs.
-          format: int32
-          type: integer
-        nameFilter:
-          description: Filters jobs by the `nameFilter` pattern. The pattern can match any job parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
-          type: string
-        orderAsc:
-          description: Sorts jobs in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EJobFiltersOrderColumn'
-        skip:
-          description: Skips the specified number of jobs.
-          format: int32
-          type: integer
-        typeFilter:
-          $ref: '#/components/schemas/EJobType'
-      type: object
-    FullBackupMaintenanceDefragmentAndCompactModel:
-      description: Compact operation settings.
-      properties:
-        isEnabled:
-          description: If *true*, Veeam Backup & Replication compacts full backup files.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
-      required:
-      - isEnabled
-      type: object
-    ETransactionLogsSettings:
-      description: Transaction logs settings that define whether copy-only backups must be created, or transaction logs for Microsoft Exchange, Microsoft SQL and Oracle VMs must be processed.<br> If transaction log processing is selected, specify the following parameters:<ul> <li>[For Microsoft SQL Server VMs] Microsoft SQL Server transaction log settings</li> <li>[For Oracle VMs] Oracle archived log settings</li></ul>
-      enum:
-      - process
-      - copyOnly
-      type: string
-    EJobStatesFiltersOrderColumn:
-      description: Orders job states by the specified column.
-      enum:
-      - Name
-      - Type
-      - Status
-      - LastRun
-      - LastResult
-      - NextRun
-      - Description
-      - RepositoryId
-      - ObjectsCount
-      type: string
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
     BackupOracleSettingsModel:
       description: Oracle archived log settings.
       properties:
@@ -3086,18 +2837,112 @@ components:
       - archiveLogs
       - useGuestCredentials
       type: object
-    JobsResult:
+    BackupJobStorageModel:
+      description: Backup storage settings.
       properties:
-        data:
-          description: Array of jobs.
-          items:
-            $ref: '#/components/schemas/JobModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
+        advancedSettings:
+          $ref: '#/components/schemas/BackupJobAdvancedSettingsModel'
+        backupProxies:
+          $ref: '#/components/schemas/BackupProxiesSettingsModel'
+        backupRepositoryId:
+          description: ID of the backup repository.
+          format: uuid
+          type: string
+        gfsPolicy:
+          $ref: '#/components/schemas/GFSPolicySettingsModel'
+        retentionPolicy:
+          $ref: '#/components/schemas/BackupJobRetentionPolicySettingsModel'
       required:
-      - data
-      - pagination
+      - backupProxies
+      - backupRepositoryId
+      - retentionPolicy
+      type: object
+    ScheduleDailyModel:
+      description: Daily scheduling options.
+      properties:
+        dailyKind:
+          $ref: '#/components/schemas/EDailyKinds'
+        days:
+          description: Days of the week when the job must start.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: true
+          description: If *true*, daily schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+      required:
+      - isEnabled
+      type: object
+    BackupStorageSettingModel:
+      description: Storage settings.
+      properties:
+        compressionLevel:
+          $ref: '#/components/schemas/ECompressionLevel'
+        enableInlineDataDedup:
+          description: If *true*, Veeam Backup & Replication deduplicates VM data before storing it in the backup repository.
+          type: boolean
+        encryption:
+          $ref: '#/components/schemas/BackupStorageSettingsEncryptionModel'
+        excludeDeletedFileBlocks:
+          description: If *true*, Veeam Backup & Replication does not copy deleted file blocks.
+          type: boolean
+        excludeSwapFileBlocks:
+          description: If *true*, Veeam Backup & Replication excludes swap file blocks from processing.
+          type: boolean
+        storageOptimization:
+          $ref: '#/components/schemas/EStorageOptimization'
+      type: object
+    BackupFSExclusionsModel:
+      description: VM guest OS file exclusion.
+      properties:
+        exclusionPolicy:
+          $ref: '#/components/schemas/EBackupExclusionPolicy'
+        itemsList:
+          description: Array of files and folders. Full paths to files and folders, environmental variables and file masks with the asterisk (*) and question mark (?) characters can be used.
+          items:
+            type: string
+          type: array
+      required:
+      - exclusionPolicy
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    JobScriptsSettingsModel:
+      description: Script settings.
+      properties:
+        dayOfWeek:
+          description: Days of the week when the scripts must be executed.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        periodicityType:
+          $ref: '#/components/schemas/EScriptPeriodicityType'
+        postCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        preCommand:
+          $ref: '#/components/schemas/ScriptCommand'
+        runScriptEvery:
+          description: Number of the backup job session after which the scripts must be executed.
+          type: integer
+      type: object
+    BaseJobSpec:
+      properties:
+        description:
+          description: Job description specified at the time of the job creation.
+          type: string
+        name:
+          description: Name of the job.
+          type: string
+        type:
+          $ref: '#/components/schemas/EJobType'
       type: object
     PrimaryStorageIntegrationSettingsModel:
       description: Primary storage integration settings for the backup job.
@@ -3117,40 +2962,135 @@ components:
       required:
       - isEnabled
       type: object
-    EStorageOptimization:
-      description: Storage optimization that depends on the target type.
-      enum:
-      - LocalTargetLarge
-      - LocalTarget
-      - LANTarget
-      - WANTarget
-      - LocalTargetLarge8192
-      - LocalTargetLarge4096
-      type: string
-    ScheduleRetryModel:
-      description: Retry options.
+    BackupJobAdvancedSettingsModel:
+      description: Advanced settings of the backup job.
       properties:
-        awaitMinutes:
-          default: 10
-          description: Time interval between job retries in minutes. Must be greater than zero.
-          type: integer
-        isEnabled:
-          default: false
-          description: If *true*, retry options are enabled.
-          type: boolean
-        retryCount:
-          default: 3
-          description: Number of retries set for the job. Must be greater than zero.
-          type: integer
-      type: object
-    JobStopSpec:
-      properties:
-        gracefullStop:
-          default: true
-          description: If *true*, Veeam Backup & Replication will produce a new restore point for those VMs that have already been processed and for VMs that are being processed at the moment.
-          type: boolean
+        activeFulls:
+          $ref: '#/components/schemas/ActiveFullSettingsModel'
+        backupHealth:
+          $ref: '#/components/schemas/BackupHealthCheckSettingsModels'
+        backupModeType:
+          $ref: '#/components/schemas/EBackupModeType'
+        fullBackupMaintenance:
+          $ref: '#/components/schemas/FullBackupMaintenanceModel'
+        notifications:
+          $ref: '#/components/schemas/NotificationSettingsModel'
+        scripts:
+          $ref: '#/components/schemas/JobScriptsSettingsModel'
+        storageData:
+          $ref: '#/components/schemas/BackupStorageSettingModel'
+        storageIntegration:
+          $ref: '#/components/schemas/PrimaryStorageIntegrationSettingsModel'
+        synthenticFulls:
+          $ref: '#/components/schemas/SyntheticFullSettingsModel'
+        vSphere:
+          $ref: '#/components/schemas/BackupJobAdvancedSettingsVSphereModel'
       required:
-      - gracefullStop
+      - backupModeType
+      type: object
+    BackupJobExclusionsSpec:
+      description: Objects that you want to exclude from the backup.
+      properties:
+        disks:
+          description: Array of disks.
+          items:
+            $ref: '#/components/schemas/VmwareObjectDiskModel'
+          type: array
+        templates:
+          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
+        vms:
+          description: Array of VMs.
+          items:
+            $ref: '#/components/schemas/VmwareObjectModel'
+          type: array
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    EmailCustomNotificationType:
+      description: Custom notification settings.
+      properties:
+        SuppressNotificationUntilLastRetry:
+          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
+          type: boolean
+        notifyOnError:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li> <li>*%ObjectCount%* — number of VMs in the job</li> <li>*%Issues%* — number of VMs in the job that have finished with the Warning or Failed status</li></ul>
+          type: string
+      type: object
+    EGuestFSIndexingMode:
+      description: Indexing mode.
+      enum:
+      - disable
+      - indexAll
+      - indexAllExcept
+      - indexOnly
+      type: string
+    EJobStatus:
+      description: Current status of the job.
+      enum:
+      - running
+      - inactive
+      - disabled
+      type: string
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    BackupJobAdvancedSettingsVSphereModel:
+      description: VMware vSphere settings for the backup job.
+      properties:
+        changedBlockTracking:
+          $ref: '#/components/schemas/VSphereChangedBlockTrackingSettingsModel'
+        enableVMWareToolsQuiescence:
+          description: If *true*, VMware Tools quiescence is enabled for freezing the VM file system and application data.
+          type: boolean
+      type: object
+    BackupJobVirtualMachinesModel:
+      description: Included and excluded objects.
+      properties:
+        excludes:
+          $ref: '#/components/schemas/BackupJobExclusions'
+        includes:
+          description: Array of VMs and VM containers processed by the job.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+      required:
+      - includes
       type: object
     JobStateModel:
       properties:
@@ -3204,77 +3144,37 @@ components:
       - workload
       - objectsCount
       type: object
-    EBackupExclusionPolicy:
-      description: Exclusion policy.
-      enum:
-      - disabled
-      - excludeOnly
-      - includeOnly
-      type: string
-    EBackupScriptProcessingMode:
-      description: Scenario for scripts execution.
-      enum:
-      - disableExec
-      - ignoreExecFailures
-      - requireSuccess
-      type: string
-    PaginationResult:
-      description: Pagination settings.
+    BackupApplicationSettingsModel:
       properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    EEmailNotificationType:
-      description: Type of email notification settings (global notification settings specified for the backup server, or custom notification settings specified for this job).
-      enum:
-      - UseGlobalNotificationSettings
-      - UseCustomNotificationSettings
-      type: string
-    BackupLogShippingServersModel:
-      description: Log shipping server used to transport logs.
-      properties:
-        autoSelection:
-          description: If *true*, Veeam Backup & Replication chooses an optimal log shipping server automatically.
+        exclusions:
+          $ref: '#/components/schemas/BackupFSExclusionsModel'
+        oracle:
+          $ref: '#/components/schemas/BackupOracleSettingsModel'
+        scripts:
+          $ref: '#/components/schemas/BackupScriptSettingsModel'
+        sql:
+          $ref: '#/components/schemas/BackupSQLSettingsModel'
+        transactionLogs:
+          $ref: '#/components/schemas/ETransactionLogsSettings'
+        usePersistentGuestAgent:
+          description: If *true*, persistent guest agent is used.
           type: boolean
-        shippingServerIds:
-          description: Array of servers that are explicitly selected for log shipping.
-          items:
-            format: uuid
-            type: string
-          type: array
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        vss:
+          $ref: '#/components/schemas/EApplicationSettingsVSS'
       required:
-      - autoSelection
+      - vmObject
+      - vss
       type: object
-    ESQLLogsProcessing:
-      description: Type of transaction logs processing.
+    ECompressionLevel:
+      description: Compression level.
       enum:
-      - truncate
-      - preserve
-      - backup
-      - neverTruncate
-      type: string
-    EScriptPeriodicityType:
-      description: Type of script periodicity.
-      enum:
-      - Days
-      - BackupSessions
+      - None
+      - DedupFriendly
+      - Optimal
+      - High
+      - Extreme
       type: string
     SyntheticFullSettingsModel:
       description: Synthetic full backup settings.
@@ -3289,101 +3189,161 @@ components:
       required:
       - isEnabled
       type: object
-    EmailNotificationSettingsModel:
-      description: Email notification settings for the backup job.
+    GFSPolicySettingsYearlyModel:
+      description: Yearly GFS retention policy.
       properties:
-        customNotificationSettings:
-          $ref: '#/components/schemas/EmailCustomNotificationType'
+        desiredTime:
+          $ref: '#/components/schemas/EMonth'
         isEnabled:
-          description: If *true*, email notifications are enabled for this job.
+          description: If *true*, the yearly GFS retention policy is enabled.
           type: boolean
-        notificationType:
-          $ref: '#/components/schemas/EEmailNotificationType'
-        recipients:
-          description: Array of recipient’s email addresses.
-          items:
-            type: string
-          type: array
-          uniqueItems: true
+        keepForNumberOfYears:
+          description: Number of years to keep full backups for archival purposes. Possible values are from 1 through 999.
+          type: integer
       required:
       - isEnabled
       type: object
-    ScheduleAfterThisJobModel:
-      description: Job chaining options.
+    BackupScheduleModel:
+      description: Job scheduling options.
       properties:
-        isEnabled:
-          description: If *true*, job chaining is enabled.
+        afterThisJob:
+          $ref: '#/components/schemas/ScheduleAfterThisJobModel'
+        backupWindow:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        continuously:
+          $ref: '#/components/schemas/ScheduleBackupWindowModel'
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+        periodically:
+          $ref: '#/components/schemas/SchedulePeriodicallyModel'
+        retry:
+          $ref: '#/components/schemas/ScheduleRetryModel'
+        runAutomatically:
+          default: false
+          description: If *true*, job scheduling is enabled.
           type: boolean
-        jobName:
-          description: Name of the preceding job.
+      required:
+      - runAutomatically
+      type: object
+    BackupScriptSettingsModel:
+      description: Pre-freeze and post-thaw scripts.
+      properties:
+        linuxScripts:
+          $ref: '#/components/schemas/BackupLinuxScriptModel'
+        scriptProcessingMode:
+          $ref: '#/components/schemas/EBackupScriptProcessingMode'
+        windowsScripts:
+          $ref: '#/components/schemas/BackupWindowsScriptModel'
+      required:
+      - scriptProcessingMode
+      type: object
+    NotificationVmAttributeSettingsModel:
+      description: VM attribute settings.
+      properties:
+        appendToExisitingValue:
+          description: If *true*, information about successfully performed backup is appended to the existing value of the attribute added by the user.
+          type: boolean
+        isEnabled:
+          description: If *true*, information about successfully performed backup is written to a VM attribute.
+          type: boolean
+        notes:
+          description: Name of the VM attribute.
           type: string
       required:
       - isEnabled
       type: object
-    GuestOsCredentialsPerMachineModel:
+    SchedulePeriodicallyModel:
+      description: Periodic scheduling options.
       properties:
-        linuxCredsId:
-          description: Credentials ID for a Linux VM.
-          format: uuid
-          type: string
-        vmObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        windowsCredsId:
-          description: Credentials ID for a Microsoft Windows VM.
-          format: uuid
-          type: string
-      required:
-      - vmObject
-      type: object
-    BackupJobExclusionsTemplates:
-      description: VM templates exclusion.
-      properties:
-        excludeFromIncremental:
-          description: If *true*, VM templates are excluded from the incremental backup.
-          type: boolean
+        backupWindow:
+          $ref: '#/components/schemas/BackupWindowSettingModel'
+        frequency:
+          description: Number of time units that defines the time interval.
+          type: integer
         isEnabled:
-          description: If *true*, VM templates are excluded from the backup.
+          default: false
+          description: If *true*, periodic schedule is enabled.
           type: boolean
-      type: object
-    BackupJobAdvancedSettingsVSphereModel:
-      description: VMware vSphere settings for the backup job.
-      properties:
-        changedBlockTracking:
-          $ref: '#/components/schemas/VSphereChangedBlockTrackingSettingsModel'
-        enableVMWareToolsQuiescence:
-          description: If *true*, VMware Tools quiescence is enabled for freezing the VM file system and application data.
-          type: boolean
-      type: object
-    BackupJobAdvancedSettingsModel:
-      description: Advanced settings of the backup job.
-      properties:
-        activeFulls:
-          $ref: '#/components/schemas/ActiveFullSettingsModel'
-        backupHealth:
-          $ref: '#/components/schemas/BackupHealthCheckSettingsModels'
-        backupModeType:
-          $ref: '#/components/schemas/EBackupModeType'
-        fullBackupMaintenance:
-          $ref: '#/components/schemas/FullBackupMaintenanceModel'
-        notifications:
-          $ref: '#/components/schemas/NotificationSettingsModel'
-        scripts:
-          $ref: '#/components/schemas/JobScriptsSettingsModel'
-        storageData:
-          $ref: '#/components/schemas/BackupStorageSettingModel'
-        storageIntegration:
-          $ref: '#/components/schemas/PrimaryStorageIntegrationSettingsModel'
-        synthenticFulls:
-          $ref: '#/components/schemas/SyntheticFullSettingsModel'
-        vSphere:
-          $ref: '#/components/schemas/BackupJobAdvancedSettingsVSphereModel'
+        periodicallyKind:
+          $ref: '#/components/schemas/EPeriodicallyKinds'
+        startTimeWithinAnHour:
+          description: Start time within an hour, in minutes.
+          type: integer
       required:
-      - backupModeType
+      - isEnabled
       type: object
-    EJobType:
-      description: Type of the job.
+    EStorageOptimization:
+      description: Storage optimization that depends on the target type.
       enum:
-      - Backup
+      - LocalTargetLarge
+      - LocalTarget
+      - LANTarget
+      - WANTarget
+      - LocalTargetLarge8192
+      - LocalTargetLarge4096
+      type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    EScriptPeriodicityType:
+      description: Type of script periodicity.
+      enum:
+      - Days
+      - BackupSessions
+      type: string
+    ECredentialsType:
+      description: Credentials type.
+      enum:
+      - Standard
+      - Linux
+      type: string
+    JobsFilters:
+      description: Filters jobs by the specified parameters.
+      properties:
+        limit:
+          description: Returns the specified number of jobs.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters jobs by the `nameFilter` pattern. The pattern can match any job parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        orderAsc:
+          description: Sorts jobs in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EJobFiltersOrderColumn'
+        skip:
+          description: Skips the specified number of jobs.
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EJobType'
+      type: object
+    EJobStatesFiltersOrderColumn:
+      description: Orders job states by the specified column.
+      enum:
+      - Name
+      - Type
+      - Status
+      - LastRun
+      - LastResult
+      - NextRun
+      - Description
+      - RepositoryId
+      - ObjectsCount
       type: string
     JobModel:
       allOf:
@@ -3394,132 +3354,142 @@ components:
         oneOf:
         - $ref: '#/components/schemas/BackupJobModel'
       - $ref: '#/components/schemas/BaseJobModel'
-    BackupApplicationAwareProcessingModel:
-      description: Application-aware processing settings.
-      properties:
-        appSettings:
-          description: Array of VMware vSphere objects and their application settings.
-          items:
-            $ref: '#/components/schemas/BackupApplicationSettingsModel'
-          type: array
-        isEnabled:
-          description: If *true*, application-aware processing is enabled.
-          type: boolean
-      required:
-      - isEnabled
-      type: object
-    ScheduleDailyModel:
-      description: Daily scheduling options.
-      properties:
-        dailyKind:
-          $ref: '#/components/schemas/EDailyKinds'
-        days:
-          description: Days of the week when the job must start.
-          items:
-            $ref: '#/components/schemas/EDayOfWeek'
-          type: array
-          uniqueItems: true
-        isEnabled:
-          default: true
-          description: If *true*, daily schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-      required:
-      - isEnabled
-      type: object
-    BackupWindowSettingModel:
-      description: Time scheme that defines permitted days and hours for the job to start.
-      properties:
-        days:
-          description: Array of per-day schemes.
-          items:
-            $ref: '#/components/schemas/BackupWindowDayHoursModel'
-          type: array
-      required:
-      - days
-      type: object
-    EmailCustomNotificationType:
-      description: Custom notification settings.
-      properties:
-        SuppressNotificationUntilLastRetry:
-          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
-          type: boolean
-        notifyOnError:
-          description: If *true*, email notifications are sent when the job fails.
-          type: boolean
-        notifyOnSuccess:
-          description: If *true*, email notifications are sent when the job completes successfully.
-          type: boolean
-        notifyOnWarning:
-          description: If *true*, email notifications are sent when the job completes with a warning.
-          type: boolean
-        subject:
-          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li> <li>*%ObjectCount%* — number of VMs in the job</li> <li>*%Issues%* — number of VMs in the job that have finished with the Warning or Failed status</li></ul>
-          type: string
-      type: object
-    EJobStatus:
-      description: Current status of the job.
-      enum:
-      - running
-      - inactive
-      - disabled
-      type: string
-    BackupJobExclusionsSpec:
-      description: Objects that you want to exclude from the backup.
-      properties:
-        disks:
-          description: Array of disks.
-          items:
-            $ref: '#/components/schemas/VmwareObjectDiskModel'
-          type: array
-        templates:
-          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
-        vms:
-          description: Array of VMs.
-          items:
-            $ref: '#/components/schemas/VmwareObjectModel'
-          type: array
-      type: object
-    BackupJobVirtualMachinesModel:
-      description: Included and excluded objects.
+    BackupJobVirtualMachinesSpec:
+      description: Arrays of objects that you want to back up or exclude from the backup.
       properties:
         excludes:
-          $ref: '#/components/schemas/BackupJobExclusions'
+          $ref: '#/components/schemas/BackupJobExclusionsSpec'
         includes:
-          description: Array of VMs and VM containers processed by the job.
+          description: Array of objects that you want to back up.
           items:
-            $ref: '#/components/schemas/VmwareObjectSizeModel'
+            $ref: '#/components/schemas/VmwareObjectModel'
           type: array
       required:
       - includes
       type: object
-    BackupHealthCheckSettingsModels:
-      description: Health check settings for the for the latest restore point in the backup chain.
+    BackupJobSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseJobSpec'
+      - properties:
+          guestProcessing:
+            $ref: '#/components/schemas/BackupJobGuestProcessingModel'
+          isHighPriority:
+            default: false
+            description: If *true*, the job has a high priority in getting backup infrastructure resources.
+            type: boolean
+          schedule:
+            $ref: '#/components/schemas/BackupScheduleModel'
+          storage:
+            $ref: '#/components/schemas/BackupJobStorageModel'
+          virtualMachines:
+            $ref: '#/components/schemas/BackupJobVirtualMachinesSpec'
+        required:
+        - guestProcessing
+        - isHighPriority
+        - schedule
+        - storage
+        - virtualMachines
+        type: object
+    JobStartSpec:
       properties:
-        isEnabled:
-          description: If *true*, the health check is enabled.
+        performActiveFull:
+          default: false
+          description: If *true*, Veeam Backup & Replication will perform an active full backup.
           type: boolean
-        monthly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
-        weekly:
-          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+        startChainedJobs:
+          default: false
+          description: If *true*, Veeam Backup & Replication will start chained jobs as well.
+          type: boolean
+      required:
+      - performActiveFull
+      type: object
+    ERetainLogBackupsType:
+      description: Retention policy for the logs stored in the backup repository.
+      enum:
+      - untilBackupDeleted
+      - KeepOnlyDays
+      type: string
+    BackupProxiesSettingsModel:
+      description: Backup proxy settings.
+      properties:
+        autoSelection:
+          default: true
+          description: If *true*, backup proxies are detected and assigned automatically.
+          type: boolean
+        proxyIds:
+          description: Array of proxy IDs.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
+      required:
+      - autoSelection
+      type: object
+    BackupJobGuestProcessingModel:
+      description: Guest processing settings.
+      properties:
+        appAwareProcessing:
+          $ref: '#/components/schemas/BackupApplicationAwareProcessingModel'
+        guestCredentials:
+          $ref: '#/components/schemas/GuestOsCredentialsModel'
+        guestFSIndexing:
+          $ref: '#/components/schemas/GuestFileSystemIndexingModel'
+        guestInteractionProxies:
+          $ref: '#/components/schemas/GuestInteractionProxiesSettingsModel'
+      required:
+      - appAwareProcessing
+      - guestFSIndexing
+      type: object
+    EDayNumberInMonth:
+      description: Week day number in the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    GuestFileSystemIndexingModel:
+      description: VM guest OS file indexing.
+      properties:
+        indexingSettings:
+          description: Array of VMs with guest OS file indexing options.
+          items:
+            $ref: '#/components/schemas/BackupIndexingSettingsModel'
+          type: array
+        isEnabled:
+          description: If *true*, file indexing is enabled.
+          type: boolean
       required:
       - isEnabled
       type: object
-    ScriptCommand:
-      description: Script settings.
+    JobSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            Backup: '#/components/schemas/BackupJobSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/BackupJobSpec'
+      - $ref: '#/components/schemas/BaseJobSpec'
+    GuestInteractionProxiesSettingsModel:
+      description: Guest interaction proxy used to deploy the runtime process on the VM guest OS.
       properties:
-        command:
-          description: Path to the script.
-          type: string
-        isEnabled:
-          description: If *true*, script execution is enabled.
+        autoSelection:
+          default: true
+          description: If *true*, Veeam Backup & Replication automatically selects the guest interaction proxy.
           type: boolean
+        proxyIds:
+          description: Array of proxies specified explicitly. The array must contain Microsoft Windows servers added to the backup infrastructure only.
+          items:
+            format: uuid
+            type: string
+          type: array
+          uniqueItems: true
       required:
-      - isEnabled
+      - autoSelection
       type: object
     SessionModel:
       properties:
@@ -3575,29 +3545,142 @@ components:
       - state
       - usn
       type: object
-    BackupJobRetentionPolicySettingsModel:
-      description: Retention policy settings.
+    FullBackupMaintenanceDefragmentAndCompactModel:
+      description: Compact operation settings.
       properties:
-        quantity:
-          description: Number of restore points or days to keep.
-          type: integer
-        type:
-          $ref: '#/components/schemas/ERetentionPolicyType'
+        isEnabled:
+          description: If *true*, Veeam Backup & Replication compacts full backup files.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
       required:
-      - quantity
-      - type
+      - isEnabled
       type: object
-    BackupScriptSettingsModel:
-      description: Pre-freeze and post-thaw scripts.
+    BackupStorageSettingsEncryptionModel:
+      description: Encryption of backup files.
       properties:
-        linuxScripts:
-          $ref: '#/components/schemas/BackupLinuxScriptModel'
-        scriptProcessingMode:
-          $ref: '#/components/schemas/EBackupScriptProcessingMode'
-        windowsScripts:
-          $ref: '#/components/schemas/BackupWindowsScriptModel'
+        encryptionPasswordIdOrNull:
+          description: ID of the password used for encryption. The value is *null* for exported objects.
+          format: uuid
+          type: string
+        encryptionPasswordTag:
+          description: Tag used to identify the password.
+          type: string
+        isEnabled:
+          description: If *true*, the content of backup files is encrypted.
+          type: boolean
       required:
-      - scriptProcessingMode
+      - isEnabled
+      type: object
+    BackupIndexingSettingsModel:
+      properties:
+        LinuxIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        WindowsIndexing:
+          $ref: '#/components/schemas/BackupObjectIndexingModel'
+        vmObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - vmObject
+      type: object
+    ESQLLogsProcessing:
+      description: Type of transaction logs processing.
+      enum:
+      - truncate
+      - preserve
+      - backup
+      - neverTruncate
+      type: string
+    EVmwareDisksTypeToProcess:
+      description: Type of disk selection.
+      enum:
+      - AllDisks
+      - SystemOnly
+      - SelectedDisks
+      type: string
+    EEmailNotificationType:
+      description: Type of email notification settings (global notification settings specified for the backup server, or custom notification settings specified for this job).
+      enum:
+      - UseGlobalNotificationSettings
+      - UseCustomNotificationSettings
+      type: string
+    BackupHealthCheckSettingsModels:
+      description: Health check settings for the for the latest restore point in the backup chain.
+      properties:
+        isEnabled:
+          description: If *true*, the health check is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    ETransactionLogsSettings:
+      description: Transaction logs settings that define whether copy-only backups must be created, or transaction logs for Microsoft Exchange, Microsoft SQL and Oracle VMs must be processed.<br> If transaction log processing is selected, specify the following parameters:<ul> <li>[For Microsoft SQL Server VMs] Microsoft SQL Server transaction log settings</li> <li>[For Oracle VMs] Oracle archived log settings</li></ul>
+      enum:
+      - process
+      - copyOnly
+      type: string
+    BackupJobExclusions:
+      description: Objects excluded from the backup.
+      properties:
+        disks:
+          description: Array of VM disks excluded from the backup.
+          items:
+            $ref: '#/components/schemas/VmwareObjectDiskModel'
+          type: array
+        templates:
+          $ref: '#/components/schemas/BackupJobExclusionsTemplates'
+        vms:
+          description: Array of VMs excluded from the backup.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+      type: object
+    BackupApplicationAwareProcessingModel:
+      description: Application-aware processing settings.
+      properties:
+        appSettings:
+          description: Array of VMware vSphere objects and their application settings.
+          items:
+            $ref: '#/components/schemas/BackupApplicationSettingsModel'
+          type: array
+        isEnabled:
+          description: If *true*, application-aware processing is enabled.
+          type: boolean
+      required:
+      - isEnabled
+      type: object
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
       type: object
     NotificationSettingsModel:
       description: Notification settings for the backup job.
@@ -3609,76 +3692,6 @@ components:
           type: boolean
         vmAttribute:
           $ref: '#/components/schemas/NotificationVmAttributeSettingsModel'
-      type: object
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
-    GuestInteractionProxiesSettingsModel:
-      description: Guest interaction proxy used to deploy the runtime process on the VM guest OS.
-      properties:
-        autoSelection:
-          default: true
-          description: If *true*, Veeam Backup & Replication automatically selects the guest interaction proxy.
-          type: boolean
-        proxyIds:
-          description: Array of proxies specified explicitly. The array must contain Microsoft Windows servers added to the backup infrastructure only.
-          items:
-            format: uuid
-            type: string
-          type: array
-          uniqueItems: true
-      required:
-      - autoSelection
-      type: object
-    BackupWindowsScriptModel:
-      description: Paths to pre-freeze and post-thaw scripts for Microsoft Windows VMs.
-      properties:
-        postThawScript:
-          description: Path to a post-thaw script.
-          type: string
-        preFreezeScript:
-          description: Path to a pre-freeze script.
-          type: string
-      type: object
-    GFSPolicySettingsMonthlyModel:
-      description: Monthly GFS retention policy.
-      properties:
-        desiredTime:
-          $ref: '#/components/schemas/ESennightOfMonth'
-        isEnabled:
-          description: If *true*, the monthly GFS retention policy is enabled.
-          type: boolean
-        keepForNumberOfMonths:
-          description: Number of months to keep full backups for archival purposes. Possible values are from 1 through 999.
-          type: integer
-      required:
-      - isEnabled
-      type: object
-    ECompressionLevel:
-      description: Compression level.
-      enum:
-      - None
-      - DedupFriendly
-      - Optimal
-      - High
-      - Extreme
-      type: string
-    ScheduleBackupWindowModel:
-      description: Backup window settings.
-      properties:
-        backupWindow:
-          $ref: '#/components/schemas/BackupWindowSettingModel'
-        isEnabled:
-          default: false
-          description: If *true*, backup window is enabled.
-          type: boolean
-      required:
-      - isEnabled
       type: object
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
@@ -3702,99 +3715,88 @@ components:
       - Multitag
       - Network
       type: string
-    BackupObjectIndexingModel:
-      description: Guest OS indexing options for the VM.
+    ActiveFullSettingsModel:
+      description: Active full backup settings.
       properties:
-        guestFSIndexingMode:
-          $ref: '#/components/schemas/EGuestFSIndexingMode'
-        indexingList:
-          description: Array of folders. Environmental variables and full paths to folders can be used.
-          items:
-            type: string
-          type: array
-      required:
-      - guestFSIndexingMode
-      type: object
-    VmwareObjectSizeModel:
-      properties:
-        inventoryObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        size:
-          description: Size used by the VMware vSphere object.
-          type: string
-      required:
-      - inventoryObject
-      type: object
-    JobSpec:
-      allOf:
-      - discriminator:
-          mapping:
-            Backup: '#/components/schemas/BackupJobSpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/BackupJobSpec'
-      - $ref: '#/components/schemas/BaseJobSpec'
-    VSphereChangedBlockTrackingSettingsModel:
-      description: CBT settings for the backup job.
-      properties:
-        enableCBTautomatically:
-          description: If *true*, CBT is enabled for all processed VMs even if CBT is disabled in VM configuration. CBT is used for VMs with virtual hardware version 7 or later. These VMs must not have existing snapshots.
-          type: boolean
         isEnabled:
-          description: If *true*, CBT data is used.
+          description: If *true*, active full backups are enabled.
           type: boolean
-        resetCBTonActiveFull:
-          description: If *true*, CBT is reset before creating active full backups.
+        monthly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleMonthlyModel'
+        weekly:
+          $ref: '#/components/schemas/AdvancedStorageScheduleWeeklyModel'
+      required:
+      - isEnabled
+      type: object
+    EBackupExclusionPolicy:
+      description: Exclusion policy.
+      enum:
+      - disabled
+      - excludeOnly
+      - includeOnly
+      type: string
+    EPeriodicallyKinds:
+      description: Time unit for periodic job scheduling.
+      enum:
+      - Hours
+      - Minutes
+      - Seconds
+      - Days
+      type: string
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    EJobFiltersOrderColumn:
+      description: Orders jobs by the specified column.
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    AdvancedStorageScheduleWeeklyModel:
+      description: Weekly schedule settings.
+      properties:
+        days:
+          description: Days of the week when the operation is performed.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: false
+          description: If *true*, the weekly schedule is enabled.
           type: boolean
       required:
       - isEnabled
       type: object
-    EMonth:
-      description: Month.
-      enum:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-      type: string
-    BaseJobSpec:
+    BackupLinuxScriptModel:
+      description: Paths to pre-freeze and post-thaw scripts for Linux VMs.
       properties:
-        description:
-          description: Job description specified at the time of the job creation.
+        postThawScript:
+          description: Path to a post-thaw script.
           type: string
-        name:
-          description: Name of the job.
+        preFreezeScript:
+          description: Path to a pre-freeze script.
           type: string
-        type:
-          $ref: '#/components/schemas/EJobType'
       type: object
   responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Deleted:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EmptySuccessResponse'
-      description: Removed.
     Forbidden:
       content:
         application/json:
@@ -3807,12 +3809,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    InternalServerError:
+    Deleted:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptySuccessResponse'
+      description: Removed.
+    BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
@@ -3824,7 +3832,7 @@ components:
         type: string
   securitySchemes:
     Bearer:
-      name: Authorization
+      description: Access token specified in the following format&#58; `Bearer <access token>`.
       in: header
+      name: Authorization
       type: apiKey
-      description: Bearer \<JWT\>
