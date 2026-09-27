@@ -41,7 +41,7 @@ tags:
   - Restore
   - Replication
   - Data Protection
-  - Microsoft-365
+  - Microsoft 365
   - AWS
   - Azure
   - Google Cloud
@@ -59,6 +59,7 @@ tags_raw:
   - Azure
   - Google Cloud
   - Ransomware Recovery
+  - Microsoft-365
 apis:
 - name: Veeam Backup & Replication REST API
   description: >-
@@ -101,7 +102,7 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html
   baseURL: https://localhost:4443
   tags:
-  - Microsoft-365
+  - Microsoft 365
   - Exchange Online
   - SharePoint
   - OneDrive
@@ -114,6 +115,7 @@ apis:
   - OneDrive
   - Teams
   - SaaS Backup
+  - Microsoft-365
   properties:
   - type: Documentation
     url: https://helpcenter.veeam.com/docs/vbo365/rest/overview.html

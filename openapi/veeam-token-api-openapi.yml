@@ -199,6 +199,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AuthorizationCode:
+      required:
+      - code
+      properties:
+        code:
+          type: string
     RESTLogin:
       type: object
       properties:
@@ -225,11 +231,33 @@ components:
           type: boolean
         mfa_token:
           type: string
-    AuthorizationCode:
+    LoginGrantTypes:
+      enum:
+      - password
+      - refresh_token
+      - authorization_code
+      - mfa
+      type: string
+    LoginSpec:
       required:
-      - code
+      - grant_type
+      type: object
       properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+        refresh_token:
+          type: string
         code:
+          type: string
+          description: required if grant_type = authorization_code
+        grant_type:
+          $ref: '#/components/schemas/LoginGrantTypes'
+        mfa_token:
+          type: string
+        mfa_code:
           type: string
     Error:
       description: ''
@@ -279,34 +307,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    LoginSpec:
-      required:
-      - grant_type
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-          format: password
-        refresh_token:
-          type: string
-        code:
-          type: string
-          description: required if grant_type = authorization_code
-        grant_type:
-          $ref: '#/components/schemas/LoginGrantTypes'
-        mfa_token:
-          type: string
-        mfa_code:
-          type: string
-    LoginGrantTypes:
-      enum:
-      - password
-      - refresh_token
-      - authorization_code
-      - mfa
-      type: string
   parameters:
     apiVersionParam:
       name: x-api-version

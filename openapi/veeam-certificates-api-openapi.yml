@@ -193,11 +193,76 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UploadCertificateSpec:
+      type: object
+      required:
+      - certificateFile
+      - certificatePassword
+      properties:
+        certificateFile:
+          type: string
+          format: binary
+          x-veeam-type:
+            type: formfile
+          description: The .PFX certificate to upload.
+        certificatePassword:
+          type: string
+          description: .PFX certificate password
+    Certificates:
+      type: object
+      properties:
+        data:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Certificate'
     CertificateRegenerateSpec:
       properties:
         validBy:
           format: date-time
           type: string
+    Certificate:
+      required:
+      - thumbprint
+      - serialNumber
+      - issuedTo
+      - issuedBy
+      - validFrom
+      - validBy
+      - subject
+      - keyAlgorithm
+      - keySize
+      - automaticallyGenerated
+      type: object
+      properties:
+        thumbprint:
+          description: certificate thumpbprint
+          type: string
+        serialNumber:
+          type: string
+        keyAlgorithm:
+          description: certificate key algorithm
+          type: string
+        keySize:
+          description: certificate key size
+          type: string
+        subject:
+          description: certificate subject
+          type: string
+        issuedTo:
+          description: certificate acquirer
+          type: string
+        issuedBy:
+          description: certificate issuer
+          type: string
+        validFrom:
+          format: date-time
+          type: string
+        validBy:
+          format: date-time
+          type: string
+        automaticallyGenerated:
+          type: boolean
     Error:
       description: ''
       required:
@@ -246,71 +311,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Certificate:
-      required:
-      - thumbprint
-      - serialNumber
-      - issuedTo
-      - issuedBy
-      - validFrom
-      - validBy
-      - subject
-      - keyAlgorithm
-      - keySize
-      - automaticallyGenerated
-      type: object
-      properties:
-        thumbprint:
-          description: certificate thumpbprint
-          type: string
-        serialNumber:
-          type: string
-        keyAlgorithm:
-          description: certificate key algorithm
-          type: string
-        keySize:
-          description: certificate key size
-          type: string
-        subject:
-          description: certificate subject
-          type: string
-        issuedTo:
-          description: certificate acquirer
-          type: string
-        issuedBy:
-          description: certificate issuer
-          type: string
-        validFrom:
-          format: date-time
-          type: string
-        validBy:
-          format: date-time
-          type: string
-        automaticallyGenerated:
-          type: boolean
-    Certificates:
-      type: object
-      properties:
-        data:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Certificate'
-    UploadCertificateSpec:
-      type: object
-      required:
-      - certificateFile
-      - certificatePassword
-      properties:
-        certificateFile:
-          type: string
-          format: binary
-          x-veeam-type:
-            type: formfile
-          description: The .PFX certificate to upload.
-        certificatePassword:
-          type: string
-          description: .PFX certificate password
   parameters:
     apiVersionParam:
       name: x-api-version

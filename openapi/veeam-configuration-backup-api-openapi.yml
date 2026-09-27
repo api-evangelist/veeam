@@ -270,48 +270,6 @@ paths:
         - StartConfigBackup
 components:
   schemas:
-    ConfigBackupLastSuccessfulModel:
-      description: Last successful backup.
-      properties:
-        lastSuccessfulTime:
-          description: Date and time when the last successful backup was created.
-          format: date-time
-          type: string
-        sessionId:
-          description: ID of the job session.
-          format: uuid
-          type: string
-      type: object
-    ConfigBackupModel:
-      properties:
-        backupRepositoryId:
-          description: ID of the backup repository on which the configuration backup is stored.
-          format: uuid
-          type: string
-        encryption:
-          $ref: '#/components/schemas/ConfigBackupEncryptionModel'
-        isEnabled:
-          description: If *true*, configuration backup is enabled.
-          type: boolean
-        lastSuccessfulBackup:
-          $ref: '#/components/schemas/ConfigBackupLastSuccessfulModel'
-        notifications:
-          $ref: '#/components/schemas/ConfigBackupNotificationsModel'
-        restorePointsToKeep:
-          description: Number of restore points to keep in the backup repository.
-          format: int32
-          type: integer
-        schedule:
-          $ref: '#/components/schemas/ConfigBackupScheduleModel'
-      required:
-      - isEnabled
-      - backupRepositoryId
-      - restorePointsToKeep
-      - notifications
-      - schedule
-      - lastSuccessfulBackup
-      - encryption
-      type: object
     ConfigBackupSMTPSettigsModel:
       description: Email notification settings.
       properties:
@@ -346,6 +304,104 @@ components:
       - notifyOnWarning
       - notifyOnError
       type: object
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ConfigBackupScheduleModel:
+      description: Scheduling settings.
+      properties:
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        isEnabled:
+          description: If *true*, backup scheduling is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+      required:
+      - isEnabled
+      type: object
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
     ConfigBackupEncryptionModel:
       description: Encryption settings.
       properties:
@@ -370,22 +426,123 @@ components:
       - Last
       - OnDay
       type: string
-    ESessionType:
-      description: Type of the session.
+    EConfigBackupSMTPSettingsType:
+      description: Type of notification settings.
       enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
+      - Global
+      - Custom
       type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    ConfigBackupLastSuccessfulModel:
+      description: Last successful backup.
+      properties:
+        lastSuccessfulTime:
+          description: Date and time when the last successful backup was created.
+          format: date-time
+          type: string
+        sessionId:
+          description: ID of the job session.
+          format: uuid
+          type: string
+      type: object
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ScheduleDailyModel:
+      description: Daily scheduling options.
+      properties:
+        dailyKind:
+          $ref: '#/components/schemas/EDailyKinds'
+        days:
+          description: Days of the week when the job must start.
+          items:
+            $ref: '#/components/schemas/EDayOfWeek'
+          type: array
+          uniqueItems: true
+        isEnabled:
+          default: true
+          description: If *true*, daily schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+      required:
+      - isEnabled
+      type: object
+    ConfigBackupModel:
+      properties:
+        backupRepositoryId:
+          description: ID of the backup repository on which the configuration backup is stored.
+          format: uuid
+          type: string
+        encryption:
+          $ref: '#/components/schemas/ConfigBackupEncryptionModel'
+        isEnabled:
+          description: If *true*, configuration backup is enabled.
+          type: boolean
+        lastSuccessfulBackup:
+          $ref: '#/components/schemas/ConfigBackupLastSuccessfulModel'
+        notifications:
+          $ref: '#/components/schemas/ConfigBackupNotificationsModel'
+        restorePointsToKeep:
+          description: Number of restore points to keep in the backup repository.
+          format: int32
+          type: integer
+        schedule:
+          $ref: '#/components/schemas/ConfigBackupScheduleModel'
+      required:
+      - isEnabled
+      - backupRepositoryId
+      - restorePointsToKeep
+      - notifications
+      - schedule
+      - lastSuccessfulBackup
+      - encryption
+      type: object
     SessionModel:
       properties:
         activityId:
@@ -440,11 +597,13 @@ components:
       - state
       - usn
       type: object
-    EConfigBackupSMTPSettingsType:
-      description: Type of notification settings.
+    ESessionResult:
+      description: Result status.
       enum:
-      - Global
-      - Custom
+      - None
+      - Success
+      - Warning
+      - Failed
       type: string
     ConfigBackupNotificationsModel:
       description: Notification settings.
@@ -457,196 +616,37 @@ components:
       required:
       - SNMPEnabled
       type: object
-    EDailyKinds:
-      description: Kind of daily scheduling scheme.
-      enum:
-      - Everyday
-      - WeekDays
-      - SelectedDays
-      type: string
-    EMonth:
-      description: Month.
-      enum:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-      type: string
-    ConfigBackupScheduleModel:
-      description: Scheduling settings.
-      properties:
-        daily:
-          $ref: '#/components/schemas/ScheduleDailyModel'
-        isEnabled:
-          description: If *true*, backup scheduling is enabled.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/ScheduleMonthlyModel'
-      required:
-      - isEnabled
-      type: object
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    ScheduleMonthlyModel:
-      description: Monthly scheduling options.
-      properties:
-        dayNumberInMonth:
-          $ref: '#/components/schemas/EDayNumberInMonth'
-        dayOfMonth:
-          description: Day of the month when the job must start.
-          type: integer
-        dayOfWeek:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          default: false
-          description: If *true*, monthly schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-        months:
-          description: Months when the job must start.
-          items:
-            $ref: '#/components/schemas/EMonth'
-          type: array
-          uniqueItems: true
-      required:
-      - isEnabled
-      type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    ScheduleDailyModel:
-      description: Daily scheduling options.
-      properties:
-        dailyKind:
-          $ref: '#/components/schemas/EDailyKinds'
-        days:
-          description: Days of the week when the job must start.
-          items:
-            $ref: '#/components/schemas/EDayOfWeek'
-          type: array
-          uniqueItems: true
-        isEnabled:
-          default: true
-          description: If *true*, daily schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-      required:
-      - isEnabled
-      type: object
-    SessionResultModel:
-      description: Session result.
-      properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
     BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

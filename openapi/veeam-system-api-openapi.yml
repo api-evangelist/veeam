@@ -154,33 +154,7 @@ paths:
       summary: Get system date time info
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
-    LogExportSpec:
-      required:
-      - exportType
-      properties:
-        exportLogsType:
-          type: string
-          enum:
-          - LastDays
-          - BetweenDates
-        days:
-          format: int32
-          type: integer
-        fromDateUtc:
-          format: date-time
-          type: string
-        toDateUtc:
-          format: date-time
-          type: string
     Error:
       description: ''
       required:
@@ -237,6 +211,32 @@ components:
         utcDateTime:
           format: date-time
           type: string
+    LogExportSpec:
+      required:
+      - exportType
+      properties:
+        exportLogsType:
+          type: string
+          enum:
+          - LastDays
+          - BetweenDates
+        days:
+          format: int32
+          type: integer
+        fromDateUtc:
+          format: date-time
+          type: string
+        toDateUtc:
+          format: date-time
+          type: string
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

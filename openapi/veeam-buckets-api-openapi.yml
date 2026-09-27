@@ -388,6 +388,87 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    BucketsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFolder:
+      required:
+      - name
+      - folderId
+      type: object
+      properties:
+        name:
+          type: string
+        folderId:
+          format: uuid
+          type: string
     BucketsFilters:
       type: object
       properties:
@@ -409,17 +490,11 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/BucketsSortColumns'
-    BucketFolder:
-      required:
-      - name
-      - folderId
-      type: object
-      properties:
-        name:
-          type: string
-        folderId:
-          format: uuid
-          type: string
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
     Error:
       description: ''
       required:
@@ -486,81 +561,6 @@ components:
           - POST
           - PUT
           - DELETE
-    BucketFoldersFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
-    BucketFoldersFiltersOrderColumns:
-      enum:
-      - NameAsc
-      - NameDesc
-      type: string
-    BucketsPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketFoldersPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/BucketFolder'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

@@ -314,6 +314,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeZone'
+    DateTimeSettings:
+      required:
+      - timezone
+      - useCustomSettings
+      type: object
+      properties:
+        timezone:
+          $ref: '#/components/schemas/TimeZone'
+        useCustomSettings:
+          type: boolean
+    TimeZone:
+      required:
+      - name
+      - displayName
+      type: object
+      properties:
+        name:
+          type: string
+        displayName:
+          type: string
     Error:
       description: ''
       required:
@@ -362,26 +382,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    DateTimeSettings:
-      required:
-      - timezone
-      - useCustomSettings
-      type: object
-      properties:
-        timezone:
-          $ref: '#/components/schemas/TimeZone'
-        useCustomSettings:
-          type: boolean
-    TimeZone:
-      required:
-      - name
-      - displayName
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

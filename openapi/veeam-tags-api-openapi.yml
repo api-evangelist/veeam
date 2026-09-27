@@ -177,20 +177,20 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TagsPage:
+    Tag:
       required:
-      - results
-      - totalCount
+      - id
+      - key
+      - value
       type: object
       properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        totalCount:
-          format: int32
-          type: integer
+        id:
+          format: uuid
+          type: string
+        key:
+          type: string
+        value:
+          type: string
         _links:
           type: array
           uniqueItems: false
@@ -214,6 +214,30 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/TagsSortColumns'
+    TagsSortColumns:
+      type: string
+      enum:
+      - keyAsc
+      - keyDesc
+    TagsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -262,25 +286,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Tag:
-      required:
-      - id
-      - key
-      - value
-      type: object
-      properties:
-        id:
-          format: uuid
-          type: string
-        key:
-          type: string
-        value:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Link:
       required:
       - rel
@@ -299,11 +304,6 @@ components:
           - POST
           - PUT
           - DELETE
-    TagsSortColumns:
-      type: string
-      enum:
-      - keyAsc
-      - keyDesc
   parameters:
     apiVersionParam:
       name: x-api-version

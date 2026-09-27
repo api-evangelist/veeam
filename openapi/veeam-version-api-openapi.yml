@@ -124,14 +124,6 @@ paths:
       summary: Get product id
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
     ProductId:
       required:
@@ -199,6 +191,14 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

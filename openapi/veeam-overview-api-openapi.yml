@@ -66,14 +66,6 @@ paths:
       summary: User status
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
     Error:
       description: ''
@@ -139,6 +131,14 @@ components:
           type: integer
         workerLocationsCount:
           type: integer
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

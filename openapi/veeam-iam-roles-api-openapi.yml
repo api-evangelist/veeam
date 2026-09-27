@@ -622,7 +622,46 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AmazonAccountIAMRoleFromAnotherAccountUpdateSpec:
+    AmazonAccountsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonAccount'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    ValidationMessage:
+      type: object
+      properties:
+        severity:
+          enum:
+          - Warning
+          - Error
+          type: string
+        message:
+          type: string
+        contextId:
+          type: string
+          format: uuid
+    RegionTypes:
+      enum:
+      - Global
+      - Emulator
+      - Government
+      - China
+      type: string
+    AmazonAccountIAMRoleFromAnotherAccountCreateSpec:
       required:
       - accountId
       - roleName
@@ -634,6 +673,85 @@ components:
           type: string
         externalId:
           type: string
+    AmazonAccountAccessKeysCreateSpec:
+      required:
+      - accessKey
+      - secretKey
+      - defaultRegionType
+      type: object
+      properties:
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        defaultRegionType:
+          $ref: '#/components/schemas/RegionTypes'
+    AmazonAccountAccessKeysUpdateSpec:
+      required:
+      - accessKey
+      - secretKey
+      - defaultRegionType
+      type: object
+      properties:
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        defaultRegionType:
+          $ref: '#/components/schemas/RegionTypes'
+    AmazonAccountUpdateSpec:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 255
+          minLength: 0
+          type: string
+        description:
+          maxLength: 512
+          minLength: 0
+          type: string
+        accessKeys:
+          $ref: '#/components/schemas/AmazonAccountAccessKeysUpdateSpec'
+        IAMRole:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleUpdateSpec'
+        IAMRoleFromAnotherAccount:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountUpdateSpec'
+    AmazonAccountIAMRoleUpdateSpec:
+      required:
+      - roleName
+      type: object
+      properties:
+        roleName:
+          type: string
+    RescanCloudAccountSpec:
+      type: object
+      properties:
+        regionIds:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+            format: uuid
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     AmazonAccountIAMRoleCreateSpec:
       required:
       - roleName
@@ -641,19 +759,6 @@ components:
       properties:
         roleName:
           type: string
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     AmazonAccountIAMRole:
       required:
       - roleName
@@ -667,6 +772,29 @@ components:
           type: string
         isDefault:
           type: boolean
+    AmazonAccountAccessKeys:
+      required:
+      - accessKey
+      - defaultRegionType
+      type: object
+      properties:
+        accessKey:
+          type: string
+        defaultRegion:
+          $ref: '#/components/schemas/RegionTypes'
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     AmazonAccountCreateSpec:
       required:
       - name
@@ -687,111 +815,36 @@ components:
           $ref: '#/components/schemas/AmazonAccountIAMRoleCreateSpec'
         IAMRoleFromAnotherAccount:
           $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountCreateSpec'
-    AmazonAccountAccessKeysUpdateSpec:
+    AmazonAccount:
       required:
-      - accessKey
-      - secretKey
-      - defaultRegionType
+      - id
+      - name
+      - awsid
+      - description
       type: object
       properties:
-        accessKey:
+        id:
+          format: uuid
           type: string
-        secretKey:
+        name:
           type: string
-        defaultRegionType:
+        description:
+          type: string
+        awsid:
+          type: string
+        regionType:
           $ref: '#/components/schemas/RegionTypes'
-    RescanCloudAccountSpec:
-      type: object
-      properties:
-        regionIds:
+        accessKeys:
+          $ref: '#/components/schemas/AmazonAccountAccessKeys'
+        IAMRole:
+          $ref: '#/components/schemas/AmazonAccountIAMRole'
+        IAMRoleFromAnotherAccount:
+          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccount'
+        _links:
           type: array
           uniqueItems: false
           items:
-            type: string
-            format: uuid
-    AmazonAccountsSortColumns:
-      enum:
-      - nameAsc
-      - nameDesc
-      type: string
-    RegionTypes:
-      enum:
-      - Global
-      - Emulator
-      - Government
-      - China
-      type: string
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    AmazonAccountIAMRoleFromAnotherAccountCreateSpec:
-      required:
-      - accountId
-      - roleName
-      type: object
-      properties:
-        accountId:
-          type: string
-        roleName:
-          type: string
-        externalId:
-          type: string
-    ValidationMessage:
-      type: object
-      properties:
-        severity:
-          enum:
-          - Warning
-          - Error
-          type: string
-        message:
-          type: string
-        contextId:
-          type: string
-          format: uuid
-    AmazonAccountIAMRoleUpdateSpec:
-      required:
-      - roleName
-      type: object
-      properties:
-        roleName:
-          type: string
-    AmazonAccountNameValidationSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
-    AmazonAccountAccessKeysCreateSpec:
-      required:
-      - accessKey
-      - secretKey
-      - defaultRegionType
-      type: object
-      properties:
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        defaultRegionType:
-          $ref: '#/components/schemas/RegionTypes'
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -840,25 +893,31 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    AmazonAccountsPage:
+    AmazonAccountIAMRoleFromAnotherAccountUpdateSpec:
       required:
-      - results
-      - totalCount
+      - accountId
+      - roleName
       type: object
       properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/AmazonAccount'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+        accountId:
+          type: string
+        roleName:
+          type: string
+        externalId:
+          type: string
+    AmazonAccountNameValidationSpec:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+    AmazonAccountsSortColumns:
+      enum:
+      - nameAsc
+      - nameDesc
+      type: string
     AmazonAccountIAMRoleFromAnotherAccount:
       required:
       - parentAmazonAccountId
@@ -873,55 +932,6 @@ components:
           type: string
         roleName:
           type: string
-    AmazonAccount:
-      required:
-      - id
-      - name
-      - awsid
-      - description
-      type: object
-      properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        awsid:
-          type: string
-        regionType:
-          $ref: '#/components/schemas/RegionTypes'
-        accessKeys:
-          $ref: '#/components/schemas/AmazonAccountAccessKeys'
-        IAMRole:
-          $ref: '#/components/schemas/AmazonAccountIAMRole'
-        IAMRoleFromAnotherAccount:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccount'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    AmazonAccountUpdateSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          maxLength: 255
-          minLength: 0
-          type: string
-        description:
-          maxLength: 512
-          minLength: 0
-          type: string
-        accessKeys:
-          $ref: '#/components/schemas/AmazonAccountAccessKeysUpdateSpec'
-        IAMRole:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleUpdateSpec'
-        IAMRoleFromAnotherAccount:
-          $ref: '#/components/schemas/AmazonAccountIAMRoleFromAnotherAccountUpdateSpec'
     AmazonAccountsFilters:
       type: object
       properties:
@@ -940,16 +950,6 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/AmazonAccountsSortColumns'
-    AmazonAccountAccessKeys:
-      required:
-      - accessKey
-      - defaultRegionType
-      type: object
-      properties:
-        accessKey:
-          type: string
-        defaultRegion:
-          $ref: '#/components/schemas/RegionTypes'
   parameters:
     apiVersionParam:
       name: x-api-version

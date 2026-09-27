@@ -87,6 +87,18 @@ paths:
         - ViewServices
 components:
   schemas:
+    ServicesModel:
+      properties:
+        name:
+          description: Name of the service.
+          type: string
+        port:
+          description: Port used to communicate with the service.
+          type: integer
+      required:
+      - name
+      - port
+      type: object
     PaginationResult:
       description: Pagination settings.
       properties:
@@ -109,49 +121,6 @@ components:
       required:
       - total
       - count
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    EServicesFiltersOrderColumn:
-      enum:
-      - Name
-      - Port
-      type: string
-    ServicesModel:
-      properties:
-        name:
-          description: Name of the service.
-          type: string
-        port:
-          description: Port used to communicate with the service.
-          type: integer
-      required:
-      - name
-      - port
       type: object
     ServicesFilters:
       properties:
@@ -181,6 +150,37 @@ components:
       - data
       - pagination
       type: object
+    EServicesFiltersOrderColumn:
+      enum:
+      - Name
+      - Port
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
   responses:
     InternalServerError:
       content:
@@ -188,18 +188,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

@@ -576,130 +576,62 @@ paths:
       summary: Vm restore points get default network settings
       x-summary-source: derived
 components:
-  schemas:
-    StartFlrResponse:
-      required:
-      - sessionId
-      - url
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        url:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    VmRestorePointsSortColumns:
-      type: string
-      enum:
-      - pointInTimeAsc
-      - pointInTimeDesc
-      - backupSizeBytesAsc
-      - backupSizeBytesDesc
-      - jobTypeAsc
-      - jobTypeDesc
-    VmRestorePointsFilters:
-      type: object
-      properties:
-        VirtualMachineId:
-          type: string
-          format: uuid
-        OnlyLatest:
-          type: boolean
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/VmRestorePointsSortColumns'
-          uniqueItems: false
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+  requestBodies:
     VirtualMachineRestoreOptions:
-      type: object
-      properties:
-        reason:
-          type: string
-        amazonAccountId:
-          type: string
-          format: uuid
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        startInstance:
-          type: boolean
-        toAlternative:
-          $ref: '#/components/schemas/VirtualMachineToAlternativeRestoreOptions'
-    DiskRestoreOptions:
-      required:
-      - diskId
-      type: object
-      properties:
-        diskId:
-          type: string
-        name:
-          type: string
+      content:
+        application/json-patch+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        text/json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/*+json:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        application/csp-report:
+          schema:
+            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
     DiskBulkRestoreOptions:
-      required:
-      - volumes
+      content:
+        application/json-patch+json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        text/json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/*+json:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+        application/csp-report:
+          schema:
+            $ref: '#/components/schemas/DiskBulkRestoreOptions'
+  schemas:
+    ValidationMessage:
       type: object
       properties:
-        reason:
+        severity:
+          enum:
+          - Warning
+          - Error
           type: string
-        amazonAccountId:
+        message:
+          type: string
+        contextId:
           type: string
           format: uuid
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        volumes:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/DiskRestoreOptions'
-        toAlternative:
-          $ref: '#/components/schemas/DiskBulkRestoreToAlternativeOptions'
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+    JobTypes:
+      enum:
+      - Backup
+      - Snapshot
+      - ManualSnapshot
+      - Replica
+      type: string
     VirtualMachineToAlternativeRestoreOptions:
       required:
       - regionId
@@ -725,19 +657,117 @@ components:
           type: boolean
         encryptionKeyId:
           type: string
-    ValidationMessage:
+    FlrOptions:
       type: object
       properties:
-        severity:
-          enum:
-          - Warning
-          - Error
+        reason:
           type: string
-        message:
-          type: string
-        contextId:
+    Ec2DiskTypes:
+      type: string
+      enum:
+      - Standart
+      - St1
+      - Sc1
+      - Io1
+      - Gp2
+    DiskBulkRestoreToAlternativeOptions:
+      required:
+      - availabilityZoneId
+      - preserveEncryptionForVolumes
+      type: object
+      properties:
+        availabilityZoneId:
           type: string
           format: uuid
+        preserveEncryptionForVolumes:
+          type: boolean
+        encryptionKeyId:
+          type: string
+    DiskRestoreOptions:
+      required:
+      - diskId
+      type: object
+      properties:
+        diskId:
+          type: string
+        name:
+          type: string
+    VirtualMachineRestoreOptions:
+      type: object
+      properties:
+        reason:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        startInstance:
+          type: boolean
+        toAlternative:
+          $ref: '#/components/schemas/VirtualMachineToAlternativeRestoreOptions'
+    VmRestorePointDefaultNetworkSettings:
+      required:
+      - restorePointId
+      type: object
+      properties:
+        restorePointId:
+          type: string
+          format: uuid
+        networkName:
+          type: string
+        networkId:
+          type: string
+        subNetworkName:
+          type: string
+        subNetworkId:
+          type: string
+        securityGroupName:
+          type: string
+        securityGroupId:
+          type: string
+    VmRestorePointsSortColumns:
+      type: string
+      enum:
+      - pointInTimeAsc
+      - pointInTimeDesc
+      - backupSizeBytesAsc
+      - backupSizeBytesDesc
+      - jobTypeAsc
+      - jobTypeDesc
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     VmRestorePoint:
       required:
       - id
@@ -826,21 +856,41 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Ec2DiskTypes:
-      type: string
-      enum:
-      - Standart
-      - St1
-      - Sc1
-      - Io1
-      - Gp2
-    JobTypes:
-      enum:
-      - Backup
-      - Snapshot
-      - ManualSnapshot
-      - Replica
-      type: string
+    VmRestorePointsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/VmRestorePoint'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    StartFlrResponse:
+      required:
+      - sessionId
+      - url
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        url:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     VmBackupVolume:
       required:
       - diskId
@@ -866,98 +916,48 @@ components:
           type: string
         encryptionKeyName:
           type: string
-    DiskBulkRestoreToAlternativeOptions:
-      required:
-      - availabilityZoneId
-      - preserveEncryptionForVolumes
+    VmRestorePointsFilters:
       type: object
       properties:
-        availabilityZoneId:
+        VirtualMachineId:
           type: string
           format: uuid
-        preserveEncryptionForVolumes:
+        OnlyLatest:
           type: boolean
-        encryptionKeyId:
-          type: string
-    VmRestorePointDefaultNetworkSettings:
-      required:
-      - restorePointId
-      type: object
-      properties:
-        restorePointId:
-          type: string
-          format: uuid
-        networkName:
-          type: string
-        networkId:
-          type: string
-        subNetworkName:
-          type: string
-        subNetworkId:
-          type: string
-        securityGroupName:
-          type: string
-        securityGroupId:
-          type: string
-    VmRestorePointsPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
+        Offset:
           type: integer
-        results:
-          uniqueItems: false
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
           type: array
           items:
-            $ref: '#/components/schemas/VmRestorePoint'
-        _links:
-          type: array
+            $ref: '#/components/schemas/VmRestorePointsSortColumns'
           uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    FlrOptions:
+    DiskBulkRestoreOptions:
+      required:
+      - volumes
       type: object
       properties:
         reason:
           type: string
-  requestBodies:
-    DiskBulkRestoreOptions:
-      content:
-        application/json-patch+json:
-          schema:
-            $ref: '#/components/schemas/DiskBulkRestoreOptions'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DiskBulkRestoreOptions'
-        text/json:
-          schema:
-            $ref: '#/components/schemas/DiskBulkRestoreOptions'
-        application/*+json:
-          schema:
-            $ref: '#/components/schemas/DiskBulkRestoreOptions'
-        application/csp-report:
-          schema:
-            $ref: '#/components/schemas/DiskBulkRestoreOptions'
-    VirtualMachineRestoreOptions:
-      content:
-        application/json-patch+json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        text/json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/*+json:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
-        application/csp-report:
-          schema:
-            $ref: '#/components/schemas/VirtualMachineRestoreOptions'
+        amazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        volumes:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/DiskRestoreOptions'
+        toAlternative:
+          $ref: '#/components/schemas/DiskBulkRestoreToAlternativeOptions'
   parameters:
     apiVersionParam:
       name: x-api-version

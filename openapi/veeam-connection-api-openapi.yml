@@ -62,22 +62,51 @@ paths:
         claims:
         - CheckCertificate
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
-    ConnectionCertificateModel:
+    HostConnectionSpec:
       properties:
-        certificate:
-          $ref: '#/components/schemas/CertificateModel'
-        fingerprint:
-          description: SSH key fingerprint used to verify the server identity.
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
           type: string
+        port:
+          description: Port used to communicate with the server.
+          type: integer
+        serverName:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - serverName
+      - credentialsId
+      - type
       type: object
-    EManagedServerType:
-      description: Type of the server.
-      enum:
-      - WindowsHost
-      - LinuxHost
-      - ViHost
-      type: string
     Error:
       properties:
         errorCode:
@@ -147,50 +176,21 @@ components:
       - validBy
       - validFrom
       type: object
-    HostConnectionSpec:
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    ConnectionCertificateModel:
       properties:
-        credentialsId:
-          description: ID of a credentials record used to connect to the server.
-          format: uuid
+        certificate:
+          $ref: '#/components/schemas/CertificateModel'
+        fingerprint:
+          description: SSH key fingerprint used to verify the server identity.
           type: string
-        port:
-          description: Port used to communicate with the server.
-          type: integer
-        serverName:
-          description: Full DNS name or IP address of the server.
-          type: string
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      required:
-      - serverName
-      - credentialsId
-      - type
       type: object
-  responses:
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

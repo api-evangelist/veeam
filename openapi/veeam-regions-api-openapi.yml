@@ -386,6 +386,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    AmazonInstancesTypesByRegionFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        isArm64:
+          type: boolean
+        virtualizationTypes:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
     AmazonInstanceTypesByRegionPage:
       required:
       - totalCount
@@ -424,6 +440,51 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    AmazonInstanceType:
+      required:
+      - name
+      - cpuCount
+      - ram
+      type: object
+      properties:
+        name:
+          type: string
+        cpuCount:
+          format: int32
+          type: integer
+        ram:
+          format: int32
+          type: integer
+        isArm64:
+          type: boolean
+        virtualizationType:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+    RegionsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesk
+    RegionsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/RegionsSortColumns'
     Error:
       description: ''
       required:
@@ -472,22 +533,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Region:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Link:
       required:
       - rel
@@ -506,67 +551,22 @@ components:
           - POST
           - PUT
           - DELETE
-    AmazonInstancesTypesByRegionFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        isArm64:
-          type: boolean
-        virtualizationTypes:
-          type: array
-          uniqueItems: false
-          items:
-            type: string
-    RegionsFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/RegionsSortColumns'
-    RegionsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesk
-    AmazonInstanceType:
+    Region:
       required:
+      - id
       - name
-      - cpuCount
-      - ram
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
         name:
           type: string
-        cpuCount:
-          format: int32
-          type: integer
-        ram:
-          format: int32
-          type: integer
-        isArm64:
-          type: boolean
-        virtualizationType:
+        _links:
           type: array
           uniqueItems: false
           items:
-            type: string
+            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

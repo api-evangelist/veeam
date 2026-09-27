@@ -499,25 +499,58 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegionSettingsPage:
-      required:
-      - totalCount
-      - results
+    RegionSettingsFilters:
       type: object
       properties:
-        totalCount:
-          format: int32
+        offset:
           type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/RegionSettings'
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    RegionTypes:
+      enum:
+      - Global
+      - Emulator
+      - Government
+      - China
+      type: string
+    ServiceAccountSettings:
+      required:
+      - serviceAmazonAccountId
+      type: object
+      properties:
+        serviceAmazonAccountId:
+          format: uuid
+          type: string
+        serviceAmazonAccountName:
+          type: string
+        serviceAmazonAccountRegionType:
+          $ref: '#/components/schemas/RegionTypes'
+        serviceRegion:
+          type: string
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    RegionSettingsSpec:
+      required:
+      - availableZoneId
+      - cloudNetworkId
+      - cloudSubnetworkId
+      - cloudSecurityGroupId
+      type: object
+      properties:
+        availableZoneId:
+          format: uuid
+          type: string
+        cloudNetworkId:
+          type: string
+        cloudSubnetworkId:
+          type: string
+        cloudSecurityGroupId:
+          type: string
     RegionSettings:
       required:
       - regionId
@@ -547,28 +580,6 @@ components:
         cloudSecurityGroupId:
           type: string
         cloudSecurityGroupName:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    EmptySuccessResponse:
-      description: Empty succes response ( 200, 201, 204 )
-      type: object
-    ServiceAccountSettings:
-      required:
-      - serviceAmazonAccountId
-      type: object
-      properties:
-        serviceAmazonAccountId:
-          format: uuid
-          type: string
-        serviceAmazonAccountName:
-          type: string
-        serviceAmazonAccountRegionType:
-          $ref: '#/components/schemas/RegionTypes'
-        serviceRegion:
           type: string
         _links:
           type: array
@@ -623,23 +634,9 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    RegionSettingsSpec:
-      required:
-      - availableZoneId
-      - cloudNetworkId
-      - cloudSubnetworkId
-      - cloudSecurityGroupId
+    EmptySuccessResponse:
+      description: Empty succes response ( 200, 201, 204 )
       type: object
-      properties:
-        availableZoneId:
-          format: uuid
-          type: string
-        cloudNetworkId:
-          type: string
-        cloudSubnetworkId:
-          type: string
-        cloudSecurityGroupId:
-          type: string
     Link:
       required:
       - rel
@@ -658,22 +655,25 @@ components:
           - POST
           - PUT
           - DELETE
-    RegionTypes:
-      enum:
-      - Global
-      - Emulator
-      - Government
-      - China
-      type: string
-    RegionSettingsFilters:
+    RegionSettingsPage:
+      required:
+      - totalCount
+      - results
       type: object
       properties:
-        offset:
-          type: integer
+        totalCount:
           format: int32
-        limit:
           type: integer
-          format: int32
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionSettings'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

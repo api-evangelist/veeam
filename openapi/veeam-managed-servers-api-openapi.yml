@@ -441,6 +441,59 @@ paths:
         - UpdateManagedServers
 components:
   schemas:
+    EViHostType:
+      description: Type of the VMware vSphere server.
+      enum:
+      - ESX
+      - ESXi
+      - VC
+      type: string
+    LinuxHostSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
+      properties:
+        sshFingerprint:
+          description: SSH key fingerprint used to verify the server identity. For details on how to get the fingerprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
+          type: string
+        sshSettings:
+          $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
+      required:
+      - sshFingerprint
+      type: object
+    ECredentialsType:
+      description: Credentials type.
+      enum:
+      - Standard
+      - Linux
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ViHostModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseManagedServerModel'
+      - properties:
+          port:
+            description: Port used to communicate with the server.
+            type: integer
+          viHostType:
+            $ref: '#/components/schemas/EViHostType'
+        required:
+        - port
+        type: object
     BaseManagedServerSpec:
       properties:
         credentialsId:
@@ -456,12 +509,91 @@ components:
         type:
           $ref: '#/components/schemas/EManagedServerType'
       type: object
-    EManagedServersFiltersOrderColumn:
+    LinuxCredentialsSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCredentialsSpec'
+      - properties:
+          SSHPort:
+            description: SSH port used to connect to a Linux server.
+            type: integer
+          addToSudoers:
+            description: If *true*, the account is automatically added to the sudoers file.
+            type: boolean
+          autoElevated:
+            description: If *true*, the permissions of the account are automatically elevated to the root user.
+            type: boolean
+          passphrase:
+            description: Passphrase that protects the private key.
+            type: string
+          privateKey:
+            description: Private key.
+            type: string
+          rootPassword:
+            description: Password for the root account.
+            type: string
+          tag:
+            description: Tag used to identify the credentials record.
+            type: string
+          useSu:
+            description: If *true*, the `su` command is used for Linux distributions where the `sudo` command is not available.
+            type: boolean
+        type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    ESessionState:
+      description: State of the session.
       enum:
-      - Name
-      - Type
-      - Description
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
       type: string
+    WindowsHostPortsModel:
+      description: Veeam Backup & Replication components installed on the server and ports used by the components.
+      properties:
+        components:
+          description: Array of Veeam Backup & Replication components.
+          items:
+            $ref: '#/components/schemas/WindowsHostComponentPortModel'
+          type: array
+        portRangeEnd:
+          description: End port used for data transfer.
+          type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+      type: object
     LinuxHostModel:
       allOf:
       - $ref: '#/components/schemas/BaseManagedServerModel'
@@ -471,6 +603,19 @@ components:
           sshSettings:
             $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
         type: object
+    ManagedServerSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            LinuxHost: '#/components/schemas/LinuxHostSpec'
+            ViHost: '#/components/schemas/ViHostSpec'
+            WindowsHost: '#/components/schemas/WindowsHostSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsHostSpec'
+        - $ref: '#/components/schemas/LinuxHostSpec'
+        - $ref: '#/components/schemas/ViHostSpec'
+      - $ref: '#/components/schemas/BaseManagedServerSpec'
     BaseCredentialsSpec:
       properties:
         description:
@@ -485,6 +630,135 @@ components:
           description: User name.
           type: string
       type: object
+    ECredentialsStorageType:
+      description: Credentials type used to connect to the Linux server.
+      enum:
+      - Permanent
+      - SingleUse
+      type: string
+    LinuxHostSSHSettingsModel:
+      description: SSH settings.
+      properties:
+        managementPort:
+          description: Port used as a control channel from the Veeam Backup & Replication console to the Linux server.
+          type: integer
+        portRangeEnd:
+          description: End port used for data transfer.
+          type: integer
+        portRangeStart:
+          description: Start port used for data transfer.
+          type: integer
+        serverThisSide:
+          description: If *true*, the server is run on this side.
+          type: boolean
+        sshTimeOutMs:
+          description: SSH timeout, in ms. If a task targeted at the server is inactive after the timeout, the task is terminated.
+          type: integer
+      type: object
+    EWindowsHostComponentType:
+      description: Veeam Backup & Replication component.
+      enum:
+      - Transport
+      - Nfs
+      - HvIntegration
+      - DeployerSvc
+      - WanAccelerator
+      - Tape
+      - CloudGate
+      - CloudServiceInvoker
+      - CloudServiceRemoting
+      - RestoreProxy
+      - EpAgent
+      - EpAgentSqlLocalDB
+      - EpAgentSharedManagementObjects
+      - EpAgentSqlSysClrTypes
+      - AgentConfigureService
+      - VawRedist
+      - ValRedist
+      - GuestControl
+      - FileSystemVssIntegration
+      - VssHwSnapshotProvider
+      - Cdp
+      - VamRedist
+      type: string
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    BaseManagedServerModel:
+      properties:
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
+          type: string
+        description:
+          description: Description of the server.
+          type: string
+        id:
+          description: ID of the server.
+          format: uuid
+          type: string
+        name:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      type: object
+    EManagedServersFiltersOrderColumn:
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    ManagedServerModel:
+      allOf:
+      - discriminator:
+          mapping:
+            LinuxHost: '#/components/schemas/LinuxHostModel'
+            ViHost: '#/components/schemas/ViHostModel'
+            WindowsHost: '#/components/schemas/WindowsHostModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/WindowsHostModel'
+        - $ref: '#/components/schemas/LinuxHostModel'
+        - $ref: '#/components/schemas/ViHostModel'
+      - $ref: '#/components/schemas/BaseManagedServerModel'
     ManagedServersFilters:
       properties:
         limit:
@@ -504,66 +778,24 @@ components:
         viTypeFilter:
           $ref: '#/components/schemas/EViHostType'
       type: object
-    ManagedServerModel:
+    WindowsHostModel:
       allOf:
-      - discriminator:
-          mapping:
-            LinuxHost: '#/components/schemas/LinuxHostModel'
-            ViHost: '#/components/schemas/ViHostModel'
-            WindowsHost: '#/components/schemas/WindowsHostModel'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/WindowsHostModel'
-        - $ref: '#/components/schemas/LinuxHostModel'
-        - $ref: '#/components/schemas/ViHostModel'
       - $ref: '#/components/schemas/BaseManagedServerModel'
-    WindowsHostPortsModel:
-      description: Veeam Backup & Replication components installed on the server and ports used by the components.
-      properties:
-        components:
-          description: Array of Veeam Backup & Replication components.
-          items:
-            $ref: '#/components/schemas/WindowsHostComponentPortModel'
-          type: array
-        portRangeEnd:
-          description: End port used for data transfer.
-          type: integer
-        portRangeStart:
-          description: Start port used for data transfer.
-          type: integer
-        serverThisSide:
-          description: If *true*, the server is run on this side.
-          type: boolean
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
-    ManagedServerSpec:
+      - properties:
+          networkSettings:
+            $ref: '#/components/schemas/WindowsHostPortsModel'
+        type: object
+    ViHostSpec:
       allOf:
-      - discriminator:
-          mapping:
-            LinuxHost: '#/components/schemas/LinuxHostSpec'
-            ViHost: '#/components/schemas/ViHostSpec'
-            WindowsHost: '#/components/schemas/WindowsHostSpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/WindowsHostSpec'
-        - $ref: '#/components/schemas/LinuxHostSpec'
-        - $ref: '#/components/schemas/ViHostSpec'
       - $ref: '#/components/schemas/BaseManagedServerSpec'
+      - properties:
+          certificateThumbprint:
+            description: Certificate thumbprint used to verify the server identity. For details on how to get the thumbprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
+            type: string
+          port:
+            description: Port used to communicate with the server.
+            type: integer
+        type: object
     SessionModel:
       properties:
         activityId:
@@ -618,6 +850,13 @@ components:
       - state
       - usn
       type: object
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
     WindowsHostSpec:
       allOf:
       - $ref: '#/components/schemas/BaseManagedServerSpec'
@@ -625,173 +864,25 @@ components:
           networkSettings:
             $ref: '#/components/schemas/WindowsHostPortsModel'
         type: object
-    EWindowsHostComponentType:
-      description: Veeam Backup & Replication component.
-      enum:
-      - Transport
-      - Nfs
-      - HvIntegration
-      - DeployerSvc
-      - WanAccelerator
-      - Tape
-      - CloudGate
-      - CloudServiceInvoker
-      - CloudServiceRemoting
-      - RestoreProxy
-      - EpAgent
-      - EpAgentSqlLocalDB
-      - EpAgentSharedManagementObjects
-      - EpAgentSqlSysClrTypes
-      - AgentConfigureService
-      - VawRedist
-      - ValRedist
-      - GuestControl
-      - FileSystemVssIntegration
-      - VssHwSnapshotProvider
-      - Cdp
-      - VamRedist
-      type: string
-    PaginationResult:
-      description: Pagination settings.
+    WindowsHostComponentPortModel:
+      description: Ports used by Veeam Backup & Replication components.
       properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
+        componentName:
+          $ref: '#/components/schemas/EWindowsHostComponentType'
+        port:
+          description: Port used by the component.
           type: integer
       required:
-      - total
-      - count
+      - componentName
+      - port
       type: object
-    LinuxHostSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseManagedServerSpec'
-      properties:
-        sshFingerprint:
-          description: SSH key fingerprint used to verify the server identity. For details on how to get the fingerprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
-          type: string
-        sshSettings:
-          $ref: '#/components/schemas/LinuxHostSSHSettingsModel'
-      required:
-      - sshFingerprint
-      type: object
-    WindowsHostModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseManagedServerModel'
-      - properties:
-          networkSettings:
-            $ref: '#/components/schemas/WindowsHostPortsModel'
-        type: object
-    ECredentialsStorageType:
-      description: Credentials type used to connect to the Linux server.
+    ESessionResult:
+      description: Result status.
       enum:
-      - Permanent
-      - SingleUse
-      type: string
-    LinuxHostSSHSettingsModel:
-      description: SSH settings.
-      properties:
-        managementPort:
-          description: Port used as a control channel from the Veeam Backup & Replication console to the Linux server.
-          type: integer
-        portRangeEnd:
-          description: End port used for data transfer.
-          type: integer
-        portRangeStart:
-          description: Start port used for data transfer.
-          type: integer
-        serverThisSide:
-          description: If *true*, the server is run on this side.
-          type: boolean
-        sshTimeOutMs:
-          description: SSH timeout, in ms. If a task targeted at the server is inactive after the timeout, the task is terminated.
-          type: integer
-      type: object
-    ViHostModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseManagedServerModel'
-      - properties:
-          port:
-            description: Port used to communicate with the server.
-            type: integer
-          viHostType:
-            $ref: '#/components/schemas/EViHostType'
-        required:
-        - port
-        type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    ViHostSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseManagedServerSpec'
-      - properties:
-          certificateThumbprint:
-            description: Certificate thumbprint used to verify the server identity. For details on how to get the thumbprint, see [Request TLS Certificate or SSH Fingerprint](#tag/Connection/operation/GetConnectionCertificate).
-            type: string
-          port:
-            description: Port used to communicate with the server.
-            type: integer
-        type: object
-    BaseManagedServerModel:
-      properties:
-        credentialsId:
-          description: ID of a credentials record used to connect to the server.
-          format: uuid
-          type: string
-        description:
-          description: Description of the server.
-          type: string
-        id:
-          description: ID of the server.
-          format: uuid
-          type: string
-        name:
-          description: Full DNS name or IP address of the server.
-          type: string
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      type: object
-    EViHostType:
-      description: Type of the VMware vSphere server.
-      enum:
-      - ESX
-      - ESXi
-      - VC
+      - None
+      - Success
+      - Warning
+      - Failed
       type: string
     ManagedServersResult:
       properties:
@@ -806,98 +897,19 @@ components:
       - data
       - pagination
       type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    SessionResultModel:
-      description: Session result.
-      properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
-    EManagedServerType:
-      description: Type of the server.
-      enum:
-      - WindowsHost
-      - LinuxHost
-      - ViHost
-      type: string
-    LinuxCredentialsSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCredentialsSpec'
-      - properties:
-          SSHPort:
-            description: SSH port used to connect to a Linux server.
-            type: integer
-          addToSudoers:
-            description: If *true*, the account is automatically added to the sudoers file.
-            type: boolean
-          autoElevated:
-            description: If *true*, the permissions of the account are automatically elevated to the root user.
-            type: boolean
-          passphrase:
-            description: Passphrase that protects the private key.
-            type: string
-          privateKey:
-            description: Private key.
-            type: string
-          rootPassword:
-            description: Password for the root account.
-            type: string
-          tag:
-            description: Tag used to identify the credentials record.
-            type: string
-          useSu:
-            description: If *true*, the `su` command is used for Linux distributions where the `sudo` command is not available.
-            type: boolean
-        type: object
-    ECredentialsType:
-      description: Credentials type.
-      enum:
-      - Standard
-      - Linux
-      type: string
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
-    WindowsHostComponentPortModel:
-      description: Ports used by Veeam Backup & Replication components.
-      properties:
-        componentName:
-          $ref: '#/components/schemas/EWindowsHostComponentType'
-        port:
-          description: Port used by the component.
-          type: integer
-      required:
-      - componentName
-      - port
-      type: object
   responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
     InternalServerError:
       content:
         application/json:
@@ -910,18 +922,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     Unauthorized:
       content:
         application/json:

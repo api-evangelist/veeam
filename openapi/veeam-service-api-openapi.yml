@@ -94,6 +94,25 @@ paths:
       tags:
       - Service
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
     ServerTimeModel:
       properties:
@@ -106,6 +125,49 @@ components:
           type: string
       required:
       - serverTime
+      type: object
+    CertificateModel:
+      description: Certificate settings.
+      properties:
+        issuedBy:
+          description: Issuer of the certificate.
+          type: string
+        issuedTo:
+          description: Acquirer of the certificate.
+          type: string
+        keyAlgorithm:
+          description: Key algorithm of the certificate.
+          type: string
+        keySize:
+          description: Key size of the certificate.
+          type: string
+        serialNumber:
+          description: Serial number of the certificate.
+          type: string
+        subject:
+          description: Subject of the certificate.
+          type: string
+        thumbprint:
+          description: Thumbprint of the certificate.
+          type: string
+        validBy:
+          description: Expiration date and time of the certificate.
+          format: date-time
+          type: string
+        validFrom:
+          description: Date and time the certificate is valid from.
+          format: date-time
+          type: string
+      required:
+      - issuedBy
+      - issuedTo
+      - keyAlgorithm
+      - keySize
+      - serialNumber
+      - subject
+      - thumbprint
+      - validBy
+      - validFrom
       type: object
     ServerInfoModel:
       properties:
@@ -155,68 +217,6 @@ components:
       - errorCode
       - message
       type: object
-    CertificateModel:
-      description: Certificate settings.
-      properties:
-        issuedBy:
-          description: Issuer of the certificate.
-          type: string
-        issuedTo:
-          description: Acquirer of the certificate.
-          type: string
-        keyAlgorithm:
-          description: Key algorithm of the certificate.
-          type: string
-        keySize:
-          description: Key size of the certificate.
-          type: string
-        serialNumber:
-          description: Serial number of the certificate.
-          type: string
-        subject:
-          description: Subject of the certificate.
-          type: string
-        thumbprint:
-          description: Thumbprint of the certificate.
-          type: string
-        validBy:
-          description: Expiration date and time of the certificate.
-          format: date-time
-          type: string
-        validFrom:
-          description: Date and time the certificate is valid from.
-          format: date-time
-          type: string
-      required:
-      - issuedBy
-      - issuedTo
-      - keyAlgorithm
-      - keySize
-      - serialNumber
-      - subject
-      - thumbprint
-      - validBy
-      - validFrom
-      type: object
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

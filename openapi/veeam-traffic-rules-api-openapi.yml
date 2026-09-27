@@ -184,32 +184,50 @@ paths:
         claims:
         - UpdateTrafficRules
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
-    PreferredNetworkModel:
+    GlobalNetworkTrafficRulesModel:
       properties:
-        cidrNotation:
-          description: CIDR notation.
-          type: string
-        ipAddress:
-          description: IP address.
-          type: string
-        subnetMask:
-          description: Subnet mask.
-          type: string
-      type: object
-    PreferredNetworksModel:
-      description: Preferred networks used for backup and replication traffic.
-      properties:
-        isEnabled:
-          description: If *true*, prefered networks are enabled.
-          type: boolean
-        networks:
-          description: Array of networks.
+        preferredNetworks:
+          $ref: '#/components/schemas/PreferredNetworksModel'
+        trafficRules:
+          description: Array of traffic rules.
           items:
-            $ref: '#/components/schemas/PreferredNetworkModel'
+            $ref: '#/components/schemas/TrafficRuleModel'
           type: array
+        uploadStreamsCount:
+          description: Number of TCP/IP connections per job.
+          format: integer
+          type: integer
+        useMultipleStreamsPerJob:
+          description: If *true*, Veeam Backup & Replication uses multiple TCP/IP transfer connection for every job session.
+          type: boolean
       required:
-      - isEnabled
+      - useMultipleStreamsPerJob
       type: object
     BackupWindowDayHoursModel:
       description: Hourly scheme for a day.
@@ -223,17 +241,6 @@ components:
       - day
       - hours
       type: object
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
     BackupWindowSettingModel:
       description: Time scheme that defines permitted days and hours for the job to start.
       properties:
@@ -245,6 +252,36 @@ components:
       required:
       - days
       type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    PreferredNetworkModel:
+      properties:
+        cidrNotation:
+          description: CIDR notation.
+          type: string
+        ipAddress:
+          description: IP address.
+          type: string
+        subnetMask:
+          description: Subnet mask.
+          type: string
+      type: object
+    ESpeedUnit:
+      description: Traffic speed unit.
+      enum:
+      - KbytePerSec
+      - MbitPerSpec
+      - MbytePerSec
+      type: string
     Error:
       properties:
         errorCode:
@@ -271,32 +308,6 @@ components:
       - errorCode
       - message
       type: object
-    GlobalNetworkTrafficRulesModel:
-      properties:
-        preferredNetworks:
-          $ref: '#/components/schemas/PreferredNetworksModel'
-        trafficRules:
-          description: Array of traffic rules.
-          items:
-            $ref: '#/components/schemas/TrafficRuleModel'
-          type: array
-        uploadStreamsCount:
-          description: Number of TCP/IP connections per job.
-          format: integer
-          type: integer
-        useMultipleStreamsPerJob:
-          description: If *true*, Veeam Backup & Replication uses multiple TCP/IP transfer connection for every job session.
-          type: boolean
-      required:
-      - useMultipleStreamsPerJob
-      type: object
-    ESpeedUnit:
-      description: Traffic speed unit.
-      enum:
-      - KbytePerSec
-      - MbitPerSpec
-      - MbytePerSec
-      type: string
     TrafficRuleModel:
       properties:
         encryptionEnabled:
@@ -342,31 +353,20 @@ components:
       - targetIPStart
       - targetIPEnd
       type: object
-  responses:
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    PreferredNetworksModel:
+      description: Preferred networks used for backup and replication traffic.
+      properties:
+        isEnabled:
+          description: If *true*, prefered networks are enabled.
+          type: boolean
+        networks:
+          description: Array of networks.
+          items:
+            $ref: '#/components/schemas/PreferredNetworkModel'
+          type: array
+      required:
+      - isEnabled
+      type: object
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

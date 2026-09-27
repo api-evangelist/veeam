@@ -133,110 +133,46 @@ paths:
         - UpdateGeneralOptions
 components:
   responses:
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     InternalServerError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
+    BadRequest:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   schemas:
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    GeneralOptionsNotificationsModel:
-      description: Other notifications such as notifications on low disk space, support contract expiration, and available updates.
-      properties:
-        datastoreSpaceThreshold:
-          description: Space threshold of production datastore, in percent.
-          format: int32
-          type: integer
-        datastoreSpaceThresholdEnabled:
-          description: If *true*, notifications about critical amount of free space in production datastore are enabled.
-          type: boolean
-        notifyOnSupportExpiration:
-          description: If *true*, notifications about support contract expiration are enabled.
-          type: boolean
-        notifyOnUpdates:
-          description: If *true*, notifications about updates are enabled.
-          type: boolean
-        skipVMSpaceThreshold:
-          description: Space threshold of production datastore, in percent.
-          format: int32
-          type: integer
-        skipVMSpaceThresholdEnabled:
-          description: If *true* and the `skipVMSpaceThreshold` threshold is reached, Veeam Backup & Replication terminates backup and replication jobs working with production datastores before VM snapshots are taken.
-          type: boolean
-        storageSpaceThreshold:
-          description: Space threshold of backup storage, in percent.
-          format: int32
-          type: integer
-        storageSpaceThresholdEnabled:
-          description: If *true*, notifications about critical amount of free space in backup storage are enabled.
-          type: boolean
-      required:
-      - storageSpaceThresholdEnabled
-      - storageSpaceThreshold
-      - datastoreSpaceThresholdEnabled
-      - datastoreSpaceThreshold
-      - skipVMSpaceThresholdEnabled
-      - skipVMSpaceThreshold
-      - notifyOnSupportExpiration
-      - notifyOnUpdates
-      type: object
-    GeneralOptionsModel:
-      properties:
-        emailSettings:
-          $ref: '#/components/schemas/GeneralOptionsEmailNotificationsModel'
-        notifications:
-          $ref: '#/components/schemas/GeneralOptionsNotificationsModel'
-      type: object
     GeneralOptionsEmailNotificationsModel:
       description: Global email notification settings and job notifications.
       properties:
@@ -313,15 +249,79 @@ components:
       - SSLEnabled
       - authRequired
       type: object
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
+    GeneralOptionsNotificationsModel:
+      description: Other notifications such as notifications on low disk space, support contract expiration, and available updates.
+      properties:
+        datastoreSpaceThreshold:
+          description: Space threshold of production datastore, in percent.
+          format: int32
+          type: integer
+        datastoreSpaceThresholdEnabled:
+          description: If *true*, notifications about critical amount of free space in production datastore are enabled.
+          type: boolean
+        notifyOnSupportExpiration:
+          description: If *true*, notifications about support contract expiration are enabled.
+          type: boolean
+        notifyOnUpdates:
+          description: If *true*, notifications about updates are enabled.
+          type: boolean
+        skipVMSpaceThreshold:
+          description: Space threshold of production datastore, in percent.
+          format: int32
+          type: integer
+        skipVMSpaceThresholdEnabled:
+          description: If *true* and the `skipVMSpaceThreshold` threshold is reached, Veeam Backup & Replication terminates backup and replication jobs working with production datastores before VM snapshots are taken.
+          type: boolean
+        storageSpaceThreshold:
+          description: Space threshold of backup storage, in percent.
+          format: int32
+          type: integer
+        storageSpaceThresholdEnabled:
+          description: If *true*, notifications about critical amount of free space in backup storage are enabled.
+          type: boolean
+      required:
+      - storageSpaceThresholdEnabled
+      - storageSpaceThreshold
+      - datastoreSpaceThresholdEnabled
+      - datastoreSpaceThreshold
+      - skipVMSpaceThresholdEnabled
+      - skipVMSpaceThreshold
+      - notifyOnSupportExpiration
+      - notifyOnUpdates
+      type: object
+    GeneralOptionsModel:
+      properties:
+        emailSettings:
+          $ref: '#/components/schemas/GeneralOptionsEmailNotificationsModel'
+        notifications:
+          $ref: '#/components/schemas/GeneralOptionsNotificationsModel'
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

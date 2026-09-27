@@ -477,24 +477,70 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LicenseNotification:
+    LicenseNotifications:
       required:
-      - notificationType
-      - notificationSeverity
-      - message
+      - results
       type: object
       properties:
-        notificationType:
-          $ref: '#/components/schemas/LicenseNotificationTypes'
-        notificationSeverity:
-          $ref: '#/components/schemas/LicenseNotificationSeverities'
-        message:
-          type: string
-        replies:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseNotification'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    ResolveNotificationsSpec:
+      required:
+      - notificationsToResolve
+      type: object
+      properties:
+        notificationsToResolve:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseNotificationTypes'
+        selectedReplies:
           uniqueItems: false
           type: array
           items:
             $ref: '#/components/schemas/LicenseNotificationReply'
+    LicensedWorkloadsFilters:
+      type: object
+      properties:
+        searchPattern:
+          type: string
+        offset:
+          type: integer
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: -1
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicensedWorkloadsSortColumns'
+          uniqueItems: false
+    LicensedWorkload:
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        lastBackupTime:
+          format: date-time
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     LicensedWorkloadsPage:
       required:
       - totalCount
@@ -514,24 +560,98 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    LicenseNotifications:
+    LicenseNotification:
       required:
-      - results
+      - notificationType
+      - notificationSeverity
+      - message
       type: object
       properties:
-        results:
+        notificationType:
+          $ref: '#/components/schemas/LicenseNotificationTypes'
+        notificationSeverity:
+          $ref: '#/components/schemas/LicenseNotificationSeverities'
+        message:
+          type: string
+        replies:
           uniqueItems: false
           type: array
           items:
-            $ref: '#/components/schemas/LicenseNotification'
+            $ref: '#/components/schemas/LicenseNotificationReply'
+    LicenseNotificationReply:
+      required:
+      - replyId
+      - notificationType
+      - replyText
+      type: object
+      properties:
+        replyId:
+          type: string
+          format: uuid
+        notificationType:
+          $ref: '#/components/schemas/LicenseNotificationTypes'
+        replyText:
+          type: string
+    LicenseNotificationSeverities:
+      enum:
+      - Information
+      - Warning
+      - Error
+      type: string
+    UploadLicenseSpec:
+      type: object
+      required:
+      - licenseFile
+      properties:
+        licenseFile:
+          type: string
+          format: binary
+          x-veeam-type:
+            type: formfile
+          description: The .lic license to upload.
+    LicenseInfo:
+      type: object
+      properties:
+        licenseType:
+          enum:
+          - Free
+          - Subscription
+          - Marketplace
+          - Managed
+          type: string
+        instancesUses:
+          format: double
+          type: number
+        instances:
+          format: int32
+          type: integer
+        licensedTo:
+          type: string
+        licenseExpires:
+          format: date-time
+          type: string
+        licenseId:
+          type: string
+        supportId:
+          type: string
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    EmptySuccessResponse:
-      description: Empty succes response ( 200, 201, 204 )
-      type: object
+    LicensedWorkloadsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - lastBackupAsc
+      - lastBackupDesc
+    LicenseNotificationTypes:
+      enum:
+      - Expiration
+      - Exceed
+      - Marketplace
+      type: string
     Error:
       description: ''
       required:
@@ -580,42 +700,9 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    LicenseNotificationTypes:
-      enum:
-      - Expiration
-      - Exceed
-      - Marketplace
-      type: string
-    LicenseInfo:
+    EmptySuccessResponse:
+      description: Empty succes response ( 200, 201, 204 )
       type: object
-      properties:
-        licenseType:
-          enum:
-          - Free
-          - Subscription
-          - Marketplace
-          - Managed
-          type: string
-        instancesUses:
-          format: double
-          type: number
-        instances:
-          format: int32
-          type: integer
-        licensedTo:
-          type: string
-        licenseExpires:
-          format: date-time
-          type: string
-        licenseId:
-          type: string
-        supportId:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Link:
       required:
       - rel
@@ -634,93 +721,6 @@ components:
           - POST
           - PUT
           - DELETE
-    ResolveNotificationsSpec:
-      required:
-      - notificationsToResolve
-      type: object
-      properties:
-        notificationsToResolve:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseNotificationTypes'
-        selectedReplies:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseNotificationReply'
-    LicensedWorkloadsFilters:
-      type: object
-      properties:
-        searchPattern:
-          type: string
-        offset:
-          type: integer
-          format: int32
-          minimum: 0
-        limit:
-          type: integer
-          format: int32
-          minimum: -1
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/LicensedWorkloadsSortColumns'
-          uniqueItems: false
-    LicensedWorkloadsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - lastBackupAsc
-      - lastBackupDesc
-    UploadLicenseSpec:
-      type: object
-      required:
-      - licenseFile
-      properties:
-        licenseFile:
-          type: string
-          format: binary
-          x-veeam-type:
-            type: formfile
-          description: The .lic license to upload.
-    LicenseNotificationReply:
-      required:
-      - replyId
-      - notificationType
-      - replyText
-      type: object
-      properties:
-        replyId:
-          type: string
-          format: uuid
-        notificationType:
-          $ref: '#/components/schemas/LicenseNotificationTypes'
-        replyText:
-          type: string
-    LicensedWorkload:
-      type: object
-      properties:
-        id:
-          format: uuid
-          type: string
-        name:
-          type: string
-        lastBackupTime:
-          format: date-time
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    LicenseNotificationSeverities:
-      enum:
-      - Information
-      - Warning
-      - Error
-      type: string
   parameters:
     apiVersionParam:
       name: x-api-version
