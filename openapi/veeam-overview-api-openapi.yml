@@ -67,6 +67,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UserStatus:
+      required:
+      - connectionsCount
+      - repositoryCount
+      - policiesCount
+      - workerLocationsCount
+      type: object
+      properties:
+        connectionsCount:
+          type: integer
+        repositoryCount:
+          type: integer
+        policiesCount:
+          type: integer
+        workerLocationsCount:
+          type: integer
     Error:
       description: ''
       required:
@@ -115,22 +131,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    UserStatus:
-      required:
-      - connectionsCount
-      - repositoryCount
-      - policiesCount
-      - workerLocationsCount
-      type: object
-      properties:
-        connectionsCount:
-          type: integer
-        repositoryCount:
-          type: integer
-        policiesCount:
-          type: integer
-        workerLocationsCount:
-          type: integer
   parameters:
     apiVersionParam:
       name: x-api-version

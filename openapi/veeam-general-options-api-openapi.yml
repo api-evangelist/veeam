@@ -151,77 +151,19 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   schemas:
-    GeneralOptionsEmailNotificationsModel:
-      description: Global email notification settings and job notifications.
-      properties:
-        advancedSmtpOptions:
-          $ref: '#/components/schemas/AdvancedSmtpOptionsModel'
-        from:
-          description: Email address from which email notifications must be sent.
-          type: string
-        isEnabled:
-          description: If *true*, global email notification settings are enabled.
-          type: boolean
-        notifyOnFailure:
-          description: If *true*, email notifications are sent when the job fails.
-          type: boolean
-        notifyOnLastRetry:
-          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
-          type: boolean
-        notifyOnSuccess:
-          description: If *true*, email notifications are sent when the job completes successfully.
-          type: boolean
-        notifyOnWarning:
-          description: If *true*, email notifications are sent when the job completes with a warning.
-          type: boolean
-        sendDailyReportsAt:
-          description: Time when Veeam Backup & Replication sends daily email reports.
-          format: date-time
-          type: string
-        smtpServerName:
-          description: Full DNS name or IP address of the SMTP server.
-          type: string
-        subject:
-          description: Notification subject. Use the following variables in the subject:<ul> <li>%Time% — completion time</li> <li>%JobName% — job name</li> <li>%JobResult% — job result</li> <li>%ObjectCount% — number of VMs in the job</li> <li>%Issues% — number of VMs in the job that have been processed with the Warning or Failed status</li></ul>
-          type: string
-        to:
-          description: Recipient email addresses. Use a semicolon to separate multiple addresses.
-          type: string
-      required:
-      - isEnabled
-      - smtpServerName
-      - advancedSmtpOptions
-      - from
-      - to
-      - subject
-      - sendDailyReportsAt
-      - notifyOnSuccess
-      - notifyOnWarning
-      - notifyOnFailure
-      - notifyOnLastRetry
-      type: object
     AdvancedSmtpOptionsModel:
       description: Advanced global email notification settings.
       properties:
@@ -322,6 +264,64 @@ components:
       - errorCode
       - message
       type: object
+    GeneralOptionsEmailNotificationsModel:
+      description: Global email notification settings and job notifications.
+      properties:
+        advancedSmtpOptions:
+          $ref: '#/components/schemas/AdvancedSmtpOptionsModel'
+        from:
+          description: Email address from which email notifications must be sent.
+          type: string
+        isEnabled:
+          description: If *true*, global email notification settings are enabled.
+          type: boolean
+        notifyOnFailure:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnLastRetry:
+          description: If *true*, email notifications are sent about the final job status only (not per every job retry).
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        sendDailyReportsAt:
+          description: Time when Veeam Backup & Replication sends daily email reports.
+          format: date-time
+          type: string
+        smtpServerName:
+          description: Full DNS name or IP address of the SMTP server.
+          type: string
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>%Time% — completion time</li> <li>%JobName% — job name</li> <li>%JobResult% — job result</li> <li>%ObjectCount% — number of VMs in the job</li> <li>%Issues% — number of VMs in the job that have been processed with the Warning or Failed status</li></ul>
+          type: string
+        to:
+          description: Recipient email addresses. Use a semicolon to separate multiple addresses.
+          type: string
+      required:
+      - isEnabled
+      - smtpServerName
+      - advancedSmtpOptions
+      - from
+      - to
+      - subject
+      - sendDailyReportsAt
+      - notifyOnSuccess
+      - notifyOnWarning
+      - notifyOnFailure
+      - notifyOnLastRetry
+      type: object
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

@@ -231,28 +231,6 @@ paths:
         - ViewBackupObjects
 components:
   schemas:
-    EVmwareInventoryType:
-      description: Type of the VMware vSphere object.
-      enum:
-      - Unknown
-      - VirtualMachine
-      - vCenterServer
-      - Datacenter
-      - Cluster
-      - Host
-      - ResourcePool
-      - Folder
-      - Datastore
-      - DatastoreCluster
-      - StoragePolicy
-      - Template
-      - ComputeResource
-      - VirtualApp
-      - Tag
-      - Category
-      - Multitag
-      - Network
-      type: string
     BaseBackupObjectModel:
       properties:
         id:
@@ -275,91 +253,6 @@ components:
           description: Type of the object.
           type: string
       type: object
-    BackupObjectsResult:
-      properties:
-        data:
-          description: Array of backup objects.
-          items:
-            $ref: '#/components/schemas/BackupObjectModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    ViBackupObjectModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
-      - properties:
-          objectId:
-            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
-            type: string
-          path:
-            description: Path to the object.
-            type: string
-          viType:
-            $ref: '#/components/schemas/EVmwareInventoryType'
-        required:
-        - objectId
-        type: object
-    EPlatformType:
-      description: Platform name.
-      enum:
-      - VMware
-      - HyperV
-      - Vcd
-      - WindowsPhysical
-      - LinuxPhysical
-      - Tape
-      - NasBackup
-      - CustomPlatform
-      type: string
-    BackupsResult:
-      properties:
-        data:
-          description: Array of backups.
-          items:
-            $ref: '#/components/schemas/BackupModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    BackupObjectModel:
-      allOf:
-      - discriminator:
-          mapping:
-            VMware: '#/components/schemas/ViBackupObjectModel'
-          propertyName: platformName
-        oneOf:
-        - $ref: '#/components/schemas/ViBackupObjectModel'
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
     BackupModel:
       properties:
         creationTime:
@@ -399,6 +292,135 @@ components:
       - creationTime
       - repositoryId
       type: object
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    BackupObjectModel:
+      allOf:
+      - discriminator:
+          mapping:
+            VMware: '#/components/schemas/ViBackupObjectModel'
+          propertyName: platformName
+        oneOf:
+        - $ref: '#/components/schemas/ViBackupObjectModel'
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    EBackupsFiltersOrderColumn:
+      enum:
+      - Name
+      - CreationTime
+      - PlatformId
+      - JobId
+      - PolicyTag
+      type: string
+    BackupObjectsResult:
+      properties:
+        data:
+          description: Array of backup objects.
+          items:
+            $ref: '#/components/schemas/BackupObjectModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupsResult:
+      properties:
+        data:
+          description: Array of backups.
+          items:
+            $ref: '#/components/schemas/BackupModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
     BackupsFilters:
       properties:
         createdAfterFilter:
@@ -428,40 +450,18 @@ components:
           format: int32
           type: integer
       type: object
-    EBackupsFiltersOrderColumn:
+    EPlatformType:
+      description: Platform name.
       enum:
-      - Name
-      - CreationTime
-      - PlatformId
-      - JobId
-      - PolicyTag
+      - VMware
+      - HyperV
+      - Vcd
+      - WindowsPhysical
+      - LinuxPhysical
+      - Tape
+      - NasBackup
+      - CustomPlatform
       type: string
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
   responses:
     InternalServerError:
       content:
@@ -469,6 +469,12 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     NotFound:
       content:
         application/json:
@@ -481,12 +487,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

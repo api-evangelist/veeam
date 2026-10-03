@@ -870,6 +870,75 @@ paths:
     - url: /
 components:
   schemas:
+    LogItem:
+      required:
+      - logTime
+      - status
+      type: object
+      properties:
+        logTime:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - NeverExecuted
+          - Success
+          - Warning
+          - Error
+          - Pending
+          - Canceling
+          - Canceled
+          - Running
+          - RunningWithWarning
+          - RunningWithError
+          type: string
+        message:
+          type: string
+        executionStartTime:
+          format: date-time
+          type: string
+        executionDuration:
+          type: integer
+          format: int64
+    SessionLog:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        log:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LogItem'
+    SessionResults:
+      enum:
+      - Running
+      - Success
+      - Warning
+      - Failed
+      - Cancelled
+      type: string
+    RestoredItemsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - regionAsc
+      - regionDesc
+    RetentionJobDeletedRestorePoint:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SessionItemsStatuses'
+        region:
+          type: string
+        _embedded:
+          $ref: '#/components/schemas/RetentionJobDeletedRestorePointEmbedded'
     RestoredItemsFilters:
       type: object
       properties:
@@ -888,87 +957,6 @@ components:
           items:
             $ref: '#/components/schemas/RestoredItemsSortColumns'
           uniqueItems: false
-    RestoreItemEmbedded:
-      type: object
-      properties:
-        virtualMachine:
-          $ref: '#/components/schemas/Link'
-        region:
-          $ref: '#/components/schemas/Link'
-    SessionItemsStatuses:
-      enum:
-      - Succeeded
-      - Warning
-      - Failed
-      type: string
-    RestoredItemsPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/RestoredItem'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    ProtectedItemsFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProtectedItemsSortColumns'
-          uniqueItems: false
-    RetentionJobDeletedRestorePoint:
-      type: object
-      properties:
-        name:
-          type: string
-        status:
-          $ref: '#/components/schemas/SessionItemsStatuses'
-        region:
-          type: string
-        _embedded:
-          $ref: '#/components/schemas/RetentionJobDeletedRestorePointEmbedded'
-    SessionLog:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        log:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/LogItem'
-    RestoredItemsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - regionAsc
-      - regionDesc
     RetentionJobDeletedRestorePointsPage:
       required:
       - totalCount
@@ -988,6 +976,13 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    ProtectedItemEmbedded:
+      type: object
+      properties:
+        virtualMachine:
+          $ref: '#/components/schemas/Link'
+        region:
+          $ref: '#/components/schemas/Link'
     Session:
       required:
       - id
@@ -1026,47 +1021,6 @@ components:
             $ref: '#/components/schemas/Link'
         _embedded:
           $ref: '#/components/schemas/SessionEmbeddedResources'
-    SessionEmbeddedResources:
-      type: object
-      properties:
-        backupJobInfo:
-          $ref: '#/components/schemas/Link'
-        restoreJobInfo:
-          $ref: '#/components/schemas/Link'
-        retentionJobDeletedRestorePoints:
-          $ref: '#/components/schemas/Link'
-    RetentionJobDeletedRestorePointsFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/RetentionJobDeletedRestorePointSortColumns'
-          uniqueItems: false
-    RetentionJobDeletedRestorePointEmbedded:
-      type: object
-      properties:
-        region:
-          $ref: '#/components/schemas/Link'
-    RetentionJobDeletedRestorePointSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - statusAsc
-      - statusDesc
-      - regionAsc
-      - regionDesc
     Link:
       required:
       - rel
@@ -1085,7 +1039,7 @@ components:
           - POST
           - PUT
           - DELETE
-    ProtectedItemsPage:
+    RestoredItemsPage:
       required:
       - totalCount
       - results
@@ -1098,73 +1052,35 @@ components:
           uniqueItems: false
           type: array
           items:
-            $ref: '#/components/schemas/ProtectedItem'
+            $ref: '#/components/schemas/RestoredItem'
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    RestoredItem:
+    RetentionJobDeletedRestorePointsFilters:
       type: object
       properties:
-        name:
+        SearchPattern:
           type: string
-        status:
-          $ref: '#/components/schemas/SessionItemsStatuses'
-        regionName:
-          type: string
-        _embedded:
-          $ref: '#/components/schemas/RestoreItemEmbedded'
-    SessionResults:
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetentionJobDeletedRestorePointSortColumns'
+          uniqueItems: false
+    SessionItemsStatuses:
       enum:
-      - Running
-      - Success
+      - Succeeded
       - Warning
       - Failed
-      - Cancelled
-      type: string
-    LogItem:
-      required:
-      - logTime
-      - status
-      type: object
-      properties:
-        logTime:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - NeverExecuted
-          - Success
-          - Warning
-          - Error
-          - Pending
-          - Canceling
-          - Canceled
-          - Running
-          - RunningWithWarning
-          - RunningWithError
-          type: string
-        message:
-          type: string
-        executionStartTime:
-          format: date-time
-          type: string
-        executionDuration:
-          type: integer
-          format: int64
-    SessionTypes:
-      enum:
-      - Policy
-      - Job
-      - Task
-      - UserPolicy
-      - RetentionActivity
-      - RestoreTask
-      - FLRTask
-      - SelfBackupActivity
-      - ImportPolicy
-      - TombstoneRetention
       type: string
     Error:
       description: ''
@@ -1214,6 +1130,100 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    RetentionJobDeletedRestorePointEmbedded:
+      type: object
+      properties:
+        region:
+          $ref: '#/components/schemas/Link'
+    SessionEmbeddedResources:
+      type: object
+      properties:
+        backupJobInfo:
+          $ref: '#/components/schemas/Link'
+        restoreJobInfo:
+          $ref: '#/components/schemas/Link'
+        retentionJobDeletedRestorePoints:
+          $ref: '#/components/schemas/Link'
+    SessionTypes:
+      enum:
+      - Policy
+      - Job
+      - Task
+      - UserPolicy
+      - RetentionActivity
+      - RestoreTask
+      - FLRTask
+      - SelfBackupActivity
+      - ImportPolicy
+      - TombstoneRetention
+      type: string
+    RestoreItemEmbedded:
+      type: object
+      properties:
+        virtualMachine:
+          $ref: '#/components/schemas/Link'
+        region:
+          $ref: '#/components/schemas/Link'
+    SessionsSortColumns:
+      type: string
+      enum:
+      - startTimeAsc
+      - startTimeDesc
+      - stopTimeAsc
+      - stopTimeDesc
+      - durationAsc
+      - durationDesc
+      - typeAsc
+      - typeDesc
+      - reasonAsc
+      - reasonDesc
+      - usnAsc
+      - usnDesc
+    ProtectedItemsSortColumns:
+      type: string
+      enum:
+      - virtualMachineNameAsc
+      - virtualMachineNameDesc
+      - regionAsc
+      - regionDesc
+    RestoredItem:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/SessionItemsStatuses'
+        regionName:
+          type: string
+        _embedded:
+          $ref: '#/components/schemas/RestoreItemEmbedded'
+    RetentionJobDeletedRestorePointSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - statusAsc
+      - statusDesc
+      - regionAsc
+      - regionDesc
+    ProtectedItemsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProtectedItemsSortColumns'
+          uniqueItems: false
     ProtectedItem:
       required:
       - id
@@ -1231,6 +1241,25 @@ components:
           type: string
         _embedded:
           $ref: '#/components/schemas/ProtectedItemEmbedded'
+    ProtectedItemsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ProtectedItem'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     SessionsFilters:
       type: object
       properties:
@@ -1294,35 +1323,6 @@ components:
       - Warning
       - Failed
       - Canceled
-    SessionsSortColumns:
-      type: string
-      enum:
-      - startTimeAsc
-      - startTimeDesc
-      - stopTimeAsc
-      - stopTimeDesc
-      - durationAsc
-      - durationDesc
-      - typeAsc
-      - typeDesc
-      - reasonAsc
-      - reasonDesc
-      - usnAsc
-      - usnDesc
-    ProtectedItemsSortColumns:
-      type: string
-      enum:
-      - virtualMachineNameAsc
-      - virtualMachineNameDesc
-      - regionAsc
-      - regionDesc
-    ProtectedItemEmbedded:
-      type: object
-      properties:
-        virtualMachine:
-          $ref: '#/components/schemas/Link'
-        region:
-          $ref: '#/components/schemas/Link'
     ETaskLogRecordStatus:
       enum:
       - None
@@ -1330,84 +1330,8 @@ components:
       - Warning
       - Failed
       type: string
-    ESessionsFiltersOrderColumn:
-      enum:
-      - Name
-      - SessionType
-      - CreationTime
-      - EndTime
-      - State
-      - Result
-      type: string
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
     EmptySuccessResponse:
       description: Empty success response (200, 201, 204).
-      type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    SessionsResult:
-      properties:
-        data:
-          description: Array of sessions.
-          items:
-            $ref: '#/components/schemas/SessionModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
       type: object
     SessionResultModel:
       description: Session result.
@@ -1422,6 +1346,19 @@ components:
           $ref: '#/components/schemas/ESessionResult'
       required:
       - result
+      type: object
+    SessionsResult:
+      properties:
+        data:
+          description: Array of sessions.
+          items:
+            $ref: '#/components/schemas/SessionModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
       type: object
     Error_2:
       properties:
@@ -1449,6 +1386,46 @@ components:
       - errorCode
       - message
       type: object
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    ESessionsFiltersOrderColumn:
+      enum:
+      - Name
+      - SessionType
+      - CreationTime
+      - EndTime
+      - State
+      - Result
+      type: string
     SessionLogRecordModel:
       description: Record of the session log.
       properties:
@@ -1472,54 +1449,37 @@ components:
           format: date-time
           type: string
       type: object
-    SessionLogResult:
-      description: Log of the session.
-      properties:
-        records:
-          description: Array of log records.
-          items:
-            $ref: '#/components/schemas/SessionLogRecordModel'
-          type: array
-        totalRecords:
-          description: Total number of records.
-          type: integer
-      type: object
-    SessionsFilters_2:
-      properties:
-        createdAfterFilter:
-          format: date-time
-          type: string
-        createdBeforeFilter:
-          format: date-time
-          type: string
-        endedAfterFilter:
-          format: date-time
-          type: string
-        endedBeforeFilter:
-          format: date-time
-          type: string
-        jobIdFilter:
-          format: uuid
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/ESessionsFiltersOrderColumn'
-        resultFilter:
-          $ref: '#/components/schemas/ESessionResult'
-        skip:
-          format: int32
-          type: integer
-        stateFilter:
-          $ref: '#/components/schemas/ESessionState'
-        typeFilter:
-          $ref: '#/components/schemas/ESessionType'
-      type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
     SessionModel:
       properties:
         activityId:
@@ -1574,14 +1534,54 @@ components:
       - state
       - usn
       type: object
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
+    SessionLogResult:
+      description: Log of the session.
+      properties:
+        records:
+          description: Array of log records.
+          items:
+            $ref: '#/components/schemas/SessionLogRecordModel'
+          type: array
+        totalRecords:
+          description: Total number of records.
+          type: integer
+      type: object
+    SessionsFilters_2:
+      properties:
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        endedAfterFilter:
+          format: date-time
+          type: string
+        endedBeforeFilter:
+          format: date-time
+          type: string
+        jobIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/ESessionsFiltersOrderColumn'
+        resultFilter:
+          $ref: '#/components/schemas/ESessionResult'
+        skip:
+          format: int32
+          type: integer
+        stateFilter:
+          $ref: '#/components/schemas/ESessionState'
+        typeFilter:
+          $ref: '#/components/schemas/ESessionType'
+      type: object
   parameters:
     apiVersionParam:
       name: x-api-version
@@ -1599,30 +1599,30 @@ components:
         default: 1.1-rev0
         type: string
   responses:
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
-      description: Not found. No object was found with the path parameter specified in the request.
     InternalServerError:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Unauthorized:
+    NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+      description: Not found. No object was found with the path parameter specified in the request.
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   securitySchemes:
     Bearer:
       name: Authorization

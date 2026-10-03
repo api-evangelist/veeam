@@ -193,34 +193,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UploadCertificateSpec:
-      type: object
-      required:
-      - certificateFile
-      - certificatePassword
-      properties:
-        certificateFile:
-          type: string
-          format: binary
-          x-veeam-type:
-            type: formfile
-          description: The .PFX certificate to upload.
-        certificatePassword:
-          type: string
-          description: .PFX certificate password
-    Certificates:
-      type: object
-      properties:
-        data:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Certificate'
-    CertificateRegenerateSpec:
-      properties:
-        validBy:
-          format: date-time
-          type: string
     Certificate:
       required:
       - thumbprint
@@ -311,6 +283,34 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    UploadCertificateSpec:
+      type: object
+      required:
+      - certificateFile
+      - certificatePassword
+      properties:
+        certificateFile:
+          type: string
+          format: binary
+          x-veeam-type:
+            type: formfile
+          description: The .PFX certificate to upload.
+        certificatePassword:
+          type: string
+          description: .PFX certificate password
+    CertificateRegenerateSpec:
+      properties:
+        validBy:
+          format: date-time
+          type: string
+    Certificates:
+      type: object
+      properties:
+        data:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Certificate'
   parameters:
     apiVersionParam:
       name: x-api-version

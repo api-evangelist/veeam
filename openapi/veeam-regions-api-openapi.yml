@@ -386,41 +386,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AmazonInstancesTypesByRegionFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        isArm64:
-          type: boolean
-        virtualizationTypes:
-          type: array
-          uniqueItems: false
-          items:
-            type: string
-    AmazonInstanceTypesByRegionPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/AmazonInstanceType'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     RegionsPage:
       required:
       - totalCount
@@ -440,51 +405,43 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    AmazonInstanceType:
+    Link:
       required:
-      - name
-      - cpuCount
-      - ram
+      - rel
+      - href
+      - method
       type: object
       properties:
-        name:
+        rel:
           type: string
-        cpuCount:
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    AmazonInstanceTypesByRegionPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
           format: int32
           type: integer
-        ram:
-          format: int32
-          type: integer
-        isArm64:
-          type: boolean
-        virtualizationType:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonInstanceType'
+        _links:
           type: array
           uniqueItems: false
           items:
-            type: string
-    RegionsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesk
-    RegionsFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/RegionsSortColumns'
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -533,24 +490,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
     Region:
       required:
       - id
@@ -567,6 +506,67 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    RegionsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesk
+    RegionsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/RegionsSortColumns'
+    AmazonInstanceType:
+      required:
+      - name
+      - cpuCount
+      - ram
+      type: object
+      properties:
+        name:
+          type: string
+        cpuCount:
+          format: int32
+          type: integer
+        ram:
+          format: int32
+          type: integer
+        isArm64:
+          type: boolean
+        virtualizationType:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+    AmazonInstancesTypesByRegionFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        isArm64:
+          type: boolean
+        virtualizationTypes:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
   parameters:
     apiVersionParam:
       name: x-api-version

@@ -177,25 +177,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Tag:
+    Link:
       required:
-      - id
-      - key
-      - value
+      - rel
+      - href
+      - method
       type: object
       properties:
-        id:
-          format: uuid
+        rel:
           type: string
-        key:
+        href:
           type: string
-        value:
+        method:
           type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     TagsFilters:
       type: object
       properties:
@@ -219,25 +218,6 @@ components:
       enum:
       - keyAsc
       - keyDesc
-    TagsPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -286,24 +266,44 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Link:
+    Tag:
       required:
-      - rel
-      - href
-      - method
+      - id
+      - key
+      - value
       type: object
       properties:
-        rel:
+        id:
+          format: uuid
           type: string
-        href:
+        key:
           type: string
-        method:
+        value:
           type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    TagsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

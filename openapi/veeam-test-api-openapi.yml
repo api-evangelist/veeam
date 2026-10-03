@@ -67,6 +67,9 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    EmptySuccessResponse:
+      description: Empty succes response ( 200, 201, 204 )
+      type: object
     Error:
       description: ''
       required:
@@ -115,9 +118,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    EmptySuccessResponse:
-      description: Empty succes response ( 200, 201, 204 )
-      type: object
   parameters:
     apiVersionParam:
       name: x-api-version

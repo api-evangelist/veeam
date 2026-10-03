@@ -185,13 +185,6 @@ paths:
       summary: Send test message
       x-summary-source: derived
 components:
-  requestBodies:
-    EmailNotifications:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EmailNotifications'
-      required: true
   schemas:
     EmailNotifications:
       required:
@@ -234,15 +227,6 @@ components:
           type: boolean
         notifyTime:
           format: date-time
-          type: string
-    EmailNotificationsTestResult:
-      required:
-      - success
-      type: object
-      properties:
-        success:
-          type: boolean
-        message:
           type: string
     Error:
       description: ''
@@ -292,6 +276,22 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    EmailNotificationsTestResult:
+      required:
+      - success
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+  requestBodies:
+    EmailNotifications:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmailNotifications'
+      required: true
   parameters:
     apiVersionParam:
       name: x-api-version

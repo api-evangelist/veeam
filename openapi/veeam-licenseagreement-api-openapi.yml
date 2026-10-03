@@ -188,21 +188,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LicenseAgreements:
-      type: object
-      properties:
-        items:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseAgreement'
-    LicenseAgreementAcceptResult:
-      required:
-      - accepted
-      type: object
-      properties:
-        accepted:
-          type: boolean
+    LicenseAgreementTypes:
+      type: string
+      enum:
+      - Eula
+      - ThirdPartyAgreement
     LicenseAgreement:
       required:
       - type
@@ -213,13 +203,6 @@ components:
         content:
           type: string
         type:
-          $ref: '#/components/schemas/LicenseAgreementTypes'
-    LicenseAgreementDownloadSpec:
-      required:
-      - licenseAgreementType
-      type: object
-      properties:
-        licenseAgreementType:
           $ref: '#/components/schemas/LicenseAgreementTypes'
     Error:
       description: ''
@@ -269,11 +252,28 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    LicenseAgreementTypes:
-      type: string
-      enum:
-      - Eula
-      - ThirdPartyAgreement
+    LicenseAgreements:
+      type: object
+      properties:
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseAgreement'
+    LicenseAgreementDownloadSpec:
+      required:
+      - licenseAgreementType
+      type: object
+      properties:
+        licenseAgreementType:
+          $ref: '#/components/schemas/LicenseAgreementTypes'
+    LicenseAgreementAcceptResult:
+      required:
+      - accepted
+      type: object
+      properties:
+        accepted:
+          type: boolean
   parameters:
     apiVersionParam:
       name: x-api-version

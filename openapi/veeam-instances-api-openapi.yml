@@ -411,74 +411,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    VirtualMachine:
-      required:
-      - id
-      - awsResourceId
-      - protectionStatus
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        awsResourceId:
-          type: string
-        protectionStatus:
-          $ref: '#/components/schemas/VirtualMachineProtectionStatuses'
-        backupDestinations:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BackupDestinations'
-        location:
-          required:
-          - id
-          - name
-          type: object
-          properties:
-            name:
-              type: string
-            id:
-              type: string
-              format: uuid
-        isDeleted:
-          type: boolean
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BackupDestinations:
-      type: string
-      enum:
-      - Snapshot
-      - AwsBlob
-      - ManualSnapshot
-    VirtualMachineSnapshotSpec:
-      required:
-      - amazonAccountId
-      type: object
-      properties:
-        amazonAccountId:
-          type: string
-          format: uuid
-        targetAmazonAccountIdToCopySnapshots:
-          format: uuid
-          type: string
-        targetRegionIdToCopySnapshots:
-          format: uuid
-          type: string
-        encryptionKey:
-          type: string
-        additionalTags:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/TagSpec'
-        copyTagsFromVolumeEnabled:
-          type: boolean
     VirtualMachineProtectionStatuses:
       type: string
       enum:
@@ -503,26 +435,24 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    VirtualMachinesSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - locationAsc
-      - locationDesc
-    SessionLink:
+    Link:
       required:
-      - sessionId
+      - rel
+      - href
+      - method
       type: object
       properties:
-        sessionId:
+        rel:
           type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     VirtualMachinesFilters:
       type: object
       properties:
@@ -605,24 +535,35 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Link:
+    VirtualMachineSnapshotSpec:
       required:
-      - rel
-      - href
-      - method
+      - amazonAccountId
       type: object
       properties:
-        rel:
+        amazonAccountId:
           type: string
-        href:
+          format: uuid
+        targetAmazonAccountIdToCopySnapshots:
+          format: uuid
           type: string
-        method:
+        targetRegionIdToCopySnapshots:
+          format: uuid
           type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+        encryptionKey:
+          type: string
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
+    BackupDestinations:
+      type: string
+      enum:
+      - Snapshot
+      - AwsBlob
+      - ManualSnapshot
     TagSpec:
       required:
       - key
@@ -633,6 +574,65 @@ components:
           type: string
         value:
           type: string
+    VirtualMachine:
+      required:
+      - id
+      - awsResourceId
+      - protectionStatus
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        awsResourceId:
+          type: string
+        protectionStatus:
+          $ref: '#/components/schemas/VirtualMachineProtectionStatuses'
+        backupDestinations:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BackupDestinations'
+        location:
+          required:
+          - id
+          - name
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: string
+              format: uuid
+        isDeleted:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    VirtualMachinesSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - locationAsc
+      - locationDesc
   parameters:
     apiVersionParam:
       name: x-api-version

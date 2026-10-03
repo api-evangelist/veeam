@@ -499,58 +499,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegionSettingsFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-    RegionTypes:
-      enum:
-      - Global
-      - Emulator
-      - Government
-      - China
-      type: string
-    ServiceAccountSettings:
-      required:
-      - serviceAmazonAccountId
-      type: object
-      properties:
-        serviceAmazonAccountId:
-          format: uuid
-          type: string
-        serviceAmazonAccountName:
-          type: string
-        serviceAmazonAccountRegionType:
-          $ref: '#/components/schemas/RegionTypes'
-        serviceRegion:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    RegionSettingsSpec:
-      required:
-      - availableZoneId
-      - cloudNetworkId
-      - cloudSubnetworkId
-      - cloudSecurityGroupId
-      type: object
-      properties:
-        availableZoneId:
-          format: uuid
-          type: string
-        cloudNetworkId:
-          type: string
-        cloudSubnetworkId:
-          type: string
-        cloudSecurityGroupId:
-          type: string
     RegionSettings:
       required:
       - regionId
@@ -581,6 +529,95 @@ components:
           type: string
         cloudSecurityGroupName:
           type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    RegionSettingsSpec:
+      required:
+      - availableZoneId
+      - cloudNetworkId
+      - cloudSubnetworkId
+      - cloudSecurityGroupId
+      type: object
+      properties:
+        availableZoneId:
+          format: uuid
+          type: string
+        cloudNetworkId:
+          type: string
+        cloudSubnetworkId:
+          type: string
+        cloudSecurityGroupId:
+          type: string
+    ServiceAccountSettings:
+      required:
+      - serviceAmazonAccountId
+      type: object
+      properties:
+        serviceAmazonAccountId:
+          format: uuid
+          type: string
+        serviceAmazonAccountName:
+          type: string
+        serviceAmazonAccountRegionType:
+          $ref: '#/components/schemas/RegionTypes'
+        serviceRegion:
+          type: string
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RegionTypes:
+      enum:
+      - Global
+      - Emulator
+      - Government
+      - China
+      type: string
+    RegionSettingsFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+    RegionSettingsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionSettings'
         _links:
           type: array
           uniqueItems: false
@@ -637,43 +674,6 @@ components:
     EmptySuccessResponse:
       description: Empty succes response ( 200, 201, 204 )
       type: object
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    RegionSettingsPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/RegionSettings'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
   parameters:
     apiVersionParam:
       name: x-api-version

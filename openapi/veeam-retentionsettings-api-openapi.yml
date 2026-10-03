@@ -215,41 +215,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RetentionSettings:
-      type: object
+    Link:
       required:
-      - lingeringSnapshotRetentionDisabled
-      - keepAllSessions
-      - defaultRepositoryRetention
-      properties:
-        lingeringSnapshotRetentionDisabled:
-          type: boolean
-        lingeringSnapshotRetention:
-          $ref: '#/components/schemas/RetentionSetting'
-        sessionsRetention:
-          $ref: '#/components/schemas/RetentionSetting'
-        keepAllSessions:
-          type: boolean
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    RetentionSetting:
-      required:
-      - timeRetentionDuration
-      - retentionDurationType
+      - rel
+      - href
+      - method
       type: object
       properties:
-        timeRetentionDuration:
-          format: int32
-          type: integer
-        retentionDurationType:
-          enum:
-          - Daily
-          - Monthly
-          - Points
+        rel:
           type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     Error:
       description: ''
       required:
@@ -298,24 +281,41 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Link:
+    RetentionSettings:
+      type: object
       required:
-      - rel
-      - href
-      - method
+      - lingeringSnapshotRetentionDisabled
+      - keepAllSessions
+      - defaultRepositoryRetention
+      properties:
+        lingeringSnapshotRetentionDisabled:
+          type: boolean
+        lingeringSnapshotRetention:
+          $ref: '#/components/schemas/RetentionSetting'
+        sessionsRetention:
+          $ref: '#/components/schemas/RetentionSetting'
+        keepAllSessions:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RetentionSetting:
+      required:
+      - timeRetentionDuration
+      - retentionDurationType
       type: object
       properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
+        timeRetentionDuration:
+          format: int32
+          type: integer
+        retentionDurationType:
           enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+          - Daily
+          - Monthly
+          - Points
+          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

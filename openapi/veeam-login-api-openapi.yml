@@ -112,19 +112,45 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
     Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   schemas:
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
     AuthorizationCodeModel:
       properties:
         code:
@@ -132,32 +158,6 @@ components:
           type: string
       required:
       - code
-      type: object
-    TokenLoginSpec:
-      properties:
-        code:
-          description: Authorization code. Required if the `grant_type` value is `authorization_code`.
-          type: string
-        grant_type:
-          $ref: '#/components/schemas/ELoginGrantType'
-        password:
-          description: Password. Required if the `grant_type` value is `password`.
-          format: password
-          type: string
-        refresh_token:
-          description: Refresh token. Required if the `grant_type` value is `refresh_token`.
-          type: string
-        use_short_term_refresh:
-          description: If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.
-          type: boolean
-        username:
-          description: User name. Required if the `grant_type` value is `password`.
-          type: string
-        vbr_token:
-          description: Veeam Backup & Replication platform service token.
-          type: string
-      required:
-      - grant_type
       type: object
     ELoginGrantType:
       default: password
@@ -199,31 +199,31 @@ components:
       - refresh_token
       - token_type
       type: object
-    Error:
+    TokenLoginSpec:
       properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
+        code:
+          description: Authorization code. Required if the `grant_type` value is `authorization_code`.
           type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+        grant_type:
+          $ref: '#/components/schemas/ELoginGrantType'
+        password:
+          description: Password. Required if the `grant_type` value is `password`.
+          format: password
           type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
+        refresh_token:
+          description: Refresh token. Required if the `grant_type` value is `refresh_token`.
+          type: string
+        use_short_term_refresh:
+          description: If *true*, a short-term refresh token is used. Lifetime of the short-term refresh token is the access token lifetime plus 15 minutes.
+          type: boolean
+        username:
+          description: User name. Required if the `grant_type` value is `password`.
+          type: string
+        vbr_token:
+          description: Veeam Backup & Replication platform service token.
           type: string
       required:
-      - errorCode
-      - message
+      - grant_type
       type: object
     EmptySuccessResponse:
       description: Empty success response (200, 201, 204).
