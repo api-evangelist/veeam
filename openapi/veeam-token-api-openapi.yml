@@ -205,13 +205,6 @@ components:
       properties:
         code:
           type: string
-    LoginGrantTypes:
-      enum:
-      - password
-      - refresh_token
-      - authorization_code
-      - mfa
-      type: string
     RESTLogin:
       type: object
       properties:
@@ -286,6 +279,13 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    LoginGrantTypes:
+      enum:
+      - password
+      - refresh_token
+      - authorization_code
+      - mfa
+      type: string
     LoginSpec:
       required:
       - grant_type

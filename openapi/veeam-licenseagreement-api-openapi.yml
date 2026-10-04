@@ -188,11 +188,14 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    LicenseAgreementTypes:
-      type: string
-      enum:
-      - Eula
-      - ThirdPartyAgreement
+    LicenseAgreements:
+      type: object
+      properties:
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseAgreement'
     LicenseAgreement:
       required:
       - type
@@ -252,14 +255,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    LicenseAgreements:
-      type: object
-      properties:
-        items:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/LicenseAgreement'
     LicenseAgreementDownloadSpec:
       required:
       - licenseAgreementType
@@ -267,6 +262,11 @@ components:
       properties:
         licenseAgreementType:
           $ref: '#/components/schemas/LicenseAgreementTypes'
+    LicenseAgreementTypes:
+      type: string
+      enum:
+      - Eula
+      - ThirdPartyAgreement
     LicenseAgreementAcceptResult:
       required:
       - accepted

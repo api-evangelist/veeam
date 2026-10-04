@@ -151,19 +151,61 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   schemas:
+    GeneralOptionsModel:
+      properties:
+        emailSettings:
+          $ref: '#/components/schemas/GeneralOptionsEmailNotificationsModel'
+        notifications:
+          $ref: '#/components/schemas/GeneralOptionsNotificationsModel'
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
     AdvancedSmtpOptionsModel:
       description: Advanced global email notification settings.
       properties:
@@ -231,39 +273,6 @@ components:
       - notifyOnSupportExpiration
       - notifyOnUpdates
       type: object
-    GeneralOptionsModel:
-      properties:
-        emailSettings:
-          $ref: '#/components/schemas/GeneralOptionsEmailNotificationsModel'
-        notifications:
-          $ref: '#/components/schemas/GeneralOptionsNotificationsModel'
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
     GeneralOptionsEmailNotificationsModel:
       description: Global email notification settings and job notifications.
       properties:
@@ -313,15 +322,6 @@ components:
       - notifyOnFailure
       - notifyOnLastRetry
       type: object
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

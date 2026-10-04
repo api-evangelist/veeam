@@ -63,7 +63,60 @@ paths:
       summary: Get summary
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
+    SummaryChangesTrends:
+      enum:
+      - NotChanged
+      - Increased
+      - Decreased
+      type: string
+    SummaryStatistics:
+      required:
+      - alarmsCount
+      - alarmsCountChangesTrend
+      - instancesCount
+      - instancesCountChangesTrend
+      - protectedInstancesCount
+      - protectedInstancesCountChangesTrend
+      - policiesCount
+      - policiesCountChangesTrend
+      - repositoriesCount
+      - repositoriesCountChangesTrend
+      type: object
+      properties:
+        alarmsCount:
+          format: int32
+          type: integer
+        alarmsCountChangesTrend:
+          $ref: '#/components/schemas/SummaryChangesTrends'
+        instancesCount:
+          format: int32
+          type: integer
+        instancesCountChangesTrend:
+          $ref: '#/components/schemas/SummaryChangesTrends'
+        protectedInstancesCount:
+          format: int32
+          type: integer
+        protectedInstancesCountChangesTrend:
+          $ref: '#/components/schemas/SummaryChangesTrends'
+        policiesCount:
+          format: int32
+          type: integer
+        policiesCountChangesTrend:
+          $ref: '#/components/schemas/SummaryChangesTrends'
+        repositoriesCount:
+          format: int32
+          type: integer
+        repositoriesCountChangesTrend:
+          $ref: '#/components/schemas/SummaryChangesTrends'
     Error:
       description: ''
       required:
@@ -112,59 +165,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    SummaryStatistics:
-      required:
-      - alarmsCount
-      - alarmsCountChangesTrend
-      - instancesCount
-      - instancesCountChangesTrend
-      - protectedInstancesCount
-      - protectedInstancesCountChangesTrend
-      - policiesCount
-      - policiesCountChangesTrend
-      - repositoriesCount
-      - repositoriesCountChangesTrend
-      type: object
-      properties:
-        alarmsCount:
-          format: int32
-          type: integer
-        alarmsCountChangesTrend:
-          $ref: '#/components/schemas/SummaryChangesTrends'
-        instancesCount:
-          format: int32
-          type: integer
-        instancesCountChangesTrend:
-          $ref: '#/components/schemas/SummaryChangesTrends'
-        protectedInstancesCount:
-          format: int32
-          type: integer
-        protectedInstancesCountChangesTrend:
-          $ref: '#/components/schemas/SummaryChangesTrends'
-        policiesCount:
-          format: int32
-          type: integer
-        policiesCountChangesTrend:
-          $ref: '#/components/schemas/SummaryChangesTrends'
-        repositoriesCount:
-          format: int32
-          type: integer
-        repositoriesCountChangesTrend:
-          $ref: '#/components/schemas/SummaryChangesTrends'
-    SummaryChangesTrends:
-      enum:
-      - NotChanged
-      - Increased
-      - Decreased
-      type: string
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

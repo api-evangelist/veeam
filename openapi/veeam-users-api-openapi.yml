@@ -1021,6 +1021,45 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UsersSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - descriptionAsc
+      - descriptionDesc
+      - isDefaultAsc
+      - isDefaultDesc
+      - mfaEnabledAsc
+      - mfaEnabledDesc
+    UserMfaAccept:
+      required:
+      - code
+      - token
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+        token:
+          minLength: 1
+          type: string
+    UserMfaData:
+      type: object
+      properties:
+        userName:
+          type: string
+        qrString:
+          type: string
+        secretKey:
+          type: string
+        scratchCodes:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+        token:
+          type: string
     User:
       required:
       - name
@@ -1057,30 +1096,6 @@ components:
         password:
           minLength: 1
           type: string
-    DefaultUserSpec:
-      type: object
-      required:
-      - instance
-      - userSpec
-      properties:
-        instance:
-          $ref: '#/components/schemas/CheckInstanceIdSpec'
-        userSpec:
-          $ref: '#/components/schemas/UserCreateSpec'
-    UserDescriptionValidationSpec:
-      required:
-      - description
-      type: object
-      properties:
-        description:
-          type: string
-    CheckInstanceIdSpec:
-      type: object
-      required:
-      - instanceId
-      properties:
-        instanceId:
-          type: string
     Link:
       required:
       - rel
@@ -1099,6 +1114,16 @@ components:
           - POST
           - PUT
           - DELETE
+    DefaultUserSpec:
+      type: object
+      required:
+      - instance
+      - userSpec
+      properties:
+        instance:
+          $ref: '#/components/schemas/CheckInstanceIdSpec'
+        userSpec:
+          $ref: '#/components/schemas/UserCreateSpec'
     Error:
       description: ''
       required:
@@ -1147,18 +1172,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    UserMfaSetup:
-      type: object
-      properties:
-        recreate:
-          type: boolean
-    IsFirstLoginResult:
-      type: object
-      required:
-      - isFirstLogin
-      properties:
-        isFirstLogin:
-          type: boolean
     UserUpdateSpec:
       type: object
       properties:
@@ -1168,6 +1181,13 @@ components:
           type: string
         oldPassword:
           type: string
+    CheckInstanceIdResult:
+      type: object
+      required:
+      - isValid
+      properties:
+        isValid:
+          type: boolean
     UsersPage:
       required:
       - totalCount
@@ -1205,13 +1225,32 @@ components:
           items:
             $ref: '#/components/schemas/UsersSortColumns'
           uniqueItems: false
-    UserPasswordValidationSpec:
+    IsFirstLoginResult:
+      type: object
       required:
-      - password
+      - isFirstLogin
+      properties:
+        isFirstLogin:
+          type: boolean
+    UserMfaSetup:
       type: object
       properties:
-        password:
+        recreate:
+          type: boolean
+    UserNameValidationSpec:
+      required:
+      - name
+      type: object
+      properties:
+        name:
           minLength: 1
+          type: string
+    CheckInstanceIdSpec:
+      type: object
+      required:
+      - instanceId
+      properties:
+        instanceId:
           type: string
     ValidationMessage:
       type: object
@@ -1226,59 +1265,20 @@ components:
         contextId:
           type: string
           format: uuid
-    UserNameValidationSpec:
+    UserPasswordValidationSpec:
       required:
-      - name
+      - password
       type: object
       properties:
-        name:
+        password:
           minLength: 1
           type: string
-    UsersSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - descriptionAsc
-      - descriptionDesc
-      - isDefaultAsc
-      - isDefaultDesc
-      - mfaEnabledAsc
-      - mfaEnabledDesc
-    CheckInstanceIdResult:
-      type: object
+    UserDescriptionValidationSpec:
       required:
-      - isValid
-      properties:
-        isValid:
-          type: boolean
-    UserMfaData:
+      - description
       type: object
       properties:
-        userName:
-          type: string
-        qrString:
-          type: string
-        secretKey:
-          type: string
-        scratchCodes:
-          uniqueItems: false
-          type: array
-          items:
-            type: string
-        token:
-          type: string
-    UserMfaAccept:
-      required:
-      - code
-      - token
-      type: object
-      properties:
-        code:
-          minLength: 1
-          type: string
-        token:
-          minLength: 1
+        description:
           type: string
   parameters:
     apiVersionParam:

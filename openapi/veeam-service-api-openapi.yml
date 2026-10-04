@@ -101,19 +101,50 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   schemas:
+    ServerInfoModel:
+      properties:
+        buildVersion:
+          description: Veeam Backup & Replication build number.
+          type: string
+        name:
+          description: Full DNS name or IP address of the backup server.
+          type: string
+        patches:
+          description: Array of Veeam Backup & Replication cumulative patches installed on the backup server.
+          items:
+            type: string
+          type: array
+        vbrId:
+          description: Veeam Backup & Replication installation ID.
+          type: string
+      required:
+      - vbrInstallationId
+      - name
+      - buildVersion
+      - patches
+      type: object
     ServerTimeModel:
       properties:
         serverTime:
@@ -195,37 +226,6 @@ components:
       - validBy
       - validFrom
       type: object
-    ServerInfoModel:
-      properties:
-        buildVersion:
-          description: Veeam Backup & Replication build number.
-          type: string
-        name:
-          description: Full DNS name or IP address of the backup server.
-          type: string
-        patches:
-          description: Array of Veeam Backup & Replication cumulative patches installed on the backup server.
-          items:
-            type: string
-          type: array
-        vbrId:
-          description: Veeam Backup & Replication installation ID.
-          type: string
-      required:
-      - vbrInstallationId
-      - name
-      - buildVersion
-      - patches
-      type: object
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

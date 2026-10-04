@@ -228,28 +228,21 @@ paths:
         - ViewRestorePoints
 components:
   schemas:
-    BaseBackupObjectModel:
-      properties:
-        id:
-          description: ID of the object.
-          format: uuid
-          type: string
-        name:
-          description: Name of the object.
-          type: string
-        platformId:
-          description: Id of the platform where the object was created.
-          format: uuid
-          type: string
-        platformName:
-          $ref: '#/components/schemas/EPlatformType'
-        restorePointsCount:
-          description: Number of restore points.
-          type: integer
-        type:
-          description: Type of the object.
-          type: string
-      type: object
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
     ObjectRestorePointModel:
       properties:
         allowedOperations:
@@ -287,6 +280,17 @@ components:
       - backupId
       - allowedOperations
       type: object
+    EObjectRestorePointOperation:
+      enum:
+      - VmwareInstantRecoveryFcd
+      type: string
+    EBackupObjectsFiltersOrderColumn:
+      enum:
+      - Name
+      - ObjectId
+      - PlatformId
+      - Type
+      type: string
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
       enum:
@@ -335,64 +339,6 @@ components:
       - errorCode
       - message
       type: object
-    BackupObjectModel:
-      allOf:
-      - discriminator:
-          mapping:
-            VMware: '#/components/schemas/ViBackupObjectModel'
-          propertyName: platformName
-        oneOf:
-        - $ref: '#/components/schemas/ViBackupObjectModel'
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    BackupObjectsResult:
-      properties:
-        data:
-          description: Array of backup objects.
-          items:
-            $ref: '#/components/schemas/BackupObjectModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    ObjectRestorePointsResult:
-      properties:
-        data:
-          description: Array of restore points.
-          items:
-            $ref: '#/components/schemas/ObjectRestorePointModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
     BackupObjectsFilters:
       properties:
         limit:
@@ -429,32 +375,86 @@ components:
       - NasBackup
       - CustomPlatform
       type: string
-    EObjectRestorePointOperation:
-      enum:
-      - VmwareInstantRecoveryFcd
-      type: string
-    ViBackupObjectModel:
+    ObjectRestorePointsResult:
+      properties:
+        data:
+          description: Array of restore points.
+          items:
+            $ref: '#/components/schemas/ObjectRestorePointModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    BackupObjectModel:
       allOf:
+      - discriminator:
+          mapping:
+            VMware: '#/components/schemas/ViBackupObjectModel'
+          propertyName: platformName
+        oneOf:
+        - $ref: '#/components/schemas/ViBackupObjectModel'
       - $ref: '#/components/schemas/BaseBackupObjectModel'
-      - properties:
-          objectId:
-            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
-            type: string
-          path:
-            description: Path to the object.
-            type: string
-          viType:
-            $ref: '#/components/schemas/EVmwareInventoryType'
-        required:
-        - objectId
-        type: object
-    EBackupObjectsFiltersOrderColumn:
-      enum:
-      - Name
-      - ObjectId
-      - PlatformId
-      - Type
-      type: string
+    BaseBackupObjectModel:
+      properties:
+        id:
+          description: ID of the object.
+          format: uuid
+          type: string
+        name:
+          description: Name of the object.
+          type: string
+        platformId:
+          description: Id of the platform where the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        restorePointsCount:
+          description: Number of restore points.
+          type: integer
+        type:
+          description: Type of the object.
+          type: string
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    BackupObjectsResult:
+      properties:
+        data:
+          description: Array of backup objects.
+          items:
+            $ref: '#/components/schemas/BackupObjectModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
   responses:
     InternalServerError:
       content:
@@ -468,18 +468,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

@@ -112,19 +112,53 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    TokenModel:
+      properties:
+        .expires:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+        .issued:
+          description: Date and time when the access token is issued.
+          format: date-time
+          type: string
+        access_token:
+          description: String that represents authorization issued to the client. It must be specified in all requests. An access token can be used multiple times, but its lifetime is 15 minutes.
+          type: string
+        expires_in:
+          description: Lifetime of the access token, in seconds.
+          format: int32
+          type: integer
+        refresh_token:
+          description: String that is used to obtain a new access token if the current access token expires or becomes lost. A refresh token can be used only once, and its default lifetime is 14 days.
+          type: string
+        token_type:
+          description: Type of the access token.
+          type: string
+      required:
+      - .expires
+      - .issued
+      - access_token
+      - expires_in
+      - refresh_token
+      - token_type
+      type: object
     Error:
       properties:
         errorCode:
@@ -168,37 +202,6 @@ components:
       - authorization_code
       - vbr_token
       type: string
-    TokenModel:
-      properties:
-        .expires:
-          description: Date and time when the access token expires.
-          format: date-time
-          type: string
-        .issued:
-          description: Date and time when the access token is issued.
-          format: date-time
-          type: string
-        access_token:
-          description: String that represents authorization issued to the client. It must be specified in all requests. An access token can be used multiple times, but its lifetime is 15 minutes.
-          type: string
-        expires_in:
-          description: Lifetime of the access token, in seconds.
-          format: int32
-          type: integer
-        refresh_token:
-          description: String that is used to obtain a new access token if the current access token expires or becomes lost. A refresh token can be used only once, and its default lifetime is 14 days.
-          type: string
-        token_type:
-          description: Type of the access token.
-          type: string
-      required:
-      - .expires
-      - .issued
-      - access_token
-      - expires_in
-      - refresh_token
-      - token_type
-      type: object
     TokenLoginSpec:
       properties:
         code:
@@ -224,9 +227,6 @@ components:
           type: string
       required:
       - grant_type
-      type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
       type: object
   parameters:
     apiVersionParam:

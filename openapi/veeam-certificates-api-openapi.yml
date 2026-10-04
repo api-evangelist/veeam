@@ -192,6 +192,14 @@ paths:
       summary: Upload certificate
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
     Certificate:
       required:
@@ -283,6 +291,19 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    CertificateRegenerateSpec:
+      properties:
+        validBy:
+          format: date-time
+          type: string
+    Certificates:
+      type: object
+      properties:
+        data:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Certificate'
     UploadCertificateSpec:
       type: object
       required:
@@ -298,27 +319,6 @@ components:
         certificatePassword:
           type: string
           description: .PFX certificate password
-    CertificateRegenerateSpec:
-      properties:
-        validBy:
-          format: date-time
-          type: string
-    Certificates:
-      type: object
-      properties:
-        data:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Certificate'
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

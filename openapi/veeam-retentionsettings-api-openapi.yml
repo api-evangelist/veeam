@@ -214,25 +214,30 @@ paths:
       summary: Set default retention settings
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
-    Link:
+    RetentionSetting:
       required:
-      - rel
-      - href
-      - method
+      - timeRetentionDuration
+      - retentionDurationType
       type: object
       properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
+        timeRetentionDuration:
+          format: int32
+          type: integer
+        retentionDurationType:
           enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+          - Daily
+          - Monthly
+          - Points
+          type: string
     Error:
       description: ''
       required:
@@ -281,6 +286,24 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     RetentionSettings:
       type: object
       required:
@@ -301,29 +324,6 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    RetentionSetting:
-      required:
-      - timeRetentionDuration
-      - retentionDurationType
-      type: object
-      properties:
-        timeRetentionDuration:
-          format: int32
-          type: integer
-        retentionDurationType:
-          enum:
-          - Daily
-          - Monthly
-          - Points
-          type: string
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

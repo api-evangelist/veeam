@@ -754,25 +754,53 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegionsPage:
+    CloudNetwork:
       required:
-      - totalCount
-      - results
+      - resourceId
+      - cidrBlock
+      - state
+      - isDefault
       type: object
       properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
+        resourceId:
+          type: string
+        name:
+          type: string
+        cidrBlock:
+          type: string
+        state:
+          $ref: '#/components/schemas/CloudNetworkStates'
+        isDefault:
+          type: boolean
+    Region:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    CloudSecurityGroup:
+      required:
+      - resourceId
+      - cloudNetworkResourceId
+      - name
+      type: object
+      properties:
+        resourceId:
+          type: string
+        cloudNetworkResourceId:
+          type: string
+        name:
+          type: string
     CloudSubnetworksPage:
       required:
       - totalCount
@@ -792,76 +820,39 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    CloudSecurityGroup:
-      required:
-      - resourceId
-      - cloudNetworkResourceId
-      - name
+    CloudSubnetworksFilters:
       type: object
       properties:
-        resourceId:
+        cloudNetworkId:
           type: string
-        cloudNetworkResourceId:
-          type: string
-        name:
-          type: string
-    Region:
-      required:
-      - id
-      - name
-      type: object
-      properties:
-        id:
+        availabilityZone:
           type: string
           format: uuid
-        name:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketFoldersFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
-    CloudNetworksFilters:
-      type: object
-      properties:
         Offset:
           type: integer
           format: int32
         Limit:
           type: integer
           format: int32
-    CloudNetwork:
+    CloudEncryptionKeysPage:
       required:
-      - resourceId
-      - cidrBlock
-      - state
-      - isDefault
+      - totalCount
+      - results
       type: object
       properties:
-        resourceId:
-          type: string
-        name:
-          type: string
-        cidrBlock:
-          type: string
-        state:
-          $ref: '#/components/schemas/CloudNetworkStates'
-        isDefault:
-          type: boolean
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudEncryptionKey'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     Link:
       required:
       - rel
@@ -880,6 +871,92 @@ components:
           - POST
           - PUT
           - DELETE
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudEncryptionKey:
+      required:
+      - arn
+      - name
+      type: object
+      properties:
+        arn:
+          type: string
+        name:
+          type: string
+    AmazonConnectionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AmazonConnection'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RegionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    CloudNetworksPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CloudNetwork'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -928,30 +1005,9 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    AmazonConnectionsPage:
-      required:
-      - totalCount
-      - results
+    CloudEncryptionKeysFilters:
       type: object
       properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/AmazonConnection'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    CloudSecurityGroupsFilters:
-      type: object
-      properties:
-        cloudNetworkId:
-          type: string
         offset:
           type: integer
           format: int32
@@ -963,6 +1019,17 @@ components:
       - NameAsc
       - NameDesc
       type: string
+    CloudSecurityGroupsFilters:
+      type: object
+      properties:
+        cloudNetworkId:
+          type: string
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
     CloudSubnetwork:
       required:
       - resourceId
@@ -981,59 +1048,6 @@ components:
           type: string
         availabilityZone:
           type: string
-    AmazonConnectionSpec:
-      required:
-      - RegionId
-      type: object
-      properties:
-        AmazonAccountId:
-          type: string
-          format: uuid
-        accessKey:
-          type: string
-        secretKey:
-          type: string
-        RegionId:
-          type: string
-          format: uuid
-    CloudNetworksPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudNetwork'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketFoldersPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/BucketFolder'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     CloudSubnetS3EndpointValidationResult:
       required:
       - isValid
@@ -1044,25 +1058,6 @@ components:
           type: boolean
         details:
           type: string
-    CloudEncryptionKeysPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/CloudEncryptionKey'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     BucketFolder:
       required:
       - name
@@ -1074,35 +1069,29 @@ components:
         folderId:
           format: uuid
           type: string
-    CloudSubnetworksFilters:
+    BucketFoldersFilters:
       type: object
       properties:
-        cloudNetworkId:
-          type: string
-        availabilityZone:
-          type: string
-          format: uuid
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    CloudNetworksFilters:
+      type: object
+      properties:
         Offset:
           type: integer
           format: int32
         Limit:
           type: integer
           format: int32
-    CloudNetworkStates:
-      enum:
-      - Available
-      - Pending
-      type: string
-    CloudEncryptionKey:
-      required:
-      - arn
-      - name
-      type: object
-      properties:
-        arn:
-          type: string
-        name:
-          type: string
     CloudSecurityGroupsPage:
       required:
       - totalCount
@@ -1135,15 +1124,26 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    CloudEncryptionKeysFilters:
+    CloudNetworkStates:
+      enum:
+      - Available
+      - Pending
+      type: string
+    AmazonConnectionSpec:
+      required:
+      - RegionId
       type: object
       properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
+        AmazonAccountId:
+          type: string
+          format: uuid
+        accessKey:
+          type: string
+        secretKey:
+          type: string
+        RegionId:
+          type: string
+          format: uuid
   parameters:
     apiVersionParam:
       name: x-api-version

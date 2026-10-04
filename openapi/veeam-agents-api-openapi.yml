@@ -215,9 +215,61 @@ paths:
         claims:
         - UpdateComputerRecoveryToken
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
     EmptySuccessResponse:
       description: Empty success response (200, 201, 204).
+      type: object
+    ComputerRecoveryTokenFilters:
+      properties:
+        expirationDateAfter:
+          format: date-time
+          type: string
+        expirationDateBefore:
+          format: date-time
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
       type: object
     ComputerRecoveryTokenResult:
       properties:
@@ -231,6 +283,27 @@ components:
       required:
       - data
       - pagination
+      type: object
+    ComputerRecoveryTokenModel:
+      properties:
+        expirationDate:
+          description: Date and time when the recovery token expires.
+          format: date-time
+          type: string
+        id:
+          description: ID of the recovery token.
+          format: uuid
+          type: string
+        name:
+          description: Friendly name of the recovery token.
+          type: string
+        recoveryToken:
+          description: Recovery token.
+          type: string
+      required:
+      - id
+      - name
+      - expirationDate
       type: object
     Error:
       properties:
@@ -258,6 +331,22 @@ components:
       - errorCode
       - message
       type: object
+    ComputerRecoveryTokenSpec:
+      properties:
+        backupIds:
+          description: Array of backup IDs whose data you want to restore with the recovery token.
+          items:
+            format: uuid
+            type: string
+          type: array
+        expirationDate:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+      required:
+      - backupIds
+      - expirationDate
+      type: object
     PaginationResult:
       description: Pagination settings.
       properties:
@@ -281,100 +370,11 @@ components:
       - total
       - count
       type: object
-    ComputerRecoveryTokenModel:
-      properties:
-        expirationDate:
-          description: Date and time when the recovery token expires.
-          format: date-time
-          type: string
-        id:
-          description: ID of the recovery token.
-          format: uuid
-          type: string
-        name:
-          description: Friendly name of the recovery token.
-          type: string
-        recoveryToken:
-          description: Recovery token.
-          type: string
-      required:
-      - id
-      - name
-      - expirationDate
-      type: object
     EComputerRecoveryTokenFiltersOrderColumn:
       enum:
       - Name
       - ExpirationDate
       type: string
-    ComputerRecoveryTokenSpec:
-      properties:
-        backupIds:
-          description: Array of backup IDs whose data you want to restore with the recovery token.
-          items:
-            format: uuid
-            type: string
-          type: array
-        expirationDate:
-          description: Date and time when the access token expires.
-          format: date-time
-          type: string
-      required:
-      - backupIds
-      - expirationDate
-      type: object
-    ComputerRecoveryTokenFilters:
-      properties:
-        expirationDateAfter:
-          format: date-time
-          type: string
-        expirationDateBefore:
-          format: date-time
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EComputerRecoveryTokenFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
-      type: object
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

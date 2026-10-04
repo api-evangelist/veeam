@@ -148,23 +148,287 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CostEstimationSortColumns:
-      type: string
+    YearlyRetentionOptions:
+      required:
+      - count
+      - type
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+        type:
+          type: string
+          enum:
+          - Years
+    DailySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    WeeklySchedule:
+      type: object
+      required:
+      - days
+      properties:
+        days:
+          type: array
+          uniqueItems: true
+          minLength: 0
+          maxLength: 7
+          items:
+            $ref: '#/components/schemas/DaysOfWeek'
+    MonthlySchedule:
+      type: object
+      required:
+      - months
+      properties:
+        months:
+          type: array
+          uniqueItems: true
+          minLength: 0
+          maxLength: 12
+          items:
+            $ref: '#/components/schemas/Months'
+    CostEstimationsPage:
+      required:
+      - totalCount
+      - items
+      - isEmpty
+      - instancesCosts
+      - totalTrafficCost
+      - totalTransactionCost
+      - totalCost
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CostEstimationItem'
+        isEmpty:
+          type: boolean
+        totalSnapshotCost:
+          type: number
+          format: double
+        totalReplicaCost:
+          type: number
+          format: double
+        totalBackupCost:
+          type: number
+          format: double
+        totalTrafficCost:
+          type: number
+          format: double
+        totalTransactionCost:
+          type: number
+          format: double
+        totalCost:
+          type: number
+          format: double
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    MonthlySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
+    ReplicaMapping:
+      required:
+      - sourceRegionId
+      - targetRegionId
+      - targetAmazonAccountId
+      type: object
+      properties:
+        sourceRegionId:
+          format: uuid
+          type: string
+        targetRegionId:
+          format: uuid
+          type: string
+        targetAmazonAccountId:
+          type: string
+          format: uuid
+        encryptionKey:
+          type: string
+    DailyScheduleKinds:
       enum:
-      - virtualMachineNameAsc
-      - virtualMachineNameDesc
-      - snapshotCostAsc
-      - snapshotCostDesc
-      - replicaCostAsc
-      - replicaCostDesc
-      - backupCostAsc
-      - backupCostDesc
-      - trafficAsc
-      - trafficDesc
-      - transactionAsc
-      - transactionDesc
-      - totalAsc
-      - totalDesc
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    PointsRetentionOptions:
+      required:
+      - count
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+    WeeklySnapshotScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/WeeklySchedule'
+    ScheduleSettings:
+      required:
+      - dailyScheduleEnabled
+      - weeklyScheduleEnabled
+      - monthlyScheduleEnabled
+      - yearlyScheduleEnabled
+      type: object
+      properties:
+        dailyScheduleEnabled:
+          type: boolean
+        dailySchedule:
+          $ref: '#/components/schemas/DailyScheduleSettings'
+        weeklyScheduleEnabled:
+          type: boolean
+        weeklySchedule:
+          $ref: '#/components/schemas/WeeklyScheduleSettings'
+        monthlyScheduleEnabled:
+          type: boolean
+        monthlySchedule:
+          $ref: '#/components/schemas/MonthlyScheduleSettings'
+        yearlyScheduleEnabled:
+          type: boolean
+        yearlySchedule:
+          $ref: '#/components/schemas/YearlyScheduleSettings'
+    PolicyNotificationSettings:
+      type: object
+      properties:
+        recipient:
+          type: string
+        notifyOnSuccess:
+          type: boolean
+        notifyOnWarning:
+          type: boolean
+        notifyOnFailure:
+          type: boolean
+    RetrySettings:
+      required:
+      - retryTimes
+      type: object
+      properties:
+        retryTimes:
+          format: int32
+          type: integer
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    PolicyBackupItems:
+      type: object
+      properties:
+        virtualMachineIds:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+        tagIds:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+    MonthlyScheduleSettings:
+      required:
+      - timeLocal
+      - dayNumberInMonth
+      - snapshotOptions
+      type: object
+      properties:
+        timeLocal:
+          format: date-time
+          type: string
+        dayNumberInMonth:
+          $ref: '#/components/schemas/DayNumbersInMonth'
+        dayOfWeek:
+          $ref: '#/components/schemas/DaysOfWeek'
+        dayOfMonth:
+          format: int32
+          type: integer
+        snapshotOptions:
+          $ref: '#/components/schemas/MonthlySnapshotScheduleSettings'
+        backupOptions:
+          $ref: '#/components/schemas/MonthlyBackupScheduleSettings'
+        replicaOptions:
+          $ref: '#/components/schemas/MonthlyReplicaScheduleSettings'
+    PolicyReplicaSettings:
+      required:
+      - mapping
+      type: object
+      properties:
+        mapping:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ReplicaMapping'
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
+    MonthlyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
+    WeeklyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/WeeklySchedule'
     YearlyScheduleSettings:
       required:
       - timeLocal
@@ -187,112 +451,21 @@ components:
           $ref: '#/components/schemas/Months'
         retention:
           $ref: '#/components/schemas/YearlyRetentionOptions'
-    PolicyBackupSettings:
-      type: object
-      properties:
-        targetRepositoryId:
-          format: uuid
-          type: string
-    PolicySpec:
-      required:
-      - regions
-      - name
-      - amazonAccountId
-      - backupType
-      type: object
-      properties:
-        snapshotSettings:
-          $ref: '#/components/schemas/PolicySnapshotSettings'
-        replicaSettings:
-          $ref: '#/components/schemas/PolicyReplicaSettings'
-        backupSettings:
-          $ref: '#/components/schemas/PolicyBackupSettings'
-        regionIds:
-          minLength: 1
-          uniqueItems: false
-          type: array
-          items:
-            type: string
-            format: uuid
-        selectedItems:
-          $ref: '#/components/schemas/PolicyBackupItems'
-        excludedItems:
-          $ref: '#/components/schemas/PolicyBackupItems'
-        scheduleSettings:
-          $ref: '#/components/schemas/ScheduleSettings'
-        name:
-          maxLength: 255
-          minLength: 1
-          type: string
-        description:
-          type: string
-        amazonAccountId:
-          type: string
-          format: uuid
-        retrySettings:
-          $ref: '#/components/schemas/RetrySettings'
-        policyNotificationSettings:
-          $ref: '#/components/schemas/PolicyNotificationSettings'
-        backupType:
-          $ref: '#/components/schemas/PolicySelectionTypes'
-    WeeklyBackupScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PeriodRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/WeeklySchedule'
-    DailyScheduleKinds:
+    Months:
       enum:
-      - Everyday
-      - WeekDays
-      - SelectedDays
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
       type: string
-    TagSpec:
-      required:
-      - key
-      - value
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    YearlyRetentionOptions:
-      required:
-      - count
-      - type
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-          minimum: 0
-        type:
-          type: string
-          enum:
-          - Years
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
     Error:
       description: ''
       required:
@@ -341,6 +514,66 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    PeriodRetentionOptions:
+      required:
+      - type
+      - count
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/RetentionTypes'
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+    DailyReplicaScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    DailyBackupScheduleSettings:
+      type: object
+      required:
+      - retention
+      - schedule
+      properties:
+        retention:
+          $ref: '#/components/schemas/PeriodRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/DailySchedule'
+    RetentionTypes:
+      type: string
+      enum:
+      - Days
+      - Months
+    PolicyBackupSettings:
+      type: object
+      properties:
+        targetRepositoryId:
+          format: uuid
+          type: string
+    PolicySelectionTypes:
+      enum:
+      - AllItems
+      - SelectedItems
+      type: string
+    PolicySnapshotSettings:
+      type: object
+      properties:
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
+        tryCreateVSSSnapshot:
+          type: boolean
     CostEstimationItem:
       required:
       - virtualMachineId
@@ -373,238 +606,23 @@ components:
         totalCost:
           type: number
           format: double
-    PolicyNotificationSettings:
-      type: object
-      properties:
-        recipient:
-          type: string
-        notifyOnSuccess:
-          type: boolean
-        notifyOnWarning:
-          type: boolean
-        notifyOnFailure:
-          type: boolean
-    PolicySelectionTypes:
-      enum:
-      - AllItems
-      - SelectedItems
-      type: string
-    RetentionTypes:
+    CostEstimationSortColumns:
       type: string
       enum:
-      - Days
-      - Months
-    PolicyReplicaSettings:
-      required:
-      - mapping
-      type: object
-      properties:
-        mapping:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/ReplicaMapping'
-        additionalTags:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/TagSpec'
-        copyTagsFromVolumeEnabled:
-          type: boolean
-    RetrySettings:
-      required:
-      - retryTimes
-      type: object
-      properties:
-        retryTimes:
-          format: int32
-          type: integer
-    WeeklySnapshotScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PointsRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/WeeklySchedule'
-    Months:
-      enum:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-      type: string
-    PointsRetentionOptions:
-      required:
-      - count
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int32
-          minimum: 0
-    CostEstimationFilters:
-      type: object
-      properties:
-        VirtualMachineNameFilter:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/CostEstimationSortColumns'
-    ScheduleSettings:
-      required:
-      - dailyScheduleEnabled
-      - weeklyScheduleEnabled
-      - monthlyScheduleEnabled
-      - yearlyScheduleEnabled
-      type: object
-      properties:
-        dailyScheduleEnabled:
-          type: boolean
-        dailySchedule:
-          $ref: '#/components/schemas/DailyScheduleSettings'
-        weeklyScheduleEnabled:
-          type: boolean
-        weeklySchedule:
-          $ref: '#/components/schemas/WeeklyScheduleSettings'
-        monthlyScheduleEnabled:
-          type: boolean
-        monthlySchedule:
-          $ref: '#/components/schemas/MonthlyScheduleSettings'
-        yearlyScheduleEnabled:
-          type: boolean
-        yearlySchedule:
-          $ref: '#/components/schemas/YearlyScheduleSettings'
-    CostEstimationsPage:
-      required:
-      - totalCount
-      - items
-      - isEmpty
-      - instancesCosts
-      - totalTrafficCost
-      - totalTransactionCost
-      - totalCost
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        items:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/CostEstimationItem'
-        isEmpty:
-          type: boolean
-        totalSnapshotCost:
-          type: number
-          format: double
-        totalReplicaCost:
-          type: number
-          format: double
-        totalBackupCost:
-          type: number
-          format: double
-        totalTrafficCost:
-          type: number
-          format: double
-        totalTransactionCost:
-          type: number
-          format: double
-        totalCost:
-          type: number
-          format: double
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    DailyReplicaScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PointsRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/DailySchedule'
-    WeeklyReplicaScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PointsRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/WeeklySchedule'
-    MonthlyReplicaScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PointsRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/MonthlySchedule'
-    DailySchedule:
-      type: object
-      required:
-      - hours
-      properties:
-        hours:
-          type: array
-          uniqueItems: false
-          minLength: 24
-          maxLength: 24
-          items:
-            type: boolean
-    WeeklySchedule:
-      type: object
-      required:
-      - days
-      properties:
-        days:
-          type: array
-          uniqueItems: true
-          minLength: 0
-          maxLength: 7
-          items:
-            $ref: '#/components/schemas/DaysOfWeek'
-    MonthlySchedule:
-      type: object
-      required:
-      - months
-      properties:
-        months:
-          type: array
-          uniqueItems: true
-          minLength: 0
-          maxLength: 12
-          items:
-            $ref: '#/components/schemas/Months'
+      - virtualMachineNameAsc
+      - virtualMachineNameDesc
+      - snapshotCostAsc
+      - snapshotCostDesc
+      - replicaCostAsc
+      - replicaCostDesc
+      - backupCostAsc
+      - backupCostDesc
+      - trafficAsc
+      - trafficDesc
+      - transactionAsc
+      - transactionDesc
+      - totalAsc
+      - totalDesc
     DailyScheduleSettings:
       required:
       - kind
@@ -629,92 +647,6 @@ components:
           $ref: '#/components/schemas/DailyBackupScheduleSettings'
         replicaOptions:
           $ref: '#/components/schemas/DailyReplicaScheduleSettings'
-    MonthlyScheduleSettings:
-      required:
-      - timeLocal
-      - dayNumberInMonth
-      - snapshotOptions
-      type: object
-      properties:
-        timeLocal:
-          format: date-time
-          type: string
-        dayNumberInMonth:
-          $ref: '#/components/schemas/DayNumbersInMonth'
-        dayOfWeek:
-          $ref: '#/components/schemas/DaysOfWeek'
-        dayOfMonth:
-          format: int32
-          type: integer
-        snapshotOptions:
-          $ref: '#/components/schemas/MonthlySnapshotScheduleSettings'
-        backupOptions:
-          $ref: '#/components/schemas/MonthlyBackupScheduleSettings'
-        replicaOptions:
-          $ref: '#/components/schemas/MonthlyReplicaScheduleSettings'
-    MonthlyBackupScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PeriodRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/MonthlySchedule'
-    MonthlySnapshotScheduleSettings:
-      type: object
-      required:
-      - retention
-      - schedule
-      properties:
-        retention:
-          $ref: '#/components/schemas/PointsRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/MonthlySchedule'
-    PolicyBackupItems:
-      type: object
-      properties:
-        virtualMachineIds:
-          uniqueItems: false
-          type: array
-          items:
-            type: string
-            format: uuid
-        tagIds:
-          uniqueItems: false
-          type: array
-          items:
-            type: string
-            format: uuid
-    ReplicaMapping:
-      required:
-      - sourceRegionId
-      - targetRegionId
-      - targetAmazonAccountId
-      type: object
-      properties:
-        sourceRegionId:
-          format: uuid
-          type: string
-        targetRegionId:
-          format: uuid
-          type: string
-        targetAmazonAccountId:
-          type: string
-          format: uuid
-        encryptionKey:
-          type: string
-    DaysOfWeek:
-      enum:
-      - Sunday
-      - Monday
-      - Tuesday
-      - Wednesday
-      - Thursday
-      - Friday
-      - Saturday
-      type: string
     DayNumbersInMonth:
       enum:
       - First
@@ -724,18 +656,16 @@ components:
       - Last
       - OnDay
       type: string
-    PolicySnapshotSettings:
+    MonthlyReplicaScheduleSettings:
       type: object
+      required:
+      - retention
+      - schedule
       properties:
-        additionalTags:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/TagSpec'
-        copyTagsFromVolumeEnabled:
-          type: boolean
-        tryCreateVSSSnapshot:
-          type: boolean
+        retention:
+          $ref: '#/components/schemas/PointsRetentionOptions'
+        schedule:
+          $ref: '#/components/schemas/MonthlySchedule'
     WeeklyScheduleSettings:
       required:
       - timeLocal
@@ -751,7 +681,17 @@ components:
           $ref: '#/components/schemas/WeeklyBackupScheduleSettings'
         replicaOptions:
           $ref: '#/components/schemas/WeeklyReplicaScheduleSettings'
-    DailySnapshotScheduleSettings:
+    DaysOfWeek:
+      enum:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
+      type: string
+    WeeklyReplicaScheduleSettings:
       type: object
       required:
       - retention
@@ -760,29 +700,96 @@ components:
         retention:
           $ref: '#/components/schemas/PointsRetentionOptions'
         schedule:
-          $ref: '#/components/schemas/DailySchedule'
-    DailyBackupScheduleSettings:
+          $ref: '#/components/schemas/WeeklySchedule'
+    DailySchedule:
       type: object
       required:
-      - retention
-      - schedule
+      - hours
       properties:
-        retention:
-          $ref: '#/components/schemas/PeriodRetentionOptions'
-        schedule:
-          $ref: '#/components/schemas/DailySchedule'
-    PeriodRetentionOptions:
-      required:
-      - type
-      - count
+        hours:
+          type: array
+          uniqueItems: false
+          minLength: 24
+          maxLength: 24
+          items:
+            type: boolean
+    CostEstimationFilters:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/RetentionTypes'
-        count:
+        VirtualMachineNameFilter:
+          type: string
+        Offset:
           type: integer
           format: int32
           minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/CostEstimationSortColumns'
+    PolicySpec:
+      required:
+      - regions
+      - name
+      - amazonAccountId
+      - backupType
+      type: object
+      properties:
+        snapshotSettings:
+          $ref: '#/components/schemas/PolicySnapshotSettings'
+        replicaSettings:
+          $ref: '#/components/schemas/PolicyReplicaSettings'
+        backupSettings:
+          $ref: '#/components/schemas/PolicyBackupSettings'
+        regionIds:
+          minLength: 1
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+            format: uuid
+        selectedItems:
+          $ref: '#/components/schemas/PolicyBackupItems'
+        excludedItems:
+          $ref: '#/components/schemas/PolicyBackupItems'
+        scheduleSettings:
+          $ref: '#/components/schemas/ScheduleSettings'
+        name:
+          maxLength: 255
+          minLength: 1
+          type: string
+        description:
+          type: string
+        amazonAccountId:
+          type: string
+          format: uuid
+        retrySettings:
+          $ref: '#/components/schemas/RetrySettings'
+        policyNotificationSettings:
+          $ref: '#/components/schemas/PolicyNotificationSettings'
+        backupType:
+          $ref: '#/components/schemas/PolicySelectionTypes'
+    TagSpec:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+  requestBodies:
+    PolicySpec:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PolicySpec'
+      required: true
   parameters:
     apiVersionParam:
       name: x-api-version
@@ -791,13 +798,6 @@ components:
       schema:
         type: string
         default: 1.0-rev0
-  requestBodies:
-    PolicySpec:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PolicySpec'
-      required: true
   securitySchemes:
     Bearer:
       name: Authorization

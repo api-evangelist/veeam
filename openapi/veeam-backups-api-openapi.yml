@@ -231,28 +231,21 @@ paths:
         - ViewBackupObjects
 components:
   schemas:
-    BaseBackupObjectModel:
-      properties:
-        id:
-          description: ID of the object.
-          format: uuid
-          type: string
-        name:
-          description: Name of the object.
-          type: string
-        platformId:
-          description: Id of the platform where the object was created.
-          format: uuid
-          type: string
-        platformName:
-          $ref: '#/components/schemas/EPlatformType'
-        restorePointsCount:
-          description: Number of restore points.
-          type: integer
-        type:
-          description: Type of the object.
-          type: string
-      type: object
+    ViBackupObjectModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseBackupObjectModel'
+      - properties:
+          objectId:
+            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
+            type: string
+          path:
+            description: Path to the object.
+            type: string
+          viType:
+            $ref: '#/components/schemas/EVmwareInventoryType'
+        required:
+        - objectId
+        type: object
     BackupModel:
       properties:
         creationTime:
@@ -291,6 +284,35 @@ components:
       - platformId
       - creationTime
       - repositoryId
+      type: object
+    BackupsFilters:
+      properties:
+        createdAfterFilter:
+          format: date-time
+          type: string
+        createdBeforeFilter:
+          format: date-time
+          type: string
+        jobIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
+        platformIdFilter:
+          format: uuid
+          type: string
+        policyTagFilter:
+          type: string
+        skip:
+          format: int32
+          type: integer
       type: object
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
@@ -340,6 +362,31 @@ components:
       - errorCode
       - message
       type: object
+    EPlatformType:
+      description: Platform name.
+      enum:
+      - VMware
+      - HyperV
+      - Vcd
+      - WindowsPhysical
+      - LinuxPhysical
+      - Tape
+      - NasBackup
+      - CustomPlatform
+      type: string
+    BackupsResult:
+      properties:
+        data:
+          description: Array of backups.
+          items:
+            $ref: '#/components/schemas/BackupModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
     BackupObjectModel:
       allOf:
       - discriminator:
@@ -349,6 +396,28 @@ components:
         oneOf:
         - $ref: '#/components/schemas/ViBackupObjectModel'
       - $ref: '#/components/schemas/BaseBackupObjectModel'
+    BaseBackupObjectModel:
+      properties:
+        id:
+          description: ID of the object.
+          format: uuid
+          type: string
+        name:
+          description: Name of the object.
+          type: string
+        platformId:
+          description: Id of the platform where the object was created.
+          format: uuid
+          type: string
+        platformName:
+          $ref: '#/components/schemas/EPlatformType'
+        restorePointsCount:
+          description: Number of restore points.
+          type: integer
+        type:
+          description: Type of the object.
+          type: string
+      type: object
     PaginationResult:
       description: Pagination settings.
       properties:
@@ -393,75 +462,6 @@ components:
       - data
       - pagination
       type: object
-    BackupsResult:
-      properties:
-        data:
-          description: Array of backups.
-          items:
-            $ref: '#/components/schemas/BackupModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    ViBackupObjectModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseBackupObjectModel'
-      - properties:
-          objectId:
-            description: ID of the virtual infrastructure object (mo-ref or ID, depending on the virtualization platform).
-            type: string
-          path:
-            description: Path to the object.
-            type: string
-          viType:
-            $ref: '#/components/schemas/EVmwareInventoryType'
-        required:
-        - objectId
-        type: object
-    BackupsFilters:
-      properties:
-        createdAfterFilter:
-          format: date-time
-          type: string
-        createdBeforeFilter:
-          format: date-time
-          type: string
-        jobIdFilter:
-          format: uuid
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EBackupsFiltersOrderColumn'
-        platformIdFilter:
-          format: uuid
-          type: string
-        policyTagFilter:
-          type: string
-        skip:
-          format: int32
-          type: integer
-      type: object
-    EPlatformType:
-      description: Platform name.
-      enum:
-      - VMware
-      - HyperV
-      - Vcd
-      - WindowsPhysical
-      - LinuxPhysical
-      - Tape
-      - NasBackup
-      - CustomPlatform
-      type: string
   responses:
     InternalServerError:
       content:
@@ -469,12 +469,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     NotFound:
       content:
         application/json:
@@ -487,6 +481,12 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

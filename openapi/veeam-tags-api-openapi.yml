@@ -176,48 +176,53 @@ paths:
       summary: Tag
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
-    Link:
+    Tag:
       required:
-      - rel
-      - href
-      - method
+      - id
+      - key
+      - value
       type: object
       properties:
-        rel:
+        id:
+          format: uuid
           type: string
-        href:
+        key:
           type: string
-        method:
+        value:
           type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    TagsFilters:
-      type: object
-      properties:
-        searchPattern:
-          type: string
-        offset:
-          type: integer
-          format: int32
-          minimum: 0
-        limit:
-          type: integer
-          format: int32
-          minimum: -1
-        sort:
+        _links:
           type: array
           uniqueItems: false
           items:
-            $ref: '#/components/schemas/TagsSortColumns'
-    TagsSortColumns:
-      type: string
-      enum:
-      - keyAsc
-      - keyDesc
+            $ref: '#/components/schemas/Link'
+    TagsPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -266,52 +271,47 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Tag:
+    TagsSortColumns:
+      type: string
+      enum:
+      - keyAsc
+      - keyDesc
+    Link:
       required:
-      - id
-      - key
-      - value
+      - rel
+      - href
+      - method
       type: object
       properties:
-        id:
-          format: uuid
+        rel:
           type: string
-        key:
+        href:
           type: string
-        value:
+        method:
           type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    TagsPage:
-      required:
-      - results
-      - totalCount
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    TagsFilters:
       type: object
       properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-        totalCount:
-          format: int32
+        searchPattern:
+          type: string
+        offset:
           type: integer
-        _links:
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: -1
+        sort:
           type: array
           uniqueItems: false
           items:
-            $ref: '#/components/schemas/Link'
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
+            $ref: '#/components/schemas/TagsSortColumns'
   securitySchemes:
     Bearer:
       name: Authorization

@@ -106,11 +106,39 @@ components:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
+    ServicesResult:
+      properties:
+        data:
+          description: Array of services.
+          items:
+            $ref: '#/components/schemas/ServicesModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
     EServicesFiltersOrderColumn:
       enum:
       - Name
       - Port
       type: string
+    ServicesFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EServicesFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
     Error:
       properties:
         errorCode:
@@ -137,18 +165,17 @@ components:
       - errorCode
       - message
       type: object
-    ServicesResult:
+    ServicesModel:
       properties:
-        data:
-          description: Array of services.
-          items:
-            $ref: '#/components/schemas/ServicesModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
+        name:
+          description: Name of the service.
+          type: string
+        port:
+          description: Port used to communicate with the service.
+          type: integer
       required:
-      - data
-      - pagination
+      - name
+      - port
       type: object
     PaginationResult:
       description: Pagination settings.
@@ -172,33 +199,6 @@ components:
       required:
       - total
       - count
-      type: object
-    ServicesModel:
-      properties:
-        name:
-          description: Name of the service.
-          type: string
-        port:
-          description: Port used to communicate with the service.
-          type: integer
-      required:
-      - name
-      - port
-      type: object
-    ServicesFilters:
-      properties:
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EServicesFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
       type: object
   parameters:
     apiVersionParam:

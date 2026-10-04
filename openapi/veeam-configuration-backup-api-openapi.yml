@@ -270,84 +270,39 @@ paths:
         - StartConfigBackup
 components:
   schemas:
-    EConfigBackupSMTPSettingsType:
-      description: Type of notification settings.
-      enum:
-      - Global
-      - Custom
-      type: string
-    EDayNumberInMonth:
-      description: Week day number in the month.
-      enum:
-      - First
-      - Second
-      - Third
-      - Fourth
-      - Last
-      - OnDay
-      type: string
-    EDailyKinds:
-      description: Kind of daily scheduling scheme.
-      enum:
-      - Everyday
-      - WeekDays
-      - SelectedDays
-      type: string
-    EMonth:
-      description: Month.
-      enum:
-      - January
-      - February
-      - March
-      - April
-      - May
-      - June
-      - July
-      - August
-      - September
-      - October
-      - November
-      - December
-      type: string
-    SessionResultModel:
-      description: Session result.
+    ConfigBackupSMTPSettigsModel:
+      description: Email notification settings.
       properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
+        isEnabled:
+          description: If *true*, email notifications are enabled for this job.
           type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
+        notifyOnError:
+          description: If *true*, email notifications are sent when the job fails.
+          type: boolean
+        notifyOnSuccess:
+          description: If *true*, email notifications are sent when the job completes successfully.
+          type: boolean
+        notifyOnWarning:
+          description: If *true*, email notifications are sent when the job completes with a warning.
+          type: boolean
+        recipients:
+          description: Array of recipients' email addresses.
+          items:
+            type: string
+          type: array
+        settingsType:
+          $ref: '#/components/schemas/EConfigBackupSMTPSettingsType'
+        subject:
+          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li></ul>
           type: string
       required:
-      - errorCode
-      - message
+      - isEnabled
+      - recipients
+      - settingsType
+      - subject
+      - notifyOnSuccess
+      - notifyOnWarning
+      - notifyOnError
       type: object
     ESessionResult:
       description: Result status.
@@ -357,44 +312,6 @@ components:
       - Warning
       - Failed
       type: string
-    EDayOfWeek:
-      description: Day of the week.
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      type: string
-    ScheduleMonthlyModel:
-      description: Monthly scheduling options.
-      properties:
-        dayNumberInMonth:
-          $ref: '#/components/schemas/EDayNumberInMonth'
-        dayOfMonth:
-          description: Day of the month when the job must start.
-          type: integer
-        dayOfWeek:
-          $ref: '#/components/schemas/EDayOfWeek'
-        isEnabled:
-          default: false
-          description: If *true*, monthly schedule is enabled.
-          type: boolean
-        localTime:
-          description: Local time when the job must start.
-          format: time
-          type: string
-        months:
-          description: Months when the job must start.
-          items:
-            $ref: '#/components/schemas/EMonth'
-          type: array
-          uniqueItems: true
-      required:
-      - isEnabled
-      type: object
     ScheduleDailyModel:
       description: Daily scheduling options.
       properties:
@@ -417,37 +334,6 @@ components:
       required:
       - isEnabled
       type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
     SessionModel:
       properties:
         activityId:
@@ -502,75 +388,45 @@ components:
       - state
       - usn
       type: object
-    ConfigBackupSMTPSettigsModel:
-      description: Email notification settings.
+    SessionResultModel:
+      description: Session result.
       properties:
-        isEnabled:
-          description: If *true*, email notifications are enabled for this job.
+        isCanceled:
+          description: If *true*, the session has been canceled.
           type: boolean
-        notifyOnError:
-          description: If *true*, email notifications are sent when the job fails.
-          type: boolean
-        notifyOnSuccess:
-          description: If *true*, email notifications are sent when the job completes successfully.
-          type: boolean
-        notifyOnWarning:
-          description: If *true*, email notifications are sent when the job completes with a warning.
-          type: boolean
-        recipients:
-          description: Array of recipients' email addresses.
-          items:
-            type: string
-          type: array
-        settingsType:
-          $ref: '#/components/schemas/EConfigBackupSMTPSettingsType'
-        subject:
-          description: Notification subject. Use the following variables in the subject:<ul> <li>*%Time%* — completion time</li> <li>*%JobName%* — job name</li> <li>*%JobResult%* — job result</li></ul>
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
           type: string
       required:
-      - isEnabled
-      - recipients
-      - settingsType
-      - subject
-      - notifyOnSuccess
-      - notifyOnWarning
-      - notifyOnError
-      type: object
-    ConfigBackupNotificationsModel:
-      description: Notification settings.
-      properties:
-        SMTPSettings:
-          $ref: '#/components/schemas/ConfigBackupSMTPSettigsModel'
-        SNMPEnabled:
-          description: If *true*, SNMP traps are enabled for this job.
-          type: boolean
-      required:
-      - SNMPEnabled
-      type: object
-    ConfigBackupLastSuccessfulModel:
-      description: Last successful backup.
-      properties:
-        lastSuccessfulTime:
-          description: Date and time when the last successful backup was created.
-          format: date-time
-          type: string
-        sessionId:
-          description: ID of the job session.
-          format: uuid
-          type: string
-      type: object
-    ConfigBackupScheduleModel:
-      description: Scheduling settings.
-      properties:
-        daily:
-          $ref: '#/components/schemas/ScheduleDailyModel'
-        isEnabled:
-          description: If *true*, backup scheduling is enabled.
-          type: boolean
-        monthly:
-          $ref: '#/components/schemas/ScheduleMonthlyModel'
-      required:
-      - isEnabled
+      - errorCode
+      - message
       type: object
     ConfigBackupModel:
       properties:
@@ -602,6 +458,46 @@ components:
       - lastSuccessfulBackup
       - encryption
       type: object
+    ScheduleMonthlyModel:
+      description: Monthly scheduling options.
+      properties:
+        dayNumberInMonth:
+          $ref: '#/components/schemas/EDayNumberInMonth'
+        dayOfMonth:
+          description: Day of the month when the job must start.
+          type: integer
+        dayOfWeek:
+          $ref: '#/components/schemas/EDayOfWeek'
+        isEnabled:
+          default: false
+          description: If *true*, monthly schedule is enabled.
+          type: boolean
+        localTime:
+          description: Local time when the job must start.
+          format: time
+          type: string
+        months:
+          description: Months when the job must start.
+          items:
+            $ref: '#/components/schemas/EMonth'
+          type: array
+          uniqueItems: true
+      required:
+      - isEnabled
+      type: object
+    ConfigBackupScheduleModel:
+      description: Scheduling settings.
+      properties:
+        daily:
+          $ref: '#/components/schemas/ScheduleDailyModel'
+        isEnabled:
+          description: If *true*, backup scheduling is enabled.
+          type: boolean
+        monthly:
+          $ref: '#/components/schemas/ScheduleMonthlyModel'
+      required:
+      - isEnabled
+      type: object
     ConfigBackupEncryptionModel:
       description: Encryption settings.
       properties:
@@ -616,6 +512,110 @@ components:
       - isEnabled
       - passwordId
       type: object
+    ConfigBackupLastSuccessfulModel:
+      description: Last successful backup.
+      properties:
+        lastSuccessfulTime:
+          description: Date and time when the last successful backup was created.
+          format: date-time
+          type: string
+        sessionId:
+          description: ID of the job session.
+          format: uuid
+          type: string
+      type: object
+    EDayOfWeek:
+      description: Day of the week.
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      type: string
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    EDayNumberInMonth:
+      description: Week day number in the month.
+      enum:
+      - First
+      - Second
+      - Third
+      - Fourth
+      - Last
+      - OnDay
+      type: string
+    EConfigBackupSMTPSettingsType:
+      description: Type of notification settings.
+      enum:
+      - Global
+      - Custom
+      type: string
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ConfigBackupNotificationsModel:
+      description: Notification settings.
+      properties:
+        SMTPSettings:
+          $ref: '#/components/schemas/ConfigBackupSMTPSettigsModel'
+        SNMPEnabled:
+          description: If *true*, SNMP traps are enabled for this job.
+          type: boolean
+      required:
+      - SNMPEnabled
+      type: object
+    EDailyKinds:
+      description: Kind of daily scheduling scheme.
+      enum:
+      - Everyday
+      - WeekDays
+      - SelectedDays
+      type: string
+    EMonth:
+      description: Month.
+      enum:
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+      type: string
   responses:
     InternalServerError:
       content:
@@ -629,24 +629,24 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

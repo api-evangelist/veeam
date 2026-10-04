@@ -75,19 +75,54 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   schemas:
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    HostConnectionSpec:
+      properties:
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
+          type: string
+        port:
+          description: Port used to communicate with the server.
+          type: integer
+        serverName:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - serverName
+      - credentialsId
+      - type
+      type: object
     ConnectionCertificateModel:
       properties:
         certificate:
@@ -122,32 +157,6 @@ components:
       - errorCode
       - message
       type: object
-    HostConnectionSpec:
-      properties:
-        credentialsId:
-          description: ID of a credentials record used to connect to the server.
-          format: uuid
-          type: string
-        port:
-          description: Port used to communicate with the server.
-          type: integer
-        serverName:
-          description: Full DNS name or IP address of the server.
-          type: string
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      required:
-      - serverName
-      - credentialsId
-      - type
-      type: object
-    EManagedServerType:
-      description: Type of the server.
-      enum:
-      - WindowsHost
-      - LinuxHost
-      - ViHost
-      type: string
     CertificateModel:
       description: Certificate settings.
       properties:
@@ -191,15 +200,6 @@ components:
       - validBy
       - validFrom
       type: object
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

@@ -498,164 +498,122 @@ paths:
         claims:
         - StartEntireVmRestore
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
   schemas:
-    VmwareFcdInstantRecoveryDiskInfo:
-      properties:
-        mountedDiskName:
-          description: Name of the VMDK file that is stored in the datastore.
-          type: string
-        nameInBackup:
-          description: Disk name displayed in the backup.
-          type: string
-        objectId:
-          description: FCD ID.
-          type: string
-        registeredFcdName:
-          description: Name under which the disk is registered as an FCD in the vCenter Managed Object Browser.
-          type: string
-      required:
-      - nameInBackup
-      - mountedDiskName
-      - registeredFcdName
-      - objectId
-      type: object
-    EEntireVMRestoreModeType:
-      description: Restore mode.
+    EInstantRecoveryMountState:
+      description: Mount state.
       enum:
-      - OriginalLocation
-      - Customized
+      - Failed
+      - Mounting
+      - Mounted
+      - Dismounting
       type: string
-    VmwareFcdWriteCacheSpec:
-      description: Write cache for recovered disks.
-      properties:
-        cacheDatastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        redirectIsEnabled:
-          description: If *true*, cache redirection is enabled. In this case, all changes made to the recovered disks while the Instant FCD Recovery is active are redirected to the specified `cacheDatastore` associated with the `storagePolicy`.
-          type: boolean
-        storagePolicy:
-          $ref: '#/components/schemas/VmwareObjectModel'
-      required:
-      - redirectIsEnabled
-      type: object
-    InstantViVMCustomizedRecoveryDatastoreSpec:
-      description: Datastore that keeps redo logs with changes that take place while a VM is running from a backup.
-      properties:
-        cacheDatastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        redirectIsEnabled:
-          description: If *true*, redo logs are redirected to `cacheDatastore`.
-          type: boolean
-      required:
-      - redirectIsEnabled
-      type: object
-    EInstantVMRecoveryModeType:
-      description: Restore mode.
+    EVirusDetectionAction:
+      description: Action that Veeam Backup & Replication takes if the antivirus software finds a threat.
       enum:
-      - OriginalLocation
-      - Customized
+      - DisableNetwork
+      - AbortRecovery
+      - Ignore
       type: string
-    EInstantViVMRecoveryMountsFiltersOrderColumn:
-      description: Sorts mounts by one of the mount parameters.
-      enum:
-      - state
-      - name
-      type: string
-    InstantViVMOriginalLocationRecoverySpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseInstantViVMRecoverySpec'
-      description: Instant Recovery to the original location with initial settings.
-    SessionResultModel:
-      description: Session result.
+    InstantViVMRecoveryMountsResult:
       properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
-      required:
-      - result
-      type: object
-    VmwareFcdInstantRecoveryDiskSpec:
-      properties:
-        mountedDiskName:
-          description: Name of the VMDK file that will be stored in the datastore.
-          type: string
-        nameInBackup:
-          description: Disk name displayed in the backup.
-          type: string
-        registeredFcdName:
-          description: Name under which the disk will be registered as an FCD in the vCenter Managed Object Browser.
-          type: string
-      required:
-      - nameInBackup
-      - mountedDiskName
-      - registeredFcdName
-      type: object
-    EVmwareInventoryType:
-      description: Type of the VMware vSphere object.
-      enum:
-      - Unknown
-      - VirtualMachine
-      - vCenterServer
-      - Datacenter
-      - Cluster
-      - Host
-      - ResourcePool
-      - Folder
-      - Datastore
-      - DatastoreCluster
-      - StoragePolicy
-      - Template
-      - ComputeResource
-      - VirtualApp
-      - Tag
-      - Category
-      - Multitag
-      - Network
-      type: string
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    VmwareFcdQuickMigrationSpec:
-      properties:
-        mountedDiskNames:
-          description: Array of disks that will be migrated to the `targetDatastore` associated with the `storagePolicy`.
+        data:
+          description: Array of VM mounts.
           items:
-            type: string
+            $ref: '#/components/schemas/InstantViVMRecoveryMount'
           type: array
-        storagePolicy:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        targetDatastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
       required:
-      - targetDatastore
+      - data
+      - pagination
+      type: object
+    InstantViVMRecoveryMountsFilters:
+      properties:
+        limit:
+          description: Maximum number of mounts to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters mounts by the `nameFilter` pattern. The pattern can match any mount parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
+          type: string
+        orderAsc:
+          description: Sorts mounts in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EInstantViVMRecoveryMountsFiltersOrderColumn'
+        skip:
+          description: Number of mounts to skip.
+          format: int32
+          type: integer
+        stateFilter:
+          $ref: '#/components/schemas/EInstantRecoveryMountState'
+      type: object
+    VmwareFcdInstantRecoveryMountsFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EVmwareFcdInstantRecoveryMountsFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+        stateFilter:
+          $ref: '#/components/schemas/EInstantRecoveryMountState'
+      type: object
+    BaseEntireViVMRestoreSpec:
+      properties:
+        objectRestorePointId:
+          description: ID of the restore point.
+          format: uuid
+          type: string
+        powerUp:
+          description: If *true*, Veeam Backup & Replication starts the restored VM on the target host.
+          type: boolean
+        reason:
+          description: Reason for restoring the VM.
+          type: string
+        restoreProxies:
+          $ref: '#/components/schemas/RestoreProxySpec'
+        secureRestore:
+          $ref: '#/components/schemas/SecureRestoreSpec'
+        type:
+          $ref: '#/components/schemas/EEntireVMRestoreModeType'
       type: object
     EntireViVMCustomizedRestoreSpec:
       allOf:
@@ -681,109 +639,54 @@ components:
       - Warning
       - Failed
       type: string
-    InstantViVMRecoveryMount:
-      description: VM mount.
+    EDiskCreationMode:
+      description: Disk format of the restored VM.
+      enum:
+      - Source
+      - Thick
+      - Thin
+      - ThickEagerZeroed
+      type: string
+      x-enumDescriptions:
+        Thick: Thick provision lazy zeroed.
+        ThickEagerZeroed: Thick provision eager zeroed.
+        Thin: Thin provision.
+        Source: Same as source.
+    VmwareFcdInstantRecoveryDiskInfo:
       properties:
-        errorMessage:
-          description: Error message.
+        mountedDiskName:
+          description: Name of the VMDK file that is stored in the datastore.
           type: string
-        id:
-          description: Mount ID.
-          format: uuid
+        nameInBackup:
+          description: Disk name displayed in the backup.
           type: string
-        sessionId:
-          description: ID of the restore session. Use the ID to track the progress. For details, see [Get Session](#tag/Sessions/operation/GetSession).
-          format: uuid
+        objectId:
+          description: FCD ID.
           type: string
-        spec:
-          $ref: '#/components/schemas/InstantViVMRecoverySpec'
-        state:
-          $ref: '#/components/schemas/EInstantRecoveryMountState'
-        vmName:
-          description: Name of the recovered VM.
+        registeredFcdName:
+          description: Name under which the disk is registered as an FCD in the vCenter Managed Object Browser.
           type: string
       required:
-      - id
-      - sessionId
-      - state
-      - spec
-      - vmName
+      - nameInBackup
+      - mountedDiskName
+      - registeredFcdName
+      - objectId
       type: object
-    PaginationResult:
-      description: Pagination settings.
+    VmwareFcdInstantRecoveryDiskSpec:
       properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
+        mountedDiskName:
+          description: Name of the VMDK file that will be stored in the datastore.
+          type: string
+        nameInBackup:
+          description: Disk name displayed in the backup.
+          type: string
+        registeredFcdName:
+          description: Name under which the disk will be registered as an FCD in the vCenter Managed Object Browser.
+          type: string
       required:
-      - total
-      - count
-      type: object
-    InstantViVMRecoveryMountsResult:
-      properties:
-        data:
-          description: Array of VM mounts.
-          items:
-            $ref: '#/components/schemas/InstantViVMRecoveryMount'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    BaseEntireViVMRestoreSpec:
-      properties:
-        objectRestorePointId:
-          description: ID of the restore point.
-          format: uuid
-          type: string
-        powerUp:
-          description: If *true*, Veeam Backup & Replication starts the restored VM on the target host.
-          type: boolean
-        reason:
-          description: Reason for restoring the VM.
-          type: string
-        restoreProxies:
-          $ref: '#/components/schemas/RestoreProxySpec'
-        secureRestore:
-          $ref: '#/components/schemas/SecureRestoreSpec'
-        type:
-          $ref: '#/components/schemas/EEntireVMRestoreModeType'
-      type: object
-    InstantViVMRecoveryMountsFilters:
-      properties:
-        limit:
-          description: Maximum number of mounts to return.
-          format: int32
-          type: integer
-        nameFilter:
-          description: Filters mounts by the `nameFilter` pattern. The pattern can match any mount parameter. To substitute one or more characters, use the asterisk (*) character at the beginning, at the end or both.
-          type: string
-        orderAsc:
-          description: Sorts mounts in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EInstantViVMRecoveryMountsFiltersOrderColumn'
-        skip:
-          description: Number of mounts to skip.
-          format: int32
-          type: integer
-        stateFilter:
-          $ref: '#/components/schemas/EInstantRecoveryMountState'
+      - nameInBackup
+      - mountedDiskName
+      - registeredFcdName
       type: object
     SecureRestoreSpec:
       description: Secure restore settings.
@@ -799,196 +702,6 @@ components:
       required:
       - enableAntivirusScan
       type: object
-    VmwareObjectModel:
-      description: VMware vSphere object.
-      properties:
-        hostName:
-          description: Name of the VMware vSphere server that hosts the object.
-          type: string
-        name:
-          description: Name of the VMware vSphere object.
-          type: string
-        objectId:
-          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
-          type: string
-        type:
-          $ref: '#/components/schemas/EVmwareInventoryType'
-      required:
-      - name
-      - type
-      - hostName
-      type: object
-    EntireViVMOriginalLocationRestoreSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseEntireViVMRestoreSpec'
-      - properties:
-          quickRollback:
-            description: If *true*, Veeam Backup & Replication performs incremental restore.
-            type: boolean
-        type: object
-      description: Restore to the original location with initial settings.
-    VmwareFcdInstantRecoveryMountsFilters:
-      properties:
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EVmwareFcdInstantRecoveryMountsFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
-        stateFilter:
-          $ref: '#/components/schemas/EInstantRecoveryMountState'
-      type: object
-    RestoreTargetNetworkSpec:
-      description: Network to which the restored VM is connected.
-      properties:
-        disconnected:
-          description: If *true*, the restored VMs is not connected to any virtual network.
-          type: boolean
-        network:
-          $ref: '#/components/schemas/VmwareObjectModel'
-      required:
-      - network
-      type: object
-    VmwareFcdInstantRecoveryMount:
-      properties:
-        errorMessage:
-          description: Error message.
-          type: string
-        id:
-          description: Mount ID.
-          format: uuid
-          type: string
-        mountedDisks:
-          description: Array of mounted disks.
-          items:
-            $ref: '#/components/schemas/VmwareFcdInstantRecoveryDiskInfo'
-          type: array
-        sessionId:
-          description: ID of the restore session. Use the ID to track the progress. For details, see [Get Session](#tag/Sessions/operation/GetSession).
-          format: uuid
-          type: string
-        spec:
-          $ref: '#/components/schemas/VmwareFcdInstantRecoverySpec'
-        state:
-          $ref: '#/components/schemas/EInstantRecoveryMountState'
-      required:
-      - id
-      - sessionId
-      - state
-      - spec
-      type: object
-    InstantViVMCustomizedRecoveryDestinationSpec:
-      description: Destination where the recovered VM resides. To get models of the destination host, folder and resource pool, use the [Get VMware vSphere Server Objects](#tag/Inventory-Browser/operation/GetVmwareHostObject) request.
-      properties:
-        biosUuidPolicy:
-          $ref: '#/components/schemas/EInstantViVmRecoveryBiosUuidPolicyType'
-        destinationHost:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        folder:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        resourcePool:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        restoredVmName:
-          description: Restored VM name.
-          type: string
-      required:
-      - restoredVmName
-      - destinationHost
-      - folder
-      - resourcePool
-      - biosUuidPolicy
-      type: object
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    ViVMQuickMigrationSpec:
-      properties:
-        DeleteSourceVmsFiles:
-          description: If *true*, Veeam Backup & Replication will delete source VM files upon successful migration.
-          type: boolean
-        VeeamQMEnabled:
-          description: If *true*, the Veeam Quick Migration mechanism is used. Otherwise, Veeam Backup & Replication will use VMware vMotion for migration.
-          type: boolean
-        datastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        destinationHost:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        folder:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        resourcePool:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        sourceProxyIds:
-          description: Array of source backup proxies.
-          items:
-            format: uuid
-            type: string
-          type: array
-        targetProxyIds:
-          description: Array of target backup proxies.
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - destinationHost
-      type: object
-    BaseInstantViVMRecoverySpec:
-      properties:
-        VmTagsRestoreEnabled:
-          description: If *true*, Veeam Backup & Replication restores tags that were assigned to the original VM, and assign them to the restored VM.
-          type: boolean
-        nicsEnabled:
-          description: If *true*, the restored VM is connected to the network.
-          type: boolean
-        objectRestorePointId:
-          description: ID of the restore point.
-          format: uuid
-          type: string
-        powerUp:
-          description: If *true*, Veeam Backup & Replication starts the restored VM on the target host.
-          type: boolean
-        reason:
-          description: Reason for restoring the VM.
-          type: string
-        secureRestore:
-          $ref: '#/components/schemas/SecureRestoreSpec'
-        type:
-          $ref: '#/components/schemas/EInstantVMRecoveryModeType'
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
     SessionModel:
       properties:
         activityId:
@@ -1043,74 +756,17 @@ components:
       - state
       - usn
       type: object
-    EDiskCreationMode:
-      description: Disk format of the restored VM.
-      enum:
-      - Source
-      - Thick
-      - Thin
-      - ThickEagerZeroed
-      type: string
-      x-enumDescriptions:
-        Thick: Thick provision lazy zeroed.
-        ThickEagerZeroed: Thick provision eager zeroed.
-        Thin: Thin provision.
-        Source: Same as source.
-    EInstantRecoveryMountState:
-      description: Mount state.
-      enum:
-      - Failed
-      - Mounting
-      - Mounted
-      - Dismounting
-      type: string
-    RestoreTargetFolderSpec:
-      description: Destination VM folder.
-      properties:
-        folder:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        restoreVmTags:
-          description: If *true*, Veeam Backup & Replication restores tags that were assigned to the original VMs, and assigns them to the restored VMs.
-          type: boolean
-        vmName:
-          description: VM name.
-          type: string
-      required:
-      - folder
-      type: object
-    EVmwareFcdInstantRecoveryMountsFiltersOrderColumn:
-      enum:
-      - state
-      - name
-      type: string
-    RestoreTargetDatastoreSpec:
-      description: Destination datastore.
-      properties:
-        datastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        diskType:
-          $ref: '#/components/schemas/EDiskCreationMode'
-      type: object
-    VmwareFcdInstantRecoveryMountsResult:
-      properties:
-        data:
-          description: Array of FCD mounts.
-          items:
-            $ref: '#/components/schemas/VmwareFcdInstantRecoveryMount'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    EVirusDetectionAction:
-      description: Action that Veeam Backup & Replication takes if the antivirus software finds a threat.
-      enum:
-      - DisableNetwork
-      - AbortRecovery
-      - Ignore
-      type: string
+    EntireViVMRestoreSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            Customized: '#/components/schemas/EntireViVMCustomizedRestoreSpec'
+            OriginalLocation: '#/components/schemas/EntireViVMOriginalLocationRestoreSpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/EntireViVMOriginalLocationRestoreSpec'
+        - $ref: '#/components/schemas/EntireViVMCustomizedRestoreSpec'
+      - $ref: '#/components/schemas/BaseEntireViVMRestoreSpec'
     RestoreProxySpec:
       description: Backup proxies for VM data transport.
       properties:
@@ -1126,6 +782,288 @@ components:
       required:
       - autoSelection
       type: object
+    SessionResultModel:
+      description: Session result.
+      properties:
+        isCanceled:
+          description: If *true*, the session has been canceled.
+          type: boolean
+        message:
+          description: Message that explains the session result.
+          type: string
+        result:
+          $ref: '#/components/schemas/ESessionResult'
+      required:
+      - result
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    InstantViVMRecoverySpec:
+      allOf:
+      - discriminator:
+          mapping:
+            Customized: '#/components/schemas/InstantViVMCustomizedRecoverySpec'
+            OriginalLocation: '#/components/schemas/InstantViVMOriginalLocationRecoverySpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/InstantViVMOriginalLocationRecoverySpec'
+        - $ref: '#/components/schemas/InstantViVMCustomizedRecoverySpec'
+      - $ref: '#/components/schemas/BaseInstantViVMRecoverySpec'
+    InstantViVMCustomizedRecoveryDestinationSpec:
+      description: Destination where the recovered VM resides. To get models of the destination host, folder and resource pool, use the [Get VMware vSphere Server Objects](#tag/Inventory-Browser/operation/GetVmwareHostObject) request.
+      properties:
+        biosUuidPolicy:
+          $ref: '#/components/schemas/EInstantViVmRecoveryBiosUuidPolicyType'
+        destinationHost:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        folder:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        resourcePool:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        restoredVmName:
+          description: Restored VM name.
+          type: string
+      required:
+      - restoredVmName
+      - destinationHost
+      - folder
+      - resourcePool
+      - biosUuidPolicy
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
+    VmwareFcdInstantRecoveryMountsResult:
+      properties:
+        data:
+          description: Array of FCD mounts.
+          items:
+            $ref: '#/components/schemas/VmwareFcdInstantRecoveryMount'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    EInstantViVmRecoveryBiosUuidPolicyType:
+      description: BIOS UUID policy for the restored VM.
+      enum:
+      - preserve
+      - generateNew
+      type: string
+    EInstantVMRecoveryModeType:
+      description: Restore mode.
+      enum:
+      - OriginalLocation
+      - Customized
+      type: string
+    BaseInstantViVMRecoverySpec:
+      properties:
+        VmTagsRestoreEnabled:
+          description: If *true*, Veeam Backup & Replication restores tags that were assigned to the original VM, and assign them to the restored VM.
+          type: boolean
+        nicsEnabled:
+          description: If *true*, the restored VM is connected to the network.
+          type: boolean
+        objectRestorePointId:
+          description: ID of the restore point.
+          format: uuid
+          type: string
+        powerUp:
+          description: If *true*, Veeam Backup & Replication starts the restored VM on the target host.
+          type: boolean
+        reason:
+          description: Reason for restoring the VM.
+          type: string
+        secureRestore:
+          $ref: '#/components/schemas/SecureRestoreSpec'
+        type:
+          $ref: '#/components/schemas/EInstantVMRecoveryModeType'
+      type: object
+    EEntireVMRestoreModeType:
+      description: Restore mode.
+      enum:
+      - OriginalLocation
+      - Customized
+      type: string
+    InstantViVMRecoveryMount:
+      description: VM mount.
+      properties:
+        errorMessage:
+          description: Error message.
+          type: string
+        id:
+          description: Mount ID.
+          format: uuid
+          type: string
+        sessionId:
+          description: ID of the restore session. Use the ID to track the progress. For details, see [Get Session](#tag/Sessions/operation/GetSession).
+          format: uuid
+          type: string
+        spec:
+          $ref: '#/components/schemas/InstantViVMRecoverySpec'
+        state:
+          $ref: '#/components/schemas/EInstantRecoveryMountState'
+        vmName:
+          description: Name of the recovered VM.
+          type: string
+      required:
+      - id
+      - sessionId
+      - state
+      - spec
+      - vmName
+      type: object
+    RestoreTargetFolderSpec:
+      description: Destination VM folder.
+      properties:
+        folder:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        restoreVmTags:
+          description: If *true*, Veeam Backup & Replication restores tags that were assigned to the original VMs, and assigns them to the restored VMs.
+          type: boolean
+        vmName:
+          description: VM name.
+          type: string
+      required:
+      - folder
+      type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    VmwareFcdWriteCacheSpec:
+      description: Write cache for recovered disks.
+      properties:
+        cacheDatastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        redirectIsEnabled:
+          description: If *true*, cache redirection is enabled. In this case, all changes made to the recovered disks while the Instant FCD Recovery is active are redirected to the specified `cacheDatastore` associated with the `storagePolicy`.
+          type: boolean
+        storagePolicy:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - redirectIsEnabled
+      type: object
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    VmwareFcdInstantRecoveryMount:
+      properties:
+        errorMessage:
+          description: Error message.
+          type: string
+        id:
+          description: Mount ID.
+          format: uuid
+          type: string
+        mountedDisks:
+          description: Array of mounted disks.
+          items:
+            $ref: '#/components/schemas/VmwareFcdInstantRecoveryDiskInfo'
+          type: array
+        sessionId:
+          description: ID of the restore session. Use the ID to track the progress. For details, see [Get Session](#tag/Sessions/operation/GetSession).
+          format: uuid
+          type: string
+        spec:
+          $ref: '#/components/schemas/VmwareFcdInstantRecoverySpec'
+        state:
+          $ref: '#/components/schemas/EInstantRecoveryMountState'
+      required:
+      - id
+      - sessionId
+      - state
+      - spec
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
     InstantViVMCustomizedRecoverySpec:
       allOf:
       - $ref: '#/components/schemas/BaseInstantViVMRecoverySpec'
@@ -1142,6 +1080,17 @@ components:
         - datastore
         type: object
       description: Instant Recovery to a new location or with different settings.
+    InstantViVMCustomizedRecoveryDatastoreSpec:
+      description: Datastore that keeps redo logs with changes that take place while a VM is running from a backup.
+      properties:
+        cacheDatastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        redirectIsEnabled:
+          description: If *true*, redo logs are redirected to `cacheDatastore`.
+          type: boolean
+      required:
+      - redirectIsEnabled
+      type: object
     VmwareFcdInstantRecoverySpec:
       description: Instant FCD Recovery configuration:<ul> <li>Restore point ID</li> <li>Destination cluster</li> <li>Disks for restore</li> <li>Write cache</li></ul>
       properties:
@@ -1163,65 +1112,116 @@ components:
       - destinationCluster
       - disksMapping
       type: object
-    EInstantViVmRecoveryBiosUuidPolicyType:
-      description: BIOS UUID policy for the restored VM.
+    RestoreTargetDatastoreSpec:
+      description: Destination datastore.
+      properties:
+        datastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        diskType:
+          $ref: '#/components/schemas/EDiskCreationMode'
+      type: object
+    EVmwareFcdInstantRecoveryMountsFiltersOrderColumn:
       enum:
-      - preserve
-      - generateNew
+      - state
+      - name
       type: string
-    EntireViVMRestoreSpec:
+    EntireViVMOriginalLocationRestoreSpec:
       allOf:
-      - discriminator:
-          mapping:
-            Customized: '#/components/schemas/EntireViVMCustomizedRestoreSpec'
-            OriginalLocation: '#/components/schemas/EntireViVMOriginalLocationRestoreSpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/EntireViVMOriginalLocationRestoreSpec'
-        - $ref: '#/components/schemas/EntireViVMCustomizedRestoreSpec'
       - $ref: '#/components/schemas/BaseEntireViVMRestoreSpec'
-    InstantViVMRecoverySpec:
+      - properties:
+          quickRollback:
+            description: If *true*, Veeam Backup & Replication performs incremental restore.
+            type: boolean
+        type: object
+      description: Restore to the original location with initial settings.
+    EVmwareInventoryType:
+      description: Type of the VMware vSphere object.
+      enum:
+      - Unknown
+      - VirtualMachine
+      - vCenterServer
+      - Datacenter
+      - Cluster
+      - Host
+      - ResourcePool
+      - Folder
+      - Datastore
+      - DatastoreCluster
+      - StoragePolicy
+      - Template
+      - ComputeResource
+      - VirtualApp
+      - Tag
+      - Category
+      - Multitag
+      - Network
+      type: string
+    RestoreTargetNetworkSpec:
+      description: Network to which the restored VM is connected.
+      properties:
+        disconnected:
+          description: If *true*, the restored VMs is not connected to any virtual network.
+          type: boolean
+        network:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - network
+      type: object
+    InstantViVMOriginalLocationRecoverySpec:
       allOf:
-      - discriminator:
-          mapping:
-            Customized: '#/components/schemas/InstantViVMCustomizedRecoverySpec'
-            OriginalLocation: '#/components/schemas/InstantViVMOriginalLocationRecoverySpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/InstantViVMOriginalLocationRecoverySpec'
-        - $ref: '#/components/schemas/InstantViVMCustomizedRecoverySpec'
       - $ref: '#/components/schemas/BaseInstantViVMRecoverySpec'
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+      description: Instant Recovery to the original location with initial settings.
+    ViVMQuickMigrationSpec:
+      properties:
+        DeleteSourceVmsFiles:
+          description: If *true*, Veeam Backup & Replication will delete source VM files upon successful migration.
+          type: boolean
+        VeeamQMEnabled:
+          description: If *true*, the Veeam Quick Migration mechanism is used. Otherwise, Veeam Backup & Replication will use VMware vMotion for migration.
+          type: boolean
+        datastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        destinationHost:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        folder:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        resourcePool:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        sourceProxyIds:
+          description: Array of source backup proxies.
+          items:
+            format: uuid
+            type: string
+          type: array
+        targetProxyIds:
+          description: Array of target backup proxies.
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - destinationHost
+      type: object
+    VmwareFcdQuickMigrationSpec:
+      properties:
+        mountedDiskNames:
+          description: Array of disks that will be migrated to the `targetDatastore` associated with the `storagePolicy`.
+          items:
+            type: string
+          type: array
+        storagePolicy:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        targetDatastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+      required:
+      - targetDatastore
+      type: object
+    EInstantViVMRecoveryMountsFiltersOrderColumn:
+      description: Sorts mounts by one of the mount parameters.
+      enum:
+      - state
+      - name
+      type: string
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

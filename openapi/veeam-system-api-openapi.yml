@@ -155,6 +155,32 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    LogExportSpec:
+      required:
+      - exportType
+      properties:
+        exportLogsType:
+          type: string
+          enum:
+          - LastDays
+          - BetweenDates
+        days:
+          format: int32
+          type: integer
+        fromDateUtc:
+          format: date-time
+          type: string
+        toDateUtc:
+          format: date-time
+          type: string
+    DateTimeInfo:
+      required:
+      - utcDateTime
+      type: object
+      properties:
+        utcDateTime:
+          format: date-time
+          type: string
     Error:
       description: ''
       required:
@@ -203,32 +229,6 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    DateTimeInfo:
-      required:
-      - utcDateTime
-      type: object
-      properties:
-        utcDateTime:
-          format: date-time
-          type: string
-    LogExportSpec:
-      required:
-      - exportType
-      properties:
-        exportLogsType:
-          type: string
-          enum:
-          - LastDays
-          - BetweenDates
-        days:
-          format: int32
-          type: integer
-        fromDateUtc:
-          format: date-time
-          type: string
-        toDateUtc:
-          format: date-time
-          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

@@ -235,16 +235,16 @@ paths:
         - ViewViHierarchy
 components:
   schemas:
-    VmwareObjectSizeModel:
-      properties:
-        inventoryObject:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        size:
-          description: Size used by the VMware vSphere object.
-          type: string
-      required:
-      - inventoryObject
-      type: object
+    EHierarchyType:
+      description: Hierarchy type.
+      enum:
+      - HostsAndClusters
+      - DatastoresAndVms
+      - HostsAndDatastores
+      - VmsAndTemplates
+      - VmsAndTags
+      - Network
+      type: string
     VCenterInventoryFilters:
       properties:
         hierarchyTypeFilter:
@@ -273,6 +273,48 @@ components:
           type: integer
         typeFilter:
           $ref: '#/components/schemas/EVmwareInventoryType'
+      type: object
+    ViRootsResult:
+      properties:
+        data:
+          description: Array of VMware vSphere servers.
+          items:
+            $ref: '#/components/schemas/VmwareObjectSizeModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
+      type: object
+    ViRootFilters:
+      properties:
+        limit:
+          description: Maximum number of VMware vSphere servers to return.
+          format: int32
+          type: integer
+        nameFilter:
+          description: Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
+          type: string
+        orderAsc:
+          description: Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter.
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EViRootFiltersOrderColumn'
+        skip:
+          description: Number of VMware vSphere servers to skip.
+          format: int32
+          type: integer
+      type: object
+    VmwareObjectSizeModel:
+      properties:
+        inventoryObject:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        size:
+          description: Size used by the VMware vSphere object.
+          type: string
+      required:
+      - inventoryObject
       type: object
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
@@ -322,38 +364,11 @@ components:
       - errorCode
       - message
       type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    EHierarchyType:
-      description: Hierarchy type.
+    EViRootFiltersOrderColumn:
+      description: Sorts VMware vSphere servers by one of the VMware vSphere server parameters.
       enum:
-      - HostsAndClusters
-      - DatastoresAndVms
-      - HostsAndDatastores
-      - VmsAndTemplates
-      - VmsAndTags
-      - Network
+      - Name
+      - Type
       type: string
     EvCentersInventoryFiltersOrderColumn:
       description: Sorts vCenter Servers by one of the job parameters.
@@ -394,43 +409,28 @@ components:
       - type
       - hostName
       type: object
-    ViRootFilters:
+    PaginationResult:
+      description: Pagination settings.
       properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
         limit:
-          description: Maximum number of VMware vSphere servers to return.
+          description: Maximum number of results to return.
           format: int32
           type: integer
-        nameFilter:
-          description: Filters VMware vSphere servers by the `nameFilter` pattern. The pattern can match any VMware vSphere server parameter. To substitute one or more characters, use the asterisk (*) character at the beginning and/or at the end.
-          type: string
-        orderAsc:
-          description: Sorts VMware vSphere servers in the ascending order by the `orderColumn` parameter.
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EViRootFiltersOrderColumn'
         skip:
-          description: Number of VMware vSphere servers to skip.
+          description: Number of skipped results.
           format: int32
           type: integer
-      type: object
-    EViRootFiltersOrderColumn:
-      description: Sorts VMware vSphere servers by one of the VMware vSphere server parameters.
-      enum:
-      - Name
-      - Type
-      type: string
-    ViRootsResult:
-      properties:
-        data:
-          description: Array of VMware vSphere servers.
-          items:
-            $ref: '#/components/schemas/VmwareObjectSizeModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
       required:
-      - data
-      - pagination
+      - total
+      - count
       type: object
   responses:
     InternalServerError:
@@ -445,18 +445,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
     Unauthorized:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

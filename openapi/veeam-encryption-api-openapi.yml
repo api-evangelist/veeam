@@ -237,19 +237,58 @@ paths:
         claims:
         - UpdateEncryptionPasswords
 components:
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
-    EncryptionPasswordsFilters:
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    EEncryptionPasswordsFiltersOrderColumn:
+      enum:
+      - Hint
+      - ModificationTime
+      type: string
+    EncryptionPasswordsResult:
       properties:
-        limit:
-          format: int32
-          type: integer
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
+        data:
+          description: Array of encryption passwords.
+          items:
+            $ref: '#/components/schemas/EncryptionPasswordModel'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResult'
+      required:
+      - data
+      - pagination
       type: object
     EncryptionPasswordSpec:
       properties:
@@ -292,11 +331,26 @@ components:
       - errorCode
       - message
       type: object
-    EEncryptionPasswordsFiltersOrderColumn:
-      enum:
-      - Hint
-      - ModificationTime
-      type: string
+    EncryptionPasswordModel:
+      properties:
+        hint:
+          description: Hint for the encryption password.
+          type: string
+        id:
+          description: ID of the encryption password.
+          format: uuid
+          type: string
+        modificationTime:
+          description: Date and time when the password was last modified.
+          format: date-time
+          type: string
+        tag:
+          description: Tag for the encryption password.
+          type: string
+      required:
+      - hint
+      - id
+      type: object
     PaginationResult:
       description: Pagination settings.
       properties:
@@ -320,73 +374,19 @@ components:
       - total
       - count
       type: object
-    EncryptionPasswordModel:
+    EncryptionPasswordsFilters:
       properties:
-        hint:
-          description: Hint for the encryption password.
-          type: string
-        id:
-          description: ID of the encryption password.
-          format: uuid
-          type: string
-        modificationTime:
-          description: Date and time when the password was last modified.
-          format: date-time
-          type: string
-        tag:
-          description: Tag for the encryption password.
-          type: string
-      required:
-      - hint
-      - id
+        limit:
+          format: int32
+          type: integer
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
       type: object
-    EncryptionPasswordsResult:
-      properties:
-        data:
-          description: Array of encryption passwords.
-          items:
-            $ref: '#/components/schemas/EncryptionPasswordModel'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/PaginationResult'
-      required:
-      - data
-      - pagination
-      type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

@@ -185,48 +185,23 @@ paths:
       summary: Send test message
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
-    EmailNotifications:
+    EmailNotificationsTestResult:
       required:
-      - enabled
-      - server
-      - port
-      - from
-      - to
-      - subject
+      - success
       type: object
       properties:
-        enabled:
+        success:
           type: boolean
-        server:
-          type: string
-        port:
-          type: integer
-        useSsl:
-          type: boolean
-        timeout:
-          type: integer
-        useCredentials:
-          type: boolean
-        credentialsId:
-          format: uuid
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-        subject:
-          type: string
-        onSuccess:
-          type: boolean
-        onWarning:
-          type: boolean
-        onFailure:
-          type: boolean
-        enableScheduledNotification:
-          type: boolean
-        notifyTime:
-          format: date-time
+        message:
           type: string
     Error:
       description: ''
@@ -276,14 +251,47 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    EmailNotificationsTestResult:
+    EmailNotifications:
       required:
-      - success
+      - enabled
+      - server
+      - port
+      - from
+      - to
+      - subject
       type: object
       properties:
-        success:
+        enabled:
           type: boolean
-        message:
+        server:
+          type: string
+        port:
+          type: integer
+        useSsl:
+          type: boolean
+        timeout:
+          type: integer
+        useCredentials:
+          type: boolean
+        credentialsId:
+          format: uuid
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        subject:
+          type: string
+        onSuccess:
+          type: boolean
+        onWarning:
+          type: boolean
+        onFailure:
+          type: boolean
+        enableScheduledNotification:
+          type: boolean
+        notifyTime:
+          format: date-time
           type: string
   requestBodies:
     EmailNotifications:
@@ -292,14 +300,6 @@ components:
           schema:
             $ref: '#/components/schemas/EmailNotifications'
       required: true
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

@@ -386,43 +386,67 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegionsPage:
-      required:
-      - totalCount
-      - results
+    RegionsFilters:
       type: object
       properties:
-        totalCount:
-          format: int32
+        SearchPattern:
+          type: string
+        Offset:
           type: integer
-        results:
-          uniqueItems: false
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
           type: array
+          uniqueItems: false
           items:
-            $ref: '#/components/schemas/Region'
+            $ref: '#/components/schemas/RegionsSortColumns'
+    Region:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
         _links:
           type: array
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    Link:
+    AmazonInstanceType:
       required:
-      - rel
-      - href
-      - method
+      - name
+      - cpuCount
+      - ram
       type: object
       properties:
-        rel:
+        name:
           type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+        cpuCount:
+          format: int32
+          type: integer
+        ram:
+          format: int32
+          type: integer
+        isArm64:
+          type: boolean
+        virtualizationType:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
+    RegionsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesk
     AmazonInstanceTypesByRegionPage:
       required:
       - totalCount
@@ -437,6 +461,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AmazonInstanceType'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    RegionsPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
         _links:
           type: array
           uniqueItems: false
@@ -490,67 +533,24 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    Region:
+    Link:
       required:
-      - id
-      - name
+      - rel
+      - href
+      - method
       type: object
       properties:
-        id:
+        rel:
           type: string
-          format: uuid
-        name:
+        href:
           type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    RegionsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesk
-    RegionsFilters:
-      type: object
-      properties:
-        SearchPattern:
+        method:
           type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/RegionsSortColumns'
-    AmazonInstanceType:
-      required:
-      - name
-      - cpuCount
-      - ram
-      type: object
-      properties:
-        name:
-          type: string
-        cpuCount:
-          format: int32
-          type: integer
-        ram:
-          format: int32
-          type: integer
-        isArm64:
-          type: boolean
-        virtualizationType:
-          type: array
-          uniqueItems: false
-          items:
-            type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
     AmazonInstancesTypesByRegionFilters:
       type: object
       properties:

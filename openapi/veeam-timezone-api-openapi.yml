@@ -314,6 +314,16 @@ components:
           type: string
         displayName:
           type: string
+    DateTimeSettings:
+      required:
+      - timezone
+      - useCustomSettings
+      type: object
+      properties:
+        timezone:
+          $ref: '#/components/schemas/TimeZone'
+        useCustomSettings:
+          type: boolean
     Error:
       description: ''
       required:
@@ -372,16 +382,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeZone'
-    DateTimeSettings:
-      required:
-      - timezone
-      - useCustomSettings
-      type: object
-      properties:
-        timezone:
-          $ref: '#/components/schemas/TimeZone'
-        useCustomSettings:
-          type: boolean
   parameters:
     apiVersionParam:
       name: x-api-version
