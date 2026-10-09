@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Veeam Plans and Pricing
 description: Veeam Data Platform licensing uses a Universal License (VUL) per-workload subscription model covering VMs, physical servers, cloud instances, and NAS shares. Licenses are sold in packs of 5 or 10 workloads. Pricing increased approximately 4-8% effective January 2026.
 url: https://www.veeam.com/store/
@@ -67,3 +71,46 @@ plans:
       - Cloud tier support
       - Production support included
       - Designed for 5-50 workload environments
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Community Edition
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Standard (VUL)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Advanced (VUL)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Premium (VUL)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Backup Essentials (SMB)
+    access: other
+    model: unstated
+    model_how: derived
+    units:
+    - other
+    periods: []
