@@ -304,16 +304,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TimeZone:
-      required:
-      - name
-      - displayName
-      type: object
-      properties:
-        name:
-          type: string
-        displayName:
-          type: string
     DateTimeSettings:
       required:
       - timezone
@@ -324,6 +314,16 @@ components:
           $ref: '#/components/schemas/TimeZone'
         useCustomSettings:
           type: boolean
+    TimeZones:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeZone'
     Error:
       description: ''
       required:
@@ -372,16 +372,16 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    TimeZones:
+    TimeZone:
       required:
-      - items
+      - name
+      - displayName
       type: object
       properties:
-        items:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeZone'
+        name:
+          type: string
+        displayName:
+          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

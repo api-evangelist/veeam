@@ -100,12 +100,6 @@ paths:
       - Login
 components:
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     BadRequest:
       content:
         application/json:
@@ -124,75 +118,13 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
   schemas:
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    TokenModel:
-      properties:
-        .expires:
-          description: Date and time when the access token expires.
-          format: date-time
-          type: string
-        .issued:
-          description: Date and time when the access token is issued.
-          format: date-time
-          type: string
-        access_token:
-          description: String that represents authorization issued to the client. It must be specified in all requests. An access token can be used multiple times, but its lifetime is 15 minutes.
-          type: string
-        expires_in:
-          description: Lifetime of the access token, in seconds.
-          format: int32
-          type: integer
-        refresh_token:
-          description: String that is used to obtain a new access token if the current access token expires or becomes lost. A refresh token can be used only once, and its default lifetime is 14 days.
-          type: string
-        token_type:
-          description: Type of the access token.
-          type: string
-      required:
-      - .expires
-      - .issued
-      - access_token
-      - expires_in
-      - refresh_token
-      - token_type
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    AuthorizationCodeModel:
-      properties:
-        code:
-          description: String that is used to obtain an access token. Lifetime of the authorization code is 60 seconds.
-          type: string
-      required:
-      - code
-      type: object
     ELoginGrantType:
       default: password
       description: Authorization grant type.<br>Available values:<ul> <li>`password` — used to obtain an access token by providing a user name and password.</li> <li>`refresh_token` — used to refresh an expired or lost access token by providing a refresh token.</li> <li>`authorization_code` — used to obtain an access token by providing an authorization code.</li> <li>`vbr_token` — used to obtain an access token by providing a Veeam Backup & Replication token. This grant type is only used in a restricted mode for integration with Veeam Backup & Replication.</li></ul>
@@ -227,6 +159,74 @@ components:
           type: string
       required:
       - grant_type
+      type: object
+    TokenModel:
+      properties:
+        .expires:
+          description: Date and time when the access token expires.
+          format: date-time
+          type: string
+        .issued:
+          description: Date and time when the access token is issued.
+          format: date-time
+          type: string
+        access_token:
+          description: String that represents authorization issued to the client. It must be specified in all requests. An access token can be used multiple times, but its lifetime is 15 minutes.
+          type: string
+        expires_in:
+          description: Lifetime of the access token, in seconds.
+          format: int32
+          type: integer
+        refresh_token:
+          description: String that is used to obtain a new access token if the current access token expires or becomes lost. A refresh token can be used only once, and its default lifetime is 14 days.
+          type: string
+        token_type:
+          description: Type of the access token.
+          type: string
+      required:
+      - .expires
+      - .issued
+      - access_token
+      - expires_in
+      - refresh_token
+      - token_type
+      type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    AuthorizationCodeModel:
+      properties:
+        code:
+          description: String that is used to obtain an access token. Lifetime of the authorization code is 60 seconds.
+          type: string
+      required:
+      - code
       type: object
   parameters:
     apiVersionParam:

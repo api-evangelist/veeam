@@ -82,328 +82,7 @@ paths:
         claims:
         - CreateCloudStorageFolder
 components:
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   schemas:
-    AmazonEC2BrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          filters:
-            $ref: '#/components/schemas/AmazonEC2BrowserFilters'
-          regionType:
-            $ref: '#/components/schemas/EAmazonRegionType'
-        required:
-        - regionType
-        type: object
-    IBMCloudStorageBrowserModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
-      - properties:
-          hostId:
-            description: ID of a server used to connect to the object storage.
-            format: uuid
-            type: string
-          regions:
-            description: Array of regions.
-            items:
-              $ref: '#/components/schemas/IBMCloudStorageRegionBrowserModel'
-            type: array
-        type: object
-    AzureBlobContainerBrowserModel:
-      properties:
-        folders:
-          description: Array of folders loated in the container.
-          items:
-            type: string
-          type: array
-        name:
-          description: Container name.
-          type: string
-      type: object
-    AmazonVPCBrowserModel:
-      properties:
-        securityGroups:
-          description: Array of security groups.
-          items:
-            type: string
-          type: array
-        subnets:
-          description: Array of VPC subnets.
-          items:
-            type: string
-          type: array
-        vpcName:
-          description: VPC name.
-          type: string
-      type: object
-    S3CompatibleBrowserDestinationSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
-      - properties:
-          bucketName:
-            description: Name of the bucket where you want to store your backup data.
-            type: string
-          connectionPoint:
-            description: Endpoint address and port number of the S3 compatible storage.
-            type: string
-          hostId:
-            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          regionId:
-            description: Region where the bucket is located.
-            type: string
-        required:
-        - connectionPoint
-        - regionId
-        - bucketName
-        type: object
-    GoogleCloudStorageBrowserDestinationSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
-      - properties:
-          bucketName:
-            description: Name of the bucket where you want to store your backup data.
-            type: string
-          hostId:
-            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          regionId:
-            description: Data center region where the bucket is located.
-            type: string
-        required:
-        - regionId
-        - bucketName
-        type: object
-    AzureStorageAccountBrowserModel:
-      properties:
-        instanceSizes:
-          description: Array of available instance sizes.
-          items:
-            type: string
-          type: array
-        storageAccountName:
-          description: Account name.
-          type: string
-      type: object
-    GoogleCloudStorageBrowserFilters:
-      description: Google Cloud hierarchy filters.
-      properties:
-        bucketName:
-          description: Bucket name.
-          type: string
-        regionId:
-          description: Google Cloud data center region.
-          type: string
-      required:
-      - regionId
-      type: object
-    WasabiCloudStorageBrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          gatewayServerId:
-            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          regionId:
-            description: Region ID.
-            type: string
-        required:
-        - regionId
-        type: object
-    AzureLocationBrowserModel:
-      properties:
-        location:
-          description: Location name.
-          type: string
-        resourceGroups:
-          description: Array of Azure resource groups.
-          items:
-            $ref: '#/components/schemas/AzureResourceGroupBrowserModel'
-          type: array
-        storageAccounts:
-          description: Array of storage accounts associated with the location.
-          items:
-            $ref: '#/components/schemas/AzureStorageAccountBrowserModel'
-          type: array
-      required:
-      - location
-      - storageAccounts
-      - resourceGroups
-      type: object
-    AzureComputeBrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          filters:
-            $ref: '#/components/schemas/AzureComputeBrowserFilters'
-        type: object
-    GoogleCloudStorageBucketBrowserModel:
-      properties:
-        folders:
-          description: Array of folders located in the bucket.
-          items:
-            type: string
-          type: array
-        name:
-          description: Bucket name.
-          type: string
-      type: object
-    AzureComputeBrowserModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
-      - properties:
-          regionType:
-            description: Azure region type.
-            type: string
-          subscriptions:
-            description: Array of Azure subscriptions associated with the account.
-            items:
-              $ref: '#/components/schemas/AzureSubscriptionBrowserModel'
-            type: array
-        type: object
-    BaseCloudBrowserSpec:
-      properties:
-        credentialsId:
-          description: ID of the object storage account (for browsing either storage or compute infrastructure).
-          format: uuid
-          type: string
-        serviceType:
-          $ref: '#/components/schemas/ECloudServiceType'
-      type: object
-    AzureResourceGroupBrowserModel:
-      properties:
-        resourceGroup:
-          description: Resource group name.
-          type: string
-        virtualNetworks:
-          description: Array of virtual networks available in the resource group.
-          items:
-            $ref: '#/components/schemas/AzureVirtualNetworkBrowserModel'
-          type: array
-      required:
-      - resourceGroup
-      - virtualNetworks
-      type: object
-    S3CompatibleBrowserModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
-      - properties:
-          connectionPoint:
-            description: Service point address and port number of the S3 compatible storage.
-            type: string
-          hostId:
-            description: ID of a server used to connect to the S3 compatible storage.
-            format: uuid
-            type: string
-          regions:
-            description: Array of regions.
-            items:
-              $ref: '#/components/schemas/S3CompatibleRegionBrowserModel'
-            type: array
-        type: object
-    AmazonSnowballEdgeRegionBrowserModel:
-      properties:
-        buckets:
-          description: Array of buckets located in the region.
-          items:
-            $ref: '#/components/schemas/AmazonSnowballEdgeBucketBrowserModel'
-          type: array
-        id:
-          description: Region ID.
-          type: string
-        name:
-          description: Region name.
-          type: string
-      type: object
-    AmazonS3RegionBrowserModel:
-      description: AWS region.
-      properties:
-        buckets:
-          description: Array of buckets located in the region.
-          items:
-            $ref: '#/components/schemas/AmazonS3BucketBrowserModel'
-          type: array
-        id:
-          description: Region ID.
-          type: string
-        name:
-          description: Region name.
-          type: string
-      type: object
-    WasabiCloudStorageBrowserDestinationSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
-      - properties:
-          bucketName:
-            description: Name of the bucket where you want to store your backup data.
-            type: string
-          hostId:
-            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          regionId:
-            description: Region where the bucket is located.
-            type: string
-        required:
-        - regionId
-        - bucketName
-        type: object
-    AmazonSnowballEdgeBrowserModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
-      - properties:
-          connectionPoint:
-            description: Service point address and port number of the AWS Snowball Edge device.
-            type: string
-          hostId:
-            description: ID of a server used to connect to the AWS Snowball Edge device.
-            format: uuid
-            type: string
-          regions:
-            description: Array of regions.
-            items:
-              $ref: '#/components/schemas/AmazonSnowballEdgeRegionBrowserModel'
-            type: array
-        type: object
-    AmazonS3CloudBrowserFilters:
-      description: Amazon S3 hierarchy filters.
-      properties:
-        bucketName:
-          description: Filters buckets by bucket name.
-          type: string
-        regionId:
-          description: Filters buckets by AWS region where an Amazon S3 data center is located.
-          type: string
-      required:
-      - regionId
-      type: object
     AzureComputeBrowserFilters:
       description: Azure Compute hierarchy filters.
       properties:
@@ -422,19 +101,25 @@ components:
           description: Filters compute resorces by ID that Veeam Backup & Replication assigned to the Azure subscription.
           type: string
       type: object
-    AzureDataBoxBrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          gatewayServerId:
-            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
+    AzureDataBoxContainerBrowserModel:
+      properties:
+        folders:
+          description: Array of folders located in the container.
+          items:
             type: string
-          servicePoint:
-            description: Service endpoint used to connect to the Azure Data Box object storage.
-            type: string
-        type: object
-    WasabiCloudStorageBrowserModel:
+          type: array
+        name:
+          description: Container name.
+          type: string
+      type: object
+    EAmazonRegionType:
+      description: AWS region type.
+      enum:
+      - China
+      - Global
+      - Government
+      type: string
+    GoogleCloudStorageBrowserModel:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserModel'
       - properties:
@@ -445,97 +130,10 @@ components:
           regions:
             description: Array of regions.
             items:
-              $ref: '#/components/schemas/WasabiCloudStorageRegionBrowserModel'
+              $ref: '#/components/schemas/GoogleCloudStorageRegionBrowserModel'
             type: array
         type: object
-    AzureVirtualNetworkBrowserModel:
-      properties:
-        subnets:
-          description: Array of subnets.
-          items:
-            type: string
-          type: array
-        virtualNetworkName:
-          description: Virtual network name.
-          type: string
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
-      type: object
-    GoogleCloudStorageBrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          filters:
-            $ref: '#/components/schemas/GoogleCloudStorageBrowserFilters'
-          gatewayServerId:
-            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-        type: object
-    EAmazonRegionType:
-      description: AWS region type.
-      enum:
-      - China
-      - Global
-      - Government
-      type: string
-    CloudBrowserNewFolderSpec:
-      allOf:
-      - discriminator:
-          mapping:
-            AmazonS3: '#/components/schemas/AmazonS3BrowserDestinationSpec'
-            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeBrowserDestinationSpec'
-            AzureBlob: '#/components/schemas/AzureBlobBrowserDestinationSpec'
-            AzureDataBox: '#/components/schemas/AzureDataBoxBrowserDestinationSpec'
-            GoogleCloud: '#/components/schemas/GoogleCloudStorageBrowserDestinationSpec'
-            IBMCloud: '#/components/schemas/IBMCloudStorageBrowserDestinationSpec'
-            S3Compatible: '#/components/schemas/S3CompatibleBrowserDestinationSpec'
-            WasabiCloud: '#/components/schemas/WasabiCloudStorageBrowserDestinationSpec'
-          propertyName: serviceType
-        oneOf:
-        - $ref: '#/components/schemas/AzureBlobBrowserDestinationSpec'
-        - $ref: '#/components/schemas/AzureDataBoxBrowserDestinationSpec'
-        - $ref: '#/components/schemas/AmazonS3BrowserDestinationSpec'
-        - $ref: '#/components/schemas/S3CompatibleBrowserDestinationSpec'
-        - $ref: '#/components/schemas/AmazonSnowballEdgeBrowserDestinationSpec'
-        - $ref: '#/components/schemas/GoogleCloudStorageBrowserDestinationSpec'
-        - $ref: '#/components/schemas/IBMCloudStorageBrowserDestinationSpec'
-        - $ref: '#/components/schemas/WasabiCloudStorageBrowserDestinationSpec'
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
-    AmazonEC2BrowserFilters:
-      description: Amazon EC2 hierarchy filters.
-      properties:
-        regionId:
-          description: Filters Amazon EC2 resources by AWS region.
-          type: string
-      required:
-      - regionId
-      type: object
-    WasabiCloudStorageBucketBrowserModel:
+    AmazonS3BucketBrowserModel:
       properties:
         folders:
           description: Array of folders located in the bucket.
@@ -546,20 +144,24 @@ components:
           description: Bucket name.
           type: string
       type: object
-    S3CompatibleRegionBrowserModel:
-      properties:
-        buckets:
-          description: Array of buckets located in the region.
-          items:
-            $ref: '#/components/schemas/S3CompatibleBucketBrowserModel'
-          type: array
-        id:
-          description: Region ID.
-          type: string
-        name:
-          description: Region name.
-          type: string
-      type: object
+    IBMCloudStorageBrowserSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
+      - properties:
+          gatewayServerId:
+            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionId:
+            description: Region of the IBM Cloud object storage.
+            type: string
+          servicePoint:
+            description: Endpoint address and port number of the IBM Cloud object storage.
+            type: string
+        required:
+        - regionId
+        - servicePoint
+        type: object
     AzureBlobBrowserModel:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserModel'
@@ -576,7 +178,41 @@ components:
           regionType:
             $ref: '#/components/schemas/EAzureRegionType'
         type: object
-    AmazonSnowballEdgeBrowserSpec:
+    BaseCloudBrowserSpec:
+      properties:
+        credentialsId:
+          description: ID of the object storage account (for browsing either storage or compute infrastructure).
+          format: uuid
+          type: string
+        serviceType:
+          $ref: '#/components/schemas/ECloudServiceType'
+      type: object
+    WasabiCloudStorageBrowserModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - properties:
+          hostId:
+            description: ID of a server used to connect to the object storage.
+            format: uuid
+            type: string
+          regions:
+            description: Array of regions.
+            items:
+              $ref: '#/components/schemas/WasabiCloudStorageRegionBrowserModel'
+            type: array
+        type: object
+    AmazonSnowballEdgeBucketBrowserModel:
+      properties:
+        folders:
+          description: Array of folders located in the bucket.
+          items:
+            type: string
+          type: array
+        name:
+          description: Bucket name.
+          type: string
+      type: object
+    S3CompatibleBrowserSpec:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserSpec'
       - properties:
@@ -585,34 +221,56 @@ components:
             format: uuid
             type: string
           regionId:
-            description: To connect to the AWS Snowball Edge device, specify the `snow` value.
+            description: Region where the S3 compatible storage is located.
             type: string
           servicePoint:
-            description: Service point address and port number of the AWS Snowball Edge device.
+            description: Service point address of the S3 compatible storage.
             type: string
         type: object
-    AmazonSnowballEdgeBrowserDestinationSpec:
+    AmazonS3BrowserModel:
       allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
       - properties:
-          bucketName:
-            description: Name of the bucket where you want to store your backup data.
-            type: string
-          connectionPoint:
-            description: Service point address and port number of the AWS Snowball Edge device.
-            type: string
           hostId:
-            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            description: ID of a server used to connect to the object storage.
             format: uuid
             type: string
-          regionId:
-            description: For AWS Snowball Edge, the region is *snow*.
-            type: string
+          regionType:
+            $ref: '#/components/schemas/EAmazonRegionType'
+          regions:
+            description: Array of AWS regions belonged to the region type.
+            items:
+              $ref: '#/components/schemas/AmazonS3RegionBrowserModel'
+            type: array
         required:
-        - connectionPoint
-        - regionId
-        - bucketName
+        - hostId
+        - regionType
         type: object
+    S3CompatibleBucketBrowserModel:
+      properties:
+        folders:
+          description: Array of folders located in the bucket.
+          items:
+            type: string
+          type: array
+        name:
+          description: Bucket name.
+          type: string
+      type: object
+    GoogleCloudStorageRegionBrowserModel:
+      properties:
+        buckets:
+          description: Array of buckets located in the region.
+          items:
+            $ref: '#/components/schemas/GoogleCloudStorageBucketBrowserModel'
+          type: array
+        id:
+          description: Region ID.
+          type: string
+        name:
+          description: Region name.
+          type: string
+      type: object
     AzureSubscriptionBrowserModel:
       properties:
         azureSubscriptionId:
@@ -633,7 +291,84 @@ components:
       - virtualNetworks
       - storageAccounts
       type: object
-    S3CompatibleBucketBrowserModel:
+    AmazonEC2RegionBrowserModel:
+      properties:
+        instanceTypes:
+          description: Array of Amazon instance types.
+          items:
+            type: string
+          type: array
+        regionId:
+          description: Region ID.
+          type: string
+        vpcs:
+          description: Array of Amazon Virtual Private Cloud (Amazon VPC) networks.
+          items:
+            $ref: '#/components/schemas/AmazonVPCBrowserModel'
+          type: array
+      type: object
+    AmazonSnowballEdgeRegionBrowserModel:
+      properties:
+        buckets:
+          description: Array of buckets located in the region.
+          items:
+            $ref: '#/components/schemas/AmazonSnowballEdgeBucketBrowserModel'
+          type: array
+        id:
+          description: Region ID.
+          type: string
+        name:
+          description: Region name.
+          type: string
+      type: object
+    AzureResourceGroupBrowserModel:
+      properties:
+        resourceGroup:
+          description: Resource group name.
+          type: string
+        virtualNetworks:
+          description: Array of virtual networks available in the resource group.
+          items:
+            $ref: '#/components/schemas/AzureVirtualNetworkBrowserModel'
+          type: array
+      required:
+      - resourceGroup
+      - virtualNetworks
+      type: object
+    AzureBlobBrowserDestinationSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - properties:
+          containerName:
+            description: Name of the container where you want to store your backup data.
+            type: string
+          folderType:
+            $ref: '#/components/schemas/ECloudBrowserFolderType'
+          hostId:
+            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionType:
+            $ref: '#/components/schemas/EAzureRegionType'
+        required:
+        - regionType
+        - containerName
+        type: object
+    ECloudServiceType:
+      description: Type of cloud service.
+      enum:
+      - AzureBlob
+      - AzureDataBox
+      - AmazonS3
+      - AmazonEC2
+      - S3Compatible
+      - AmazonSnowballEdge
+      - GoogleCloud
+      - IBMCloud
+      - AzureCompute
+      - WasabiCloud
+      type: string
+    GoogleCloudStorageBucketBrowserModel:
       properties:
         folders:
           description: Array of folders located in the bucket.
@@ -644,6 +379,20 @@ components:
           description: Bucket name.
           type: string
       type: object
+    IBMCloudStorageBrowserModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - properties:
+          hostId:
+            description: ID of a server used to connect to the object storage.
+            format: uuid
+            type: string
+          regions:
+            description: Array of regions.
+            items:
+              $ref: '#/components/schemas/IBMCloudStorageRegionBrowserModel'
+            type: array
+        type: object
     CloudBrowserModel:
       allOf:
       - discriminator:
@@ -671,47 +420,29 @@ components:
         - $ref: '#/components/schemas/AmazonEC2BrowserModel'
         - $ref: '#/components/schemas/WasabiCloudStorageBrowserModel'
       - $ref: '#/components/schemas/BaseCloudBrowserModel'
-    GoogleCloudStorageRegionBrowserModel:
-      properties:
-        buckets:
-          description: Array of buckets located in the region.
-          items:
-            $ref: '#/components/schemas/GoogleCloudStorageBucketBrowserModel'
-          type: array
-        id:
-          description: Region ID.
-          type: string
-        name:
-          description: Region name.
-          type: string
-      type: object
-    AmazonS3BrowserDestinationSpec:
+    AmazonSnowballEdgeBrowserDestinationSpec:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
       - properties:
           bucketName:
             description: Name of the bucket where you want to store your backup data.
             type: string
-          folderType:
-            $ref: '#/components/schemas/ECloudBrowserFolderType'
+          connectionPoint:
+            description: Service point address and port number of the AWS Snowball Edge device.
+            type: string
           hostId:
             description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
             format: uuid
             type: string
           regionId:
-            description: AWS region where the Amazon S3 bucket is located.
+            description: For AWS Snowball Edge, the region is *snow*.
             type: string
-          regionType:
-            $ref: '#/components/schemas/EAmazonRegionType'
         required:
-        - regionType
+        - connectionPoint
         - regionId
         - bucketName
         type: object
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    S3CompatibleBrowserSpec:
+    AzureDataBoxBrowserSpec:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserSpec'
       - properties:
@@ -719,38 +450,75 @@ components:
             description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
             format: uuid
             type: string
-          regionId:
-            description: Region where the S3 compatible storage is located.
-            type: string
           servicePoint:
-            description: Service point address of the S3 compatible storage.
+            description: Service endpoint used to connect to the Azure Data Box object storage.
             type: string
         type: object
-    AmazonS3BucketBrowserModel:
+    GoogleCloudStorageBrowserSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
+      - properties:
+          filters:
+            $ref: '#/components/schemas/GoogleCloudStorageBrowserFilters'
+          gatewayServerId:
+            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+        type: object
+    AzureBlobContainerBrowserModel:
       properties:
         folders:
-          description: Array of folders located in the bucket.
+          description: Array of folders loated in the container.
           items:
             type: string
           type: array
         name:
-          description: Bucket name.
+          description: Container name.
           type: string
       type: object
-    GoogleCloudStorageBrowserModel:
+    AmazonS3CloudBrowserFilters:
+      description: Amazon S3 hierarchy filters.
+      properties:
+        bucketName:
+          description: Filters buckets by bucket name.
+          type: string
+        regionId:
+          description: Filters buckets by AWS region where an Amazon S3 data center is located.
+          type: string
+      required:
+      - regionId
+      type: object
+    AmazonEC2BrowserSpec:
       allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
       - properties:
-          hostId:
-            description: ID of a server used to connect to the object storage.
-            format: uuid
-            type: string
-          regions:
-            description: Array of regions.
-            items:
-              $ref: '#/components/schemas/GoogleCloudStorageRegionBrowserModel'
-            type: array
+          filters:
+            $ref: '#/components/schemas/AmazonEC2BrowserFilters'
+          regionType:
+            $ref: '#/components/schemas/EAmazonRegionType'
+        required:
+        - regionType
         type: object
+    AzureLocationBrowserModel:
+      properties:
+        location:
+          description: Location name.
+          type: string
+        resourceGroups:
+          description: Array of Azure resource groups.
+          items:
+            $ref: '#/components/schemas/AzureResourceGroupBrowserModel'
+          type: array
+        storageAccounts:
+          description: Array of storage accounts associated with the location.
+          items:
+            $ref: '#/components/schemas/AzureStorageAccountBrowserModel'
+          type: array
+      required:
+      - location
+      - storageAccounts
+      - resourceGroups
+      type: object
     AzureDataBoxBrowserModel:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserModel'
@@ -765,45 +533,66 @@ components:
             format: uuid
             type: string
         type: object
-    ECloudBrowserFolderType:
-      description: Folder type.
-      enum:
-      - backup
-      - archive
-      type: string
-    AzureDataBoxBrowserDestinationSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
-      - properties:
-          containerName:
-            description: Name of the container where you want to store your backup data.
-            type: string
-          hostId:
-            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          servicePoint:
-            description: Service endpoint address of the Azure Data Box device.
-            type: string
-        required:
-        - servicePoint
-        - containerName
-        type: object
-    AmazonEC2RegionBrowserModel:
+    Error:
       properties:
-        instanceTypes:
-          description: Array of Amazon instance types.
-          items:
-            type: string
-          type: array
-        regionId:
-          description: Region ID.
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
           type: string
-        vpcs:
-          description: Array of Amazon Virtual Private Cloud (Amazon VPC) networks.
-          items:
-            $ref: '#/components/schemas/AmazonVPCBrowserModel'
-          type: array
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    CloudBrowserNewFolderSpec:
+      allOf:
+      - discriminator:
+          mapping:
+            AmazonS3: '#/components/schemas/AmazonS3BrowserDestinationSpec'
+            AmazonSnowballEdge: '#/components/schemas/AmazonSnowballEdgeBrowserDestinationSpec'
+            AzureBlob: '#/components/schemas/AzureBlobBrowserDestinationSpec'
+            AzureDataBox: '#/components/schemas/AzureDataBoxBrowserDestinationSpec'
+            GoogleCloud: '#/components/schemas/GoogleCloudStorageBrowserDestinationSpec'
+            IBMCloud: '#/components/schemas/IBMCloudStorageBrowserDestinationSpec'
+            S3Compatible: '#/components/schemas/S3CompatibleBrowserDestinationSpec'
+            WasabiCloud: '#/components/schemas/WasabiCloudStorageBrowserDestinationSpec'
+          propertyName: serviceType
+        oneOf:
+        - $ref: '#/components/schemas/AzureBlobBrowserDestinationSpec'
+        - $ref: '#/components/schemas/AzureDataBoxBrowserDestinationSpec'
+        - $ref: '#/components/schemas/AmazonS3BrowserDestinationSpec'
+        - $ref: '#/components/schemas/S3CompatibleBrowserDestinationSpec'
+        - $ref: '#/components/schemas/AmazonSnowballEdgeBrowserDestinationSpec'
+        - $ref: '#/components/schemas/GoogleCloudStorageBrowserDestinationSpec'
+        - $ref: '#/components/schemas/IBMCloudStorageBrowserDestinationSpec'
+        - $ref: '#/components/schemas/WasabiCloudStorageBrowserDestinationSpec'
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+    GoogleCloudStorageBrowserFilters:
+      description: Google Cloud hierarchy filters.
+      properties:
+        bucketName:
+          description: Bucket name.
+          type: string
+        regionId:
+          description: Google Cloud data center region.
+          type: string
+      required:
+      - regionId
       type: object
     IBMCloudStorageBrowserDestinationSpec:
       allOf:
@@ -827,6 +616,98 @@ components:
         - regionId
         - bucketName
         type: object
+    AmazonSnowballEdgeBrowserSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
+      - properties:
+          gatewayServerId:
+            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionId:
+            description: To connect to the AWS Snowball Edge device, specify the `snow` value.
+            type: string
+          servicePoint:
+            description: Service point address and port number of the AWS Snowball Edge device.
+            type: string
+        type: object
+    AzureBlobBrowserSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
+      - properties:
+          folderType:
+            $ref: '#/components/schemas/ECloudBrowserFolderType'
+          gatewayServerId:
+            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionType:
+            $ref: '#/components/schemas/EAzureRegionType'
+        type: object
+    WasabiCloudStorageRegionBrowserModel:
+      properties:
+        buckets:
+          description: Array of buckets located in the region.
+          items:
+            $ref: '#/components/schemas/WasabiCloudStorageBucketBrowserModel'
+          type: array
+        id:
+          description: Region ID.
+          type: string
+        name:
+          description: Region name.
+          type: string
+      type: object
+    BaseCloudBrowserNewFolderSpec:
+      properties:
+        credentialsId:
+          description: ID of a cloud credentials record requiered to connect to the object storage.
+          format: uuid
+          type: string
+        newFolderName:
+          description: Name of the new folder.
+          type: string
+        serviceType:
+          $ref: '#/components/schemas/ECloudServiceType'
+      type: object
+    AmazonVPCBrowserModel:
+      properties:
+        securityGroups:
+          description: Array of security groups.
+          items:
+            type: string
+          type: array
+        subnets:
+          description: Array of VPC subnets.
+          items:
+            type: string
+          type: array
+        vpcName:
+          description: VPC name.
+          type: string
+      type: object
+    S3CompatibleRegionBrowserModel:
+      properties:
+        buckets:
+          description: Array of buckets located in the region.
+          items:
+            $ref: '#/components/schemas/S3CompatibleBucketBrowserModel'
+          type: array
+        id:
+          description: Region ID.
+          type: string
+        name:
+          description: Region name.
+          type: string
+      type: object
+    EAzureRegionType:
+      description: Region where your Microsoft Azure container is located.
+      enum:
+      - China
+      - Germany
+      - Global
+      - Government
+      type: string
     CloudBrowserSpec:
       allOf:
       - discriminator:
@@ -854,48 +735,42 @@ components:
         - $ref: '#/components/schemas/AmazonEC2BrowserSpec'
         - $ref: '#/components/schemas/WasabiCloudStorageBrowserSpec'
       - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-    IBMCloudStorageBrowserSpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
-      - properties:
-          gatewayServerId:
-            description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
-            format: uuid
-            type: string
-          regionId:
-            description: Region of the IBM Cloud object storage.
-            type: string
-          servicePoint:
-            description: Endpoint address and port number of the IBM Cloud object storage.
-            type: string
-        required:
-        - regionId
-        - servicePoint
-        type: object
-    WasabiCloudStorageRegionBrowserModel:
-      properties:
-        buckets:
-          description: Array of buckets located in the region.
-          items:
-            $ref: '#/components/schemas/WasabiCloudStorageBucketBrowserModel'
-          type: array
-        id:
-          description: Region ID.
-          type: string
-        name:
-          description: Region name.
-          type: string
-      type: object
-    AzureDataBoxContainerBrowserModel:
+    WasabiCloudStorageBucketBrowserModel:
       properties:
         folders:
-          description: Array of folders located in the container.
+          description: Array of folders located in the bucket.
           items:
             type: string
           type: array
         name:
-          description: Container name.
+          description: Bucket name.
           type: string
+      type: object
+    AmazonSnowballEdgeBrowserModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - properties:
+          connectionPoint:
+            description: Service point address and port number of the AWS Snowball Edge device.
+            type: string
+          hostId:
+            description: ID of a server used to connect to the AWS Snowball Edge device.
+            format: uuid
+            type: string
+          regions:
+            description: Array of regions.
+            items:
+              $ref: '#/components/schemas/AmazonSnowballEdgeRegionBrowserModel'
+            type: array
+        type: object
+    BaseCloudBrowserModel:
+      properties:
+        credentialsId:
+          description: ID of the cloud credentials record.
+          format: uuid
+          type: string
+        serviceType:
+          $ref: '#/components/schemas/ECloudServiceType'
       type: object
     AmazonS3BrowserSpec:
       allOf:
@@ -914,6 +789,151 @@ components:
         required:
         - regionType
         type: object
+    IBMCloudStorageBucketBrowserModel:
+      properties:
+        folders:
+          description: Array of folders located in the bucket.
+          items:
+            type: string
+          type: array
+        name:
+          description: Bucket name.
+          type: string
+      type: object
+    AmazonEC2BrowserFilters:
+      description: Amazon EC2 hierarchy filters.
+      properties:
+        regionId:
+          description: Filters Amazon EC2 resources by AWS region.
+          type: string
+      required:
+      - regionId
+      type: object
+    ECloudBrowserFolderType:
+      description: Folder type.
+      enum:
+      - backup
+      - archive
+      type: string
+    AzureVirtualNetworkBrowserModel:
+      properties:
+        subnets:
+          description: Array of subnets.
+          items:
+            type: string
+          type: array
+        virtualNetworkName:
+          description: Virtual network name.
+          type: string
+      type: object
+    AzureComputeBrowserSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserSpec'
+      - properties:
+          filters:
+            $ref: '#/components/schemas/AzureComputeBrowserFilters'
+        type: object
+    AzureComputeBrowserModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - properties:
+          regionType:
+            description: Azure region type.
+            type: string
+          subscriptions:
+            description: Array of Azure subscriptions associated with the account.
+            items:
+              $ref: '#/components/schemas/AzureSubscriptionBrowserModel'
+            type: array
+        type: object
+    AzureStorageAccountBrowserModel:
+      properties:
+        instanceSizes:
+          description: Array of available instance sizes.
+          items:
+            type: string
+          type: array
+        storageAccountName:
+          description: Account name.
+          type: string
+      type: object
+    WasabiCloudStorageBrowserDestinationSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - properties:
+          bucketName:
+            description: Name of the bucket where you want to store your backup data.
+            type: string
+          hostId:
+            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionId:
+            description: Region where the bucket is located.
+            type: string
+        required:
+        - regionId
+        - bucketName
+        type: object
+    AmazonS3BrowserDestinationSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - properties:
+          bucketName:
+            description: Name of the bucket where you want to store your backup data.
+            type: string
+          folderType:
+            $ref: '#/components/schemas/ECloudBrowserFolderType'
+          hostId:
+            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionId:
+            description: AWS region where the Amazon S3 bucket is located.
+            type: string
+          regionType:
+            $ref: '#/components/schemas/EAmazonRegionType'
+        required:
+        - regionType
+        - regionId
+        - bucketName
+        type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    AzureDataBoxBrowserDestinationSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - properties:
+          containerName:
+            description: Name of the container where you want to store your backup data.
+            type: string
+          hostId:
+            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          servicePoint:
+            description: Service endpoint address of the Azure Data Box device.
+            type: string
+        required:
+        - servicePoint
+        - containerName
+        type: object
+    AmazonS3RegionBrowserModel:
+      description: AWS region.
+      properties:
+        buckets:
+          description: Array of buckets located in the region.
+          items:
+            $ref: '#/components/schemas/AmazonS3BucketBrowserModel'
+          type: array
+        id:
+          description: Region ID.
+          type: string
+        name:
+          description: Region name.
+          type: string
+      type: object
     AmazonEC2BrowserModel:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserModel'
@@ -934,6 +954,41 @@ components:
         - regionType
         - regions
         type: object
+    GoogleCloudStorageBrowserDestinationSpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
+      - properties:
+          bucketName:
+            description: Name of the bucket where you want to store your backup data.
+            type: string
+          hostId:
+            description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
+            format: uuid
+            type: string
+          regionId:
+            description: Data center region where the bucket is located.
+            type: string
+        required:
+        - regionId
+        - bucketName
+        type: object
+    S3CompatibleBrowserModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseCloudBrowserModel'
+      - properties:
+          connectionPoint:
+            description: Service point address and port number of the S3 compatible storage.
+            type: string
+          hostId:
+            description: ID of a server used to connect to the S3 compatible storage.
+            format: uuid
+            type: string
+          regions:
+            description: Array of regions.
+            items:
+              $ref: '#/components/schemas/S3CompatibleRegionBrowserModel'
+            type: array
+        type: object
     IBMCloudStorageRegionBrowserModel:
       properties:
         buckets:
@@ -948,122 +1003,67 @@ components:
           description: Region name.
           type: string
       type: object
-    IBMCloudStorageBucketBrowserModel:
-      properties:
-        folders:
-          description: Array of folders located in the bucket.
-          items:
-            type: string
-          type: array
-        name:
-          description: Bucket name.
-          type: string
-      type: object
-    BaseCloudBrowserModel:
-      properties:
-        credentialsId:
-          description: ID of the cloud credentials record.
-          format: uuid
-          type: string
-        serviceType:
-          $ref: '#/components/schemas/ECloudServiceType'
-      type: object
-    BaseCloudBrowserNewFolderSpec:
-      properties:
-        credentialsId:
-          description: ID of a cloud credentials record requiered to connect to the object storage.
-          format: uuid
-          type: string
-        newFolderName:
-          description: Name of the new folder.
-          type: string
-        serviceType:
-          $ref: '#/components/schemas/ECloudServiceType'
-      type: object
-    AzureBlobBrowserSpec:
+    WasabiCloudStorageBrowserSpec:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserSpec'
       - properties:
-          folderType:
-            $ref: '#/components/schemas/ECloudBrowserFolderType'
           gatewayServerId:
             description: ID of a gateway server you want to use to connect to the object storage. Specify this parameter to check internet connection of the server. As a gateway server you can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
             format: uuid
             type: string
-          regionType:
-            $ref: '#/components/schemas/EAzureRegionType'
+          regionId:
+            description: Region ID.
+            type: string
+        required:
+        - regionId
         type: object
-    ECloudServiceType:
-      description: Type of cloud service.
-      enum:
-      - AzureBlob
-      - AzureDataBox
-      - AmazonS3
-      - AmazonEC2
-      - S3Compatible
-      - AmazonSnowballEdge
-      - GoogleCloud
-      - IBMCloud
-      - AzureCompute
-      - WasabiCloud
-      type: string
-    AzureBlobBrowserDestinationSpec:
+    S3CompatibleBrowserDestinationSpec:
       allOf:
       - $ref: '#/components/schemas/BaseCloudBrowserNewFolderSpec'
       - properties:
-          containerName:
-            description: Name of the container where you want to store your backup data.
+          bucketName:
+            description: Name of the bucket where you want to store your backup data.
             type: string
-          folderType:
-            $ref: '#/components/schemas/ECloudBrowserFolderType'
+          connectionPoint:
+            description: Endpoint address and port number of the S3 compatible storage.
+            type: string
           hostId:
             description: ID of a server you want to use to connect to the object storage. You can use the backup server or any Microsoft Windows or Linux server added to your backup infrastructure. By default, the backup server ID is used.
             format: uuid
             type: string
-          regionType:
-            $ref: '#/components/schemas/EAzureRegionType'
-        required:
-        - regionType
-        - containerName
-        type: object
-    EAzureRegionType:
-      description: Region where your Microsoft Azure container is located.
-      enum:
-      - China
-      - Germany
-      - Global
-      - Government
-      type: string
-    AmazonS3BrowserModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseCloudBrowserModel'
-      - properties:
-          hostId:
-            description: ID of a server used to connect to the object storage.
-            format: uuid
+          regionId:
+            description: Region where the bucket is located.
             type: string
-          regionType:
-            $ref: '#/components/schemas/EAmazonRegionType'
-          regions:
-            description: Array of AWS regions belonged to the region type.
-            items:
-              $ref: '#/components/schemas/AmazonS3RegionBrowserModel'
-            type: array
         required:
-        - hostId
-        - regionType
+        - connectionPoint
+        - regionId
+        - bucketName
         type: object
-    AmazonSnowballEdgeBucketBrowserModel:
-      properties:
-        folders:
-          description: Array of folders located in the bucket.
-          items:
-            type: string
-          type: array
-        name:
-          description: Bucket name.
-          type: string
-      type: object
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.

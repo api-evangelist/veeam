@@ -196,6 +196,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LicenseAgreement'
+    LicenseAgreementTypes:
+      type: string
+      enum:
+      - Eula
+      - ThirdPartyAgreement
+    LicenseAgreementAcceptResult:
+      required:
+      - accepted
+      type: object
+      properties:
+        accepted:
+          type: boolean
     LicenseAgreement:
       required:
       - type
@@ -262,18 +274,6 @@ components:
       properties:
         licenseAgreementType:
           $ref: '#/components/schemas/LicenseAgreementTypes'
-    LicenseAgreementTypes:
-      type: string
-      enum:
-      - Eula
-      - ThirdPartyAgreement
-    LicenseAgreementAcceptResult:
-      required:
-      - accepted
-      type: object
-      properties:
-        accepted:
-          type: boolean
   parameters:
     apiVersionParam:
       name: x-api-version

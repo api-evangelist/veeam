@@ -238,24 +238,18 @@ paths:
         - UpdateEncryptionPasswords
 components:
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
       description: Not found. No object was found with the path parameter specified in the request.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
     Unauthorized:
       content:
         application/json:
@@ -268,15 +262,54 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
   schemas:
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
     EEncryptionPasswordsFiltersOrderColumn:
       enum:
       - Hint
       - ModificationTime
       type: string
+    EncryptionPasswordsFilters:
+      properties:
+        limit:
+          format: int32
+          type: integer
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+      type: object
+    PaginationResult:
+      description: Pagination settings.
+      properties:
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
+      required:
+      - total
+      - count
+      type: object
     EncryptionPasswordsResult:
       properties:
         data:
@@ -305,6 +338,29 @@ components:
       - hint
       - password
       type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    EncryptionPasswordModel:
+      properties:
+        hint:
+          description: Hint for the encryption password.
+          type: string
+        id:
+          description: ID of the encryption password.
+          format: uuid
+          type: string
+        modificationTime:
+          description: Date and time when the password was last modified.
+          format: date-time
+          type: string
+        tag:
+          description: Tag for the encryption password.
+          type: string
+      required:
+      - hint
+      - id
+      type: object
     Error:
       properties:
         errorCode:
@@ -330,62 +386,6 @@ components:
       required:
       - errorCode
       - message
-      type: object
-    EncryptionPasswordModel:
-      properties:
-        hint:
-          description: Hint for the encryption password.
-          type: string
-        id:
-          description: ID of the encryption password.
-          format: uuid
-          type: string
-        modificationTime:
-          description: Date and time when the password was last modified.
-          format: date-time
-          type: string
-        tag:
-          description: Tag for the encryption password.
-          type: string
-      required:
-      - hint
-      - id
-      type: object
-    PaginationResult:
-      description: Pagination settings.
-      properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    EncryptionPasswordsFilters:
-      properties:
-        limit:
-          format: int32
-          type: integer
-        orderAsc:
-          type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EEncryptionPasswordsFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
       type: object
   parameters:
     apiVersionParam:

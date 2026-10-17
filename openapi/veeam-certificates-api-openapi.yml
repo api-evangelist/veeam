@@ -192,14 +192,6 @@ paths:
       summary: Upload certificate
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
     Certificate:
       required:
@@ -243,6 +235,34 @@ components:
           type: string
         automaticallyGenerated:
           type: boolean
+    UploadCertificateSpec:
+      type: object
+      required:
+      - certificateFile
+      - certificatePassword
+      properties:
+        certificateFile:
+          type: string
+          format: binary
+          x-veeam-type:
+            type: formfile
+          description: The .PFX certificate to upload.
+        certificatePassword:
+          type: string
+          description: .PFX certificate password
+    Certificates:
+      type: object
+      properties:
+        data:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Certificate'
+    CertificateRegenerateSpec:
+      properties:
+        validBy:
+          format: date-time
+          type: string
     Error:
       description: ''
       required:
@@ -291,34 +311,14 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    CertificateRegenerateSpec:
-      properties:
-        validBy:
-          format: date-time
-          type: string
-    Certificates:
-      type: object
-      properties:
-        data:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Certificate'
-    UploadCertificateSpec:
-      type: object
-      required:
-      - certificateFile
-      - certificatePassword
-      properties:
-        certificateFile:
-          type: string
-          format: binary
-          x-veeam-type:
-            type: formfile
-          description: The .PFX certificate to upload.
-        certificatePassword:
-          type: string
-          description: .PFX certificate password
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

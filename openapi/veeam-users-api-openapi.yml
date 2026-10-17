@@ -1021,66 +1021,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UsersSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - descriptionAsc
-      - descriptionDesc
-      - isDefaultAsc
-      - isDefaultDesc
-      - mfaEnabledAsc
-      - mfaEnabledDesc
-    UserMfaAccept:
-      required:
-      - code
-      - token
+    UsersFilters:
       type: object
       properties:
-        code:
-          minLength: 1
+        searchPattern:
           type: string
-        token:
-          minLength: 1
-          type: string
-    UserMfaData:
-      type: object
-      properties:
-        userName:
-          type: string
-        qrString:
-          type: string
-        secretKey:
-          type: string
-        scratchCodes:
-          uniqueItems: false
+        offset:
+          type: integer
+          format: int32
+          minimum: 0
+        limit:
+          type: integer
+          format: int32
+          minimum: -1
+        sort:
           type: array
           items:
-            type: string
-        token:
-          type: string
-    User:
-      required:
-      - name
-      - description
-      - mfaEnabled
-      - isDefault
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        mfaEnabled:
-          type: boolean
-        isDefault:
-          type: boolean
-        _links:
-          type: array
+            $ref: '#/components/schemas/UsersSortColumns'
           uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     UserCreateSpec:
       required:
       - name
@@ -1096,24 +1054,14 @@ components:
         password:
           minLength: 1
           type: string
-    Link:
+    UserNameValidationSpec:
       required:
-      - rel
-      - href
-      - method
+      - name
       type: object
       properties:
-        rel:
+        name:
+          minLength: 1
           type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
     DefaultUserSpec:
       type: object
       required:
@@ -1124,6 +1072,43 @@ components:
           $ref: '#/components/schemas/CheckInstanceIdSpec'
         userSpec:
           $ref: '#/components/schemas/UserCreateSpec'
+    UserMfaAccept:
+      required:
+      - code
+      - token
+      type: object
+      properties:
+        code:
+          minLength: 1
+          type: string
+        token:
+          minLength: 1
+          type: string
+    IsFirstLoginResult:
+      type: object
+      required:
+      - isFirstLogin
+      properties:
+        isFirstLogin:
+          type: boolean
+    UsersSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - descriptionAsc
+      - descriptionDesc
+      - isDefaultAsc
+      - isDefaultDesc
+      - mfaEnabledAsc
+      - mfaEnabledDesc
+    CheckInstanceIdResult:
+      type: object
+      required:
+      - isValid
+      properties:
+        isValid:
+          type: boolean
     Error:
       description: ''
       required:
@@ -1172,6 +1157,29 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    UserMfaSetup:
+      type: object
+      properties:
+        recreate:
+          type: boolean
     UserUpdateSpec:
       type: object
       properties:
@@ -1181,13 +1189,57 @@ components:
           type: string
         oldPassword:
           type: string
-    CheckInstanceIdResult:
+    CheckInstanceIdSpec:
       type: object
       required:
-      - isValid
+      - instanceId
       properties:
-        isValid:
+        instanceId:
+          type: string
+    User:
+      required:
+      - name
+      - description
+      - mfaEnabled
+      - isDefault
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        mfaEnabled:
           type: boolean
+        isDefault:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    UserMfaData:
+      type: object
+      properties:
+        userName:
+          type: string
+        qrString:
+          type: string
+        secretKey:
+          type: string
+        scratchCodes:
+          uniqueItems: false
+          type: array
+          items:
+            type: string
+        token:
+          type: string
+    UserDescriptionValidationSpec:
+      required:
+      - description
+      type: object
+      properties:
+        description:
+          type: string
     UsersPage:
       required:
       - totalCount
@@ -1207,50 +1259,13 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    UsersFilters:
-      type: object
-      properties:
-        searchPattern:
-          type: string
-        offset:
-          type: integer
-          format: int32
-          minimum: 0
-        limit:
-          type: integer
-          format: int32
-          minimum: -1
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersSortColumns'
-          uniqueItems: false
-    IsFirstLoginResult:
-      type: object
+    UserPasswordValidationSpec:
       required:
-      - isFirstLogin
-      properties:
-        isFirstLogin:
-          type: boolean
-    UserMfaSetup:
+      - password
       type: object
       properties:
-        recreate:
-          type: boolean
-    UserNameValidationSpec:
-      required:
-      - name
-      type: object
-      properties:
-        name:
+        password:
           minLength: 1
-          type: string
-    CheckInstanceIdSpec:
-      type: object
-      required:
-      - instanceId
-      properties:
-        instanceId:
           type: string
     ValidationMessage:
       type: object
@@ -1265,21 +1280,6 @@ components:
         contextId:
           type: string
           format: uuid
-    UserPasswordValidationSpec:
-      required:
-      - password
-      type: object
-      properties:
-        password:
-          minLength: 1
-          type: string
-    UserDescriptionValidationSpec:
-      required:
-      - description
-      type: object
-      properties:
-        description:
-          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

@@ -176,34 +176,7 @@ paths:
       summary: Tag
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
-    Tag:
-      required:
-      - id
-      - key
-      - value
-      type: object
-      properties:
-        id:
-          format: uuid
-          type: string
-        key:
-          type: string
-        value:
-          type: string
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     TagsPage:
       required:
       - results
@@ -223,6 +196,11 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    TagsSortColumns:
+      type: string
+      enum:
+      - keyAsc
+      - keyDesc
     Error:
       description: ''
       required:
@@ -271,29 +249,25 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    TagsSortColumns:
-      type: string
-      enum:
-      - keyAsc
-      - keyDesc
-    Link:
+    Tag:
       required:
-      - rel
-      - href
-      - method
+      - id
+      - key
+      - value
       type: object
       properties:
-        rel:
+        id:
+          format: uuid
           type: string
-        href:
+        key:
           type: string
-        method:
+        value:
           type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     TagsFilters:
       type: object
       properties:
@@ -312,6 +286,32 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/TagsSortColumns'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

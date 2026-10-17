@@ -359,29 +359,26 @@ paths:
       summary: Get bucket folder
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
-    BucketFoldersFilters:
+    BucketsPage:
+      required:
+      - results
+      - totalCount
       type: object
       properties:
-        offset:
-          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+        totalCount:
           format: int32
-        limit:
           type: integer
-          format: int32
-        sort:
+        _links:
           type: array
           uniqueItems: false
           items:
-            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+            $ref: '#/components/schemas/Link'
     BucketsFilters:
       type: object
       properties:
@@ -403,6 +400,43 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/BucketsSortColumns'
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFoldersPage:
+      required:
+      - totalCount
+      - results
+      type: object
+      properties:
+        totalCount:
+          format: int32
+          type: integer
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/BucketFolder'
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    BucketFoldersFiltersOrderColumns:
+      enum:
+      - NameAsc
+      - NameDesc
+      type: string
     Error:
       description: ''
       required:
@@ -451,6 +485,54 @@ components:
           description: Error payload
           additionalProperties:
             type: object
+    BucketFoldersFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BucketFoldersFiltersOrderColumns'
+    Link:
+      required:
+      - rel
+      - href
+      - method
+      type: object
+      properties:
+        rel:
+          type: string
+        href:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+    BucketsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+    BucketFolder:
+      required:
+      - name
+      - folderId
+      type: object
+      properties:
+        name:
+          type: string
+        folderId:
+          format: uuid
+          type: string
     Bucket:
       required:
       - id
@@ -479,96 +561,14 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
-    BucketsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-    BucketFoldersFiltersOrderColumns:
-      enum:
-      - NameAsc
-      - NameDesc
-      type: string
-    BucketFolder:
-      required:
-      - name
-      - folderId
-      type: object
-      properties:
-        name:
-          type: string
-        folderId:
-          format: uuid
-          type: string
-    Link:
-      required:
-      - rel
-      - href
-      - method
-      type: object
-      properties:
-        rel:
-          type: string
-        href:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-    BucketsPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/Bucket'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    BucketFoldersPage:
-      required:
-      - totalCount
-      - results
-      type: object
-      properties:
-        totalCount:
-          format: int32
-          type: integer
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/BucketFolder'
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

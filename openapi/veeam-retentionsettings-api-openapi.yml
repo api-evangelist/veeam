@@ -214,14 +214,6 @@ paths:
       summary: Set default retention settings
       x-summary-source: derived
 components:
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
   schemas:
     RetentionSetting:
       required:
@@ -238,6 +230,26 @@ components:
           - Monthly
           - Points
           type: string
+    RetentionSettings:
+      type: object
+      required:
+      - lingeringSnapshotRetentionDisabled
+      - keepAllSessions
+      - defaultRepositoryRetention
+      properties:
+        lingeringSnapshotRetentionDisabled:
+          type: boolean
+        lingeringSnapshotRetention:
+          $ref: '#/components/schemas/RetentionSetting'
+        sessionsRetention:
+          $ref: '#/components/schemas/RetentionSetting'
+        keepAllSessions:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
     Error:
       description: ''
       required:
@@ -304,26 +316,14 @@ components:
           - POST
           - PUT
           - DELETE
-    RetentionSettings:
-      type: object
-      required:
-      - lingeringSnapshotRetentionDisabled
-      - keepAllSessions
-      - defaultRepositoryRetention
-      properties:
-        lingeringSnapshotRetentionDisabled:
-          type: boolean
-        lingeringSnapshotRetention:
-          $ref: '#/components/schemas/RetentionSetting'
-        sessionsRetention:
-          $ref: '#/components/schemas/RetentionSetting'
-        keepAllSessions:
-          type: boolean
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   securitySchemes:
     Bearer:
       name: Authorization

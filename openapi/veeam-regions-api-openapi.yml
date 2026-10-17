@@ -386,24 +386,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    RegionsFilters:
-      type: object
-      properties:
-        SearchPattern:
-          type: string
-        Offset:
-          type: integer
-          format: int32
-          minimum: 0
-        Limit:
-          type: integer
-          format: int32
-          minimum: -1
-        Sort:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/RegionsSortColumns'
     Region:
       required:
       - id
@@ -442,11 +424,22 @@ components:
           uniqueItems: false
           items:
             type: string
-    RegionsSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesk
+    AmazonInstancesTypesByRegionFilters:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        isArm64:
+          type: boolean
+        virtualizationTypes:
+          type: array
+          uniqueItems: false
+          items:
+            type: string
     AmazonInstanceTypesByRegionPage:
       required:
       - totalCount
@@ -466,6 +459,24 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/Link'
+    RegionsFilters:
+      type: object
+      properties:
+        SearchPattern:
+          type: string
+        Offset:
+          type: integer
+          format: int32
+          minimum: 0
+        Limit:
+          type: integer
+          format: int32
+          minimum: -1
+        Sort:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/RegionsSortColumns'
     RegionsPage:
       required:
       - totalCount
@@ -551,22 +562,11 @@ components:
           - POST
           - PUT
           - DELETE
-    AmazonInstancesTypesByRegionFilters:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        isArm64:
-          type: boolean
-        virtualizationTypes:
-          type: array
-          uniqueItems: false
-          items:
-            type: string
+    RegionsSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesk
   parameters:
     apiVersionParam:
       name: x-api-version

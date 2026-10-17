@@ -63,12 +63,6 @@ paths:
         - CheckCertificate
 components:
   responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
     BadRequest:
       content:
         application/json:
@@ -87,42 +81,13 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
       description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-  parameters:
-    apiVersionParam:
-      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
-      in: header
-      name: x-api-version
-      required: true
-      schema:
-        default: 1.1-rev0
-        type: string
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
   schemas:
-    EManagedServerType:
-      description: Type of the server.
-      enum:
-      - WindowsHost
-      - LinuxHost
-      - ViHost
-      type: string
-    HostConnectionSpec:
-      properties:
-        credentialsId:
-          description: ID of a credentials record used to connect to the server.
-          format: uuid
-          type: string
-        port:
-          description: Port used to communicate with the server.
-          type: integer
-        serverName:
-          description: Full DNS name or IP address of the server.
-          type: string
-        type:
-          $ref: '#/components/schemas/EManagedServerType'
-      required:
-      - serverName
-      - credentialsId
-      - type
-      type: object
     ConnectionCertificateModel:
       properties:
         certificate:
@@ -130,32 +95,6 @@ components:
         fingerprint:
           description: SSH key fingerprint used to verify the server identity.
           type: string
-      type: object
-    Error:
-      properties:
-        errorCode:
-          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
-          enum:
-          - AccessDenied
-          - ExpiredToken
-          - InvalidToken
-          - InvalidURI
-          - MethodNotAllowed
-          - NotFound
-          - NotImplemented
-          - ServiceUnavailable
-          - UnexpectedContent
-          - UnknownError
-          type: string
-        message:
-          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
-          type: string
-        resourceId:
-          description: ID of the object that is involved in the error (or empty)
-          type: string
-      required:
-      - errorCode
-      - message
       type: object
     CertificateModel:
       description: Certificate settings.
@@ -200,6 +139,67 @@ components:
       - validBy
       - validFrom
       type: object
+    Error:
+      properties:
+        errorCode:
+          description: The error code is a string that uniquely identifies an error condition and should be understood by programs that detect and handle errors by type
+          enum:
+          - AccessDenied
+          - ExpiredToken
+          - InvalidToken
+          - InvalidURI
+          - MethodNotAllowed
+          - NotFound
+          - NotImplemented
+          - ServiceUnavailable
+          - UnexpectedContent
+          - UnknownError
+          type: string
+        message:
+          description: The error message contains a generic description of the error condition in English. It is intended for a human audience
+          type: string
+        resourceId:
+          description: ID of the object that is involved in the error (or empty)
+          type: string
+      required:
+      - errorCode
+      - message
+      type: object
+    EManagedServerType:
+      description: Type of the server.
+      enum:
+      - WindowsHost
+      - LinuxHost
+      - ViHost
+      type: string
+    HostConnectionSpec:
+      properties:
+        credentialsId:
+          description: ID of a credentials record used to connect to the server.
+          format: uuid
+          type: string
+        port:
+          description: Port used to communicate with the server.
+          type: integer
+        serverName:
+          description: Full DNS name or IP address of the server.
+          type: string
+        type:
+          $ref: '#/components/schemas/EManagedServerType'
+      required:
+      - serverName
+      - credentialsId
+      - type
+      type: object
+  parameters:
+    apiVersionParam:
+      description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
+      in: header
+      name: x-api-version
+      required: true
+      schema:
+        default: 1.1-rev0
+        type: string
   securitySchemes:
     Bearer:
       description: Access token specified in the following format&#58; `Bearer <access token>`.

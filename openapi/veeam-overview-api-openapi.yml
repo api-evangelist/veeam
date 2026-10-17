@@ -66,23 +66,15 @@ paths:
       summary: User status
       x-summary-source: derived
 components:
+  parameters:
+    apiVersionParam:
+      name: x-api-version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: 1.0-rev0
   schemas:
-    UserStatus:
-      required:
-      - connectionsCount
-      - repositoryCount
-      - policiesCount
-      - workerLocationsCount
-      type: object
-      properties:
-        connectionsCount:
-          type: integer
-        repositoryCount:
-          type: integer
-        policiesCount:
-          type: integer
-        workerLocationsCount:
-          type: integer
     Error:
       description: ''
       required:
@@ -131,14 +123,22 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-  parameters:
-    apiVersionParam:
-      name: x-api-version
-      in: header
-      required: true
-      schema:
-        type: string
-        default: 1.0-rev0
+    UserStatus:
+      required:
+      - connectionsCount
+      - repositoryCount
+      - policiesCount
+      - workerLocationsCount
+      type: object
+      properties:
+        connectionsCount:
+          type: integer
+        repositoryCount:
+          type: integer
+        policiesCount:
+          type: integer
+        workerLocationsCount:
+          type: integer
   securitySchemes:
     Bearer:
       name: Authorization

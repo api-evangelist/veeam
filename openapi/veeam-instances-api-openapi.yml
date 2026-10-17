@@ -411,34 +411,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    VirtualMachineSnapshotSpec:
-      required:
-      - amazonAccountId
-      type: object
-      properties:
-        amazonAccountId:
-          type: string
-          format: uuid
-        targetAmazonAccountIdToCopySnapshots:
-          format: uuid
-          type: string
-        targetRegionIdToCopySnapshots:
-          format: uuid
-          type: string
-        encryptionKey:
-          type: string
-        additionalTags:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/TagSpec'
-        copyTagsFromVolumeEnabled:
-          type: boolean
-    VirtualMachineProtectionStatuses:
-      type: string
-      enum:
-      - Protected
-      - Unprotected
     VirtualMachinesFilters:
       type: object
       properties:
@@ -473,6 +445,122 @@ components:
           uniqueItems: false
           items:
             $ref: '#/components/schemas/VirtualMachinesSortColumns'
+    VirtualMachineProtectionStatuses:
+      type: string
+      enum:
+      - Protected
+      - Unprotected
+    TagSpec:
+      required:
+      - key
+      - value
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    SessionLink:
+      required:
+      - sessionId
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    VirtualMachine:
+      required:
+      - id
+      - awsResourceId
+      - protectionStatus
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        awsResourceId:
+          type: string
+        protectionStatus:
+          $ref: '#/components/schemas/VirtualMachineProtectionStatuses'
+        backupDestinations:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/BackupDestinations'
+        location:
+          required:
+          - id
+          - name
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: string
+              format: uuid
+        isDeleted:
+          type: boolean
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    VirtualMachinesPage:
+      required:
+      - results
+      - totalCount
+      type: object
+      properties:
+        results:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualMachine'
+        totalCount:
+          format: int32
+          type: integer
+        _links:
+          type: array
+          uniqueItems: false
+          items:
+            $ref: '#/components/schemas/Link'
+    VirtualMachinesSortColumns:
+      type: string
+      enum:
+      - nameAsc
+      - nameDesc
+      - locationAsc
+      - locationDesc
+    VirtualMachineSnapshotSpec:
+      required:
+      - amazonAccountId
+      type: object
+      properties:
+        amazonAccountId:
+          type: string
+          format: uuid
+        targetAmazonAccountIdToCopySnapshots:
+          format: uuid
+          type: string
+        targetRegionIdToCopySnapshots:
+          format: uuid
+          type: string
+        encryptionKey:
+          type: string
+        additionalTags:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TagSpec'
+        copyTagsFromVolumeEnabled:
+          type: boolean
     Error:
       description: ''
       required:
@@ -521,58 +609,12 @@ components:
           description: Error payload
           additionalProperties:
             type: object
-    VirtualMachinesSortColumns:
-      type: string
-      enum:
-      - nameAsc
-      - nameDesc
-      - locationAsc
-      - locationDesc
     BackupDestinations:
       type: string
       enum:
       - Snapshot
       - AwsBlob
       - ManualSnapshot
-    VirtualMachine:
-      required:
-      - id
-      - awsResourceId
-      - protectionStatus
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        awsResourceId:
-          type: string
-        protectionStatus:
-          $ref: '#/components/schemas/VirtualMachineProtectionStatuses'
-        backupDestinations:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/BackupDestinations'
-        location:
-          required:
-          - id
-          - name
-          type: object
-          properties:
-            name:
-              type: string
-            id:
-              type: string
-              format: uuid
-        isDeleted:
-          type: boolean
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
     Link:
       required:
       - rel
@@ -591,48 +633,6 @@ components:
           - POST
           - PUT
           - DELETE
-    VirtualMachinesPage:
-      required:
-      - results
-      - totalCount
-      type: object
-      properties:
-        results:
-          uniqueItems: false
-          type: array
-          items:
-            $ref: '#/components/schemas/VirtualMachine'
-        totalCount:
-          format: int32
-          type: integer
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    SessionLink:
-      required:
-      - sessionId
-      type: object
-      properties:
-        sessionId:
-          type: string
-          format: uuid
-        _links:
-          type: array
-          uniqueItems: false
-          items:
-            $ref: '#/components/schemas/Link'
-    TagSpec:
-      required:
-      - key
-      - value
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
   parameters:
     apiVersionParam:
       name: x-api-version

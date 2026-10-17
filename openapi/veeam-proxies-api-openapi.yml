@@ -341,107 +341,7 @@ paths:
         claims:
         - UpdateProxies
 components:
-  responses:
-    InternalServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      description: Not found. No object was found with the path parameter specified in the request.
-    Deleted:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/EmptySuccessResponse'
-      description: Removed.
   schemas:
-    ViProxySpec:
-      allOf:
-      - $ref: '#/components/schemas/BaseProxySpec'
-      - properties:
-          server:
-            $ref: '#/components/schemas/ProxyServerSettingsModel'
-        required:
-        - server
-        type: object
-    BaseProxyModel:
-      properties:
-        description:
-          description: Description of the backup proxy.
-          type: string
-        id:
-          description: ID of the backup proxy.
-          format: uuid
-          type: string
-        name:
-          description: Name of the backup proxy.
-          type: string
-        type:
-          $ref: '#/components/schemas/EProxyType'
-      type: object
-    ESessionResult:
-      description: Result status.
-      enum:
-      - None
-      - Success
-      - Warning
-      - Failed
-      type: string
-    ProxyDatastoreModel:
-      properties:
-        datastore:
-          $ref: '#/components/schemas/VmwareObjectModel'
-        vmCount:
-          description: Number of VMs.
-          type: integer
-      type: object
-    ProxyServerSettingsModel:
-      description: Server settings for the backup proxy.
-      properties:
-        connectedDatastores:
-          $ref: '#/components/schemas/ProxyDatastoreSettingsModel'
-        failoverToNetwork:
-          description: (For the Direct storage access and Virtual appliance transport modes) If *true*, Veeam Backup & Replication failovers to the network transport mode in case the primary mode fails or is unavailable.
-          type: boolean
-        hostId:
-          description: ID of the server.
-          format: uuid
-          type: string
-        hostToProxyEncryption:
-          description: (For the Network mode) If *true*, VM data is transferred over an encrypted TLS connection.
-          type: boolean
-        maxTaskCount:
-          description: Maximum number of concurrent tasks.
-          type: integer
-        transportMode:
-          $ref: '#/components/schemas/EBackupProxyTransportMode'
-      required:
-      - hostId
-      type: object
     SessionModel:
       properties:
         activityId:
@@ -496,25 +396,129 @@ components:
       - state
       - usn
       type: object
+    ESessionState:
+      description: State of the session.
+      enum:
+      - Stopped
+      - Starting
+      - Stopping
+      - Working
+      - Pausing
+      - Resuming
+      - WaitingTape
+      - Idle
+      - Postprocessing
+      - WaitingRepository
+      - WaitingSlot
+      type: string
+    ESessionResult:
+      description: Result status.
+      enum:
+      - None
+      - Success
+      - Warning
+      - Failed
+      type: string
+    ProxyServerSettingsModel:
+      description: Server settings for the backup proxy.
+      properties:
+        connectedDatastores:
+          $ref: '#/components/schemas/ProxyDatastoreSettingsModel'
+        failoverToNetwork:
+          description: (For the Direct storage access and Virtual appliance transport modes) If *true*, Veeam Backup & Replication failovers to the network transport mode in case the primary mode fails or is unavailable.
+          type: boolean
+        hostId:
+          description: ID of the server.
+          format: uuid
+          type: string
+        hostToProxyEncryption:
+          description: (For the Network mode) If *true*, VM data is transferred over an encrypted TLS connection.
+          type: boolean
+        maxTaskCount:
+          description: Maximum number of concurrent tasks.
+          type: integer
+        transportMode:
+          $ref: '#/components/schemas/EBackupProxyTransportMode'
+      required:
+      - hostId
+      type: object
+    EProxiesFiltersOrderColumn:
+      enum:
+      - Name
+      - Type
+      - Description
+      type: string
+    BaseProxyModel:
+      properties:
+        description:
+          description: Description of the backup proxy.
+          type: string
+        id:
+          description: ID of the backup proxy.
+          format: uuid
+          type: string
+        name:
+          description: Name of the backup proxy.
+          type: string
+        type:
+          $ref: '#/components/schemas/EProxyType'
+      type: object
     EProxyType:
       description: Type of the backup proxy.
       enum:
       - ViProxy
       type: string
-    SessionResultModel:
-      description: Session result.
+    PaginationResult:
+      description: Pagination settings.
       properties:
-        isCanceled:
-          description: If *true*, the session has been canceled.
-          type: boolean
-        message:
-          description: Message that explains the session result.
-          type: string
-        result:
-          $ref: '#/components/schemas/ESessionResult'
+        count:
+          description: Number of returned results.
+          format: int32
+          type: integer
+        limit:
+          description: Maximum number of results to return.
+          format: int32
+          type: integer
+        skip:
+          description: Number of skipped results.
+          format: int32
+          type: integer
+        total:
+          description: Total number of results.
+          format: int32
+          type: integer
       required:
-      - result
+      - total
+      - count
       type: object
+    VmwareObjectModel:
+      description: VMware vSphere object.
+      properties:
+        hostName:
+          description: Name of the VMware vSphere server that hosts the object.
+          type: string
+        name:
+          description: Name of the VMware vSphere object.
+          type: string
+        objectId:
+          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
+          type: string
+        type:
+          $ref: '#/components/schemas/EVmwareInventoryType'
+      required:
+      - name
+      - type
+      - hostName
+      type: object
+    ProxySpec:
+      allOf:
+      - discriminator:
+          mapping:
+            ViProxy: '#/components/schemas/ViProxySpec'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/ViProxySpec'
+      - $ref: '#/components/schemas/BaseProxySpec'
     Error:
       properties:
         errorCode:
@@ -541,157 +545,20 @@ components:
       - errorCode
       - message
       type: object
-    ViProxyModel:
-      allOf:
-      - $ref: '#/components/schemas/BaseProxyModel'
-      - properties:
-          server:
-            $ref: '#/components/schemas/ProxyServerSettingsModel'
-        required:
-        - server
-        type: object
-    PaginationResult:
-      description: Pagination settings.
+    SessionResultModel:
+      description: Session result.
       properties:
-        count:
-          description: Number of returned results.
-          format: int32
-          type: integer
-        limit:
-          description: Maximum number of results to return.
-          format: int32
-          type: integer
-        skip:
-          description: Number of skipped results.
-          format: int32
-          type: integer
-        total:
-          description: Total number of results.
-          format: int32
-          type: integer
-      required:
-      - total
-      - count
-      type: object
-    EBackupProxyTransportMode:
-      description: Transport mode of the backup proxy.
-      enum:
-      - auto
-      - directAccess
-      - virtualAppliance
-      - network
-      type: string
-    EmptySuccessResponse:
-      description: Empty success response (200, 201, 204).
-      type: object
-    ProxyModel:
-      allOf:
-      - discriminator:
-          mapping:
-            ViProxy: '#/components/schemas/ViProxyModel'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/ViProxyModel'
-      - $ref: '#/components/schemas/BaseProxyModel'
-    ProxiesFilters:
-      properties:
-        hostIdFilter:
-          format: uuid
-          type: string
-        limit:
-          format: int32
-          type: integer
-        nameFilter:
-          type: string
-        orderAsc:
+        isCanceled:
+          description: If *true*, the session has been canceled.
           type: boolean
-        orderColumn:
-          $ref: '#/components/schemas/EProxiesFiltersOrderColumn'
-        skip:
-          format: int32
-          type: integer
-        typeFilter:
-          $ref: '#/components/schemas/EProxyType'
-      type: object
-    ProxySpec:
-      allOf:
-      - discriminator:
-          mapping:
-            ViProxy: '#/components/schemas/ViProxySpec'
-          propertyName: type
-        oneOf:
-        - $ref: '#/components/schemas/ViProxySpec'
-      - $ref: '#/components/schemas/BaseProxySpec'
-    ESessionState:
-      description: State of the session.
-      enum:
-      - Stopped
-      - Starting
-      - Stopping
-      - Working
-      - Pausing
-      - Resuming
-      - WaitingTape
-      - Idle
-      - Postprocessing
-      - WaitingRepository
-      - WaitingSlot
-      type: string
-    VmwareObjectModel:
-      description: VMware vSphere object.
-      properties:
-        hostName:
-          description: Name of the VMware vSphere server that hosts the object.
+        message:
+          description: Message that explains the session result.
           type: string
-        name:
-          description: Name of the VMware vSphere object.
-          type: string
-        objectId:
-          description: ID of the VMware vSphere object. The parameter is required for all VMware vSphere objects except vCenter Servers and standalone ESXi hosts.
-          type: string
-        type:
-          $ref: '#/components/schemas/EVmwareInventoryType'
+        result:
+          $ref: '#/components/schemas/ESessionResult'
       required:
-      - name
-      - type
-      - hostName
+      - result
       type: object
-    ProxyDatastoreSettingsModel:
-      description: Datastores to which the backup proxy has a direct SAN or NFS connection.
-      properties:
-        autoSelect:
-          description: If *true*, all datastores that the backup proxy can access are detected automatically.
-          type: boolean
-        datastores:
-          description: Array of datastores to which the backup proxy has a direct SAN or NFS connection.
-          items:
-            $ref: '#/components/schemas/ProxyDatastoreModel'
-          type: array
-      required:
-      - autoSelect
-      type: object
-    ESessionType:
-      description: Type of the session.
-      enum:
-      - Infrastructure
-      - Job
-      - Automation
-      - ConfigurationBackup
-      - RepositoryMaintenance
-      - RepositoryEvacuate
-      - InfrastructureItemDeletion
-      - RestoreVm
-      - InstantRecovery
-      - FirstClassDiskInstantRestore
-      - AzureApplianceDeploy
-      - QuickMigration
-      type: string
-    EProxiesFiltersOrderColumn:
-      enum:
-      - Name
-      - Type
-      - Description
-      type: string
     EVmwareInventoryType:
       description: Type of the VMware vSphere object.
       enum:
@@ -714,6 +581,52 @@ components:
       - Multitag
       - Network
       type: string
+    EBackupProxyTransportMode:
+      description: Transport mode of the backup proxy.
+      enum:
+      - auto
+      - directAccess
+      - virtualAppliance
+      - network
+      type: string
+    ProxiesFilters:
+      properties:
+        hostIdFilter:
+          format: uuid
+          type: string
+        limit:
+          format: int32
+          type: integer
+        nameFilter:
+          type: string
+        orderAsc:
+          type: boolean
+        orderColumn:
+          $ref: '#/components/schemas/EProxiesFiltersOrderColumn'
+        skip:
+          format: int32
+          type: integer
+        typeFilter:
+          $ref: '#/components/schemas/EProxyType'
+      type: object
+    ViProxySpec:
+      allOf:
+      - $ref: '#/components/schemas/BaseProxySpec'
+      - properties:
+          server:
+            $ref: '#/components/schemas/ProxyServerSettingsModel'
+        required:
+        - server
+        type: object
+    ViProxyModel:
+      allOf:
+      - $ref: '#/components/schemas/BaseProxyModel'
+      - properties:
+          server:
+            $ref: '#/components/schemas/ProxyServerSettingsModel'
+        required:
+        - server
+        type: object
     BaseProxySpec:
       properties:
         description:
@@ -721,6 +634,14 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/EProxyType'
+      type: object
+    ProxyDatastoreModel:
+      properties:
+        datastore:
+          $ref: '#/components/schemas/VmwareObjectModel'
+        vmCount:
+          description: Number of VMs.
+          type: integer
       type: object
     ProxiesResult:
       properties:
@@ -735,6 +656,85 @@ components:
       - data
       - pagination
       type: object
+    EmptySuccessResponse:
+      description: Empty success response (200, 201, 204).
+      type: object
+    ESessionType:
+      description: Type of the session.
+      enum:
+      - Infrastructure
+      - Job
+      - Automation
+      - ConfigurationBackup
+      - RepositoryMaintenance
+      - RepositoryEvacuate
+      - InfrastructureItemDeletion
+      - RestoreVm
+      - InstantRecovery
+      - FirstClassDiskInstantRestore
+      - AzureApplianceDeploy
+      - QuickMigration
+      type: string
+    ProxyModel:
+      allOf:
+      - discriminator:
+          mapping:
+            ViProxy: '#/components/schemas/ViProxyModel'
+          propertyName: type
+        oneOf:
+        - $ref: '#/components/schemas/ViProxyModel'
+      - $ref: '#/components/schemas/BaseProxyModel'
+    ProxyDatastoreSettingsModel:
+      description: Datastores to which the backup proxy has a direct SAN or NFS connection.
+      properties:
+        autoSelect:
+          description: If *true*, all datastores that the backup proxy can access are detected automatically.
+          type: boolean
+        datastores:
+          description: Array of datastores to which the backup proxy has a direct SAN or NFS connection.
+          items:
+            $ref: '#/components/schemas/ProxyDatastoreModel'
+          type: array
+      required:
+      - autoSelect
+      type: object
+  responses:
+    Deleted:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptySuccessResponse'
+      description: Removed.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not found. No object was found with the path parameter specified in the request.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad request. This error is related to POST/PUT requests. The request body is malformed, incomplete or otherwise invalid.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized. The authorization header has been expected but not found (or found but is expired).
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal server error. The request has been received but could not be completed because of an internal error at the server side.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden. The user sending the request does not have adequate privileges to access one or more objects specified in the request.
   parameters:
     apiVersionParam:
       description: Version and revision of the client REST API. Must be in the following format&#58; `<version>-<revision>`.
