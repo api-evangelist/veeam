@@ -43,7 +43,7 @@ tags:
   - Data Protection
   - Microsoft 365
   - AWS
-  - Azure
+  - Microsoft Azure
   - Google Cloud
   - Ransomware Recovery
 tags_raw:
@@ -159,6 +159,10 @@ apis:
   humanURL: https://helpcenter.veeam.com/docs/vbazure/rest/
   baseURL: https://localhost
   tags:
+  - Microsoft Azure
+  - Cloud Backup
+  - Virtual Machines
+  tags_raw:
   - Azure
   - Cloud Backup
   - Virtual Machines
