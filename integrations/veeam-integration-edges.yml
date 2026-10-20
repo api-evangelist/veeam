@@ -9,78 +9,6 @@ checked:
 - splunk/integrations/splunk-integration-edges.yml
 marketplace_apps: []
 edges:
-- partner_name: AWS Marketplace
-  partner: amazon-web-services
-  partner_match: aggregator
-  type: marketplace
-  marketplace: aws-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://aws.amazon.com/marketplace/seller-profile?id=402d88c1-efab-4749-b68a-b54a1587501d
-  listing_count: 2
-  apps:
-  - Veeam Data Platform
-  - Veeam Data Cloud Vault
-  seller_name: Veeam
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
-  type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
-  listing_count: 6
-  apps:
-  - Veeam Data Cloud Vault
-  - Veeam Data Cloud for Salesforce
-  - Veeam Data Cloud for Entra ID
-  - FREE Analytics Solution for Microsoft 365
-  - 'Veeam Data Cloud: Backup and Recovery for Microsoft Azure'
-  seller_name: Veeam
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
-  type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
-  listing_count: 4
-  apps:
-  - Veeam Kasten for Kubernetes on Azure Marketplace
-  - Veeam Data Platform
-  - Veeam App for Microsoft Sentinel
-  - Veeam Universal License (VUL)
-  seller_name: Veeam
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
-- partner_name: Microsoft Azure Marketplace
-  partner: microsoft-azure
-  partner_match: aggregator
-  type: marketplace
-  marketplace: azure-marketplace
-  channel: distribution
-  relationship: distribution-channel
-  direction: third-party
-  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
-  listing_count: 5
-  apps:
-  - Veeam Cloud Connect for the Enterprise
-  - Veeam Cloud Connect for Service Providers
-  - Veeam Backup & Replication
-  - Veeam Backup for Microsoft Azure Free Edition
-  - Veeam Backup for Microsoft Azure BYOL Edition
-  seller_name: Veeam
-  detected_by: sweep-cloud-marketplaces.py
-  detected: '2026-10-13'
 - partner_name: CrowdStrike (own)
   partner: crowdstrike
   partner_match: mirror
@@ -194,6 +122,79 @@ edges:
   detected: '2026-10-14'
   detected_by: mirror-platform-listings.py
   category: app
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=402d88c1-efab-4749-b68a-b54a1587501d
+  listing_count: 2
+  apps:
+  - Veeam Data Platform
+  - Veeam Data Cloud Vault
+  seller_name: Veeam
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
+  listing_count: 6
+  apps:
+  - Veeam Data Cloud Vault
+  - Veeam Data Cloud for Salesforce
+  - Veeam Data Cloud for Entra ID
+  - 'Veeam Data Cloud: SaaS Backup and Recovery for Microsoft 365'
+  - FREE Analytics Solution for Microsoft 365
+  seller_name: Veeam
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-19'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
+  listing_count: 5
+  apps:
+  - Veeam Kasten for Kubernetes on Azure Marketplace
+  - Veeam Data Platform
+  - Veeam App for Microsoft Sentinel
+  - Technical Account Manager
+  - Veeam Universal License (VUL)
+  seller_name: Veeam
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-19'
+- partner_name: Microsoft Azure Marketplace
+  partner: microsoft-azure
+  partner_match: aggregator
+  type: marketplace
+  marketplace: azure-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Veeam
+  listing_count: 5
+  apps:
+  - Veeam Cloud Connect for the Enterprise
+  - Veeam Cloud Connect for Service Providers
+  - Veeam Backup & Replication
+  - Veeam Backup for Microsoft Azure Free Edition
+  - Veeam Backup for Microsoft Azure BYOL Edition
+  seller_name: Veeam
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 source:
 - crowdstrike/integrations/crowdstrike-integration-edges.yml
 - microsoft-sentinel/integrations/microsoft-sentinel-integration-edges.yml
